@@ -16,13 +16,13 @@ class Feature {
     }
 
     this.setImages();
-    this.button.addEventListener("click", () => this.roll(true));
+    this.button.addEventListener("click", () => this.shuffle(true));
   }
 
-  roll(preventRepeat = false) {
+  shuffle(preventRepeat = false) {
     this.randomizeCurrent(preventRepeat);
     this.button.disabled = true;
-    toggleRollAllButton();
+    toggleShuffleAllButton();
     this.card.classList.add("flipping");
     setTimeout(() => this.setImages(), 500);
   }
@@ -43,7 +43,7 @@ class Feature {
   }
 }
 
-const rollAllButton = document.getElementById("roll-all");
+const shuffleAll = document.getElementById("shuffle-all");
 
 const features = [
   new Feature("villain", true, [
@@ -83,7 +83,7 @@ function onTransitionEnd(event) {
   setTimeout(() => {
     card.classList.remove("flipped");
     getButton(card).disabled = false;
-    toggleRollAllButton();
+    toggleShuffleAllButton();
   }, 0);
 }
 
@@ -91,16 +91,16 @@ function getButton(card) {
   return card.parentElement.querySelector("button");
 }
 
-function toggleRollAllButton() {
-  rollAllButton.disabled = features.some(f => f.button.disabled);
+function toggleShuffleAllButton() {
+  shuffleAll.disabled = features.some(f => f.button.disabled);
 }
 
 for (const card of features.map(f => f.card)) {
   card.addEventListener("transitionend", onTransitionEnd);
 }
 
-rollAllButton.addEventListener("click", () => {
+shuffleAll.addEventListener("click", () => {
   for (const feature of features) {
-    feature.roll();
+    feature.shuffle();
   }
 });

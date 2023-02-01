@@ -10,13 +10,32 @@
 button {
   margin: 10px auto;
   display: block;
-  width: 100px;
-  height: 40px;
+  width: 120px;
+  height: 50px;
   cursor: pointer;
   font-family: 'Back Issues BB', sans-serif;
+  font-size: 1rem;
+  background-color: #ffeba9;
+  color: black;
+  border: 3px solid black;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  outline: none;
 }
 
-button#roll-all {
+@media (hover: hover) {
+  button:hover {
+    background-color: #ffe277;
+  }
+}
+
+button:disabled {
+  color: #444;
+  border-color: #444;
+  background-color: #ddd;
+}
+
+button#shuffle-all {
   width: 150px;
   height: 60px;
   font-size: large;

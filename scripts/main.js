@@ -48,7 +48,7 @@ class Feature {
   }
 }
 
-const shuffleAll = document.getElementById("shuffle-all");
+const shuffleAllButton = document.getElementById("shuffle-all");
 
 const features = [
   new Feature("Villain", true, [
@@ -97,7 +97,7 @@ function getButton(card) {
 }
 
 function toggleShuffleAllButton() {
-  shuffleAll.disabled = features.some(f => f.button.disabled);
+  shuffleAllButton.disabled = features.some(f => f.button.disabled);
 }
 
 function slug(text) {
@@ -108,7 +108,7 @@ for (const card of features.map(f => f.card)) {
   card.addEventListener("transitionend", onTransitionEnd);
 }
 
-shuffleAll.addEventListener("click", () => {
+shuffleAllButton.addEventListener("click", () => {
   for (const feature of features) {
     feature.shuffle();
   }

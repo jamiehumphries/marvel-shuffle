@@ -1,14 +1,15 @@
 class Feature {
-  constructor(name, hasGenericCardBack, options) {
-    this.name = name;
+  constructor(title, hasGenericCardBack, options) {
+    this.titleSlug = title;
+    this.titleSlug = slug(title);
     this.hasGenericCardBack = hasGenericCardBack;
     this.options = options;
-    this.card = document.getElementById(name).querySelector(".card");
+    this.card = document.getElementById(this.titleSlug).querySelector(".card");
     this.button = getButton(this.card);
     this.front = this.card.querySelector("img.front");
     this.back = this.card.querySelector("img.back");
 
-    const storedOption = localStorage.getItem(name);
+    const storedOption = localStorage.getItem(title);
     if (options.includes(storedOption)) {
       this.current = storedOption;
     } else {
@@ -17,6 +18,10 @@ class Feature {
 
     this.setImages();
     this.button.addEventListener("click", () => this.shuffle(true));
+  }
+
+  get currentSlug() {
+    return slug(this.current);
   }
 
   shuffle(preventRepeat = false) {
@@ -28,10 +33,10 @@ class Feature {
   }
 
   setImages() {
-    const newFrontSrc = `images/${this.name}/${this.current}/front.png`;
+    const newFrontSrc = `images/${this.titleSlug}/${this.currentSlug}/front.png`;
     this.front.src = newFrontSrc;
     if (!this.hasGenericCardBack) {
-      const newBackSrc = `images/${this.name}/${this.current}/back.png`;
+      const newBackSrc = `images/${this.titleSlug}/${this.currentSlug}/back.png`;
       this.back.src = newBackSrc;
     }
   }
@@ -39,37 +44,37 @@ class Feature {
   randomizeCurrent(preventRepeat = false) {
     const currentOptions = preventRepeat ? this.options.filter(o => o !== this.current) : this.options;
     this.current = currentOptions[Math.floor(Math.random() * currentOptions.length)];
-    localStorage.setItem(this.name, this.current);
+    localStorage.setItem(this.titleSlug, this.currentSlug);
   }
 }
 
 const shuffleAll = document.getElementById("shuffle-all");
 
 const features = [
-  new Feature("villain", true, [
-    "klaw",
-    "rhino",
-    "ultron"
+  new Feature("Villain", true, [
+    "Klaw",
+    "Rhino",
+    "Ultron"
   ]),
-  new Feature("module", true, [
-    "bomb-scare",
-    "legions-of-hydra",
-    "the-doomsday-chair",
-    "the-masters-of-evil",
-    "under-attack"
+  new Feature("Module", true, [
+    "Bomb Scare",
+    "Legions of Hydra",
+    "The Doomsday Chair",
+    "The Masters of Evil",
+    "Under Attack"
   ]),
-  new Feature("hero", false, [
-    "black-panther",
-    "captain-marvel",
-    "iron-man",
-    "she-hulk",
-    "spider-man"
+  new Feature("Hero", false, [
+    "Black Panther",
+    "Captain Marvel",
+    "Iron Man",
+    "She-Hulk",
+    "Spider-Man"
   ]),
-  new Feature("aspect", true, [
-    "aggression",
-    "justice",
-    "leadership",
-    "protection"
+  new Feature("Aspect", true, [
+    "Aggression",
+    "Justice",
+    "Leadership",
+    "Protection"
   ])
 ];
 
@@ -93,6 +98,10 @@ function getButton(card) {
 
 function toggleShuffleAllButton() {
   shuffleAll.disabled = features.some(f => f.button.disabled);
+}
+
+function slug(text) {
+  return text.toLowerCase().replaceAll(/\W/g, "-")
 }
 
 for (const card of features.map(f => f.card)) {

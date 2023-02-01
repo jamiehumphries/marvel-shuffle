@@ -1,3 +1,7 @@
+.container {
+  padding: 20px;
+}
+
 button {
   margin: 10px auto;
   display: block;
@@ -6,15 +10,21 @@ button {
   cursor: pointer;
 }
 
+button#roll-all {
+  width: 150px;
+  height: 60px;
+  font-size: large;
+}
+
 .features {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   justify-content: center;
-  align-items: flex-start;
+  grid-template-columns: auto auto auto auto;
   gap: 20px;
 }
 
 .card {
+  margin: 0 auto;
   position: relative;
   perspective: 1000px;
 }
@@ -27,6 +37,50 @@ button {
 .card.landscape {
   width: 419px;
   height: 300px;
+}
+
+@media (max-width: 1400px) {
+  .features {
+    gap: calc(0.85 * 20px);
+  }
+
+  .card.portrait {
+    width: calc(0.85 * 300px);
+    height: calc(0.85 * 419px);
+  }
+
+  .card.landscape {
+    width: calc(0.85 * 419px);
+    height: calc(0.85 * 300px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .features {
+    gap: calc(0.7 * 20px);
+  }
+
+  .card.portrait {
+    width: calc(0.7 * 300px);
+    height: calc(0.7 * 419px);
+  }
+
+  .card.landscape {
+    width: calc(0.7 * 419px);
+    height: calc(0.7 * 300px);
+  }
+}
+
+@media (max-width: 1000px) {
+  .features {
+    grid-template-columns: auto auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .features {
+    grid-template-columns: auto;
+  }
 }
 
 .card-inner {

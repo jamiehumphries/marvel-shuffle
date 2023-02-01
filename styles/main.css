@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Back Issues BB';
+  src: url(fonts/BackIssuesBB_reg.otf);
+}
+
 .container {
   padding: 20px;
 }
@@ -8,6 +13,7 @@ button {
   width: 100px;
   height: 40px;
   cursor: pointer;
+  font-family: 'Back Issues BB', sans-serif;
 }
 
 button#roll-all {

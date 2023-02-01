@@ -1,75 +1,82 @@
+class Feature {
+  constructor(name, hasGenericCardBack, options) {
+    this.name = name;
+    this.hasGenericCardBack = hasGenericCardBack;
+    this.options = options;
+    this.card = document.getElementById(name).querySelector(".card");
+    this.button = getButton(this.card);
+    this.front = this.card.querySelector("img.front");
+    this.back = this.card.querySelector("img.back");
+
+    const storedOption = localStorage.getItem(name);
+    if (options.includes(storedOption)) {
+      this.current = storedOption
+    } else {
+      this.randomizeCurrent();
+    }
+
+    this.setImages();
+    this.button.addEventListener("click", () => this.roll(true));
+  }
+
+  roll(preventRepeat = false) {
+    this.randomizeCurrent(preventRepeat);
+    this.button.disabled = true;
+    toggleRollAllButton();
+    this.card.classList.add("flipping");
+    setTimeout(() => this.setImages(), 500);
+  }
+
+  setImages() {
+    const newFrontSrc = `images/${this.name}/${this.current}/front.png`;
+    this.front.src = newFrontSrc;
+    if (!this.hasGenericCardBack) {
+      const newBackSrc = `images/${this.name}/${this.current}/back.png`;
+      this.back.src = newBackSrc;
+    }
+  }
+
+  randomizeCurrent(preventRepeat = false) {
+    const currentOptions = preventRepeat ? this.options.filter(o => o !== this.current) : this.options;
+    this.current = currentOptions[Math.floor(Math.random() * currentOptions.length)];
+    localStorage.setItem(this.name, this.current);
+  }
+}
+
 const rollAllButton = document.getElementById("roll-all");
-const features = {};
 
-configureFeature("villain", true, [
-  "klaw",
-  "rhino",
-  "ultron"
-]);
+const features = [
+  new Feature("villain", true, [
+    "klaw",
+    "rhino",
+    "ultron"
+  ]),
+  new Feature("module", true, [
+    "bomb-scare",
+    "legions-of-hydra",
+    "the-doomsday-chair",
+    "the-masters-of-evil",
+    "under-attack"
+  ]),
+  new Feature("hero", false, [
+    "black-panther",
+    "captain-marvel",
+    "iron-man",
+    "she-hulk",
+    "spider-man"
+  ]),
+  new Feature("aspect", true, [
+    "aggression",
+    "justice",
+    "leadership",
+    "protection"
+  ])
+];
 
-configureFeature("module", true, [
-  "bomb-scare",
-  "legions-of-hydra",
-  "the-doomsday-chair",
-  "the-masters-of-evil",
-  "under-attack"
-]);
-
-configureFeature("hero", false, [
-  "black-panther",
-  "captain-marvel",
-  "iron-man",
-  "she-hulk",
-  "spider-man"
-]);
-
-configureFeature("aspect", true, [
-  "aggression",
-  "justice",
-  "leadership",
-  "protection"
-]);
-
-function configureFeature(name, hasGenericCardBack, options) {
-  const feature = document.getElementById(name);
-  const card = feature.querySelector(".card");
-  const button = getButton(card);
-  button.addEventListener("click", () => roll(name, true));
-  features[name] = { card, hasGenericCardBack, options, button };
-}
-
-function getButton(card) {
-  return card.parentElement.querySelector("button");
-}
-
-function roll(featureName, preventRepeat = false) {
-  const feature = features[featureName];
-  const { card, button } = feature;
-  const choice = pickFrom(feature.options);
-  const front = card.querySelector("img.front");
-  const newFrontSrc = `images/${featureName}/${choice}/front.png`;
-  if (preventRepeat && front.src.endsWith(newFrontSrc)) {
-    roll(featureName, true);
+function onTransitionEnd(event) {
+  if (event.propertyName !== "transform") {
     return;
   }
-  button.disabled = true;
-  toggleRollAllButton();
-  card.classList.add("flipping");
-  setTimeout(() => {
-    front.src = newFrontSrc;
-    if (!feature.hasGenericCardBack) {
-      const back = card.querySelector("img.back");
-      const newBackSrc = `images/${featureName}/${choice}/back.png`;
-      back.src = newBackSrc;
-    }
-  }, 500);
-}
-
-function pickFrom(array) {
-  return array[Math.floor(Math.random() * array.length)];
-}
-
-function onCardFlipped(event) {
   const card = event.currentTarget;
   card.classList.add("flipped");
   card.classList.remove("flipping");
@@ -80,16 +87,20 @@ function onCardFlipped(event) {
   }, 0);
 }
 
-function toggleRollAllButton() {
-  rollAllButton.disabled = Object.values(features).some(f => f.button.disabled);
+function getButton(card) {
+  return card.parentElement.querySelector("button");
 }
 
-for (const card of Object.values(features).map(f => f.card)) {
-  card.addEventListener("transitionend", onCardFlipped);
+function toggleRollAllButton() {
+  rollAllButton.disabled = features.some(f => f.button.disabled);
+}
+
+for (const card of features.map(f => f.card)) {
+  card.addEventListener("transitionend", onTransitionEnd);
 }
 
 rollAllButton.addEventListener("click", () => {
-  for (const feature of Object.keys(features)) {
-    roll(feature);
+  for (const feature of features) {
+    feature.roll();
   }
 });

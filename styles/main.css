@@ -49,17 +49,24 @@ button {
   transition: transform 0s;
 }
 
-.front, .back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-}
-
 .card.portrait .back {
   transform: rotateY(-180deg);
 }
 
 .card.landscape .back {
   transform: rotateX(180deg);
+}
+
+img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  opacity: 1;
+  transition: opacity 1s;
+}
+
+img:not([src]) {
+  opacity: 0;
+  visibility: hidden;
 }

@@ -17,8 +17,10 @@
 
 button {
   margin: 10px auto;
-  display: block;
-  width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
   height: 50px;
   cursor: pointer;
   font-family: 'Back Issues BB', sans-serif;
@@ -35,6 +37,12 @@ button:focus {
   background-color: #ffde65;
 }
 
+button img {
+  margin-left: 0.5em;
+  margin-bottom: 0.1em;
+  height: 1.2em;
+}
+
 @media (hover: hover) {
   button:hover {
     background-color: #ffde65;
@@ -48,7 +56,7 @@ button:disabled {
 }
 
 button#shuffle-all {
-  width: 150px;
+  width: 180px;
   height: 60px;
   font-size: large;
 }

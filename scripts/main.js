@@ -24,7 +24,7 @@ class Feature {
     this.button.disabled = true;
     toggleShuffleAllButton();
     this.card.classList.add("flipping");
-    setTimeout(() => this.setImages(), 500);
+    setTimeout(() => this.setImages(), 300);
   }
 
   setImages() {

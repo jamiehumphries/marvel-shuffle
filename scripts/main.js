@@ -10,7 +10,7 @@ class Feature {
 
     const storedOption = localStorage.getItem(name);
     if (options.includes(storedOption)) {
-      this.current = storedOption
+      this.current = storedOption;
     } else {
       this.randomizeCurrent();
     }

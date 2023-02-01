@@ -1,6 +1,6 @@
 class Feature {
   constructor(title, hasGenericCardBack, options) {
-    this.titleSlug = title;
+    this.title = title;
     this.titleSlug = slug(title);
     this.hasGenericCardBack = hasGenericCardBack;
     this.options = options;
@@ -9,8 +9,8 @@ class Feature {
     this.front = this.card.querySelector("img.front");
     this.back = this.card.querySelector("img.back");
 
-    const storedOption = localStorage.getItem(title);
-    if (options.includes(storedOption)) {
+    const storedOption = localStorage.getItem(this.title);
+    if (this.options.includes(storedOption)) {
       this.current = storedOption;
     } else {
       this.randomizeCurrent();
@@ -44,7 +44,7 @@ class Feature {
   randomizeCurrent(preventRepeat = false) {
     const currentOptions = preventRepeat ? this.options.filter(o => o !== this.current) : this.options;
     this.current = currentOptions[Math.floor(Math.random() * currentOptions.length)];
-    localStorage.setItem(this.titleSlug, this.currentSlug);
+    localStorage.setItem(this.title, this.current);
   }
 }
 

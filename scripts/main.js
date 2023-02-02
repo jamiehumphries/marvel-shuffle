@@ -4,8 +4,10 @@ class Feature {
     this.titleSlug = Feature.slug(title);
     this.hasSharedBack = hasSharedBack;
     this.options = options;
-    this.card = document.getElementById(this.titleSlug).querySelector(".card");
-    this.button = this.card.parentElement.querySelector("button");
+
+    const feature = document.getElementById(this.titleSlug);
+    this.card = feature.querySelector(".card");
+    this.button = feature.querySelector("button");
     this.front = this.card.querySelector("img.front");
     this.back = this.card.querySelector("img.back");
 
@@ -17,6 +19,7 @@ class Feature {
     }
 
     this.setImages();
+
     this.button.addEventListener("click", () => this.shuffle(true));
     this.card.addEventListener("transitionend", (e) => this.onTransitionEnd(e));
   }

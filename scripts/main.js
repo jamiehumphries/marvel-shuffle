@@ -6,8 +6,8 @@ class Feature {
     this.options = options;
 
     const feature = document.getElementById(this.titleSlug);
-    this.card = feature.querySelector(".card");
     this.button = feature.querySelector("button");
+    this.card = feature.querySelector(".card");
     this.front = this.card.querySelector("img.front");
     this.back = this.card.querySelector("img.back");
 

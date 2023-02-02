@@ -1,11 +1,11 @@
 class Feature {
-  constructor(title, hasGenericCardBack, options) {
+  constructor(title, hasSharedBack, options) {
     this.title = title;
-    this.titleSlug = slug(title);
-    this.hasGenericCardBack = hasGenericCardBack;
+    this.titleSlug = Feature.slug(title);
+    this.hasSharedBack = hasSharedBack;
     this.options = options;
     this.card = document.getElementById(this.titleSlug).querySelector(".card");
-    this.button = getButton(this.card);
+    this.button = this.card.parentElement.querySelector("button");
     this.front = this.card.querySelector("img.front");
     this.back = this.card.querySelector("img.back");
 
@@ -18,10 +18,11 @@ class Feature {
 
     this.setImages();
     this.button.addEventListener("click", () => this.shuffle(true));
+    this.card.addEventListener("transitionend", (e) => this.onTransitionEnd(e));
   }
 
   get currentSlug() {
-    return slug(this.current);
+    return Feature.slug(this.current);
   }
 
   shuffle(preventRepeat = false) {
@@ -33,79 +34,69 @@ class Feature {
   }
 
   setImages() {
-    const newFrontSrc = `images/${this.titleSlug}/${this.currentSlug}/front.png`;
-    this.front.src = newFrontSrc;
-    if (!this.hasGenericCardBack) {
-      const newBackSrc = `images/${this.titleSlug}/${this.currentSlug}/back.png`;
-      this.back.src = newBackSrc;
+    const folder = `images/${this.titleSlug}/${this.currentSlug}`;
+    this.front.src = `${folder}/front.png`;
+    if (!this.hasSharedBack) {
+      this.back.src = `${folder}/back.png`;
     }
   }
 
   randomizeCurrent(preventRepeat = false) {
-    const currentOptions = preventRepeat ? this.options.filter(o => o !== this.current) : this.options;
-    this.current = currentOptions[Math.floor(Math.random() * currentOptions.length)];
+    const currentOptions = preventRepeat
+      ? this.options.filter((o) => o !== this.current)
+      : this.options;
+    this.current = Feature.chooseRandom(currentOptions);
     localStorage.setItem(this.title, this.current);
+  }
+
+  onTransitionEnd(event) {
+    if (event.propertyName !== "transform") {
+      return;
+    }
+    this.card.classList.add("flipped");
+    this.card.classList.remove("flipping");
+    this.button.disabled = false;
+    toggleShuffleAllButton();
+    requestIdleCallback(() => this.card.classList.remove("flipped"));
+  }
+
+  static slug(text) {
+    return text.toLowerCase().replaceAll(/\W/g, "-");
+  }
+
+  static chooseRandom(array) {
+    return array[Math.floor(Math.random() * array.length)];
   }
 }
 
-const shuffleAllButton = document.getElementById("shuffle-all");
-
 const features = [
-  new Feature("Villain", true, [
-    "Klaw",
-    "Rhino",
-    "Ultron"
-  ]),
+  new Feature("Villain", true, ["Klaw", "Rhino", "Ultron"]),
   new Feature("Module", true, [
     "Bomb Scare",
     "Legions of Hydra",
     "The Doomsday Chair",
     "The Masters of Evil",
-    "Under Attack"
+    "Under Attack",
   ]),
   new Feature("Hero", false, [
     "Black Panther",
     "Captain Marvel",
     "Iron Man",
     "She-Hulk",
-    "Spider-Man"
+    "Spider-Man",
   ]),
   new Feature("Aspect", true, [
     "Aggression",
     "Justice",
     "Leadership",
-    "Protection"
-  ])
+    "Protection",
+  ]),
 ];
 
-function onTransitionEnd(event) {
-  if (event.propertyName !== "transform") {
-    return;
-  }
-  const card = event.currentTarget;
-  card.classList.add("flipped");
-  card.classList.remove("flipping");
-  setTimeout(() => {
-    card.classList.remove("flipped");
-    getButton(card).disabled = false;
-    toggleShuffleAllButton();
-  }, 0);
-}
-
-function getButton(card) {
-  return card.parentElement.querySelector("button");
-}
+const shuffleAllButton = document.getElementById("shuffle-all");
 
 function toggleShuffleAllButton() {
-  shuffleAllButton.disabled = features.some(f => f.button.disabled);
-}
-
-function slug(text) {
-  return text.toLowerCase().replaceAll(/\W/g, "-")
-}
-
-for (const card of features.map(f => f.card)) {
-  card.addEventListener("transitionend", onTransitionEnd);
+  shuffleAllButton.disabled = features.some((f) => f.button.disabled);
 }
 
 shuffleAllButton.addEventListener("click", () => {

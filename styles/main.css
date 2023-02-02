@@ -1,77 +1,90 @@
+:root {
+  --button-background-color: #ffeba9;
+  --button-background-color-focus: #ffde65;
+  --button-background-color-disabled: #dddddd;
+  --button-border-and-text-color: #000000;
+  --button-border-and-text-color-disabled: #444444;
+}
+
 @font-face {
-  font-family: 'Back Issues BB';
+  font-family: "Back Issues BB";
   src: url(fonts/BackIssuesBB_reg.otf);
 }
 
 .container {
-  padding: 20px;
-  max-width: 1600px;
   position: relative;
   margin: auto;
+  padding: 20px;
+  max-width: 1600px;
 }
 
 #logo {
-  height: 80px;
   position: absolute;
+  height: 80px;
 }
 
 button {
-  margin: 10px auto;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
+  margin: 10px auto;
   width: 150px;
   height: 50px;
-  cursor: pointer;
-  font-family: 'Back Issues BB', sans-serif;
-  font-size: 1rem;
-  background-color: #ffeba9;
-  color: #000;
-  border: 3px solid #000;
+
+  background-color: var(--button-background-color);
+  border: 3px solid var(--button-border-and-text-color);
   border-top-left-radius: 10px;
   border-bottom-right-radius: 10px;
   outline: none;
-}
 
-button:focus {
-  background-color: #ffde65;
-}
+  font-family: "Back Issues BB", sans-serif;
+  font-size: 1rem;
+  color: var(--button-border-and-text-color);
 
-button img {
-  margin-left: 0.5em;
-  margin-bottom: 0.1em;
-  height: 1.2em;
-}
-
-@media (hover: hover) {
-  button:hover {
-    background-color: #ffde65;
-  }
-}
-
-button:disabled {
-  color: #444;
-  border-color: #444;
-  background-color: #ddd;
+  cursor: pointer;
 }
 
 button#shuffle-all {
   width: 180px;
   height: 60px;
-  font-size: large;
+  font-size: 1.2rem;
+}
+
+button:focus {
+  background-color: var(--button-background-color-focus);
+}
+
+@media (hover: hover) {
+  button:hover {
+    background-color: var(--button-background-color-focus);
+  }
+}
+
+button:disabled {
+  background-color: var(--button-background-color-disabled);
+  border-color: var(--button-border-and-text-color-disabled);
+  color: var(--button-border-and-text-color-disabled);
+}
+
+button img {
+  margin-bottom: 0.1em;
+  margin-left: 0.5em;
+  height: 1.2em;
 }
 
 .features {
-  margin-top: 30px;
   display: grid;
   justify-content: center;
   grid-template-columns: auto auto auto auto;
   gap: 20px;
+
+  margin-top: 30px;
 }
 
 .card {
-  margin: auto;
   position: relative;
+  margin: auto;
   perspective: 1000px;
 }
 
@@ -131,8 +144,8 @@ button#shuffle-all {
   }
 
   .features {
-    margin-top: 0;
     grid-template-columns: auto;
+    margin-top: 0;
   }
 }
 
@@ -140,6 +153,7 @@ button#shuffle-all {
   position: relative;
   width: 100%;
   height: 100%;
+
   transition: transform 1s;
   transform-style: preserve-3d;
 }
@@ -168,7 +182,9 @@ button#shuffle-all {
   position: absolute;
   width: 100%;
   height: 100%;
+
   backface-visibility: hidden;
+
   opacity: 1;
   transition: opacity 1s;
 }

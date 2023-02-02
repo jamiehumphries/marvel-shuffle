@@ -57,7 +57,7 @@ class Feature {
     this.card.classList.remove("flipping");
     this.button.disabled = false;
     toggleShuffleAllButton();
-    requestIdleCallback(() => this.card.classList.remove("flipped"));
+    setTimeout(() => this.card.classList.remove("flipped"), 0);
   }
 
   static slug(text) {

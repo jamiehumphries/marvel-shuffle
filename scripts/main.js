@@ -11,6 +11,7 @@ class Slot {
 
     const container = document.getElementById(this.typeId);
     this.shuffleButton = container.querySelector("button");
+    this.nameElement = container.querySelector(".name");
     this.cardElement = container.querySelector(".card");
     this.frontImg = this.cardElement.querySelector("img.front");
     this.backImg = this.cardElement.querySelector("img.back");
@@ -37,6 +38,7 @@ class Slot {
       return;
     }
 
+    this.nameElement.innerText = newCard.name;
     this.frontImg.src = newCard.frontSrc;
     if (newCard.backSrc !== oldCard?.backSrc) {
       this.backImg.src = newCard.backSrc;
@@ -92,7 +94,7 @@ class Card {
   }
 }
 
-class Villain extends Card {
+class Scenario extends Card {
   constructor(name, hasBack = false) {
     super(name, hasBack);
   }
@@ -117,7 +119,12 @@ class Aspect extends Card {
 }
 
 const slots = [
-  new Slot([new Villain("Klaw"), new Villain("Rhino"), new Villain("Ultron")]),
+  new Slot([
+    new Scenario("Klaw"),
+    new Scenario("Risky Business", true),
+    new Scenario("Rhino"),
+    new Scenario("Ultron"),
+  ]),
   new Slot([
     new Module("Bomb Scare"),
     new Module("Legions of Hydra"),

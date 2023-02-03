@@ -1,109 +1,155 @@
-class Feature {
-  constructor(title, hasSharedBack, options) {
-    this.title = title;
-    this.titleSlug = Feature.slug(title);
-    this.hasSharedBack = hasSharedBack;
-    this.options = options;
+class Slot {
+  constructor(cards) {
+    this.cards = cards;
+    this.typeId = this.cards.reduce((typeId, card) => {
+      const cardTypeId = getId(card.constructor);
+      if (typeId == null || typeId == cardTypeId) {
+        return cardTypeId;
+      }
+      throw new Error("All cards in a slot must be the same type.");
+    }, null);
 
-    const feature = document.getElementById(this.titleSlug);
-    this.button = feature.querySelector("button");
-    this.card = feature.querySelector(".card");
-    this.front = this.card.querySelector("img.front");
-    this.back = this.card.querySelector("img.back");
+    const container = document.getElementById(this.typeId);
+    this.shuffleButton = container.querySelector("button");
+    this.cardElement = container.querySelector(".card");
+    this.frontImg = this.cardElement.querySelector("img.front");
+    this.backImg = this.cardElement.querySelector("img.back");
 
-    const storedOption = localStorage.getItem(this.title);
-    if (this.options.includes(storedOption)) {
-      this.current = storedOption;
-    } else {
-      this.randomizeCurrent();
-    }
+    const savedCardId = localStorage.getItem(this.typeId);
+    const savedCard = this.cards.find((card) => card.id === savedCardId);
+    this.card = savedCard || this.randomCard();
 
-    this.setImages();
-
-    this.button.addEventListener("click", () => this.shuffle(true));
-    this.card.addEventListener("transitionend", (e) => this.onTransitionEnd(e));
+    this.shuffleButton.addEventListener("click", () => this.shuffle(true));
+    this.cardElement.addEventListener("transitionend", (event) =>
+      this.onTransitionEnd(event)
+    );
   }
 
-  get currentSlug() {
-    return Feature.slug(this.current);
+  get card() {
+    return this._card;
+  }
+
+  set card(value) {
+    const oldCard = this._card;
+    const newCard = value;
+
+    if (newCard === oldCard) {
+      return;
+    }
+
+    this.frontImg.src = newCard.frontSrc;
+    if (newCard.backSrc !== oldCard?.backSrc) {
+      this.backImg.src = newCard.backSrc;
+    }
+
+    this._card = value;
+    localStorage.setItem(this.typeId, value.id);
+  }
+
+  get disabled() {
+    return this.shuffleButton.disabled;
+  }
+
+  set disabled(value) {
+    this.shuffleButton.disabled = value;
+    setShuffleAllButtonAvailability();
   }
 
   shuffle(preventRepeat = false) {
-    this.randomizeCurrent(preventRepeat);
-    this.button.disabled = true;
-    toggleShuffleAllButton();
-    this.card.classList.add("flipping");
-    setTimeout(() => this.setImages(), 300);
-  }
-
-  setImages() {
-    const folder = `images/${this.titleSlug}/${this.currentSlug}`;
-    this.front.src = `${folder}/front.png`;
-    if (!this.hasSharedBack) {
-      this.back.src = `${folder}/back.png`;
-    }
-  }
-
-  randomizeCurrent(preventRepeat = false) {
-    const currentOptions = preventRepeat
-      ? this.options.filter((o) => o !== this.current)
-      : this.options;
-    this.current = Feature.chooseRandom(currentOptions);
-    localStorage.setItem(this.title, this.current);
+    const newCard = this.randomCard(preventRepeat);
+    this.disabled = true;
+    this.cardElement.classList.add("flipping");
+    setTimeout(() => (this.card = newCard), 300);
   }
 
   onTransitionEnd(event) {
     if (event.propertyName !== "transform") {
       return;
     }
-    this.card.classList.add("flipped");
-    this.card.classList.remove("flipping");
-    this.button.disabled = false;
-    toggleShuffleAllButton();
-    setTimeout(() => this.card.classList.remove("flipped"), 0);
+    this.cardElement.classList.remove("flipping");
+    this.cardElement.classList.add("flipped");
+    this.disabled = false;
+    setTimeout(() => this.cardElement.classList.remove("flipped"), 0);
   }
 
-  static slug(text) {
-    return text.toLowerCase().replaceAll(/\W/g, "-");
-  }
-
-  static chooseRandom(array) {
-    return array[Math.floor(Math.random() * array.length)];
+  randomCard(preventRepeat = false) {
+    const availableCards = preventRepeat
+      ? this.cards.filter((card) => card !== this.card)
+      : this.cards;
+    return availableCards[Math.floor(Math.random() * availableCards.length)];
   }
 }
 
-const features = [
-  new Feature("Villain", true, ["Klaw", "Rhino", "Ultron"]),
-  new Feature("Module", true, [
-    "Bomb Scare",
-    "Legions of Hydra",
-    "The Doomsday Chair",
-    "The Masters of Evil",
-    "Under Attack",
+class Card {
+  constructor(name, hasBack) {
+    const typeId = getId(this.constructor);
+    this.name = name;
+    this.id = getId(this);
+    this.frontSrc = `images/${typeId}/${this.id}/front.png`;
+    this.backSrc = hasBack
+      ? `images/${typeId}/${this.id}/back.png`
+      : `images/${typeId}/back.png`;
+  }
+}
+
+class Villain extends Card {
+  constructor(name, hasBack = false) {
+    super(name, hasBack);
+  }
+}
+
+class Module extends Card {
+  constructor(name) {
+    super(name, false);
+  }
+}
+
+class Hero extends Card {
+  constructor(name) {
+    super(name, true);
+  }
+}
+
+class Aspect extends Card {
+  constructor(name) {
+    super(name, false);
+  }
+}
+
+const slots = [
+  new Slot([new Villain("Klaw"), new Villain("Rhino"), new Villain("Ultron")]),
+  new Slot([
+    new Module("Bomb Scare"),
+    new Module("Legions of Hydra"),
+    new Module("The Doomsday Chair"),
+    new Module("The Masters of Evil"),
+    new Module("Under Attack"),
   ]),
-  new Feature("Hero", false, [
-    "Black Panther",
-    "Captain Marvel",
-    "Iron Man",
-    "She-Hulk",
-    "Spider-Man",
+  new Slot([
+    new Hero("Black Panther"),
+    new Hero("Captain Marvel"),
+    new Hero("Iron Man"),
+    new Hero("She-Hulk"),
+    new Hero("Spider-Man"),
   ]),
-  new Feature("Aspect", true, [
-    "Aggression",
-    "Justice",
-    "Leadership",
-    "Protection",
+  new Slot([
+    new Aspect("Aggression"),
+    new Aspect("Justice"),
+    new Aspect("Leadership"),
+    new Aspect("Protection"),
   ]),
 ];
 
 const shuffleAllButton = document.getElementById("shuffle-all");
 
-function toggleShuffleAllButton() {
-  shuffleAllButton.disabled = features.some((f) => f.button.disabled);
+shuffleAllButton.addEventListener("click", () =>
+  slots.forEach((slot) => slot.shuffle())
+);
+
+function getId(obj) {
+  return obj.name.toLowerCase().replaceAll(/\W/g, "-");
 }
 
-shuffleAllButton.addEventListener("click", () => {
-  for (const feature of features) {
-    feature.shuffle();
-  }
-});
+function setShuffleAllButtonAvailability() {
+  shuffleAllButton.disabled = slots.some((slot) => slot.disabled);
+}

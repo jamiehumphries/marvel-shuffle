@@ -93,7 +93,7 @@ class Section {
 }
 
 class Card {
-  constructor(name, isLandscape, hasBack) {
+  constructor(name, { isLandscape = false, hasBack = false } = {}) {
     const typeId = getId(this.constructor);
     this.name = name;
     this.id = getId(this);
@@ -106,42 +106,38 @@ class Card {
 }
 
 class Scenario extends Card {
-  constructor(name, hasBack = false) {
-    super(name, false, hasBack);
+  constructor(name, { hasBack = false } = {}) {
+    super(name, { hasBack });
   }
 }
 
-class Module extends Card {
-  constructor(name, isLandscape = false) {
-    super(name, isLandscape, false);
-  }
-}
+class Module extends Card {}
 
 class Hero extends Card {
   constructor(name) {
-    super(name, false, true);
+    super(name, { hasBack: true });
   }
 }
 
 class Aspect extends Card {
   constructor(name) {
-    super(name, false, false);
+    super(name);
   }
 }
 
 const sections = [
   new Section([
     new Scenario("Klaw"),
-    new Scenario("Risky Business", true),
+    new Scenario("Risky Business", { hasBack: true }),
     new Scenario("Rhino"),
     new Scenario("Ultron"),
   ]),
   new Section([
-    new Module("Bomb Scare", true),
-    new Module("Legions of Hydra"),
-    new Module("The Doomsday Chair"),
-    new Module("The Masters of Evil", true),
-    new Module("Under Attack", true),
+    new Module("Bomb Scare", { isLandscape: true }),
+    new Module("Legions of Hydra", { isLandscape: true }),
+    new Module("The Doomsday Chair", { isLandscape: true }),
+    new Module("The Masters of Evil", { isLandscape: true }),
+    new Module("Under Attack", { isLandscape: true }),
   ]),
   new Section([
     new Hero("Black Panther"),

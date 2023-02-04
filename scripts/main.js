@@ -1,4 +1,4 @@
-class Slot {
+class Section {
   constructor(cards) {
     this.cards = cards;
     this.typeId = this.cards.reduce((typeId, card) => {
@@ -6,22 +6,25 @@ class Slot {
       if (typeId == null || typeId == cardTypeId) {
         return cardTypeId;
       }
-      throw new Error("All cards in a slot must be the same type.");
+      throw new Error("All cards for a section must be the same type.");
     }, null);
 
     const container = document.getElementById(this.typeId);
-    this.shuffleButton = container.querySelector("button");
-    this.nameElement = container.querySelector(".name");
-    this.cardElement = container.querySelector(".card");
-    this.frontImg = this.cardElement.querySelector("img.front");
-    this.backImg = this.cardElement.querySelector("img.back");
+    this.elements = {
+      button: container.querySelector("button"),
+      name: container.querySelector(".name"),
+      slot: container.querySelector(".slot"),
+      cardFront: container.querySelector("img.front"),
+      cardBack: container.querySelector("img.back"),
+    };
+  }
 
+  initialize() {
     const savedCardId = localStorage.getItem(this.typeId);
     const savedCard = this.cards.find((card) => card.id === savedCardId);
     this.card = savedCard || this.randomCard();
-
-    this.shuffleButton.addEventListener("click", () => this.shuffle(true));
-    this.cardElement.addEventListener("transitionend", (event) =>
+    this.elements.button.addEventListener("click", () => this.shuffle(true));
+    this.elements.slot.addEventListener("transitionend", (event) =>
       this.onTransitionEnd(event)
     );
   }
@@ -38,10 +41,16 @@ class Slot {
       return;
     }
 
-    this.nameElement.innerText = newCard.name;
-    this.frontImg.src = newCard.frontSrc;
+    if (newCard.isLandscape) {
+      this.elements.slot.classList.add("landscape");
+    } else {
+      this.elements.slot.classList.remove("landscape");
+    }
+
+    this.elements.name.innerText = newCard.name;
+    this.elements.cardFront.src = newCard.frontSrc;
     if (newCard.backSrc !== oldCard?.backSrc) {
-      this.backImg.src = newCard.backSrc;
+      this.elements.cardBack.src = newCard.backSrc;
     }
 
     this._card = value;
@@ -49,29 +58,30 @@ class Slot {
   }
 
   get disabled() {
-    return this.shuffleButton.disabled;
+    return this.elements.button.disabled;
   }
 
   set disabled(value) {
-    this.shuffleButton.disabled = value;
+    this.elements.button.disabled = value;
     setShuffleAllButtonAvailability();
   }
 
   shuffle(preventRepeat = false) {
     const newCard = this.randomCard(preventRepeat);
     this.disabled = true;
-    this.cardElement.classList.add("flipping");
+    this.elements.slot.classList.add("flipping");
     setTimeout(() => (this.card = newCard), 300);
   }
 
   onTransitionEnd(event) {
-    if (event.propertyName !== "transform") {
+    const { propertyName, target } = event;
+    if (propertyName !== "transform" || target !== this.elements.slot) {
       return;
     }
-    this.cardElement.classList.remove("flipping");
-    this.cardElement.classList.add("flipped");
+    this.elements.slot.classList.remove("flipping");
+    this.elements.slot.classList.add("flipped");
     this.disabled = false;
-    setTimeout(() => this.cardElement.classList.remove("flipped"), 0);
+    setTimeout(() => this.elements.slot.classList.remove("flipped"), 0);
   }
 
   randomCard(preventRepeat = false) {
@@ -83,10 +93,11 @@ class Slot {
 }
 
 class Card {
-  constructor(name, hasBack) {
+  constructor(name, isLandscape, hasBack) {
     const typeId = getId(this.constructor);
     this.name = name;
     this.id = getId(this);
+    this.isLandscape = isLandscape;
     this.frontSrc = `images/${typeId}/${this.id}/front.png`;
     this.backSrc = hasBack
       ? `images/${typeId}/${this.id}/back.png`
@@ -96,50 +107,50 @@ class Card {
 
 class Scenario extends Card {
   constructor(name, hasBack = false) {
-    super(name, hasBack);
+    super(name, false, hasBack);
   }
 }
 
 class Module extends Card {
-  constructor(name) {
-    super(name, false);
+  constructor(name, isLandscape = false) {
+    super(name, isLandscape, false);
   }
 }
 
 class Hero extends Card {
   constructor(name) {
-    super(name, true);
+    super(name, false, true);
   }
 }
 
 class Aspect extends Card {
   constructor(name) {
-    super(name, false);
+    super(name, false, false);
   }
 }
 
-const slots = [
-  new Slot([
+const sections = [
+  new Section([
     new Scenario("Klaw"),
     new Scenario("Risky Business", true),
     new Scenario("Rhino"),
     new Scenario("Ultron"),
   ]),
-  new Slot([
-    new Module("Bomb Scare"),
+  new Section([
+    new Module("Bomb Scare", true),
     new Module("Legions of Hydra"),
     new Module("The Doomsday Chair"),
-    new Module("The Masters of Evil"),
-    new Module("Under Attack"),
+    new Module("The Masters of Evil", true),
+    new Module("Under Attack", true),
   ]),
-  new Slot([
+  new Section([
     new Hero("Black Panther"),
     new Hero("Captain Marvel"),
     new Hero("Iron Man"),
     new Hero("She-Hulk"),
     new Hero("Spider-Man"),
   ]),
-  new Slot([
+  new Section([
     new Aspect("Aggression"),
     new Aspect("Justice"),
     new Aspect("Leadership"),
@@ -147,16 +158,23 @@ const slots = [
   ]),
 ];
 
+const container = document.querySelector(".container");
 const shuffleAllButton = document.getElementById("shuffle-all");
-
-shuffleAllButton.addEventListener("click", () =>
-  slots.forEach((slot) => slot.shuffle())
-);
 
 function getId(obj) {
   return obj.name.toLowerCase().replaceAll(/\W/g, "-");
 }
 
 function setShuffleAllButtonAvailability() {
-  shuffleAllButton.disabled = slots.some((slot) => slot.disabled);
+  shuffleAllButton.disabled = sections.some((section) => section.disabled);
 }
+
+// Initialisation steps.
+
+shuffleAllButton.addEventListener("click", () =>
+  sections.forEach((section) => section.shuffle())
+);
+
+sections.forEach((section) => section.initialize());
+
+setTimeout(() => container.classList.remove("init"), 100);

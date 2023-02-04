@@ -134,6 +134,7 @@ const sections = [
   ]),
   new Section([
     new Module("Bomb Scare", { isLandscape: true }),
+    new Module("Goblin Gimmicks"),
     new Module("Legions of Hydra", { isLandscape: true }),
     new Module("The Doomsday Chair", { isLandscape: true }),
     new Module("The Masters of Evil", { isLandscape: true }),

@@ -4,9 +4,13 @@
   --button-background-color-disabled: #dddddd;
   --button-border-and-text-color: #000000;
   --button-border-and-text-color-disabled: #444444;
-  --slot-width: 300px;
-  --slot-height: 419px;
-  --name-height: 40px;
+
+  --card-header-height: 40px;
+  --base-card-width: 300px;
+  --base-card-height: 419px;
+
+  --button-size-modifier: 1;
+  --layout-size-modifier: 1;
 }
 
 @font-face {
@@ -20,12 +24,17 @@ body {
 
 .container {
   position: relative;
+
   margin: auto;
   padding: 20px;
   max-width: 1600px;
 }
 
-#logo {
+.container.init {
+  visibility: hidden;
+}
+
+img#logo {
   position: absolute;
   height: 80px;
 }
@@ -36,32 +45,30 @@ button {
   justify-content: center;
 
   margin: 0 auto;
-  width: 150px;
-  height: 50px;
+  width: calc(150px * var(--button-size-modifier));
+  height: calc(50px * var(--button-size-modifier));
 
   background-color: var(--button-background-color);
   border: 3px solid var(--button-border-and-text-color);
-  border-top-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-radius: calc(10px * var(--button-size-modifier)) 0;
   outline: none;
 
   font-family: inherit;
-  font-size: 1rem;
+  font-size: calc(1rem * var(--button-size-modifier));
   color: var(--button-border-and-text-color);
 
   cursor: pointer;
 }
 
+button img {
+  margin-bottom: 0.1em;
+  margin-left: 0.5em;
+  height: 1.2em;
+}
+
 button#shuffle-all {
-  margin: 10px auto 20px auto;
-
-  width: 180px;
-  height: 60px;
-
-  border-top-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-
-  font-size: 1.2rem;
+  --button-size-modifier: 1.2;
+  margin: 10px auto 20px;
 }
 
 button:focus {
@@ -80,88 +87,18 @@ button:disabled {
   color: var(--button-border-and-text-color-disabled);
 }
 
-button img {
-  margin-bottom: 0.1em;
-  margin-left: 0.5em;
-  height: 1.2em;
-}
-
 .sections {
   display: grid;
   justify-content: center;
   grid-template-columns: auto auto auto auto;
-  gap: 20px;
+  gap: calc(20px * var(--layout-size-modifier));
 
   margin-top: 30px;
 }
 
-.container.init {
-  visibility: hidden;
-}
-
 .section {
-  margin: 10px 0 20px 0;
-}
-
-.slot {
-  position: relative;
-  margin: auto;
-  perspective: 1000px;
-}
-
-.slot {
-  width: var(--slot-width);
-  height: calc(var(--slot-height) + var(--name-height));
-}
-
-.container:not(.init) .slot {
-  transition: transform 1s, width 0.7s, height 0.7s;
-}
-
-.slot .card {
-  width: var(--slot-width);
-  height: var(--slot-height);
-  transform-origin: calc(var(--slot-height) / 2) calc(var(--slot-height) / 2);
-  transform-style: preserve-3d;
-}
-
-.container:not(.init) .slot .card {
-  transition: transform 0.7s;
-}
-
-.slot.landscape {
-  width: var(--slot-height);
-  height: var(--slot-width) + var(--name-height);
-}
-
-.slot.landscape .card {
-  transform: rotate(90deg);
-}
-
-.slot {
-  position: relative;
-
-  transition: transform 1s;
-  transform-style: preserve-3d;
-}
-
-.slot .back {
-  transform: rotateY(-180deg);
-}
-
-.slot img {
-  position: absolute;
-  width: 100%;
-
-  backface-visibility: hidden;
-}
-
-.slot.flipping {
-  transform: rotateY(720deg);
-}
-
-.container:not(.init) .slot.flipped {
-  transition: transform 0s, width 0.7s, height 0.7s;
+  margin: 10px 0;
+  perspective: calc(800px * var(--layout-size-modifier));
 }
 
 .header {
@@ -169,34 +106,81 @@ button img {
   flex-direction: column;
   justify-content: center;
 
-  height: var(--name-height);
+  height: var(--card-header-height);
 }
 
 .name {
   padding: 0 10px;
+
   font-size: 1.2rem;
   text-align: center;
 }
 
+.slot {
+  --card-width: calc(var(--base-card-width) * var(--layout-size-modifier));
+  --card-height: calc(var(--base-card-height) * var(--layout-size-modifier));
+
+  position: relative;
+
+  margin: auto;
+  width: var(--card-width);
+  height: calc(var(--card-header-height) + var(--card-height));
+
+  transform-style: preserve-3d;
+}
+
+.slot.landscape {
+  width: var(--card-height);
+  height: calc(var(--card-header-height) + var(--card-width));
+}
+
+.slot.flipping {
+  transform: rotateY(720deg);
+}
+
+.container:not(.init) .slot {
+  --flip-duration: 1000ms;
+  --card-change-delay: 300ms;
+  --card-change-duration: calc(var(--flip-duration) - var(--card-change-delay));
+  transition: transform var(--flip-duration), width var(--card-change-duration),
+    height var(--card-change-duration);
+}
+
+.container:not(.init) .slot.flipped {
+  transition: none;
+}
+
+.card {
+  width: var(--card-width);
+  height: var(--card-height);
+
+  transform-style: preserve-3d;
+  transform-origin: calc(var(--card-height) / 2) calc(var(--card-height) / 2);
+}
+
+.slot.landscape .card {
+  transform: rotate(90deg);
+}
+
+.container:not(.init) .card {
+  transition: transform var(--card-change-duration);
+}
+
+img.front,
+img.back {
+  position: absolute;
+  width: 100%;
+
+  backface-visibility: hidden;
+}
+
+img.back {
+  transform: rotateY(-180deg);
+}
+
 @media (max-width: 1400px) {
-  .sections {
-    gap: calc(0.85 * 20px);
-  }
-
-  .slot {
-    width: calc(0.85 * var(--slot-width));
-    height: calc(0.85 * var(--slot-height) + var(--name-height));
-  }
-
-  .slot .card {
-    width: calc(0.85 * var(--slot-width));
-    height: calc(0.85 * var(--slot-height));
-    transform-origin: calc(0.85 * var(--slot-height) / 2) calc(0.85 * var(--slot-height) / 2);
-  }
-
-  .slot.landscape {
-    width: calc(0.85 * var(--slot-height));
-    height: calc(0.85 * var(--slot-width) + var(--name-height));
+  :root {
+    --layout-size-modifier: 0.85;
   }
 
   .name {
@@ -205,24 +189,8 @@ button img {
 }
 
 @media (max-width: 1200px) {
-  .sections {
-    gap: calc(0.7 * 20px);
-  }
-
-  .slot {
-    width: calc(0.7 * var(--slot-width));
-    height: calc(0.7 * (var(--slot-height) + var(--name-height)));
-  }
-
-  .slot .card {
-    width: calc(0.7 * var(--slot-width));
-    height: calc(0.7 * var(--slot-height));
-    transform-origin: calc(0.7 * var(--slot-height) / 2) calc(0.7 * var(--slot-height) / 2);
-  }
-
-  .slot.landscape {
-    width: calc(0.7 * var(--slot-height));
-    height: calc(0.7 * (var(--slot-width) + var(--name-height)));
+  :root {
+    --layout-size-modifier: 0.7;
   }
 
   .name {
@@ -240,6 +208,7 @@ button img {
   #logo {
     position: relative;
     display: block;
+
     margin: 0 auto 20px auto;
   }
 

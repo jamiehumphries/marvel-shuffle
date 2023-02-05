@@ -205,7 +205,7 @@ img.back {
 }
 
 @media (max-width: 600px) {
-  #logo {
+  img#logo {
     position: relative;
     display: block;
 

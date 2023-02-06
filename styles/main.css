@@ -9,6 +9,10 @@
   --base-card-width: 300px;
   --base-card-height: 419px;
 
+  --flip-duration: 1000ms;
+  /* Value must match CARD_CHANGE_DELAY_MS in scripts/main.js */
+  --card-change-delay: 300ms;
+
   --button-scale-factor: 1;
   --layout-scale-factor: 1;
 }
@@ -139,8 +143,6 @@ button:disabled {
 }
 
 .container:not(.init) .slot {
-  --flip-duration: 1000ms;
-  --card-change-delay: 300ms;
   --card-change-duration: calc(var(--flip-duration) - var(--card-change-delay));
   transition: transform var(--flip-duration), width var(--card-change-duration),
     height var(--card-change-duration);

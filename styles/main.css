@@ -9,8 +9,8 @@
   --base-card-width: 300px;
   --base-card-height: 419px;
 
-  --button-size-modifier: 1;
-  --layout-size-modifier: 1;
+  --button-scale-factor: 1;
+  --layout-scale-factor: 1;
 }
 
 @font-face {
@@ -45,16 +45,16 @@ button {
   justify-content: center;
 
   margin: 0 auto;
-  width: calc(150px * var(--button-size-modifier));
-  height: calc(50px * var(--button-size-modifier));
+  width: calc(150px * var(--button-scale-factor));
+  height: calc(50px * var(--button-scale-factor));
 
   background-color: var(--button-background-color);
   border: 3px solid var(--button-border-and-text-color);
-  border-radius: calc(10px * var(--button-size-modifier)) 0;
+  border-radius: calc(10px * var(--button-scale-factor)) 0;
   outline: none;
 
   font-family: inherit;
-  font-size: calc(1rem * var(--button-size-modifier));
+  font-size: calc(1rem * var(--button-scale-factor));
   color: var(--button-border-and-text-color);
 
   cursor: pointer;
@@ -67,7 +67,7 @@ button img {
 }
 
 button#shuffle-all {
-  --button-size-modifier: 1.2;
+  --button-scale-factor: 1.2;
   margin: 10px auto 20px;
 }
 
@@ -91,14 +91,14 @@ button:disabled {
   display: grid;
   justify-content: center;
   grid-template-columns: auto auto auto auto;
-  gap: calc(20px * var(--layout-size-modifier));
+  gap: calc(20px * var(--layout-scale-factor));
 
   margin-top: 30px;
 }
 
 .section {
   margin: 10px 0;
-  perspective: calc(800px * var(--layout-size-modifier));
+  perspective: calc(800px * var(--layout-scale-factor));
 }
 
 .header {
@@ -117,8 +117,8 @@ button:disabled {
 }
 
 .slot {
-  --card-width: calc(var(--base-card-width) * var(--layout-size-modifier));
-  --card-height: calc(var(--base-card-height) * var(--layout-size-modifier));
+  --card-width: calc(var(--base-card-width) * var(--layout-scale-factor));
+  --card-height: calc(var(--base-card-height) * var(--layout-scale-factor));
 
   position: relative;
 
@@ -180,7 +180,7 @@ img.back {
 
 @media (max-width: 1400px) {
   :root {
-    --layout-size-modifier: 0.85;
+    --layout-scale-factor: 0.85;
   }
 
   .name {
@@ -190,7 +190,7 @@ img.back {
 
 @media (max-width: 1200px) {
   :root {
-    --layout-size-modifier: 0.7;
+    --layout-scale-factor: 0.7;
   }
 
   .name {

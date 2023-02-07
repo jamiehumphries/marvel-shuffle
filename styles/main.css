@@ -32,6 +32,7 @@
 
 body {
   font-family: "Back Issues BB", sans-serif;
+  overflow-y: scroll;
 }
 
 .container {
@@ -133,8 +134,11 @@ button:disabled {
   cursor: pointer;
 }
 
-.option.set {
+.option.all {
   font-weight: bold;
+}
+
+.option.set {
   font-style: italic;
 }
 

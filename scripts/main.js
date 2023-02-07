@@ -6,18 +6,18 @@ class Section {
     this.cardsOrSets = cardsOrSets;
 
     this.cards = cardsOrSets.reduce((cards, cardOrSet) => {
-      return cards.concat(cardOrSet.cards || [cardOrSet]);
+      return cards.concat(cardOrSet.children || [cardOrSet]);
     }, []);
 
-    this.typeId = this.cards.reduce((typeId, card) => {
-      const cardTypeId = getId(card.constructor);
-      if (typeId == null || typeId == cardTypeId) {
-        return cardTypeId;
+    this.type = this.cards.reduce((type, card) => {
+      const cardType = card.constructor;
+      if (type == null || type == cardType) {
+        return cardType;
       }
       throw new Error("All cards for a section must be the same type.");
     }, null);
 
-    const container = document.getElementById(this.typeId);
+    const container = document.getElementById(this.type.id);
     this.elements = {
       button: container.querySelector("button"),
       options: container.querySelector(".options"),
@@ -29,8 +29,10 @@ class Section {
   }
 
   initialize() {
+    const all = new All(this);
+    all.appendTo(this.elements.options);
     this.cardsOrSets.forEach((cardOrSet) =>
-      cardOrSet.appendOptionsTo(this.elements.options)
+      cardOrSet.appendTo(this.elements.options)
     );
     this.elements.options.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -39,7 +41,7 @@ class Section {
       }
     });
 
-    const savedCardId = localStorage.getItem(this.typeId);
+    const savedCardId = localStorage.getItem(this.type.id);
     const savedCard = this.cards.find((card) => card.id === savedCardId);
     this.card = savedCard || this.randomCard();
 
@@ -74,7 +76,7 @@ class Section {
     }
 
     this._card = value;
-    localStorage.setItem(this.typeId, value.id);
+    localStorage.setItem(this.type.id, value.id);
   }
 
   get disabled() {
@@ -131,10 +133,19 @@ class Option {
   }
 
   set checked(value) {
-    this.setChecked(value, true);
+    this.setChecked(value, true, true);
   }
 
-  appendOptionsTo(element, ...classes) {
+  get children() {
+    return this._children;
+  }
+
+  set children(value) {
+    this._children = value;
+    value.forEach((child) => (child.parent = this));
+  }
+
+  appendTo(element, ...classes) {
     const label = document.createElement("label");
     label.htmlFor = this.id;
     label.classList.add("option");
@@ -158,56 +169,69 @@ class Option {
     });
   }
 
-  setChecked(value, _cascade) {
+  setChecked(value, cascadeUp, cascadeDown) {
     this._checked = value;
     localStorage.setItem(this.id, value);
     if (this.checkbox) {
       this.checkbox.checked = value;
     }
+    if (this.children && cascadeDown) {
+      this.children.forEach((child) => child.setChecked(value, false, true));
+    }
+    if (this.parent && cascadeUp) {
+      const siblings = this.parent.children;
+      const allSiblingsChecked = siblings.every((child) => child.checked);
+      this.parent.setChecked(allSiblingsChecked, true, false);
+    }
   }
 }
 
-class Set extends Option {
+class All extends Option {
+  constructor(section) {
+    super();
+    this.name = `All ${section.type.namePlural}`;
+    this.id = getId(this);
+    this.children = section.cardsOrSets;
+  }
+
+  appendTo(element) {
+    super.appendTo(element, "all");
+  }
+}
+
+class CardSet extends Option {
   constructor(name, cards) {
     super();
     this.name = name;
-    this.id = `${getId(this)}-${getId(cards[0].constructor)}`;
-    this.cards = cards;
-    this.cards.forEach((card) => (card.set = this));
+    this.id = `${getId(this)}-${cards[0].constructor.id}`;
+    this.children = cards;
   }
 
-  appendOptionsTo(element) {
-    super.appendOptionsTo(element, "set");
-    this.cards.forEach((card) => card.appendOptionsTo(element, "set-member"));
-  }
-
-  setChecked(value, cascade) {
-    super.setChecked(value, cascade);
-    if (cascade) {
-      this.cards.forEach((card) => card.setChecked(value, false));
-    }
+  appendTo(element) {
+    super.appendTo(element, "set");
+    this.children.forEach((card) => card.appendTo(element, "set-member"));
   }
 }
 
 class Card extends Option {
+  static get id() {
+    return (this._id ||= getId(this));
+  }
+
+  static get namePlural() {
+    return (this._name ||= `${this.name}s`);
+  }
+
   constructor(name, { isLandscape = false, hasBack = false } = {}) {
     super();
-    const typeId = getId(this.constructor);
+    const type = this.constructor;
     this.name = name;
     this.id = getId(this);
     this.isLandscape = isLandscape;
-    this.frontSrc = `images/${typeId}/${this.id}/front.png`;
+    this.frontSrc = `images/${type.id}/${this.id}/front.png`;
     this.backSrc = hasBack
-      ? `images/${typeId}/${this.id}/back.png`
-      : `images/${typeId}/back.png`;
-  }
-
-  setChecked(value, cascade) {
-    super.setChecked(value, cascade);
-    if (cascade && this.set) {
-      const allCardsInSetChecked = this.set.cards.every((card) => card.checked);
-      this.set.setChecked(allCardsInSetChecked, false);
-    }
+      ? `images/${type.id}/${this.id}/back.png`
+      : `images/${type.id}/back.png`;
   }
 }
 
@@ -220,6 +244,10 @@ class Scenario extends Card {
 class Module extends Card {}
 
 class Hero extends Card {
+  static get namePlural() {
+    return "Heroes";
+  }
+
   constructor(name) {
     super(name, { hasBack: true });
   }
@@ -233,7 +261,7 @@ class Aspect extends Card {
 
 const sections = [
   new Section([
-    new Set("Core Set", [
+    new CardSet("Core Set", [
       new Scenario("Rhino"),
       new Scenario("Klaw"),
       new Scenario("Ultron"),
@@ -241,7 +269,7 @@ const sections = [
     new Scenario("Risky Business", { hasBack: true }),
   ]),
   new Section([
-    new Set("Core Set", [
+    new CardSet("Core Set", [
       new Module("Bomb Scare", { isLandscape: true }),
       new Module("Legions of Hydra", { isLandscape: true }),
       new Module("Under Attack", { isLandscape: true }),
@@ -251,16 +279,17 @@ const sections = [
     new Module("Goblin Gimmicks"),
   ]),
   new Section([
-    new Set("Core Set", [
+    new CardSet("Core Set", [
       new Hero("Black Panther"),
       new Hero("Captain Marvel"),
       new Hero("Iron Man"),
       new Hero("She-Hulk"),
       new Hero("Spider-Man"),
     ]),
+    new Hero("Captain America"),
   ]),
   new Section([
-    new Set("Core Set", [
+    new CardSet("Core Set", [
       new Aspect("Aggression"),
       new Aspect("Justice"),
       new Aspect("Leadership"),

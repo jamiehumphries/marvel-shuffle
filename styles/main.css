@@ -52,6 +52,11 @@ img#logo {
   height: 80px;
 }
 
+h1,
+h2 {
+  margin: 0;
+}
+
 button {
   display: flex;
   align-items: center;
@@ -122,6 +127,15 @@ button:disabled {
 .options {
   margin: 20px auto;
   width: calc(var(--card-width) - 20px);
+}
+
+.options h3 {
+  margin: 20px auto;
+  width: 10ch;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
 }
 
 .option {
@@ -211,10 +225,12 @@ input:active ~ .checkmark {
   height: var(--card-header-height);
 }
 
-.name {
+h3.name {
+  margin: 0;
   padding: 0 10px;
 
   font-size: 1.2rem;
+  font-weight: normal;
   text-align: center;
 }
 

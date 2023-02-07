@@ -4,8 +4,11 @@
   --button-background-color-disabled: #dddddd;
   --button-border-and-text-color: #000000;
   --button-border-and-text-color-disabled: #444444;
-  --checkbox-background-color-focus: #eeeeee;
+  --checkbox-background-color-hover: #eeeeee;
   --checkbox-border-and-check-color: #000000;
+
+  --outline: 2px solid #6586ff;
+  --outline-offset: 1px;
 
   --button-scale-factor: 1;
   --layout-scale-factor: 1;
@@ -80,7 +83,12 @@ button#shuffle-all {
   margin: 10px auto 20px;
 }
 
-button:focus {
+.keyboard-nav button:focus {
+  outline: var(--outline);
+  outline-offset: var(--outline-offset);
+}
+
+button:active {
   background-color: var(--button-background-color-focus);
 }
 
@@ -176,9 +184,18 @@ button:disabled {
   display: block;
 }
 
+.keyboard-nav input:focus ~ .checkmark {
+  outline: var(--outline);
+  outline-offset: var(--outline-offset);
+}
+
+input:active ~ .checkmark {
+  background-color: var(--checkbox-background-color-hover);
+}
+
 @media (hover: hover) {
-  label:hover .checkmark {
-    background-color: var(--checkbox-background-color-focus);
+  label:hover input ~ .checkmark {
+    background-color: var(--checkbox-background-color-hover);
   }
 }
 

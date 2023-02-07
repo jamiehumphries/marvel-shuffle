@@ -32,6 +32,12 @@ class Section {
     this.cardsOrSets.forEach((cardOrSet) =>
       cardOrSet.appendOptionsTo(this.elements.options)
     );
+    this.elements.options.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!this.elements.button.disabled) {
+        this.shuffle(true);
+      }
+    });
 
     const savedCardId = localStorage.getItem(this.typeId);
     const savedCard = this.cards.find((card) => card.id === savedCardId);
@@ -95,6 +101,7 @@ class Section {
     this.elements.slot.classList.remove("flipping");
     this.elements.slot.classList.add("flipped");
     this.disabled = false;
+    maybeReturnFocusAfterShuffle();
     setTimeout(() => this.elements.slot.classList.remove("flipped"), 0);
   }
 
@@ -264,6 +271,7 @@ const sections = [
 
 const container = document.querySelector(".container");
 const shuffleAllButton = document.getElementById("shuffle-all");
+let lastClickedButton = null;
 
 function getId(obj) {
   return obj.name.toLowerCase().replaceAll(/\W/g, "-");
@@ -273,7 +281,27 @@ function setShuffleAllButtonAvailability() {
   shuffleAllButton.disabled = sections.some((section) => section.disabled);
 }
 
+function maybeReturnFocusAfterShuffle() {
+  if (lastClickedButton && !lastClickedButton.disabled) {
+    lastClickedButton.focus();
+  }
+}
+
 // Initialisation steps.
+
+window.addEventListener("keydown", () => {
+  container.classList.add("keyboard-nav");
+  lastClickedButton = null;
+});
+
+window.addEventListener("mousedown", () => {
+  container.classList.remove("keyboard-nav");
+  lastClickedButton = null;
+});
+
+window.addEventListener("click", (event) => {
+  lastClickedButton = event.target.tagName === "BUTTON" ? event.target : null;
+});
 
 sections.forEach((section) => section.initialize());
 

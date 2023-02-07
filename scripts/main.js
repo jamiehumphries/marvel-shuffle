@@ -271,9 +271,9 @@ const sections = [
   new Section([
     new CardSet("Core Set", [
       new Module("Bomb Scare", { isLandscape: true }),
-      new Module("Legions of Hydra", { isLandscape: true }),
-      new Module("Under Attack", { isLandscape: true }),
       new Module("The Masters of Evil", { isLandscape: true }),
+      new Module("Under Attack", { isLandscape: true }),
+      new Module("Legions of Hydra", { isLandscape: true }),
       new Module("The Doomsday Chair", { isLandscape: true }),
     ]),
     new Module("Goblin Gimmicks"),

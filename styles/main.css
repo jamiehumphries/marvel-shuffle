@@ -4,17 +4,22 @@
   --button-background-color-disabled: #dddddd;
   --button-border-and-text-color: #000000;
   --button-border-and-text-color-disabled: #444444;
+  --checkbox-background-color-focus: #eeeeee;
+  --checkbox-border-and-check-color: #000000;
+
+  --button-scale-factor: 1;
+  --layout-scale-factor: 1;
 
   --card-header-height: 40px;
   --base-card-width: 300px;
   --base-card-height: 419px;
+  --card-width: calc(var(--base-card-width) * var(--layout-scale-factor));
+  --card-height: calc(var(--base-card-height) * var(--layout-scale-factor));
 
   --flip-duration: 1000ms;
   /* Value must match CARD_CHANGE_DELAY_MS in scripts/main.js */
   --card-change-delay: 300ms;
-
-  --button-scale-factor: 1;
-  --layout-scale-factor: 1;
+  --card-change-duration: calc(var(--flip-duration) - var(--card-change-delay));
 }
 
 @font-face {
@@ -105,6 +110,78 @@ button:disabled {
   perspective: calc(800px * var(--layout-scale-factor));
 }
 
+.options {
+  margin: 20px auto;
+  width: calc(var(--card-width) - 20px);
+}
+
+.option {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  margin: 0.5rem 0;
+
+  cursor: pointer;
+}
+
+.option.set {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.option.set-member {
+  margin-left: 30px;
+}
+
+.option input {
+  position: absolute;
+
+  height: 0;
+  width: 0;
+
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: relative;
+  flex: none;
+  margin-right: 8px;
+
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+
+  border: 2px solid var(--checkbox-border-and-check-color);
+}
+
+.checkmark:after {
+  content: "";
+
+  position: absolute;
+  display: none;
+  left: 5px;
+
+  width: 5px;
+  height: 10px;
+
+  border: solid var(--checkbox-border-and-check-color);
+  border-width: 0 2px 2px 0;
+
+  transform: rotate(40deg);
+}
+
+:checked ~ .checkmark:after {
+  display: block;
+}
+
+@media (hover: hover) {
+  label:hover .checkmark {
+    background-color: var(--checkbox-background-color-focus);
+  }
+}
+
 .header {
   display: flex;
   flex-direction: column;
@@ -121,9 +198,6 @@ button:disabled {
 }
 
 .slot {
-  --card-width: calc(var(--base-card-width) * var(--layout-scale-factor));
-  --card-height: calc(var(--base-card-height) * var(--layout-scale-factor));
-
   position: relative;
 
   margin: auto;
@@ -143,7 +217,6 @@ button:disabled {
 }
 
 .container:not(.init) .slot {
-  --card-change-duration: calc(var(--flip-duration) - var(--card-change-delay));
   transition: transform var(--flip-duration), width var(--card-change-duration),
     height var(--card-change-duration);
 }
@@ -172,7 +245,6 @@ img.front,
 img.back {
   position: absolute;
   width: 100%;
-
   backface-visibility: hidden;
 }
 

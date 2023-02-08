@@ -46,6 +46,10 @@ body {
   overflow-y: scroll;
 }
 
+button {
+  font-family: inherit;
+}
+
 button:not(:disabled) {
   cursor: pointer;
 }
@@ -91,7 +95,6 @@ button.shuffle {
   border-radius: calc(10px * var(--button-scale-factor)) 0;
   outline: none;
 
-  font-family: inherit;
   font-size: calc(1rem * var(--button-scale-factor));
   color: var(--button-border-and-text-color);
 }
@@ -148,7 +151,6 @@ button#settings {
   width: 70px;
   padding: 10px 0;
 
-  font-family: inherit;
   font-size: 0.7rem;
   color: var(--icon-button-text-color);
 }

@@ -173,6 +173,10 @@ button#settings:disabled {
 
 .container.show-settings button#settings {
   position: fixed;
+  margin-right: max(
+    0px,
+    calc((100% - var(--container-max-width)) / 2 - var(--container-padding))
+  );
 }
 
 .container:not(.show-settings) button#settings .hide {
@@ -369,15 +373,6 @@ img.back {
 
 img.back {
   transform: rotateY(-180deg);
-}
-
-/* This breakpoint value should be the same as --container-max-width. */
-@media (min-width: 1600px) {
-  .container.show-settings button#settings {
-    margin-right: calc(
-      (100% - var(--container-max-width)) / 2 - var(--container-padding)
-    );
-  }
 }
 
 @media (max-width: 1400px) {

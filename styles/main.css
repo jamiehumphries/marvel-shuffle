@@ -1,9 +1,16 @@
 :root {
+  --container-padding: 20px;
+  --container-max-width: 1600px;
+
   --button-background-color: #ffeba9;
-  --button-background-color-focus: #ffde65;
+  --button-background-color-hover: #ffde65;
   --button-background-color-disabled: #dddddd;
+  --button-background-color-settings: #c7e6f1;
   --button-border-and-text-color: #000000;
   --button-border-and-text-color-disabled: #444444;
+  --icon-button-text-color: #000000;
+  --icon-button-background-color-hover: #e0e0e0;
+  --icon-button-image-brightness-hover: 90%;
   --checkbox-background-color-hover: #eeeeee;
   --checkbox-border-and-check-color: #000000;
 
@@ -31,16 +38,28 @@
 }
 
 body {
+  margin: 0;
+  padding: 0;
+
   font-family: "Back Issues BB", sans-serif;
   overflow-y: scroll;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+.keyboard-nav button:focus {
+  outline: var(--outline);
+  outline-offset: var(--outline-offset);
 }
 
 .container {
   position: relative;
 
   margin: auto;
-  padding: 20px;
-  max-width: 1600px;
+  padding: var(--container-padding);
+  max-width: var(--container-max-width);
 }
 
 .container.init {
@@ -57,7 +76,7 @@ h2 {
   margin: 0;
 }
 
-button {
+button.shuffle {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,47 +93,101 @@ button {
   font-family: inherit;
   font-size: calc(1rem * var(--button-scale-factor));
   color: var(--button-border-and-text-color);
-
-  cursor: pointer;
 }
 
-button img {
+button.shuffle img {
   margin-bottom: 0.1em;
   margin-left: 0.5em;
   height: 1.2em;
 }
 
-button#shuffle-all {
+button.shuffle#shuffle-all {
   --button-scale-factor: 1.2;
   margin: 10px auto 20px;
 }
 
-.keyboard-nav button:focus {
-  outline: var(--outline);
-  outline-offset: var(--outline-offset);
-}
-
-button:active {
-  background-color: var(--button-background-color-focus);
+button.shuffle:active {
+  background-color: var(--button-background-color-hover);
 }
 
 @media (hover: hover) {
-  button:hover {
-    background-color: var(--button-background-color-focus);
+  button.shuffle:hover {
+    background-color: var(--button-background-color-hover);
   }
 }
 
-button:disabled {
+button.shuffle:disabled {
   background-color: var(--button-background-color-disabled);
   border-color: var(--button-border-and-text-color-disabled);
   color: var(--button-border-and-text-color-disabled);
+}
+
+.container.show-settings button.shuffle:disabled {
+  background-color: var(--button-background-color-settings);
+  border-color: var(--button-border-and-text-color);
+  color: var(--button-border-and-text-color);
+}
+
+button#settings {
+  position: absolute;
+  top: calc(var(--container-padding) / 2);
+  right: var(--container-padding);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: none;
+  border: none;
+  border-radius: 10px;
+  width: 70px;
+  padding: 10px 0;
+
+  font-family: inherit;
+  font-size: 0.7rem;
+  color: var(--icon-button-text-color);
+}
+
+button#settings img {
+  width: 50px;
+  height: 50px;
+}
+
+button#settings:active {
+  background-color: var(--icon-button-background-color-hover);
+}
+
+button#settings:active img {
+  filter: brightness(var(--icon-button-image-brightness-hover));
+}
+
+@media (hover: hover) {
+  button#settings:hover img {
+    filter: brightness(var(--icon-button-image-brightness-hover));
+  }
+}
+
+button#settings:disabled {
+  opacity: 0.6;
+}
+
+.container.show-settings button#settings {
+  position: fixed;
+}
+
+.container:not(.show-settings) button#settings .hide {
+  display: none;
+}
+
+.container.show-settings button#settings .show {
+  display: none;
 }
 
 .sections {
   display: grid;
   justify-content: center;
   grid-template-columns: auto auto auto auto;
-  gap: calc(20px * var(--layout-scale-factor));
+  gap: 0 calc(20px * var(--layout-scale-factor));
 
   margin-top: 30px;
 }
@@ -125,12 +198,17 @@ button:disabled {
 }
 
 .options {
-  margin: 20px auto;
+  margin: 0 auto;
+  padding: 0 10px;
   width: calc(var(--card-width) - 20px);
 }
 
+.container:not(.show-settings) .options {
+  display: none;
+}
+
 .options h3 {
-  margin: 20px auto;
+  margin: 10px auto;
   width: 10ch;
 
   font-size: 1.2rem;
@@ -217,23 +295,6 @@ input:active ~ .checkmark {
   }
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  height: var(--card-header-height);
-}
-
-h3.name {
-  margin: 0;
-  padding: 0 10px;
-
-  font-size: 1.2rem;
-  font-weight: normal;
-  text-align: center;
-}
-
 .slot {
   position: relative;
 
@@ -262,6 +323,27 @@ h3.name {
   transition: none;
 }
 
+.container.show-settings .slot {
+  display: none;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  height: var(--card-header-height);
+}
+
+h3.name {
+  margin: 0;
+  padding: 0 10px;
+
+  font-size: 1.2rem;
+  font-weight: normal;
+  text-align: center;
+}
+
 .card {
   width: var(--card-width);
   height: var(--card-height);
@@ -287,6 +369,15 @@ img.back {
 
 img.back {
   transform: rotateY(-180deg);
+}
+
+/* This breakpoint value should be the same as --container-max-width. */
+@media (min-width: 1600px) {
+  .container.show-settings button#settings {
+    margin-right: calc(
+      (100% - var(--container-max-width)) / 2 - var(--container-padding)
+    );
+  }
 }
 
 @media (max-width: 1400px) {

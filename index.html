@@ -16,14 +16,22 @@
       <div class="container init">
         <img id="logo" src="images/logo.png" />
         <h1>
-          <button id="shuffle-all">
+          <button id="shuffle-all" class="shuffle">
             Shuffle <img src="images/shuffle.svg" />
           </button>
         </h1>
+        <button id="settings" ontouchstart>
+          <img class="show" src="images/settings.svg" />
+          <span class="show">Settings</span>
+          <img class="hide" src="images/done.svg" />
+          <span class="hide">Done</span>
+        </button>
         <div class="sections">
           <div id="scenario" class="section">
             <h2>
-              <button>Scenario <img src="images/shuffle.svg" /></button>
+              <button class="shuffle">
+                Scenario <img src="images/shuffle.svg" />
+              </button>
             </h2>
             <form class="options">
               <input type="submit" hidden />
@@ -41,7 +49,9 @@
           </div>
           <div id="module" class="section">
             <h2>
-              <button>Module <img src="images/shuffle.svg" /></button>
+              <button class="shuffle">
+                Modules <img src="images/shuffle.svg" />
+              </button>
             </h2>
             <form class="options">
               <input type="submit" hidden />
@@ -59,7 +69,9 @@
           </div>
           <div id="hero" class="section">
             <h2>
-              <button>Hero <img src="images/shuffle.svg" /></button>
+              <button class="shuffle">
+                Hero <img src="images/shuffle.svg" />
+              </button>
             </h2>
             <form class="options">
               <input type="submit" hidden />
@@ -77,7 +89,9 @@
           </div>
           <div id="aspect" class="section">
             <h2>
-              <button>Aspect <img src="images/shuffle.svg" /></button>
+              <button class="shuffle">
+                Aspect <img src="images/shuffle.svg" />
+              </button>
             </h2>
             <form class="options">
               <input type="submit" hidden />

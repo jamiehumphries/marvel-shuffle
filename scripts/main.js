@@ -36,9 +36,8 @@ class Section {
     );
     this.elements.options.addEventListener("submit", (event) => {
       event.preventDefault();
-      if (!this.elements.button.disabled) {
-        this.shuffle(true);
-      }
+      event.stopImmediatePropagation();
+      toggleSettings();
     });
 
     const savedCardId = localStorage.getItem(this.type.id);
@@ -63,12 +62,7 @@ class Section {
       return;
     }
 
-    if (newCard.isLandscape) {
-      this.elements.slot.classList.add("landscape");
-    } else {
-      this.elements.slot.classList.remove("landscape");
-    }
-
+    this.elements.slot.classList.toggle("landscape", newCard.isLandscape);
     this.elements.name.innerText = newCard.name;
     this.elements.cardFront.src = newCard.frontSrc;
     if (newCard.backSrc !== oldCard?.backSrc) {
@@ -85,7 +79,7 @@ class Section {
 
   set disabled(value) {
     this.elements.button.disabled = value;
-    setShuffleAllButtonAvailability();
+    setGlobalButtonsAvailability();
   }
 
   shuffle(preventRepeat = false) {
@@ -104,7 +98,9 @@ class Section {
     this.elements.slot.classList.add("flipped");
     this.disabled = false;
     maybeReturnFocusAfterShuffle();
-    setTimeout(() => this.elements.slot.classList.remove("flipped"), 0);
+    requestPostAnimationFrame(() =>
+      this.elements.slot.classList.remove("flipped")
+    );
   }
 
   randomCard(preventRepeat = false) {
@@ -299,21 +295,45 @@ const sections = [
 ];
 
 const container = document.querySelector(".container");
+const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");
+const shuffleButtons = Array.from(document.getElementsByClassName("shuffle"));
 let lastClickedButton = null;
 
 function getId(obj) {
   return obj.name.toLowerCase().replaceAll(/\W/g, "-");
 }
 
-function setShuffleAllButtonAvailability() {
-  shuffleAllButton.disabled = sections.some((section) => section.disabled);
+function shuffleAll() {
+  sections.forEach((section) => section.shuffle());
+}
+
+function toggleSettings() {
+  const settingsVisible = container.classList.toggle("show-settings");
+  shuffleButtons.forEach((button) => (button.disabled = settingsVisible));
+  if (!settingsVisible) {
+    requestPostAnimationFrame(() => shuffleAll());
+  }
+}
+
+function setGlobalButtonsAvailability() {
+  const disabled = sections.some((section) => section.disabled);
+  shuffleAllButton.disabled = disabled;
+  settingsButton.disabled = disabled;
 }
 
 function maybeReturnFocusAfterShuffle() {
   if (lastClickedButton && !lastClickedButton.disabled) {
     lastClickedButton.focus();
   }
+}
+
+function requestPostAnimationFrame(callback) {
+  requestAnimationFrame(() => {
+    const messageChannel = new MessageChannel();
+    messageChannel.port1.onmessage = callback;
+    messageChannel.port2.postMessage(undefined);
+  });
 }
 
 // Initialisation steps.
@@ -333,9 +353,7 @@ window.addEventListener("click", (event) => {
 });
 
 sections.forEach((section) => section.initialize());
-
-shuffleAllButton.addEventListener("click", () =>
-  sections.forEach((section) => section.shuffle())
-);
+shuffleAllButton.addEventListener("click", () => shuffleAll());
+settingsButton.addEventListener("click", () => toggleSettings());
 
 setTimeout(() => container.classList.remove("init"), 100);

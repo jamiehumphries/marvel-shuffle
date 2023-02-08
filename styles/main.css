@@ -130,7 +130,7 @@ button.shuffle:disabled {
 }
 
 .container.show-settings .section button.shuffle {
-  padding-top: 5px;
+  padding-top: 3px;
 }
 
 button#settings {

@@ -29,7 +29,7 @@
           <span class="settings-show">Done</span>
         </button>
         <div class="sections">
-          <div id="scenario" class="section">
+          <template id="section">
             <h2>
               <button class="shuffle">
                 <span class="settings-hide type-name"></span>
@@ -49,70 +49,18 @@
                 <img class="back" />
               </div>
             </div>
-          </div>
-          <div id="module" class="section">
-            <h2>
-              <button class="shuffle">
-                <span class="settings-hide type-name"></span>
-                <img src="images/shuffle.svg" class="settings-hide" />
-                <span class="settings-show select-cards"></span>
-              </button>
-            </h2>
-            <form class="options settings-show">
-              <input type="submit" hidden />
-            </form>
-            <div class="slot settings-hide">
-              <div class="header">
-                <h3 class="name"></h3>
-              </div>
-              <div class="card">
-                <img class="front" />
-                <img class="back" />
-              </div>
-            </div>
-          </div>
-          <div id="hero" class="section">
-            <h2>
-              <button class="shuffle">
-                <span class="settings-hide type-name"></span>
-                <img src="images/shuffle.svg" class="settings-hide" />
-                <span class="settings-show select-cards"></span>
-              </button>
-            </h2>
-            <form class="options settings-show">
-              <input type="submit" hidden />
-            </form>
-            <div class="slot settings-hide">
-              <div class="header">
-                <h3 class="name"></h3>
-              </div>
-              <div class="card">
-                <img class="front" />
-                <img class="back" />
-              </div>
-            </div>
-          </div>
-          <div id="aspect" class="section">
-            <h2>
-              <button class="shuffle">
-                <span class="settings-hide type-name"></span>
-                <img src="images/shuffle.svg" class="settings-hide" />
-                <span class="settings-show select-cards"></span>
-              </button>
-            </h2>
-            <form class="options settings-show">
-              <input type="submit" hidden />
-            </form>
-            <div class="slot settings-hide">
-              <div class="header">
-                <h3 class="name"></h3>
-              </div>
-              <div class="card">
-                <img class="front" />
-                <img class="back" src="images/aspect/back.png" />
-              </div>
-            </div>
-          </div>
+          </template>
+          <template id="option">
+            <label class="option">
+              <input type="checkbox" />
+              <div class="checkmark"></div>
+              <span class="name"></span>
+            </label>
+          </template>
+          <div id="scenario" class="section"></div>
+          <div id="module" class="section"></div>
+          <div id="hero" class="section"></div>
+          <div id="aspect" class="section"></div>
         </div>
       </div>
     </main>

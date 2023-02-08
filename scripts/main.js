@@ -4,6 +4,9 @@ const cardChangeDelayMs = Number(
   )
 );
 
+const sectionTemplate = document.getElementById("section");
+const optionTemplate = document.getElementById("option");
+
 class Section {
   constructor(cardsOrSets) {
     this.cardsOrSets = cardsOrSets;
@@ -21,6 +24,7 @@ class Section {
     }, null);
 
     const container = document.getElementById(this.type.id);
+    container.appendChild(sectionTemplate.content.cloneNode(true));
 
     container.querySelector(".type-name").innerText = this.type.name;
     container.querySelector(
@@ -151,23 +155,20 @@ class Option {
   }
 
   appendTo(element, ...classes) {
-    const label = document.createElement("label");
+    const option = optionTemplate.content.cloneNode(true);
+
+    const label = option.querySelector("label");
     label.htmlFor = this.id;
-    label.classList.add("option");
     classes.forEach((className) => label.classList.add(className));
 
-    const input = document.createElement("input");
+    const input = option.querySelector("input");
     input.id = this.id;
-    input.type = "checkbox";
     input.checked = this.checked;
 
-    const checkmark = document.createElement("div");
-    checkmark.className = "checkmark";
+    const name = option.querySelector(".name");
+    name.innerText = this.name;
 
-    label.appendChild(input);
-    label.appendChild(checkmark);
-    label.append(this.name);
-    element.appendChild(label);
+    element.appendChild(option);
 
     input.addEventListener("click", (event) => {
       this.checked = event.target.checked;

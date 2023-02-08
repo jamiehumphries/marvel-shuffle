@@ -27,9 +27,10 @@
   --card-height: calc(var(--base-card-height) * var(--layout-scale-factor));
 
   --flip-duration: 1000ms;
-  /* Value must match CARD_CHANGE_DELAY_MS in scripts/main.js */
-  --card-change-delay: 300ms;
-  --card-change-duration: calc(var(--flip-duration) - var(--card-change-delay));
+  --card-change-delay-ms: 300; /* No units, so JavaScript can fetch and parse. */
+  --card-change-duration: calc(
+    var(--flip-duration) - var(--card-change-delay-ms) * 1ms
+  );
 }
 
 @font-face {

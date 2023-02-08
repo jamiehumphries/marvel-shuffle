@@ -1,5 +1,8 @@
-// Value must match --card-change-delay in styles/main.css
-const CARD_CHANGE_DELAY_MS = 300;
+const cardChangeDelayMs = Number(
+  getComputedStyle(document.documentElement).getPropertyValue(
+    "--card-change-delay-ms"
+  )
+);
 
 class Section {
   constructor(cardsOrSets) {
@@ -86,7 +89,7 @@ class Section {
     const newCard = this.randomCard(preventRepeat);
     this.disabled = true;
     this.elements.slot.classList.add("flipping");
-    setTimeout(() => (this.card = newCard), CARD_CHANGE_DELAY_MS);
+    setTimeout(() => (this.card = newCard), cardChangeDelayMs);
   }
 
   onTransitionEnd(event) {

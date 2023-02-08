@@ -17,67 +17,72 @@
         <img id="logo" src="images/logo.png" />
         <h1>
           <button id="shuffle-all" class="shuffle">
-            Shuffle <img src="images/shuffle.svg" />
+            <span class="settings-hide">Shuffle</span>
+            <img src="images/shuffle.svg" class="settings-hide" />
+            <span class="settings-show">Settings</span>
           </button>
         </h1>
         <button id="settings" ontouchstart>
-          <img class="show" src="images/settings.svg" />
-          <span class="show">Settings</span>
-          <img class="hide" src="images/done.svg" />
-          <span class="hide">Done</span>
+          <img src="images/settings.svg" class="settings-hide" />
+          <span class="settings-hide">Settings</span>
+          <img src="images/done.svg" class="settings-show" />
+          <span class="settings-show">Done</span>
         </button>
         <div class="sections">
           <div id="scenario" class="section">
             <h2>
               <button class="shuffle">
-                Scenario <img src="images/shuffle.svg" />
+                <span class="settings-hide type-name"></span>
+                <img src="images/shuffle.svg" class="settings-hide" />
+                <span class="settings-show select-cards"></span>
               </button>
             </h2>
-            <form class="options">
+            <form class="options settings-show">
               <input type="submit" hidden />
-              <h3>Select Scenarios</h3>
             </form>
-            <div class="slot">
+            <div class="slot settings-hide">
               <div class="header">
                 <h3 class="name"></h3>
               </div>
               <div class="card">
                 <img class="front" />
-                <img class="back" src="images/scenario/back.png" />
+                <img class="back" />
               </div>
             </div>
           </div>
           <div id="module" class="section">
             <h2>
               <button class="shuffle">
-                Modules <img src="images/shuffle.svg" />
+                <span class="settings-hide type-name"></span>
+                <img src="images/shuffle.svg" class="settings-hide" />
+                <span class="settings-show select-cards"></span>
               </button>
             </h2>
-            <form class="options">
+            <form class="options settings-show">
               <input type="submit" hidden />
-              <h3>Select Modules</h3>
             </form>
-            <div class="slot">
+            <div class="slot settings-hide">
               <div class="header">
                 <h3 class="name"></h3>
               </div>
               <div class="card">
                 <img class="front" />
-                <img class="back" src="images/module/back.png" />
+                <img class="back" />
               </div>
             </div>
           </div>
           <div id="hero" class="section">
             <h2>
               <button class="shuffle">
-                Hero <img src="images/shuffle.svg" />
+                <span class="settings-hide type-name"></span>
+                <img src="images/shuffle.svg" class="settings-hide" />
+                <span class="settings-show select-cards"></span>
               </button>
             </h2>
-            <form class="options">
+            <form class="options settings-show">
               <input type="submit" hidden />
-              <h3>Select Heroes</h3>
             </form>
-            <div class="slot">
+            <div class="slot settings-hide">
               <div class="header">
                 <h3 class="name"></h3>
               </div>
@@ -90,14 +95,15 @@
           <div id="aspect" class="section">
             <h2>
               <button class="shuffle">
-                Aspect <img src="images/shuffle.svg" />
+                <span class="settings-hide type-name"></span>
+                <img src="images/shuffle.svg" class="settings-hide" />
+                <span class="settings-show select-cards"></span>
               </button>
             </h2>
-            <form class="options">
+            <form class="options settings-show">
               <input type="submit" hidden />
-              <h3>Select Aspects</h3>
             </form>
-            <div class="slot">
+            <div class="slot settings-hide">
               <div class="header">
                 <h3 class="name"></h3>
               </div>

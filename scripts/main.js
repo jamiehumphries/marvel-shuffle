@@ -21,6 +21,12 @@ class Section {
     }, null);
 
     const container = document.getElementById(this.type.id);
+
+    container.querySelector(".type-name").innerText = this.type.name;
+    container.querySelector(
+      ".select-cards"
+    ).innerText = `Select ${this.type.namePlural}`;
+
     this.elements = {
       button: container.querySelector("button"),
       options: container.querySelector(".options"),

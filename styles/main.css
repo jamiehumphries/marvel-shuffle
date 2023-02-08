@@ -123,10 +123,14 @@ button.shuffle:disabled {
   color: var(--button-border-and-text-color-disabled);
 }
 
-.container.show-settings button.shuffle:disabled {
+.container.show-settings button.shuffle {
   background-color: var(--button-background-color-settings);
   border-color: var(--button-border-and-text-color);
   color: var(--button-border-and-text-color);
+}
+
+.container.show-settings .section button.shuffle {
+  padding-top: 5px;
 }
 
 button#settings {
@@ -180,11 +184,11 @@ button#settings:disabled {
   );
 }
 
-.container:not(.show-settings) button#settings .hide {
+.container:not(.show-settings) .settings-show {
   display: none;
 }
 
-.container.show-settings button#settings .show {
+.container.show-settings .settings-hide {
   display: none;
 }
 
@@ -203,22 +207,9 @@ button#settings:disabled {
 }
 
 .options {
-  margin: 0 auto;
+  margin: 20px auto 0;
   padding: 0 10px;
   width: calc(var(--card-width) - 20px);
-}
-
-.container:not(.show-settings) .options {
-  display: none;
-}
-
-.options h3 {
-  margin: 10px auto;
-  width: 10ch;
-
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-align: center;
 }
 
 .option {
@@ -326,10 +317,6 @@ input:active ~ .checkmark {
 
 .container:not(.init) .slot.flipped {
   transition: none;
-}
-
-.container.show-settings .slot {
-  display: none;
 }
 
 .header {

@@ -390,6 +390,7 @@ img.back {
 @media (max-width: 1000px) {
   .sections {
     grid-template-columns: auto auto;
+    margin-top: 20px;
   }
 }
 
@@ -403,6 +404,6 @@ img.back {
 
   .sections {
     grid-template-columns: auto;
-    margin-top: 0;
+    row-gap: 10px;
   }
 }

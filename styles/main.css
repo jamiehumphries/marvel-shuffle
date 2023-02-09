@@ -20,7 +20,7 @@
   --button-scale-factor: 1;
   --layout-scale-factor: 1;
 
-  --card-header-height: 40px;
+  --card-header-height: 50px;
   --base-card-width: 300px;
   --base-card-height: 419px;
   --card-width: calc(var(--base-card-width) * var(--layout-scale-factor));
@@ -326,7 +326,9 @@ input:active ~ .checkmark {
   flex-direction: column;
   justify-content: center;
 
+  box-sizing: border-box;
   height: var(--card-header-height);
+  padding-top: 3px;
 }
 
 h3.name {

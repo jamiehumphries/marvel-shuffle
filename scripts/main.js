@@ -242,12 +242,16 @@ class Card extends Option {
 }
 
 class Scenario extends Card {
-  constructor(name, { hasBack = false } = {}) {
+  constructor(name, hasBack = false) {
     super(name, { hasBack });
   }
 }
 
-class Module extends Card {}
+class Module extends Card {
+  constructor(name, isLandscape = true) {
+    super(name, { isLandscape });
+  }
+}
 
 class Hero extends Card {
   static get namePlural() {
@@ -272,17 +276,25 @@ const sections = [
       new Scenario("Klaw"),
       new Scenario("Ultron"),
     ]),
-    new Scenario("Risky Business", { hasBack: true }),
+    new CardSet("The Green Goblin", [
+      new Scenario("Risky Business", true),
+      new Scenario("Mutagen Formula"),
+    ]),
   ]),
   new Section([
     new CardSet("Core Set", [
-      new Module("Bomb Scare", { isLandscape: true }),
-      new Module("The Masters of Evil", { isLandscape: true }),
-      new Module("Under Attack", { isLandscape: true }),
-      new Module("Legions of Hydra", { isLandscape: true }),
-      new Module("The Doomsday Chair", { isLandscape: true }),
+      new Module("Bomb Scare"),
+      new Module("The Masters of Evil"),
+      new Module("Under Attack"),
+      new Module("Legions of Hydra"),
+      new Module("The Doomsday Chair"),
     ]),
-    new Module("Goblin Gimmicks"),
+    new CardSet("The Green Goblin", [
+      new Module("Goblin Gimmicks", false),
+      new Module("A Mess of Things"),
+      new Module("Power Drain"),
+      new Module("Running Interference"),
+    ]),
   ]),
   new Section([
     new CardSet("Core Set", [

@@ -281,6 +281,13 @@ const sections = [
       new Scenario("Mutagen Formula"),
     ]),
     new Scenario("The Wrecking Crew"),
+    new CardSet("The Rise of Red Skull", [
+      new Scenario("Crossbones"),
+      new Scenario("Absorbing Man"),
+      new Scenario("Taskmaster"),
+      new Scenario("Zola"),
+      new Scenario("Red Skull"),
+    ]),
   ]),
   new Section([
     new CardSet("Core Set", [
@@ -295,6 +302,12 @@ const sections = [
       new Module("A Mess of Things"),
       new Module("Power Drain"),
       new Module("Running Interference"),
+    ]),
+    new CardSet("The Rise of Red Skull", [
+      new Module("Experimental Weapons", false),
+      new Module("Hydra Assault", false),
+      new Module("Weapon Master", false),
+      new Module("Hydra Patrol"),
     ]),
   ]),
   new Section([
@@ -311,6 +324,10 @@ const sections = [
     new Hero("Black Widow"),
     new Hero("Doctor Strange"),
     new Hero("Hulk"),
+    new CardSet("The Rise of Red Skull", [
+      new Hero("Hawkeye"),
+      new Hero("Spider-Woman"),
+    ]),
   ]),
   new Section([
     new CardSet("Core Set", [

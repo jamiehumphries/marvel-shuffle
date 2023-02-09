@@ -99,6 +99,14 @@ class Section {
     const newCard = this.randomCard(preventRepeat);
     this.disabled = true;
     this.elements.slot.classList.add("flipping");
+
+    // Preload new images.
+    for (const src of ["frontSrc", "backSrc"]) {
+      if (newCard[src] !== this.card?.[src]) {
+        new Image().src = newCard[src];
+      }
+    }
+
     setTimeout(() => (this.card = newCard), cardChangeDelayMs);
   }
 

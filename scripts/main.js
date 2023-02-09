@@ -280,6 +280,7 @@ const sections = [
       new Scenario("Risky Business", true),
       new Scenario("Mutagen Formula"),
     ]),
+    new Scenario("The Wrecking Crew"),
   ]),
   new Section([
     new CardSet("Core Set", [
@@ -305,6 +306,11 @@ const sections = [
       new Hero("Spider-Man"),
     ]),
     new Hero("Captain America"),
+    new Hero("Ms. Marvel"),
+    new Hero("Thor"),
+    new Hero("Black Widow"),
+    new Hero("Doctor Strange"),
+    new Hero("Hulk"),
   ]),
   new Section([
     new CardSet("Core Set", [
@@ -323,7 +329,10 @@ const shuffleButtons = Array.from(document.getElementsByClassName("shuffle"));
 let lastClickedButton = null;
 
 function getId(obj) {
-  return obj.name.toLowerCase().replaceAll(/\W/g, "-");
+  return obj.name
+    .toLowerCase()
+    .replaceAll(/\W+/g, "-") // Replace all non-word characters with "-".
+    .replaceAll(/((?<=^)\-+|\-+(?=$))/g, ""); // Strip any leading and trailing "-".
 }
 
 function shuffleAll() {

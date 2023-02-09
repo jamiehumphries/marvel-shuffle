@@ -332,7 +332,7 @@ function getId(obj) {
   return obj.name
     .toLowerCase()
     .replaceAll(/\W+/g, "-") // Replace all non-word characters with "-".
-    .replaceAll(/((?<=^)\-+|\-+(?=$))/g, ""); // Strip any leading and trailing "-".
+    .replaceAll(/(^\-+|\-+$)/g, ""); // Strip any leading and trailing "-".
 }
 
 function shuffleAll() {

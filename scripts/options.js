@@ -1,4 +1,12 @@
 class Option {
+  constructor(name, { variant = null, type = null, children = null } = {}) {
+    this.name = name;
+    this.type = type || this.constructor;
+    this.slug = slug(this.name, variant);
+    this.id = `${this.type.slug}--${this.slug}`;
+    this.children = children;
+  }
+
   get checkbox() {
     return document.getElementById(this.id);
   }
@@ -17,7 +25,7 @@ class Option {
 
   set children(value) {
     this._children = value;
-    value.forEach((child) => (child.parent = this));
+    value?.forEach((child) => (child.parent = this));
   }
 
   appendTo(element, ...classes) {
@@ -27,7 +35,7 @@ class Option {
     classes.forEach((className) => label.classList.add(className));
 
     const input = document.createElement("input");
-    input.id = this.id;
+    input.id = label.htmlFor;
     input.type = "checkbox";
     input.checked = this.checked;
 
@@ -63,10 +71,10 @@ class Option {
 
 class All extends Option {
   constructor(section) {
-    super();
-    this.name = `All ${section.type.namePlural}`;
-    this.id = getId(this);
-    this.children = section.cardsOrSets;
+    const name = `All ${section.type.namePlural}`;
+    const type = section.type;
+    const children = section.cardsOrSets;
+    super(name, { type, children });
   }
 
   appendTo(element) {
@@ -76,10 +84,10 @@ class All extends Option {
 
 class CardSet extends Option {
   constructor(name, cards) {
-    super();
-    this.name = name;
-    this.id = `${getId(this)}-${cards[0].constructor.id}`;
-    this.children = cards;
+    const variant = "set";
+    const type = cards[0].constructor;
+    const children = cards;
+    super(name, { variant, type, children });
   }
 
   appendTo(element) {
@@ -90,23 +98,26 @@ class CardSet extends Option {
 
 class Card extends Option {
   static get id() {
-    return (this._id ||= getId(this));
+    return this.slug;
+  }
+
+  static get slug() {
+    return (this._slug ||= slug(this.name));
   }
 
   static get namePlural() {
     return (this._name ||= `${this.name}s`);
   }
 
-  constructor(name, { isLandscape = false, hasBack = false } = {}) {
-    super();
-    const type = this.constructor;
-    this.name = name;
-    this.id = getId(this);
+  constructor(
+    name,
+    { variant = null, isLandscape = false, hasBack = false } = {}
+  ) {
+    super(name, { variant });
+    const image = (...path) => `images/${this.type.slug}/${path.join("/")}`;
     this.isLandscape = isLandscape;
-    this.frontSrc = `images/${type.id}/${this.id}/front.png`;
-    this.backSrc = hasBack
-      ? `images/${type.id}/${this.id}/back.png`
-      : `images/${type.id}/back.png`;
+    this.frontSrc = image(this.slug, "front.png");
+    this.backSrc = hasBack ? image(this.slug, "back.png") : image("back.png");
   }
 }
 
@@ -127,8 +138,8 @@ class Hero extends Card {
     return "Heroes";
   }
 
-  constructor(name) {
-    super(name, { hasBack: true });
+  constructor(name, alterEgo = null) {
+    super(name, { variant: alterEgo, hasBack: true });
   }
 }
 
@@ -138,10 +149,12 @@ class Aspect extends Card {
   }
 }
 
-function getId(obj) {
-  return obj.name
+function slug(...names) {
+  return names
+    .join()
     .toLowerCase()
-    .replaceAll(/\W+/g, "-") // Replace all non-word characters with "-".
+    .replaceAll(/’/g, "") // Remove apostrophes.
+    .replaceAll(/[^a-zA-Z0-9]+/g, "-") // Replace all non-word characters with "-".
     .replaceAll(/(^\-+|\-+$)/g, ""); // Strip any leading and trailing "-".
 }
 

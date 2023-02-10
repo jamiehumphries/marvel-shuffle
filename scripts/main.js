@@ -40,29 +40,6 @@ class Section {
       cardBack: container.querySelector("img.back"),
     };
   }
-
-  initialize() {
-    const all = new All(this);
-    all.appendTo(this.elements.options);
-    this.cardsOrSets.forEach((cardOrSet) =>
-      cardOrSet.appendTo(this.elements.options)
-    );
-    this.elements.options.addEventListener("submit", (event) => {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      toggleSettings();
-    });
-
-    const savedCardId = localStorage.getItem(this.type.id);
-    const savedCard = this.cards.find((card) => card.id === savedCardId);
-    this.card = savedCard || this.randomCard();
-
-    this.elements.button.addEventListener("click", () => this.shuffle(true));
-    this.elements.slot.addEventListener("transitionend", (event) =>
-      this.onTransitionEnd(event)
-    );
-  }
-
   get card() {
     return this._card;
   }
@@ -95,6 +72,43 @@ class Section {
     setGlobalButtonsAvailability();
   }
 
+  initialize() {
+    const all = new All(this);
+    all.appendTo(this.elements.options);
+    this.cardsOrSets.forEach((cardOrSet) =>
+      cardOrSet.appendTo(this.elements.options)
+    );
+    this.elements.options.addEventListener("submit", (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      toggleSettings();
+    });
+
+    const savedCardId = localStorage.getItem(this.type.id);
+    const savedCard = this.cards.find((card) => card.id === savedCardId);
+    this.card = savedCard || this.randomCard();
+
+    this.elements.button.addEventListener("click", () => this.shuffle(true));
+    this.elements.slot.addEventListener("transitionend", (event) =>
+      this.onTransitionEnd(event)
+    );
+  }
+
+  randomCard(preventRepeat = false) {
+    let availableCards = this.cards.filter((card) => card.checked);
+    if (availableCards.length > 1 && preventRepeat) {
+      availableCards = availableCards.filter((card) => card !== this.card);
+    }
+    if (availableCards.length < 1) {
+      const firstUncheckedOption = this.cardsOrSets.find(
+        (cardOrSet) => !cardOrSet.checked
+      );
+      firstUncheckedOption.checked = true;
+      return this.randomCard(preventRepeat);
+    }
+    return availableCards[Math.floor(Math.random() * availableCards.length)];
+  }
+
   shuffle(preventRepeat = false) {
     const newCard = this.randomCard(preventRepeat);
     this.disabled = true;
@@ -122,21 +136,6 @@ class Section {
     requestPostAnimationFrame(() =>
       this.elements.slot.classList.remove("flipped")
     );
-  }
-
-  randomCard(preventRepeat = false) {
-    let availableCards = this.cards.filter((card) => card.checked);
-    if (availableCards.length > 1 && preventRepeat) {
-      availableCards = availableCards.filter((card) => card !== this.card);
-    }
-    if (availableCards.length < 1) {
-      const firstUncheckedOption = this.cardsOrSets.find(
-        (cardOrSet) => !cardOrSet.checked
-      );
-      firstUncheckedOption.checked = true;
-      return this.randomCard(preventRepeat);
-    }
-    return availableCards[Math.floor(Math.random() * availableCards.length)];
   }
 }
 

@@ -7,10 +7,6 @@ class Option {
     this.children = children;
   }
 
-  get checkbox() {
-    return document.getElementById(this.id);
-  }
-
   get checked() {
     return (this._checked ||= localStorage.getItem(this.id) === "true");
   }
@@ -35,20 +31,22 @@ class Option {
     classes.forEach((className) => label.classList.add(className));
 
     const input = document.createElement("input");
-    input.id = label.htmlFor;
+    input.id = this.id;
     input.type = "checkbox";
     input.checked = this.checked;
 
-    const checkmark = document.createElement("checkmark");
+    const checkmark = document.createElement("div");
     checkmark.classList.add("checkmark");
 
     label.appendChild(input);
     label.appendChild(checkmark);
     label.append(this.name);
+
     input.addEventListener("click", (event) => {
       this.checked = event.target.checked;
     });
 
+    this.checkbox = input;
     element.appendChild(label);
   }
 

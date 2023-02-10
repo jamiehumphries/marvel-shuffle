@@ -40,6 +40,7 @@ const modules = [
     new Module("Weapon Master", false),
     new Module("Hydra Patrol"),
   ]),
+  new CardSet("The Once and Future Kang", [new Module("Anachronauts")]),
 ];
 
 const heroes = [

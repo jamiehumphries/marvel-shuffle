@@ -21,8 +21,8 @@
   --layout-scale-factor: 1;
 
   --card-header-height: 50px;
-  --base-card-width: 300px;
-  --base-card-height: 419px;
+  --base-card-width: 294px;
+  --base-card-height: 418px;
   --card-width: calc(var(--base-card-width) * var(--layout-scale-factor));
   --card-height: calc(var(--base-card-height) * var(--layout-scale-factor));
 

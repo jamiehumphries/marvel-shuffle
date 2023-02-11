@@ -47,7 +47,7 @@ const scenarios = [
   ),
   theMadTitansShadow(
     new Scenario("Ebony Maw"),
-    new Scenario("The Tower Defense"),
+    new Scenario("Tower Defense", true),
     new Scenario("Thanos"),
     new Scenario("Hela", true),
     new Scenario("Loki")
@@ -66,12 +66,12 @@ const scenarios = [
     new Scenario("Sabretooth"),
     new Scenario("Project Wideawake"),
     new Scenario("Master Mold"),
-    new Scenario("Mansion Attack"),
+    new Scenario("Mansion Attack", true),
     new Scenario("Magneto")
   ),
   mojoMania(
-    new Scenario("Magog"),
-    new Scenario("Spiral"),
+    new Scenario("Magog", true),
+    new Scenario("Spiral", true),
     new Scenario("Mojo")
   ),
 ];
@@ -79,86 +79,86 @@ const scenarios = [
 // prettier-ignore
 const modules = [
   coreSet(
-    new Module("Bomb Scare"),
-    new Module("The Masters of Evil"),
-    new Module("Under Attack"),
-    new Module("Legions of Hydra"),
-    new Module("The Doomsday Chair")
+    new Module("Bomb Scare", true),
+    new Module("Masters of Evil", true),
+    new Module("Under Attack", true),
+    new Module("Legions of Hydra", true),
+    new Module("The Doomsday Chair", true)
   ),
   theGreenGoblin(
     new Module("Goblin Gimmicks", false),
-    new Module("A Mess of Things"),
-    new Module("Power Drain"),
-    new Module("Running Interference")
+    new Module("A Mess of Things", true),
+    new Module("Power Drain", true),
+    new Module("Running Interference", true)
   ),
   theRiseOfRedSkull(
     new Module("Experimental Weapons", false),
     new Module("Hydra Assault", false),
     new Module("Weapon Master", false),
-    new Module("Hydra Patrol")
+    new Module("Hydra Patrol", true)
   ),
   theOnceAndFutureKang(
-    new Module("Temporal"),
-    new Module("Anachronauts"),
-    new Module("Master of Time")
+    new Module("Temporal", true),
+    new Module("Anachronauts", true),
+    new Module("Master of Time", false)
   ),
   theGalaxysMostWanted(
-    new Module("Band of Badoon"),
-    new Module("Galactic Artifacts"),
-    new Module("Kree Militants"),
-    new Module("Menagerie Medley"),
-    new Module("Space Pirates"),
-    new Module("Ship Command")
+    new Module("Band of Badoon", false),
+    new Module("Galactic Artifacts", false),
+    new Module("Kree Militants", false),
+    new Module("Menagerie Medley", false),
+    new Module("Space Pirates", false),
+    new Module("Ship Command", false)
   ),
   theMadTitansShadow(
-    new Module("Black Order"),
-    new Module("Armies of Titan"),
-    new Module("Children of Thanos"),
-    new Module("Infinity Gauntlet"),
-    new Module("Legions of Hel"),
-    new Module("Frost Giants"),
-    new Module("Enchantress")
+    new Module("Black Order", true),
+    new Module("Armies of Titan", false),
+    new Module("Children of Thanos", false),
+    new Module("Infinity Gauntlet", false),
+    new Module("Legions of Hel", true),
+    new Module("Frost Giants", false),
+    new Module("Enchantress", false)
   ),
   theHood(
-    new Module("Beasty Boys"),
-    new Module("Brothers Grimm"),
-    new Module("Crossfire’s Crew"),
-    new Module("Mimster Hyde"),
-    new Module("Ransacked Armory"),
-    new Module("Sinister Syndicate"),
-    new Module("State of Emergency"),
-    new Module("Streets of Mayhem"),
-    new Module("Wrecking Crew")
+    new Module("Beasty Boys", true),
+    new Module("Brothers Grimm", false),
+    new Module("Crossfire’s Crew", false),
+    new Module("Mister Hyde", false),
+    new Module("Ransacked Armory", false),
+    new Module("Sinister Syndicate", false),
+    new Module("State of Emergency", false),
+    new Module("Streets of Mayhem", false),
+    new Module("Wrecking Crew", false)
   ),
   sinisterMotives(
-    new Module("City in Chaos"),
-    new Module("Down to Earth"),
-    new Module("Goblin Gear"),
-    new Module("Guerilla Tactics"),
-    new Module("Osborn Tech"),
-    new Module("Personal Nightmare"),
-    new Module("Sinister Assault"),
-    new Module("Symbiotic Strength"),
-    new Module("Whispers of Paranoia")
+    new Module("City in Chaos", true),
+    new Module("Down to Earth", false),
+    new Module("Goblin Gear", false),
+    new Module("Guerilla Tactics", false),
+    new Module("Osborn Tech", false),
+    new Module("Personal Nightmare", false),
+    new Module("Sinister Assault", false),
+    new Module("Symbiotic Strength", false),
+    new Module("Whispers of Paranoia", false)
   ),
   mutantGenesis(
-    new Module("Brotherhood"),
-    new Module("Mystique"),
-    new Module("Zero Tolerance"),
-    new Module("Sentinels"),
-    new Module("Acolytes"),
-    new Module("Future Past")
+    new Module("Brotherhood", true),
+    new Module("Mystique", false),
+    new Module("Zero Tolerance", true),
+    new Module("Sentinels", false),
+    new Module("Acolytes", true),
+    new Module("Future Past", true)
   ),
   mojoMania(
-    new Module("Crime"),
-    new Module("Fantasy"),
-    new Module("Horror"),
-    new Module("Sci-Fi"),
-    new Module("Sitcom"),
-    new Module("Western")
+    new Module("Crime", false),
+    new Module("Fantasy", false),
+    new Module("Horror", false),
+    new Module("Sci-Fi", false),
+    new Module("Sitcom", false),
+    new Module("Western", false)
   ),
   printAndPlay(
-    new Module("Kree Fanatic")
+    new Module("Kree Fanatic", false)
   ),
 ];
 
@@ -200,7 +200,7 @@ const heroes = [
   new Hero("Nebula"),
   new Hero("War Machine"),
   new Hero("Valkyrie"),
-  new Hero("The Vision"),
+  new Hero("Vision"),
   sinisterMotives(
     new Hero("Ghost-Spider"),
     new Hero("Spider-Man", "Miles Morales")

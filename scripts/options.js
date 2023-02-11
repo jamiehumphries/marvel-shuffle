@@ -120,13 +120,13 @@ class Card extends Option {
 }
 
 class Scenario extends Card {
-  constructor(name, hasBack = false) {
+  constructor(name, { hasBack = false } = {}) {
     super(name, { hasBack });
   }
 }
 
 class Module extends Card {
-  constructor(name, isLandscape = true) {
+  constructor(name, { isLandscape = false } = {}) {
     super(name, { isLandscape });
   }
 }
@@ -136,8 +136,8 @@ class Hero extends Card {
     return "Heroes";
   }
 
-  constructor(name, alterEgo = null) {
-    super(name, { variant: alterEgo, hasBack: true });
+  constructor(name, { variant = null } = {}) {
+    super(name, { variant, hasBack: true });
   }
 }
 

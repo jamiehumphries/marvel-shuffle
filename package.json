@@ -1,0 +1,23 @@
+{
+  "name": "marvel-shuffle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "placeholders.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamiehumphries/marvel-shuffle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamiehumphries/marvel-shuffle/issues"
+  },
+  "homepage": "https://github.com/jamiehumphries/marvel-shuffle#readme",
+  "type": "module",
+  "dependencies": {
+    "image-size": "^1.0.2"
+  }
+}

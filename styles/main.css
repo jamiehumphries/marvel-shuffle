@@ -321,7 +321,7 @@ input:active ~ .checkmark {
   transform-style: preserve-3d;
 }
 
-.slot.landscape {
+.slot.landscape:not(.hidden) {
   width: var(--card-height);
   height: var(--slot-height-landscape);
 }

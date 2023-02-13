@@ -169,7 +169,7 @@ const heroes = [
     new Hero("Captain Marvel"),
     new Hero("Iron Man"),
     new Hero("She-Hulk"),
-    new Hero("Spider-Man", { variant: "Peter Parker" })
+    new Hero("Spider-Man", { alterEgo: "Peter Parker" })
   ),
   new Hero("Captain America"),
   new Hero("Ms. Marvel"),
@@ -179,7 +179,7 @@ const heroes = [
   new Hero("Hulk"),
   theRiseOfRedSkull(
     new Hero("Hawkeye"),
-    new Hero("Spider-Woman")
+    new Hero("Spider-Woman", { aspects: 2 })
   ),
   new Hero("Ant-Man"),
   new Hero("Wasp"),
@@ -195,7 +195,7 @@ const heroes = [
   new Hero("Venom"),
   theMadTitansShadow(
     new Hero("Spectrum"),
-    new Hero("Adam Warlock")
+    new Hero("Adam Warlock", { aspects: 4 })
   ),
   new Hero("Nebula"),
   new Hero("War Machine"),
@@ -203,7 +203,7 @@ const heroes = [
   new Hero("Vision"),
   sinisterMotives(
     new Hero("Ghost-Spider"),
-    new Hero("Spider-Man", { variant: "Miles Morales" })
+    new Hero("Spider-Man", { alterEgo: "Miles Morales" })
   ),
   new Hero("Nova"),
   new Hero("Ironheart"),

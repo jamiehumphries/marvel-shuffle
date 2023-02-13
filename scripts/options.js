@@ -109,11 +109,17 @@ class Card extends Option {
 
   constructor(
     name,
-    { variant = null, isLandscape = false, hasBack = false } = {}
+    {
+      variant = null,
+      isLandscape = false,
+      childCardCount = 0,
+      hasBack = false,
+    } = {}
   ) {
     super(name, { variant });
-    const image = (...path) => `images/${this.type.slug}/${path.join("/")}`;
     this.isLandscape = isLandscape;
+    this.childCardCount = childCardCount;
+    const image = (...path) => `images/${this.type.slug}/${path.join("/")}`;
     this.frontSrc = image(this.slug, "front.png");
     this.backSrc = hasBack ? image(this.slug, "back.png") : image("back.png");
   }
@@ -136,8 +142,11 @@ class Hero extends Card {
     return "Heroes";
   }
 
-  constructor(name, { variant = null } = {}) {
-    super(name, { variant, hasBack: true });
+  constructor(name, { alterEgo = null, aspects = 1 } = {}) {
+    const variant = alterEgo;
+    const hasBack = true;
+    const childCardCount = aspects;
+    super(name, { variant, hasBack, childCardCount });
   }
 }
 

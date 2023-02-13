@@ -7,17 +7,33 @@ const cardChangeDelayMs = Number(
   )
 );
 
-const sectionTemplate = document.getElementById("section");
+function appendSectionTo(parent) {
+  const template = document.getElementById("section");
+  const element = template.content.cloneNode(true);
+  parent.appendChild(element);
+}
+
+function appendSlotTo(parent) {
+  const template = document.getElementById("slot");
+  const element = template.content.firstElementChild.cloneNode(true);
+  parent.appendChild(element);
+}
 
 class Section {
-  constructor(cardsOrSets) {
+  constructor(cardsOrSets, parentSection = null) {
+    // Initialize data.
     this.cardsOrSets = cardsOrSets;
+    this.parentSection = parentSection;
+    this.maxSlots = parentSection?.maxChildCardCount || 1;
+    if (this.parentSection) {
+      this.parentSection.childSection = this;
+    }
 
-    this.cards = cardsOrSets.reduce((cards, cardOrSet) => {
+    this.allCards = cardsOrSets.reduce((cards, cardOrSet) => {
       return cards.concat(cardOrSet.children || [cardOrSet]);
     }, []);
 
-    this.type = this.cards.reduce((type, card) => {
+    this.type = this.allCards.reduce((type, card) => {
       const cardType = card.constructor;
       if (type == null || type == cardType) {
         return cardType;
@@ -25,23 +41,182 @@ class Section {
       throw new Error("All cards for a section must be the same type.");
     }, null);
 
-    const container = document.getElementById(this.type.id);
-    container.appendChild(sectionTemplate.content.cloneNode(true));
+    // Initialize layout.
+    this.root = document.getElementById(this.type.id);
+    appendSectionTo(this.root);
 
-    container.querySelector(".type-name").innerText = this.type.name;
-    container.querySelector(
-      ".select-cards"
-    ).innerText = `Select ${this.type.namePlural}`;
+    const nameText = this.type.name;
+    this.name = this.root.querySelector(".type-name");
+    this.name.innerText = nameText;
+    const selectText = `Select ${this.type.namePlural}`;
+    this.root.querySelector(".select").innerText = selectText;
 
-    this.elements = {
-      button: container.querySelector("button"),
-      options: container.querySelector(".options"),
-      name: container.querySelector(".name"),
-      slot: container.querySelector(".slot"),
-      cardFront: container.querySelector("img.front"),
-      cardBack: container.querySelector("img.back"),
-    };
+    const slots = this.root.querySelector(".slots");
+    for (let i = 0; i < this.maxSlots; i++) {
+      appendSlotTo(slots);
+    }
+
+    // Initialize options.
+    const options = this.root.querySelector(".options");
+    const all = new All(this);
+    all.appendTo(options);
+    this.cardsOrSets.forEach((cardOrSet) => cardOrSet.appendTo(options));
+    options.addEventListener("submit", (event) => {
+      event.preventDefault();
+      toggleSettings();
+    });
+
+    // Initialize slots.
+    this.slots = Array.from(this.root.querySelectorAll(".slot")).map(
+      (element) => new Slot(element)
+    );
+
+    // Initialize cards.
+    let savedCards;
+    try {
+      const savedCardIds = JSON.parse(localStorage.getItem(this.type.id)) || [];
+      savedCards = savedCardIds.map((id) =>
+        this.allCards.find((card) => card.id === id)
+      );
+    } catch {
+      localStorage.clear();
+      savedCards = [];
+    }
+    this.cards = savedCards.length > 0 ? savedCards : [this.randomCard()];
+
+    // Add event listeners.
+    this.button = this.root.querySelector("button");
+    this.button.addEventListener("click", () => {
+      const childCardCountBefore = this.childCardCount;
+      this.shuffle({ preventRepeat: true });
+      this.shuffleChildSection = this.childCardCount !== childCardCountBefore;
+    });
+    this.root.addEventListener("transitionend", (event) =>
+      this.onTransitionEnd(event)
+    );
   }
+
+  get maxChildCardCount() {
+    return Math.max(...this.allCards.map((card) => card.childCardCount));
+  }
+
+  get childCardCount() {
+    return (this.incomingCards || this.cards)[0].childCardCount;
+  }
+
+  get disabled() {
+    return this.button.disabled;
+  }
+
+  set disabled(value) {
+    this.button.disabled = value;
+    setGlobalButtonsAvailability();
+  }
+
+  get cards() {
+    return this._cards || [];
+  }
+
+  set cards(value) {
+    const newCards = value;
+    this._cards = newCards;
+
+    this.name.innerText =
+      newCards.length === 1 ? this.type.name : this.type.namePlural;
+
+    const { style } = this.root;
+    const landscapeCount = newCards.filter((card) => card.isLandscape).length;
+    const portraitCount = newCards.length - landscapeCount;
+    style.setProperty("--landscape-cards-in-section", landscapeCount);
+    style.setProperty("--portrait-cards-in-section", portraitCount);
+
+    for (let i = 0; i < this.slots.length; i++) {
+      this.slots[i].card = newCards[i];
+    }
+
+    const cardIds = newCards.map((card) => card.id);
+    localStorage.setItem(this.type.id, JSON.stringify(cardIds));
+  }
+
+  shuffle({ preventRepeat = false } = {}) {
+    this.disabled = true;
+    this.root.classList.add("flipping");
+
+    const cardCount = this.parentSection?.childCardCount || 1;
+    const newCards = [];
+
+    for (let i = 0; i < cardCount; i++) {
+      const oldCard = this.cards[i];
+      const exclude = newCards;
+      const preferExclude = preventRepeat ? oldCard : null;
+      const newCard = this.randomCard({ exclude, preferExclude });
+      newCards.push(newCard);
+
+      // Preload new images.
+      for (const src of ["frontSrc", "backSrc"]) {
+        if (newCard[src] !== oldCard?.[src]) {
+          new Image().src = newCard[src];
+        }
+      }
+    }
+
+    this.incomingCards = newCards;
+    setTimeout(() => (this.cards = newCards), cardChangeDelayMs);
+  }
+
+  randomCard({ exclude = [], preferExclude = null } = []) {
+    let availableCards = this.allCards.filter(
+      (card) => card.checked && !exclude.includes(card)
+    );
+
+    if (preferExclude !== null && availableCards.length > 1) {
+      availableCards = availableCards.filter((card) => card !== preferExclude);
+    }
+
+    if (availableCards.length === 0) {
+      this.selectMoreOptions();
+      return this.randomCard();
+    }
+
+    return availableCards[Math.floor(Math.random() * availableCards.length)];
+  }
+
+  selectMoreOptions() {
+    const firstUncheckedOption = this.cardsOrSets.find(
+      (cardOrSet) => !cardOrSet.checked
+    );
+    firstUncheckedOption.checked = true;
+  }
+
+  onTransitionEnd(event) {
+    const { propertyName, target } = event;
+    if (propertyName !== "transform" || target !== this.slots[0].root) {
+      return;
+    }
+
+    this.root.classList.remove("flipping");
+    this.root.classList.add("flipped");
+    this.disabled = false;
+    this.incomingCards = null;
+
+    if (this.shuffleChildSection) {
+      this.childSection.shuffle();
+      this.shuffleChildSection = false;
+    }
+
+    maybeReturnFocusAfterShuffle();
+    requestPostAnimationFrame(() => this.root.classList.remove("flipped"));
+  }
+}
+
+class Slot {
+  constructor(root) {
+    this.root = root;
+    this.name = root.querySelector(".name");
+    this.cardFront = root.querySelector("img.front");
+    this.cardBack = root.querySelector("img.back");
+  }
+
   get card() {
     return this._card;
   }
@@ -49,95 +224,36 @@ class Section {
   set card(value) {
     const oldCard = this._card;
     const newCard = value;
+    this._card = newCard;
+
+    if (!newCard) {
+      this.hide();
+      return;
+    }
 
     if (newCard === oldCard) {
       return;
     }
 
-    this.elements.slot.classList.toggle("landscape", newCard.isLandscape);
-    this.elements.name.innerText = newCard.name;
-    this.elements.cardFront.src = newCard.frontSrc;
+    this.show();
+    this.root.classList.toggle("landscape", newCard.isLandscape);
+    this.name.innerText = newCard.name;
+    this.cardFront.src = newCard.frontSrc;
     if (newCard.backSrc !== oldCard?.backSrc) {
-      this.elements.cardBack.src = newCard.backSrc;
+      this.cardBack.src = newCard.backSrc;
     }
-
-    this._card = value;
-    localStorage.setItem(this.type.id, value.id);
   }
 
-  get disabled() {
-    return this.elements.button.disabled;
+  show() {
+    this.toggleVisibility(true);
   }
 
-  set disabled(value) {
-    this.elements.button.disabled = value;
-    setGlobalButtonsAvailability();
+  hide() {
+    this.toggleVisibility(false);
   }
 
-  initialize() {
-    const all = new All(this);
-    all.appendTo(this.elements.options);
-    this.cardsOrSets.forEach((cardOrSet) =>
-      cardOrSet.appendTo(this.elements.options)
-    );
-    this.elements.options.addEventListener("submit", (event) => {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      toggleSettings();
-    });
-
-    const savedCardId = localStorage.getItem(this.type.id);
-    const savedCard = this.cards.find((card) => card.id === savedCardId);
-    this.card = savedCard || this.randomCard();
-
-    this.elements.button.addEventListener("click", () => this.shuffle(true));
-    this.elements.slot.addEventListener("transitionend", (event) =>
-      this.onTransitionEnd(event)
-    );
-  }
-
-  randomCard(preventRepeat = false) {
-    let availableCards = this.cards.filter((card) => card.checked);
-    if (availableCards.length > 1 && preventRepeat) {
-      availableCards = availableCards.filter((card) => card !== this.card);
-    }
-    if (availableCards.length < 1) {
-      const firstUncheckedOption = this.cardsOrSets.find(
-        (cardOrSet) => !cardOrSet.checked
-      );
-      firstUncheckedOption.checked = true;
-      return this.randomCard(preventRepeat);
-    }
-    return availableCards[Math.floor(Math.random() * availableCards.length)];
-  }
-
-  shuffle(preventRepeat = false) {
-    const newCard = this.randomCard(preventRepeat);
-    this.disabled = true;
-    this.elements.slot.classList.add("flipping");
-
-    // Preload new images.
-    for (const src of ["frontSrc", "backSrc"]) {
-      if (newCard[src] !== this.card?.[src]) {
-        new Image().src = newCard[src];
-      }
-    }
-
-    setTimeout(() => (this.card = newCard), cardChangeDelayMs);
-  }
-
-  onTransitionEnd(event) {
-    const { propertyName, target } = event;
-    if (propertyName !== "transform" || target !== this.elements.slot) {
-      return;
-    }
-    this.elements.slot.classList.remove("flipping");
-    this.elements.slot.classList.add("flipped");
-    this.disabled = false;
-    maybeReturnFocusAfterShuffle();
-    requestPostAnimationFrame(() =>
-      this.elements.slot.classList.remove("flipped")
-    );
+  toggleVisibility(value) {
+    this.root.classList.toggle("hidden", !value);
   }
 }
 
@@ -147,12 +263,11 @@ const shuffleAllButton = document.getElementById("shuffle-all");
 const shuffleButtons = Array.from(document.getElementsByClassName("shuffle"));
 let lastClickedButton = null;
 
-const sections = [
-  new Section(scenarios),
-  new Section(modules),
-  new Section(heroes),
-  new Section(aspects),
-];
+const scenario = new Section(scenarios);
+const module = new Section(modules, scenario);
+const hero = new Section(heroes);
+const aspect = new Section(aspects, hero);
+const sections = [scenario, module, hero, aspect];
 
 function shuffleAll() {
   sections.forEach((section) => section.shuffle());
@@ -202,7 +317,6 @@ window.addEventListener("click", (event) => {
   lastClickedButton = event.target.tagName === "BUTTON" ? event.target : null;
 });
 
-sections.forEach((section) => section.initialize());
 shuffleAllButton.addEventListener("click", () => shuffleAll());
 settingsButton.addEventListener("click", () => toggleSettings());
 

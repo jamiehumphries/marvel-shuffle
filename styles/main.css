@@ -20,17 +20,29 @@
   --button-scale-factor: 1;
   --layout-scale-factor: 1;
 
-  --card-header-height: 50px;
-  --base-card-width: 294px;
-  --base-card-height: 418px;
-  --card-width: calc(var(--base-card-width) * var(--layout-scale-factor));
-  --card-height: calc(var(--base-card-height) * var(--layout-scale-factor));
+  --card-header-height-px: 50;
+  --card-header-height: calc(var(--card-header-height-px) * 1px);
+  --base-card-width-px: 294;
+  --base-card-height-px: 418;
+  --card-width: calc(
+    var(--base-card-width-px) * var(--layout-scale-factor) * 1px
+  );
+  --card-height: calc(
+    var(--base-card-height-px) * var(--layout-scale-factor) * 1px
+  );
+  --slot-landscape-ratio: calc(
+    (var(--base-card-width-px) + var(--card-header-height-px)) /
+      (var(--base-card-height-px) + var(--card-header-height-px))
+  );
 
   --flip-duration: 1000ms;
-  --card-change-delay-ms: 360; /* No units, so JavaScript can fetch and parse. */
+  --card-change-delay-ms: 360;
   --card-change-duration: calc(
     var(--flip-duration) - var(--card-change-delay-ms) * 1ms
   );
+
+  --portrait-cards-in-section: 0;
+  --landscape-cards-in-section: 0;
 }
 
 @font-face {
@@ -205,7 +217,6 @@ button#settings:disabled {
 
 .section {
   margin: 10px 0;
-  perspective: calc(800px * var(--layout-scale-factor));
 }
 
 .options {
@@ -293,8 +304,22 @@ input:active ~ .checkmark {
   }
 }
 
+.slots {
+  perspective: calc(
+    2.7 * var(--card-width) *
+      (
+        var(--portrait-cards-in-section) +
+          (var(--landscape-cards-in-section) * var(--slot-landscape-ratio))
+      )
+  );
+
+  transition: perspective var(--card-change-duration);
+}
+
 .slot {
   position: relative;
+
+  opacity: 1;
 
   margin: auto;
   width: var(--card-width);
@@ -308,17 +333,23 @@ input:active ~ .checkmark {
   height: calc(var(--card-header-height) + var(--card-width));
 }
 
-.slot.flipping {
+.flipping .slot {
   transform: rotateY(720deg);
 }
 
 .container:not(.init) .slot {
   transition: transform var(--flip-duration), width var(--card-change-duration),
-    height var(--card-change-duration);
+    height var(--card-change-duration), opacity var(--card-change-duration);
 }
 
-.container:not(.init) .slot.flipped {
+.container:not(.init) .flipped .slot {
   transition: none;
+}
+
+.slot.hidden {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
 }
 
 .header {

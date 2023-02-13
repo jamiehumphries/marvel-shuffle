@@ -108,7 +108,7 @@ class Section {
     const exclude = parentSection ? [...parentSection.excludedChildCards] : [];
     return (
       this.cards.length === cardCount &&
-      this.cards.every((card) => !exclude.includes(card))
+      this.cards.every((card) => card.checked && !exclude.includes(card))
     );
   }
 
@@ -305,7 +305,6 @@ const container = document.querySelector(".container");
 const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");
 let lastClickedButton = null;
-let settingsChanged = false;
 
 const scenario = new Section(scenarios);
 const module = new Section(modules, scenario);
@@ -320,9 +319,10 @@ function shuffleAll() {
 function toggleSettings() {
   const settingsVisible = container.classList.toggle("show-settings");
   sections.forEach((section) => (section.button.disabled = settingsVisible));
-  if (!settingsVisible && settingsChanged) {
-    settingsChanged = false;
-    requestPostAnimationFrame(() => shuffleAll());
+  if (!settingsVisible) {
+    requestPostAnimationFrame(() =>
+      sections.forEach((section) => section.shuffleIfInvalid())
+    );
   }
 }
 
@@ -360,10 +360,6 @@ window.addEventListener("mousedown", () => {
 
 window.addEventListener("click", (event) => {
   lastClickedButton = event.target.tagName === "BUTTON" ? event.target : null;
-});
-
-window.addEventListener("change", () => {
-  settingsChanged = true;
 });
 
 shuffleAllButton.addEventListener("click", () => shuffleAll());

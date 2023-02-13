@@ -304,7 +304,6 @@ class Slot {
 const container = document.querySelector(".container");
 const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");
-const shuffleButtons = Array.from(document.getElementsByClassName("shuffle"));
 let lastClickedButton = null;
 let settingsChanged = false;
 
@@ -320,7 +319,7 @@ function shuffleAll() {
 
 function toggleSettings() {
   const settingsVisible = container.classList.toggle("show-settings");
-  shuffleButtons.forEach((button) => (button.disabled = settingsVisible));
+  sections.forEach((section) => (section.button.disabled = settingsVisible));
   if (!settingsVisible && settingsChanged) {
     settingsChanged = false;
     requestPostAnimationFrame(() => shuffleAll());

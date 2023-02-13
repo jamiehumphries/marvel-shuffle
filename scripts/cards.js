@@ -26,7 +26,7 @@ const scenarios = [
     new Scenario("Mutagen Formula")
   ),
   theWreckingCrew(
-    new Scenario("Wrecking Crew")
+    new Scenario("Wrecking Crew", { modules: 0 })
   ),
   theRiseOfRedSkull(
     new Scenario("Crossbones"),

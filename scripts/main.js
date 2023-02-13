@@ -41,6 +41,8 @@ class Section {
       throw new Error("All cards for a section must be the same type.");
     }, null);
 
+    this.allCards.push(this.type.placeholder);
+
     // Initialize layout.
     this.root = document.getElementById(this.type.id);
     appendSectionTo(this.root);
@@ -74,15 +76,15 @@ class Section {
     // Initialize cards.
     let savedCards;
     try {
-      const savedCardIds = JSON.parse(localStorage.getItem(this.type.id)) || [];
-      savedCards = savedCardIds.map((id) =>
-        this.allCards.find((card) => card.id === id)
-      );
+      const savedCardIds = JSON.parse(localStorage.getItem(this.type.id));
+      savedCards = savedCardIds
+        ? savedCardIds.map((id) => this.allCards.find((card) => card.id === id))
+        : null;
     } catch {
       localStorage.clear();
-      savedCards = [];
+      savedCards = null;
     }
-    this.cards = savedCards.length > 0 ? savedCards : [this.randomCard()];
+    this.cards = savedCards || [this.randomCard()];
 
     // Add event listeners.
     this.button = this.root.querySelector("button");
@@ -101,7 +103,7 @@ class Section {
   }
 
   get childCardCount() {
-    return (this.incomingCards || this.cards)[0].childCardCount;
+    return (this.incomingCards || this.cards)[0]?.childCardCount || 0;
   }
 
   get disabled() {
@@ -118,31 +120,33 @@ class Section {
   }
 
   set cards(value) {
-    const newCards = value;
-    this._cards = newCards;
+    this._cards = value;
+
+    const cardIds = value.map((card) => card.id);
+    localStorage.setItem(this.type.id, JSON.stringify(cardIds));
 
     this.name.innerText =
-      newCards.length === 1 ? this.type.name : this.type.namePlural;
+      value.length === 1 ? this.type.name : this.type.namePlural;
+
+    const slotCards = value.length > 0 ? value : [this.type.placeholder];
 
     const { style } = this.root;
-    const landscapeCount = newCards.filter((card) => card.isLandscape).length;
-    const portraitCount = newCards.length - landscapeCount;
+    const landscapeCount = slotCards.filter((card) => card.isLandscape).length;
+    const portraitCount = slotCards.length - landscapeCount;
     style.setProperty("--landscape-cards-in-section", landscapeCount);
     style.setProperty("--portrait-cards-in-section", portraitCount);
 
     for (let i = 0; i < this.slots.length; i++) {
-      this.slots[i].card = newCards[i];
+      this.slots[i].card = slotCards[i];
     }
-
-    const cardIds = newCards.map((card) => card.id);
-    localStorage.setItem(this.type.id, JSON.stringify(cardIds));
   }
 
   shuffle({ preventRepeat = false } = {}) {
     this.disabled = true;
     this.root.classList.add("flipping");
 
-    const cardCount = this.parentSection?.childCardCount || 1;
+    const parentSection = this.parentSection;
+    const cardCount = parentSection ? this.parentSection.childCardCount : 1;
     const newCards = [];
 
     for (let i = 0; i < cardCount; i++) {

@@ -95,18 +95,6 @@ class CardSet extends Option {
 }
 
 class Card extends Option {
-  static get id() {
-    return this.slug;
-  }
-
-  static get slug() {
-    return (this._slug ||= slug(this.name));
-  }
-
-  static get namePlural() {
-    return (this._name ||= `${this.name}s`);
-  }
-
   constructor(
     name,
     {
@@ -123,11 +111,33 @@ class Card extends Option {
     this.frontSrc = image(this.slug, "front.png");
     this.backSrc = hasBack ? image(this.slug, "back.png") : image("back.png");
   }
+
+  static get id() {
+    return this.slug;
+  }
+
+  static get slug() {
+    return (this._slug ||= slug(this.name));
+  }
+
+  static get namePlural() {
+    return (this._name ||= `${this.name}s`);
+  }
+
+  static get placeholder() {
+    if (this._placeholder) {
+      return this._placeholder;
+    }
+    const card = new this(`No ${this.namePlural} needed`);
+    card.frontSrc = card.backSrc = `images/${this.slug}/back.png`;
+    return (this._placeholder = card);
+  }
 }
 
 class Scenario extends Card {
-  constructor(name, { hasBack = false } = {}) {
-    super(name, { hasBack });
+  constructor(name, { hasBack = false, modules = 1 } = {}) {
+    const childCardCount = modules;
+    super(name, { hasBack, childCardCount });
   }
 }
 
@@ -138,15 +148,15 @@ class Module extends Card {
 }
 
 class Hero extends Card {
-  static get namePlural() {
-    return "Heroes";
-  }
-
   constructor(name, { alterEgo = null, aspects = 1 } = {}) {
     const variant = alterEgo;
     const hasBack = true;
     const childCardCount = aspects;
     super(name, { variant, hasBack, childCardCount });
+  }
+
+  static get namePlural() {
+    return "Heroes";
   }
 }
 

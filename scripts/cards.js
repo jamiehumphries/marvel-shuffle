@@ -14,66 +14,26 @@ const mutantGenesis = set.bind(null, "Mutant Genesis");
 const mojoMania = set.bind(null, "MojoMania");
 const printAndPlay = set.bind(null, "Print-and-Play");
 
-// prettier-ignore
-const scenarios = [
-  coreSet(
-    new Scenario("Rhino"),
-    new Scenario("Klaw"),
-    new Scenario("Ultron")
-  ),
-  theGreenGoblin(
-    new Scenario("Risky Business", { hasBack: true }),
-    new Scenario("Mutagen Formula")
-  ),
-  theWreckingCrew(
-    new Scenario("Wrecking Crew", { modules: 0 })
-  ),
-  theRiseOfRedSkull(
-    new Scenario("Crossbones"),
-    new Scenario("Absorbing Man"),
-    new Scenario("Taskmaster"),
-    new Scenario("Zola"),
-    new Scenario("Red Skull")
-  ),
-  theOnceAndFutureKang(
-    new Scenario("Kang")
-  ),
-  theGalaxysMostWanted(
-    new Scenario("Brotherhood of Badoon"),
-    new Scenario("Infiltrate the Museum"),
-    new Scenario("Escape the Museum", { hasBack: true }),
-    new Scenario("Nebula"),
-    new Scenario("Ronan the Accuser")
-  ),
-  theMadTitansShadow(
-    new Scenario("Ebony Maw"),
-    new Scenario("Tower Defense", { hasBack: true }),
-    new Scenario("Thanos"),
-    new Scenario("Hela", { hasBack: true }),
-    new Scenario("Loki")
-  ),
-  theHood(
-    new Scenario("The Hood")
-  ),
-  sinisterMotives(
-    new Scenario("Sandman"),
-    new Scenario("Venom"),
-    new Scenario("Mysterio"),
-    new Scenario("The Sinister Six"),
-    new Scenario("Venom Goblin")
-  ),
-  mutantGenesis(
-    new Scenario("Sabretooth"),
-    new Scenario("Project Wideawake"),
-    new Scenario("Master Mold"),
-    new Scenario("Mansion Attack", { hasBack: true }),
-    new Scenario("Magneto")
-  ),
-  mojoMania(
-    new Scenario("Magog", { hasBack: true }),
-    new Scenario("Spiral", { hasBack: true }),
-    new Scenario("Mojo")
-  ),
+// Modules required by a scenario.
+const experimentalWeapons = new Module("Experimental Weapons");
+const hydraPatrol = new Module("Hydra Patrol", { isLandscape: true });
+const galacticArtifacts = new Module("Galactic Artifacts");
+const shipCommand = new Module("Ship Command");
+const infinityGauntlet = new Module("Infinity Gauntlet");
+const cityInChaos = new Module("City in Chaos", { isLandscape: true });
+const guerillaTactics = new Module("Guerilla Tactics");
+const personalNightmare = new Module("Personal Nightmare");
+const symbioticStrength = new Module("Symbiotic Strength");
+const brotherhood = new Module("Brotherhood", { isLandscape: true });
+const zeroTolerance = new Module("Zero Tolerance", { isLandscape: true });
+const sentinels = new Module("Sentinels");
+const mojoManiaModules = [
+  new Module("Crime"),
+  new Module("Fantasy"),
+  new Module("Horror"),
+  new Module("Sci-Fi"),
+  new Module("Sitcom"),
+  new Module("Western"),
 ];
 
 // prettier-ignore
@@ -92,10 +52,10 @@ const modules = [
     new Module("Running Interference", { isLandscape: true })
   ),
   theRiseOfRedSkull(
-    new Module("Experimental Weapons"),
+    experimentalWeapons,
     new Module("Hydra Assault"),
     new Module("Weapon Master"),
-    new Module("Hydra Patrol", { isLandscape: true })
+    hydraPatrol
   ),
   theOnceAndFutureKang(
     new Module("Temporal", { isLandscape: true }),
@@ -104,17 +64,17 @@ const modules = [
   ),
   theGalaxysMostWanted(
     new Module("Band of Badoon"),
-    new Module("Galactic Artifacts"),
+    galacticArtifacts,
     new Module("Kree Militants"),
     new Module("Menagerie Medley"),
     new Module("Space Pirates"),
-    new Module("Ship Command")
+    shipCommand
   ),
   theMadTitansShadow(
     new Module("Black Order", { isLandscape: true }),
     new Module("Armies of Titan"),
     new Module("Children of Thanos"),
-    new Module("Infinity Gauntlet"),
+    infinityGauntlet,
     new Module("Legions of Hel", { isLandscape: true }),
     new Module("Frost Giants"),
     new Module("Enchantress")
@@ -131,34 +91,107 @@ const modules = [
     new Module("Wrecking Crew")
   ),
   sinisterMotives(
-    new Module("City in Chaos", { isLandscape: true }),
+    cityInChaos,
     new Module("Down to Earth"),
     new Module("Goblin Gear"),
-    new Module("Guerilla Tactics"),
+    guerillaTactics,
     new Module("Osborn Tech"),
-    new Module("Personal Nightmare"),
+    personalNightmare,
     new Module("Sinister Assault"),
-    new Module("Symbiotic Strength"),
+    symbioticStrength,
     new Module("Whispers of Paranoia")
   ),
   mutantGenesis(
-    new Module("Brotherhood", { isLandscape: true }),
+    brotherhood,
     new Module("Mystique"),
-    new Module("Zero Tolerance", { isLandscape: true }),
-    new Module("Sentinels"),
+    zeroTolerance,
+    sentinels,
     new Module("Acolytes", { isLandscape: true }),
     new Module("Future Past", { isLandscape: true })
   ),
-  mojoMania(
-    new Module("Crime"),
-    new Module("Fantasy"),
-    new Module("Horror"),
-    new Module("Sci-Fi"),
-    new Module("Sitcom"),
-    new Module("Western")
-  ),
+  mojoMania(...mojoManiaModules),
   printAndPlay(
     new Module("Kree Fanatic")
+  ),
+];
+
+const allModules = modules.flatMap(
+  (cardOrSet) => cardOrSet.children || [cardOrSet]
+);
+
+const allModulesExceptMojoMania = allModules.filter(
+  (module) => !mojoManiaModules.includes(module)
+);
+
+// prettier-ignore
+const scenarios = [
+  coreSet(
+    new Scenario("Rhino", 1),
+    new Scenario("Klaw", 1),
+    new Scenario("Ultron", 1)
+  ),
+  theGreenGoblin(
+    new Scenario("Risky Business", 1,  { hasBack: true }),
+    new Scenario("Mutagen Formula", 1)
+  ),
+  theWreckingCrew(
+    new Scenario("Wrecking Crew", 0)
+  ),
+  theRiseOfRedSkull(
+    new Scenario("Crossbones", 3, { exclude: [experimentalWeapons] }),
+    new Scenario("Absorbing Man", 1),
+    new Scenario("Taskmaster", 1, { exclude: [hydraPatrol] }),
+    new Scenario("Zola", 1),
+    new Scenario("Red Skull", 2)
+  ),
+  theOnceAndFutureKang(
+    new Scenario("Kang", 1)
+  ),
+  theGalaxysMostWanted(
+    new Scenario("Brotherhood of Badoon", 1, { exclude: [shipCommand] }),
+    new Scenario("Infiltrate the Museum", 1, { exclude: [galacticArtifacts] }),
+    new Scenario("Escape the Museum", 1, { exclude: [galacticArtifacts, shipCommand], hasBack: true }),
+    new Scenario("Nebula", 1, { exclude: [shipCommand] }),
+    new Scenario("Ronan the Accuser", 1, { exclude: [shipCommand] })
+  ),
+  theMadTitansShadow(
+    new Scenario("Ebony Maw", 2),
+    new Scenario("Tower Defense", 1, { hasBack: true }),
+    new Scenario("Thanos", 2, { exclude: [infinityGauntlet] }),
+    new Scenario("Hela", 2, { hasBack: true }),
+    new Scenario("Loki", 2, { exclude: [infinityGauntlet] })
+  ),
+  theHood(
+    new Scenario("The Hood", 7)
+  ),
+  sinisterMotives(
+    new Scenario("Sandman", 1, { exclude: [cityInChaos] }),
+    new Scenario("Venom", 1, { exclude: [symbioticStrength] }),
+    new Scenario("Mysterio", 1, { exclude: [personalNightmare] }),
+    new Scenario("The Sinister Six", 0, { exclude: [guerillaTactics] }),
+    new Scenario("Venom Goblin", 1, { exclude: [symbioticStrength] })
+  ),
+  mutantGenesis(
+    new Scenario("Sabretooth", 2),
+    new Scenario("Project Wideawake", 1, { exclude: [zeroTolerance] }),
+    new Scenario("Master Mold", 1, { exclude: [sentinels] }),
+    new Scenario("Mansion Attack", 1, { exclude: [brotherhood], hasBack: true }),
+    new Scenario("Magneto", 1)
+  ),
+  mojoMania(
+    new Scenario("Magog", 1, { hasBack: true }),
+    new Scenario("Spiral", 3, { exclude: allModulesExceptMojoMania, hasBack: true }),
+    new Scenario("Mojo", 2, { exclude: allModulesExceptMojoMania })
+  ),
+];
+
+// prettier-ignore
+const aspects = [
+  coreSet(
+    new Aspect("Aggression"),
+    new Aspect("Justice"),
+    new Aspect("Leadership"),
+    new Aspect("Protection"),
   ),
 ];
 
@@ -219,16 +252,6 @@ const heroes = [
   new Hero("Storm"),
   new Hero("Gambit"),
   new Hero("Rogue"),
-];
-
-// prettier-ignore
-const aspects = [
-  coreSet(
-    new Aspect("Aggression"),
-    new Aspect("Justice"),
-    new Aspect("Leadership"),
-    new Aspect("Protection"),
-  ),
 ];
 
 export { scenarios, modules, heroes, aspects };

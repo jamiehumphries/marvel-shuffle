@@ -101,12 +101,14 @@ class Card extends Option {
       variant = null,
       isLandscape = false,
       childCardCount = 0,
+      excludedChildCards = [],
       hasBack = false,
     } = {}
   ) {
     super(name, { variant });
     this.isLandscape = isLandscape;
     this.childCardCount = childCardCount;
+    this.excludedChildCards = excludedChildCards;
     const image = (...path) => `images/${this.type.slug}/${path.join("/")}`;
     this.frontSrc = image(this.slug, "front.png");
     this.backSrc = hasBack ? image(this.slug, "back.png") : image("back.png");
@@ -135,9 +137,10 @@ class Card extends Option {
 }
 
 class Scenario extends Card {
-  constructor(name, { hasBack = false, modules = 1 } = {}) {
+  constructor(name, modules, { exclude = [], hasBack = false } = {}) {
     const childCardCount = modules;
-    super(name, { hasBack, childCardCount });
+    const excludedChildCards = exclude;
+    super(name, { hasBack, childCardCount, excludedChildCards });
   }
 }
 

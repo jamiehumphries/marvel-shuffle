@@ -29,13 +29,13 @@ class Section {
       this.parentSection.childSection = this;
     }
 
-    this.allCards = cardsOrSets.reduce((cards, cardOrSet) => {
-      return cards.concat(cardOrSet.children || [cardOrSet]);
-    }, []);
+    this.allCards = cardsOrSets.flatMap(
+      (cardOrSet) => cardOrSet.children || [cardOrSet]
+    );
 
     this.type = this.allCards.reduce((type, card) => {
       const cardType = card.constructor;
-      if (type == null || type == cardType) {
+      if (type === null || type === cardType) {
         return cardType;
       }
       throw new Error("All cards for a section must be the same type.");
@@ -53,10 +53,14 @@ class Section {
     const selectText = `Select ${this.type.namePlural}`;
     this.root.querySelector(".select").innerText = selectText;
 
-    const slots = this.root.querySelector(".slots");
+    const slotsContainer = this.root.querySelector(".slots");
     for (let i = 0; i < this.maxSlots; i++) {
-      appendSlotTo(slots);
+      appendSlotTo(slotsContainer);
     }
+
+    this.slots = Array.from(this.root.querySelectorAll(".slot")).map(
+      (element) => new Slot(element)
+    );
 
     // Initialize options.
     const options = this.root.querySelector(".options");
@@ -68,34 +72,18 @@ class Section {
       toggleSettings();
     });
 
-    // Initialize slots.
-    this.slots = Array.from(this.root.querySelectorAll(".slot")).map(
-      (element) => new Slot(element)
-    );
-
-    // Initialize cards.
-    let savedCards;
-    try {
-      const savedCardIds = JSON.parse(localStorage.getItem(this.type.id));
-      savedCards = savedCardIds
-        ? savedCardIds.map((id) => this.allCards.find((card) => card.id === id))
-        : null;
-    } catch {
-      localStorage.clear();
-      savedCards = null;
-    }
-    this.cards = savedCards || [this.randomCard()];
-
-    // Add event listeners.
+    // Initialize shuffling.
     this.button = this.root.querySelector("button");
     this.button.addEventListener("click", () => {
-      const childCardCountBefore = this.childCardCount;
       this.shuffle({ preventRepeat: true });
-      this.shuffleChildSection = this.childCardCount !== childCardCountBefore;
     });
     this.root.addEventListener("transitionend", (event) =>
       this.onTransitionEnd(event)
     );
+
+    // Initialize cards.
+    this.cards = this.loadCards();
+    this.shuffleIfInvalid({ animate: false });
   }
 
   get maxChildCardCount() {
@@ -103,7 +91,25 @@ class Section {
   }
 
   get childCardCount() {
-    return (this.incomingCards || this.cards)[0]?.childCardCount || 0;
+    return this.primaryCard?.childCardCount || 0;
+  }
+
+  get excludedChildCards() {
+    return this.primaryCard?.excludedChildCards || [];
+  }
+
+  get primaryCard() {
+    return (this.incomingCards || this.cards)[0];
+  }
+
+  get valid() {
+    const parentSection = this.parentSection;
+    const cardCount = parentSection ? parentSection.childCardCount : 1;
+    const exclude = parentSection ? [...parentSection.excludedChildCards] : [];
+    return (
+      this.cards.length === cardCount &&
+      this.cards.every((card) => !exclude.includes(card))
+    );
   }
 
   get disabled() {
@@ -121,9 +127,7 @@ class Section {
 
   set cards(value) {
     this._cards = value;
-
-    const cardIds = value.map((card) => card.id);
-    localStorage.setItem(this.type.id, JSON.stringify(cardIds));
+    this.saveCards(value);
 
     this.name.innerText =
       value.length === 1 ? this.type.name : this.type.namePlural;
@@ -141,20 +145,28 @@ class Section {
     }
   }
 
-  shuffle({ preventRepeat = false } = {}) {
-    this.disabled = true;
-    this.root.classList.add("flipping");
+  shuffleIfInvalid({ animate = true } = {}) {
+    if (!this.valid && !this.disabled) {
+      this.shuffle({ animate });
+    }
+  }
 
+  shuffle({ animate = true, preventRepeat = false } = {}) {
     const parentSection = this.parentSection;
-    const cardCount = parentSection ? this.parentSection.childCardCount : 1;
+    const cardCount = parentSection ? parentSection.childCardCount : 1;
+    const exclude = parentSection ? [...parentSection.excludedChildCards] : [];
     const newCards = [];
 
     for (let i = 0; i < cardCount; i++) {
       const oldCard = this.cards[i];
-      const exclude = newCards;
       const preferExclude = preventRepeat ? oldCard : null;
       const newCard = this.randomCard({ exclude, preferExclude });
       newCards.push(newCard);
+      exclude.push(newCard);
+
+      if (!animate) {
+        continue;
+      }
 
       // Preload new images.
       for (const src of ["frontSrc", "backSrc"]) {
@@ -164,8 +176,14 @@ class Section {
       }
     }
 
-    this.incomingCards = newCards;
-    setTimeout(() => (this.cards = newCards), cardChangeDelayMs);
+    if (animate) {
+      this.disabled = true;
+      this.root.classList.add("flipping");
+      this.incomingCards = newCards;
+      setTimeout(() => (this.cards = newCards), cardChangeDelayMs);
+    } else {
+      this.cards = newCards;
+    }
   }
 
   randomCard({ exclude = [], preferExclude = null } = []) {
@@ -179,17 +197,24 @@ class Section {
 
     if (availableCards.length === 0) {
       this.selectMoreOptions();
-      return this.randomCard();
+      return this.randomCard({ exclude, preferExclude });
     }
 
     return availableCards[Math.floor(Math.random() * availableCards.length)];
   }
 
   selectMoreOptions() {
-    const firstUncheckedOption = this.cardsOrSets.find(
-      (cardOrSet) => !cardOrSet.checked
+    const parentSet = this.cardsOrSets.find(
+      (set) => set.name === this.parentSection?.primaryCard?.parent?.name
     );
-    firstUncheckedOption.checked = true;
+    if (parentSet && !parentSet.checked) {
+      parentSet.checked = true;
+    } else {
+      const firstUncheckedOption = this.cardsOrSets.find(
+        (cardOrSet) => !cardOrSet.checked
+      );
+      firstUncheckedOption.checked = true;
+    }
   }
 
   onTransitionEnd(event) {
@@ -203,13 +228,28 @@ class Section {
     this.disabled = false;
     this.incomingCards = null;
 
-    if (this.shuffleChildSection) {
-      this.childSection.shuffle();
-      this.shuffleChildSection = false;
-    }
-
+    this.childSection?.shuffleIfInvalid();
     maybeReturnFocusAfterShuffle();
+
     requestPostAnimationFrame(() => this.root.classList.remove("flipped"));
+  }
+
+  loadCards() {
+    try {
+      const savedCardIds = JSON.parse(localStorage.getItem(this.type.id));
+      return savedCardIds
+        ? savedCardIds.map((id) => this.allCards.find((card) => card.id === id))
+        : [];
+    } catch {
+      localStorage.clear();
+      return [];
+    }
+  }
+
+  saveCards(cards) {
+    const cardIds = cards.map((card) => card.id);
+    localStorage.setItem(this.type.id, JSON.stringify(cardIds));
+    return cards;
   }
 }
 

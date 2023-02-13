@@ -262,6 +262,7 @@ const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");
 const shuffleButtons = Array.from(document.getElementsByClassName("shuffle"));
 let lastClickedButton = null;
+let settingsChanged = false;
 
 const scenario = new Section(scenarios);
 const module = new Section(modules, scenario);
@@ -276,7 +277,8 @@ function shuffleAll() {
 function toggleSettings() {
   const settingsVisible = container.classList.toggle("show-settings");
   shuffleButtons.forEach((button) => (button.disabled = settingsVisible));
-  if (!settingsVisible) {
+  if (!settingsVisible && settingsChanged) {
+    settingsChanged = false;
     requestPostAnimationFrame(() => shuffleAll());
   }
 }
@@ -315,6 +317,10 @@ window.addEventListener("mousedown", () => {
 
 window.addEventListener("click", (event) => {
   lastClickedButton = event.target.tagName === "BUTTON" ? event.target : null;
+});
+
+window.addEventListener("change", () => {
+  settingsChanged = true;
 });
 
 shuffleAllButton.addEventListener("click", () => shuffleAll());

@@ -1,6 +1,8 @@
 import { CardSet, Scenario, Module, Hero, Aspect } from "./options.js";
 
 const set = (name, ...cards) => new CardSet(name, cards);
+
+// Sets with modules.
 const coreSet = set.bind(null, "Core Set");
 const theGreenGoblin = set.bind(null, "The Green Goblin");
 const theWreckingCrew = set.bind(null, "The Wrecking Crew");
@@ -10,8 +12,16 @@ const theGalaxysMostWanted = set.bind(null, "The Galaxy’s Most Wanted");
 const theMadTitansShadow = set.bind(null, "The Mad Titan’s Shadow");
 const theHood = set.bind(null, "The Hood");
 const sinisterMotives = set.bind(null, "Sinister Motives");
+const nova = set.bind(null, "Nova");
+const ironheart = set.bind(null, "Ironheart");
+const spiderHam = set.bind(null, "Spider-Ham");
+const spdr = set.bind(null, "Sp//dr");
 const mutantGenesis = set.bind(null, "Mutant Genesis");
 const mojoMania = set.bind(null, "MojoMania");
+const wolverine = set.bind(null, "Wolverine");
+const storm = set.bind(null, "Storm");
+const gambit = set.bind(null, "Gambit");
+const rogue = set.bind(null, "Rogue");
 const printAndPlay = set.bind(null, "Print-and-Play");
 
 // Modules required by a scenario.
@@ -101,6 +111,18 @@ const modules = [
     symbioticStrength,
     new Module("Whispers of Paranoia")
   ),
+  nova(
+    new Module("Armadillo")
+  ),
+  ironheart(
+    new Module("Zzzax")
+  ),
+  spiderHam(
+    new Module("The Inheritors")
+  ),
+  spdr(
+    new Module("Iron Spider’s Sinister Six")
+  ),
   mutantGenesis(
     brotherhood,
     new Module("Mystique"),
@@ -110,6 +132,18 @@ const modules = [
     new Module("Future Past", { isLandscape: true })
   ),
   mojoMania(...mojoManiaModules),
+  wolverine(
+    new Module("Deathstrike")
+  ),
+  storm(
+    new Module("Shadow King")
+  ),
+  gambit(
+    new Module("Exodus")
+  ),
+  rogue(
+    new Module("Reavers", { isLandscape: true })
+  ),
   printAndPlay(
     new Module("Kree Fanatic")
   ),

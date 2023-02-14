@@ -73,6 +73,12 @@ class All extends Option {
     const type = section.type;
     const children = section.cardsOrSets;
     super(name, { type, children });
+
+    this.setChecked(
+      children.every((child) => child.checked),
+      false,
+      false
+    );
   }
 
   appendTo(element) {

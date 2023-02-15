@@ -2,7 +2,8 @@ import { CardSet, Scenario, Module, Hero, Aspect } from "./options.js";
 
 const set = (name, ...cards) => new CardSet(name, cards);
 
-// Sets with modules.
+// SETS
+
 const coreSet = set.bind(null, "Core Set");
 const theGreenGoblin = set.bind(null, "The Green Goblin");
 const theWreckingCrew = set.bind(null, "The Wrecking Crew");
@@ -24,268 +25,303 @@ const gambit = set.bind(null, "Gambit");
 const rogue = set.bind(null, "Rogue");
 const printAndPlay = set.bind(null, "Print-and-Play");
 
-// Modules required by a scenario.
-const experimentalWeapons = new Module("Experimental Weapons");
-const hydraPatrol = new Module("Hydra Patrol", { isLandscape: true });
-const galacticArtifacts = new Module("Galactic Artifacts");
-const shipCommand = new Module("Ship Command");
-const infinityGauntlet = new Module("Infinity Gauntlet");
-const cityInChaos = new Module("City in Chaos", { isLandscape: true });
-const guerillaTactics = new Module("Guerilla Tactics");
-const personalNightmare = new Module("Personal Nightmare");
-const symbioticStrength = new Module("Symbiotic Strength");
-const brotherhood = new Module("Brotherhood", { isLandscape: true });
-const zeroTolerance = new Module("Zero Tolerance", { isLandscape: true });
-const sentinels = new Module("Sentinels");
-const mojoManiaModules = [
-  new Module("Crime"),
-  new Module("Fantasy"),
-  new Module("Horror"),
-  new Module("Sci-Fi"),
-  new Module("Sitcom"),
-  new Module("Western"),
-];
+// MODULES
+
+const module = (name, options) => new Module(name, options);
 
 // prettier-ignore
 const modules = [
   coreSet(
-    new Module("Bomb Scare", { isLandscape: true }),
-    new Module("Masters of Evil", { isLandscape: true }),
-    new Module("Under Attack", { isLandscape: true }),
-    new Module("Legions of Hydra", { isLandscape: true }),
-    new Module("The Doomsday Chair", { isLandscape: true })
+    module("Bomb Scare", { isLandscape: true }),
+    module("Masters of Evil", { isLandscape: true }),
+    module("Under Attack", { isLandscape: true }),
+    module("Legions of Hydra", { isLandscape: true }),
+    module("The Doomsday Chair", { isLandscape: true })
   ),
   theGreenGoblin(
-    new Module("Goblin Gimmicks"),
-    new Module("A Mess of Things", { isLandscape: true }),
-    new Module("Power Drain", { isLandscape: true }),
-    new Module("Running Interference", { isLandscape: true })
+    module("Goblin Gimmicks"),
+    module("A Mess of Things", { isLandscape: true }),
+    module("Power Drain", { isLandscape: true }),
+    module("Running Interference", { isLandscape: true })
   ),
   theRiseOfRedSkull(
-    experimentalWeapons,
-    new Module("Hydra Assault"),
-    new Module("Weapon Master"),
-    hydraPatrol
+    module("Experimental Weapons"),
+    module("Hydra Assault"),
+    module("Weapon Master"),
+    module("Hydra Patrol", { isLandscape: true })
   ),
   theOnceAndFutureKang(
-    new Module("Temporal", { isLandscape: true }),
-    new Module("Anachronauts", { isLandscape: true }),
-    new Module("Master of Time")
+    module("Temporal", { isLandscape: true }),
+    module("Anachronauts", { isLandscape: true }),
+    module("Master of Time")
   ),
   theGalaxysMostWanted(
-    new Module("Band of Badoon"),
-    galacticArtifacts,
-    new Module("Kree Militants"),
-    new Module("Menagerie Medley"),
-    new Module("Space Pirates"),
-    shipCommand
+    module("Band of Badoon"),
+    module("Galactic Artifacts"),
+    module("Kree Militants"),
+    module("Menagerie Medley"),
+    module("Space Pirates"),
+    module("Ship Command")
   ),
   theMadTitansShadow(
-    new Module("Black Order", { isLandscape: true }),
-    new Module("Armies of Titan"),
-    new Module("Children of Thanos"),
-    infinityGauntlet,
-    new Module("Legions of Hel", { isLandscape: true }),
-    new Module("Frost Giants"),
-    new Module("Enchantress")
+    module("Black Order", { isLandscape: true }),
+    module("Armies of Titan"),
+    module("Children of Thanos"),
+    module("Infinity Gauntlet"),
+    module("Legions of Hel", { isLandscape: true }),
+    module("Frost Giants"),
+    module("Enchantress")
   ),
   theHood(
-    new Module("Beasty Boys", { isLandscape: true }),
-    new Module("Brothers Grimm"),
-    new Module("Crossfire’s Crew"),
-    new Module("Mister Hyde"),
-    new Module("Ransacked Armory"),
-    new Module("Sinister Syndicate"),
-    new Module("State of Emergency"),
-    new Module("Streets of Mayhem"),
-    new Module("Wrecking Crew")
+    module("Beasty Boys", { isLandscape: true }),
+    module("Brothers Grimm"),
+    module("Crossfire’s Crew"),
+    module("Mister Hyde"),
+    module("Ransacked Armory"),
+    module("Sinister Syndicate"),
+    module("State of Emergency"),
+    module("Streets of Mayhem"),
+    module("Wrecking Crew")
   ),
   sinisterMotives(
-    cityInChaos,
-    new Module("Down to Earth"),
-    new Module("Goblin Gear"),
-    guerillaTactics,
-    new Module("Osborn Tech"),
-    personalNightmare,
-    new Module("Sinister Assault"),
-    symbioticStrength,
-    new Module("Whispers of Paranoia")
+    module("City in Chaos", { isLandscape: true }),
+    module("Down to Earth"),
+    module("Goblin Gear"),
+    module("Guerilla Tactics"),
+    module("Osborn Tech"),
+    module("Personal Nightmare"),
+    module("Sinister Assault"),
+    module("Symbiotic Strength"),
+    module("Whispers of Paranoia")
   ),
   nova(
-    new Module("Armadillo")
+    module("Armadillo")
   ),
   ironheart(
-    new Module("Zzzax")
+    module("Zzzax")
   ),
   spiderHam(
-    new Module("The Inheritors")
+    module("The Inheritors")
   ),
   spdr(
-    new Module("Iron Spider’s Sinister Six")
+    module("Iron Spider’s Sinister Six")
   ),
   mutantGenesis(
-    brotherhood,
-    new Module("Mystique"),
-    zeroTolerance,
-    sentinels,
-    new Module("Acolytes", { isLandscape: true }),
-    new Module("Future Past", { isLandscape: true })
+    module("Brotherhood", { isLandscape: true }),
+    module("Mystique"),
+    module("Zero Tolerance", { isLandscape: true }),
+    module("Sentinels"),
+    module("Acolytes", { isLandscape: true }),
+    module("Future Past", { isLandscape: true })
   ),
-  mojoMania(...mojoManiaModules),
+  mojoMania(
+    module("Crime"),
+    module("Fantasy"),
+    module("Horror"),
+    module("Sci-Fi"),
+    module("Sitcom"),
+    module("Western")
+  ),
   wolverine(
-    new Module("Deathstrike")
+    module("Deathstrike")
   ),
   storm(
-    new Module("Shadow King")
+    module("Shadow King")
   ),
   gambit(
-    new Module("Exodus")
+    module("Exodus")
   ),
   rogue(
-    new Module("Reavers", { isLandscape: true })
+    module("Reavers", { isLandscape: true })
   ),
   printAndPlay(
-    new Module("Kree Fanatic")
+    module("Kree Fanatic")
   ),
 ];
+
+// SCENARIOS
 
 const allModules = modules.flatMap(
   (cardOrSet) => cardOrSet.children || [cardOrSet]
 );
 
-const allModulesExceptMojoMania = allModules.filter(
-  (module) => !mojoManiaModules.includes(module)
-);
+const nonMojoManiaModules = modules.flatMap((cardOrSet) => {
+  if (cardOrSet.name === "MojoMania") {
+    return [];
+  }
+  return cardOrSet.children?.map((card) => card.name) || [cardOrSet.name];
+});
+
+const findModule = (name) => {
+  if (name === null) {
+    return null;
+  }
+  const matchingModule = allModules.find((module) => module.name === name);
+  if (!matchingModule) {
+    throw new Error(`Could not find moduled named '${name}'.`);
+  }
+  return matchingModule;
+};
+
+const scenario = (name, moduleNamesOrNumber, options = {}) => {
+  options.exclude &&= options.exclude.map((name) => findModule(name));
+
+  if (typeof moduleNamesOrNumber === "number") {
+    const number = moduleNamesOrNumber;
+    return new Scenario(name, number, options);
+  }
+
+  let moduleNames = moduleNamesOrNumber;
+  moduleNames = Array.isArray(moduleNames) ? moduleNames : [moduleNames];
+  const modules = moduleNames.map((name) => findModule(name));
+  return new Scenario(name, modules, options);
+};
 
 // prettier-ignore
 const scenarios = [
   coreSet(
-    new Scenario("Rhino", 1),
-    new Scenario("Klaw", 1),
-    new Scenario("Ultron", 1)
+    scenario("Rhino", "Bomb Scare"),
+    scenario("Klaw", "Masters of Evil"),
+    scenario("Ultron", "Under Attack")
   ),
   theGreenGoblin(
-    new Scenario("Risky Business", 1,  { hasBack: true }),
-    new Scenario("Mutagen Formula", 1)
+    scenario("Risky Business", "Goblin Gimmicks",  { hasBack: true }),
+    scenario("Mutagen Formula", "Goblin Gimmicks")
   ),
   theWreckingCrew(
-    new Scenario("Wrecking Crew", 0)
+    scenario("Wrecking Crew", 0)
   ),
   theRiseOfRedSkull(
-    new Scenario("Crossbones", 3, { exclude: [experimentalWeapons] }),
-    new Scenario("Absorbing Man", 1),
-    new Scenario("Taskmaster", 1, { exclude: [hydraPatrol] }),
-    new Scenario("Zola", 1),
-    new Scenario("Red Skull", 2)
+    scenario("Crossbones", ["Hydra Assault", "Weapon Master", "Legions of Hydra"], { exclude: ["Experimental Weapons"] }),
+    scenario("Absorbing Man", "Hydra Patrol"),
+    scenario("Taskmaster", "Weapon Master", { exclude: ["Hydra Patrol"] }),
+    scenario("Zola", "Under Attack"),
+    scenario("Red Skull", ["Hydra Assault", "Hydra Patrol"])
   ),
   theOnceAndFutureKang(
-    new Scenario("Kang", 1)
+    scenario("Kang", "Temporal")
   ),
   theGalaxysMostWanted(
-    new Scenario("Brotherhood of Badoon", 1, { exclude: [shipCommand] }),
-    new Scenario("Infiltrate the Museum", 1, { exclude: [galacticArtifacts] }),
-    new Scenario("Escape the Museum", 1, { exclude: [galacticArtifacts, shipCommand], hasBack: true }),
-    new Scenario("Nebula", 1, { exclude: [shipCommand] }),
-    new Scenario("Ronan the Accuser", 1, { exclude: [shipCommand] })
+    scenario("Brotherhood of Badoon", "Band of Badoon", { exclude: ["Ship Command"] }),
+    scenario("Infiltrate the Museum", "Menagerie Medley", { exclude: ["Galactic Artifacts"] }),
+    scenario("Escape the Museum", "Menagerie Medley", { exclude: ["Galactic Artifacts", "Ship Command"], hasBack: true }),
+    scenario("Nebula", "Space Pirates", { exclude: ["Ship Command"] }),
+    scenario("Ronan the Accuser", "Kree Militants", { exclude: ["Ship Command"] })
   ),
   theMadTitansShadow(
-    new Scenario("Ebony Maw", 2),
-    new Scenario("Tower Defense", 1, { hasBack: true }),
-    new Scenario("Thanos", 2, { exclude: [infinityGauntlet] }),
-    new Scenario("Hela", 2, { hasBack: true }),
-    new Scenario("Loki", 2, { exclude: [infinityGauntlet] })
+    scenario("Ebony Maw", ["Armies of Titan", "Black Order"]),
+    scenario("Tower Defense", "Armies of Titan", { hasBack: true }),
+    scenario("Thanos", ["Black Order", "Children of Thanos"], { exclude: ["Infinity Gauntlet"] }),
+    scenario("Hela", ["Legions of Hel", "Frost Giants"], { hasBack: true }),
+    scenario("Loki", ["Enchantress", "Frost Giants"], { exclude: ["Infinity Gauntlet"] })
   ),
   theHood(
-    new Scenario("The Hood", 7)
+    scenario("The Hood", 7)
   ),
   sinisterMotives(
-    new Scenario("Sandman", 1, { exclude: [cityInChaos] }),
-    new Scenario("Venom", 1, { exclude: [symbioticStrength] }),
-    new Scenario("Mysterio", 1, { exclude: [personalNightmare] }),
-    new Scenario("The Sinister Six", 0, { exclude: [guerillaTactics] }),
-    new Scenario("Venom Goblin", 1, { exclude: [symbioticStrength] })
+    scenario("Sandman", "Down to Earth", { exclude: ["City in Chaos"] }),
+    scenario("Venom", "Down to Earth", { exclude: ["Symbiotic Strength"] }),
+    scenario("Mysterio", "Whispers of Paranoia", { exclude: ["Personal Nightmare"] }),
+    scenario("The Sinister Six", 0, { exclude: ["Guerilla Tactics"] }),
+    scenario("Venom Goblin", "Goblin Gear", { exclude: ["Symbiotic Strength"] })
   ),
   mutantGenesis(
-    new Scenario("Sabretooth", 2),
-    new Scenario("Project Wideawake", 1, { exclude: [zeroTolerance] }),
-    new Scenario("Master Mold", 1, { exclude: [sentinels] }),
-    new Scenario("Mansion Attack", 1, { exclude: [brotherhood], hasBack: true }),
-    new Scenario("Magneto", 1)
+    scenario("Sabretooth", ["Brotherhood", "Mystique"]),
+    scenario("Project Wideawake", "Sentinels", { exclude: ["Zero Tolerance"] }),
+    scenario("Master Mold", "Zero Tolerance", { exclude: ["Sentinels"] }),
+    scenario("Mansion Attack", "Mystique", { exclude: ["Brotherhood"], hasBack: true }),
+    scenario("Magneto", "Acolytes")
   ),
   mojoMania(
-    new Scenario("Magog", 1, { hasBack: true }),
-    new Scenario("Spiral", 3, { exclude: allModulesExceptMojoMania, hasBack: true }),
-    new Scenario("Mojo", 2, { exclude: allModulesExceptMojoMania })
+    scenario("Magog", 1, { hasBack: true }),
+    scenario("Spiral", 3, { exclude: nonMojoManiaModules, hasBack: true }),
+    scenario("Mojo", 2, { exclude: nonMojoManiaModules })
   ),
 ];
+
+// ASPECTS
+
+const aspect = (name) => new Aspect(name);
+
+const AGGRESSION = aspect("Aggression");
+const JUSTICE = aspect("Justice");
+const LEADERSHIP = aspect("Leadership");
+const PROTECTION = aspect("Protection");
 
 // prettier-ignore
 const aspects = [
   coreSet(
-    new Aspect("Aggression"),
-    new Aspect("Justice"),
-    new Aspect("Leadership"),
-    new Aspect("Protection"),
+    AGGRESSION,
+    JUSTICE,
+    LEADERSHIP,
+    PROTECTION
   ),
 ];
+
+// HEROES
+
+const hero = (name, aspects, options) => {
+  aspects = Array.isArray(aspects) ? aspects : [aspects];
+  return new Hero(name, aspects, options);
+};
 
 // prettier-ignore
 const heroes = [
   coreSet(
-    new Hero("Black Panther"),
-    new Hero("Captain Marvel"),
-    new Hero("Iron Man"),
-    new Hero("She-Hulk"),
-    new Hero("Spider-Man", { alterEgo: "Peter Parker" })
+    hero("Black Panther", PROTECTION),
+    hero("Captain Marvel", LEADERSHIP),
+    hero("Iron Man", AGGRESSION),
+    hero("She-Hulk", AGGRESSION),
+    hero("Spider-Man", JUSTICE, { alterEgo: "Peter Parker" })
   ),
-  new Hero("Captain America"),
-  new Hero("Ms. Marvel"),
-  new Hero("Thor"),
-  new Hero("Black Widow"),
-  new Hero("Doctor Strange"),
-  new Hero("Hulk"),
+  hero("Captain America", LEADERSHIP),
+  hero("Ms. Marvel", PROTECTION),
+  hero("Thor", AGGRESSION),
+  hero("Black Widow", JUSTICE),
+  hero("Doctor Strange", PROTECTION),
+  hero("Hulk", AGGRESSION),
   theRiseOfRedSkull(
-    new Hero("Hawkeye"),
-    new Hero("Spider-Woman", { aspects: 2 })
+    hero("Hawkeye", LEADERSHIP),
+    hero("Spider-Woman", [AGGRESSION, JUSTICE])
   ),
-  new Hero("Ant-Man"),
-  new Hero("Wasp"),
-  new Hero("Quicksilver"),
-  new Hero("Scarlet Witch"),
+  hero("Ant-Man", LEADERSHIP),
+  hero("Wasp", AGGRESSION),
+  hero("Quicksilver", PROTECTION),
+  hero("Scarlet Witch", JUSTICE),
   theGalaxysMostWanted(
-    new Hero("Groot"),
-    new Hero("Rocket Raccoon")
+    hero("Groot", PROTECTION),
+    hero("Rocket Raccoon", AGGRESSION)
   ),
-  new Hero("Star-Lord"),
-  new Hero("Gamora"),
-  new Hero("Drax"),
-  new Hero("Venom"),
+  hero("Star-Lord", LEADERSHIP),
+  hero("Gamora", AGGRESSION),
+  hero("Drax", PROTECTION),
+  hero("Venom", JUSTICE),
   theMadTitansShadow(
-    new Hero("Spectrum"),
-    new Hero("Adam Warlock", { aspects: 4 })
+    hero("Spectrum", LEADERSHIP),
+    hero("Adam Warlock", [AGGRESSION, JUSTICE, LEADERSHIP, PROTECTION])
   ),
-  new Hero("Nebula"),
-  new Hero("War Machine"),
-  new Hero("Valkyrie"),
-  new Hero("Vision"),
+  hero("Nebula", JUSTICE),
+  hero("War Machine", LEADERSHIP),
+  hero("Valkyrie", AGGRESSION),
+  hero("Vision", PROTECTION),
   sinisterMotives(
-    new Hero("Ghost-Spider"),
-    new Hero("Spider-Man", { alterEgo: "Miles Morales" })
+    hero("Ghost-Spider", PROTECTION),
+    hero("Spider-Man", JUSTICE, { alterEgo: "Miles Morales" })
   ),
-  new Hero("Nova"),
-  new Hero("Ironheart"),
-  new Hero("Spider-Ham"),
-  new Hero("SP//dr"),
+  hero("Nova", AGGRESSION),
+  hero("Ironheart", LEADERSHIP),
+  hero("Spider-Ham", JUSTICE),
+  hero("SP//dr", PROTECTION),
   mutantGenesis(
-    new Hero("Colossus"),
-    new Hero("Shadowcat")
+    hero("Colossus", PROTECTION),
+    hero("Shadowcat", AGGRESSION)
   ),
-  new Hero("Cyclops"),
-  new Hero("Phoenix"),
-  new Hero("Wolverine"),
-  new Hero("Storm"),
-  new Hero("Gambit"),
-  new Hero("Rogue"),
+  hero("Cyclops", LEADERSHIP),
+  hero("Phoenix", JUSTICE),
+  hero("Wolverine", AGGRESSION),
+  hero("Storm", LEADERSHIP),
+  hero("Gambit", JUSTICE),
+  hero("Rogue", PROTECTION),
 ];
 
 export { scenarios, modules, heroes, aspects };

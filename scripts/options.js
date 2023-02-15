@@ -108,6 +108,7 @@ class Card extends Option {
       isLandscape = false,
       childCardCount = 0,
       excludedChildCards = [],
+      defaultChildCards = null,
       hasBack = false,
     } = {}
   ) {
@@ -115,6 +116,7 @@ class Card extends Option {
     this.isLandscape = isLandscape;
     this.childCardCount = childCardCount;
     this.excludedChildCards = excludedChildCards;
+    this.defaultChildCards = defaultChildCards;
     const image = (...path) => `images/${this.type.slug}/${path.join("/")}`;
     this.frontSrc = image(this.slug, "front.png");
     this.backSrc = hasBack ? image(this.slug, "back.png") : image("back.png");
@@ -131,22 +133,20 @@ class Card extends Option {
   static get namePlural() {
     return (this._name ||= `${this.name}s`);
   }
-
-  static get placeholder() {
-    if (this._placeholder) {
-      return this._placeholder;
-    }
-    const card = new this(`No ${this.namePlural} needed`);
-    card.frontSrc = card.backSrc = `images/${this.slug}/back.png`;
-    return (this._placeholder = card);
-  }
 }
 
 class Scenario extends Card {
-  constructor(name, modules, { exclude = [], hasBack = false } = {}) {
-    const childCardCount = modules;
+  constructor(name, modulesOrNumber, { exclude = [], hasBack = false } = {}) {
+    const [childCardCount, defaultChildCards] = Array.isArray(modulesOrNumber)
+      ? [modulesOrNumber.length, modulesOrNumber]
+      : [modulesOrNumber, null];
     const excludedChildCards = exclude;
-    super(name, { hasBack, childCardCount, excludedChildCards });
+    super(name, {
+      hasBack,
+      childCardCount,
+      defaultChildCards,
+      excludedChildCards,
+    });
   }
 }
 
@@ -154,14 +154,24 @@ class Module extends Card {
   constructor(name, { isLandscape = false } = {}) {
     super(name, { isLandscape });
   }
+
+  static get placeholder() {
+    if (this._placeholder) {
+      return this._placeholder;
+    }
+    const card = new this(`No modules needed`);
+    card.frontSrc = card.backSrc = `images/${this.slug}/back.png`;
+    return (this._placeholder = card);
+  }
 }
 
 class Hero extends Card {
-  constructor(name, { alterEgo = null, aspects = 1 } = {}) {
+  constructor(name, aspects, { alterEgo = null } = {}) {
     const variant = alterEgo;
     const hasBack = true;
-    const childCardCount = aspects;
-    super(name, { variant, hasBack, childCardCount });
+    const childCardCount = aspects.length;
+    const defaultChildCards = aspects;
+    super(name, { variant, hasBack, childCardCount, defaultChildCards });
   }
 
   static get namePlural() {

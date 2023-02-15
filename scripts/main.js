@@ -1,5 +1,5 @@
 import { All } from "./options.js";
-import { scenarios, modules, heroes, aspects } from "./cards.js";
+import { scenarios, modules, heroes, aspects } from "./cards.js?latest=rogue";
 
 const cardChangeDelayMs = Number(
   getComputedStyle(document.documentElement).getPropertyValue(
@@ -41,7 +41,9 @@ class Section {
       throw new Error("All cards for a section must be the same type.");
     }, null);
 
-    this.allCards.push(this.type.placeholder);
+    if (this.parentSection?.minChildCardCount === 0) {
+      this.allCards.push(this.type.placeholder);
+    }
 
     // Initialize layout.
     this.root = document.getElementById(this.type.id);
@@ -86,8 +88,16 @@ class Section {
     this.shuffleIfInvalid({ animate: false });
   }
 
+  get minChildCardCount() {
+    return Math.max(...this.allCards.map((card) => card.childCardCount));
+  }
+
   get maxChildCardCount() {
     return Math.max(...this.allCards.map((card) => card.childCardCount));
+  }
+
+  get primaryCard() {
+    return (this.incomingCards || this.cards)[0];
   }
 
   get childCardCount() {
@@ -98,17 +108,29 @@ class Section {
     return this.primaryCard?.excludedChildCards || [];
   }
 
-  get primaryCard() {
-    return (this.incomingCards || this.cards)[0];
+  get defaultChildCards() {
+    return this.primaryCard?.defaultChildCards;
   }
 
   get valid() {
     const parentSection = this.parentSection;
-    const cardCount = parentSection ? parentSection.childCardCount : 1;
-    const exclude = parentSection ? [...parentSection.excludedChildCards] : [];
-    return (
-      this.cards.length === cardCount &&
-      this.cards.every((card) => card.checked && !exclude.includes(card))
+
+    const actualCount = this.cards.length;
+    const expectedCount = parentSection ? parentSection.childCardCount : 1;
+    const uniqueCount = new Set(this.cards).size;
+    if (actualCount !== expectedCount || actualCount !== uniqueCount) {
+      return false;
+    }
+
+    const exclude = parentSection?.excludedChildCards || [];
+    const included = (cards) => cards.filter((card) => !exclude.includes(card));
+    const allCheckedCards = this.allCards.filter((card) => card.checked);
+    const includedCheckedCards = included(allCheckedCards);
+    const includedDefaultCards = included(this.getDefaultOptions());
+    return this.cards.every((card, i) =>
+      i < includedCheckedCards.length
+        ? includedCheckedCards.includes(card)
+        : includedDefaultCards.includes(card)
     );
   }
 
@@ -186,35 +208,37 @@ class Section {
     }
   }
 
-  randomCard({ exclude = [], preferExclude = null } = []) {
-    let availableCards = this.allCards.filter(
-      (card) => card.checked && !exclude.includes(card)
-    );
+  randomCard({ exclude = [], preferExclude = null, available = null } = []) {
+    available ||= this.allCards.filter((card) => card.checked);
+    available = available.filter((card) => !exclude.includes(card));
 
-    if (preferExclude !== null && availableCards.length > 1) {
-      availableCards = availableCards.filter((card) => card !== preferExclude);
+    if (preferExclude !== null && available.length > 1) {
+      available = available.filter((card) => card !== preferExclude);
     }
 
-    if (availableCards.length === 0) {
-      this.selectMoreOptions();
-      return this.randomCard({ exclude, preferExclude });
+    if (available.length === 0) {
+      available = this.getDefaultOptions();
+      return this.randomCard({ exclude, preferExclude, available });
     }
 
-    return availableCards[Math.floor(Math.random() * availableCards.length)];
+    return available[Math.floor(Math.random() * available.length)];
   }
 
-  selectMoreOptions() {
-    const parentSet = this.cardsOrSets.find(
-      (set) => set.name === this.parentSection?.primaryCard?.parent?.name
-    );
-    if (parentSet && !parentSet.checked) {
-      parentSet.checked = true;
-    } else {
-      const firstUncheckedOption = this.cardsOrSets.find(
-        (cardOrSet) => !cardOrSet.checked
-      );
-      firstUncheckedOption.checked = true;
+  getDefaultOptions() {
+    const parentCard = this.parentSection?.primaryCard;
+    if (parentCard?.defaultChildCards) {
+      return parentCard.defaultChildCards;
     }
+
+    const parentSet = this.cardsOrSets.find(
+      (set) => set.name === parentCard?.parent?.name
+    );
+    if (parentSet) {
+      return parentSet.children;
+    }
+
+    const coreSet = this.cardsOrSets[0];
+    return coreSet.children;
   }
 
   onTransitionEnd(event) {

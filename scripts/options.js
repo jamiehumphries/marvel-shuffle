@@ -8,7 +8,10 @@ class Option {
   }
 
   get checked() {
-    return (this._checked ||= localStorage.getItem(this.id) === "true");
+    if (this._checked === undefined) {
+      this._checked = localStorage.getItem(this.id) === "true";
+    }
+    return this._checked;
   }
 
   set checked(value) {

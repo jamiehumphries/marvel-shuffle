@@ -405,8 +405,7 @@ settingsButton.addEventListener("click", () => toggleSettings());
 
 const heroSection = document.getElementById("hero");
 const heroSlot = heroSection.querySelector(".slot");
-const heroCard = heroSection.querySelector(".card");
-heroCard.addEventListener("click", () => {
+heroSlot.addEventListener("click", () => {
   if (heroSlot.classList.contains("has-giant-form")) {
     heroSection.classList.toggle("giant");
   }

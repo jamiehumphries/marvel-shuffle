@@ -387,14 +387,6 @@ h3.name {
   text-align: center;
 }
 
-.card-container {
-  transform-style: preserve-3d;
-}
-
-.slot.has-giant-form .card-container {
-  transform: translateZ(1px);
-}
-
 .card {
   width: var(--card-width);
   height: var(--card-height);

@@ -73,6 +73,9 @@ class Section {
       event.preventDefault();
       toggleSettings();
     });
+    if (localStorage.getItem(this.type.id) === null) {
+      this.cardsOrSets[0].checked = true;
+    }
 
     // Initialize shuffling.
     this.button = this.root.querySelector("button");

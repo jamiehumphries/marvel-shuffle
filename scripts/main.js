@@ -154,7 +154,10 @@ class Section {
     this.name.innerText =
       value.length === 1 ? this.type.name : this.type.namePlural;
 
-    const slotCards = value.length > 0 ? value : [this.type.placeholder];
+    const slotCards =
+      value.length === 0 && this.type.placeholder
+        ? [this.type.placeholder]
+        : value;
 
     const { style } = this.root;
     const landscapeCount = slotCards.filter((card) => card.isLandscape).length;

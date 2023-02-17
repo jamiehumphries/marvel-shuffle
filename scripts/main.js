@@ -269,7 +269,9 @@ class Section {
     try {
       const savedCardIds = JSON.parse(localStorage.getItem(this.type.id));
       return savedCardIds
-        ? savedCardIds.map((id) => this.allCards.find((card) => card.id === id))
+        ? savedCardIds
+            .map((id) => this.allCards.find((card) => card.id === id))
+            .filter((card) => card !== undefined)
         : [];
     } catch {
       localStorage.clear();

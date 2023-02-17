@@ -113,6 +113,7 @@ class Card extends Option {
       excludedChildCards = [],
       defaultChildCards = null,
       hasBack = false,
+      hasGiantForm = false,
     } = {}
   ) {
     super(name, { variant });
@@ -123,6 +124,10 @@ class Card extends Option {
     const image = (...path) => `images/${this.type.slug}/${path.join("/")}`;
     this.frontSrc = image(this.slug, "front.png");
     this.backSrc = hasBack ? image(this.slug, "back.png") : image("back.png");
+    this.hasGiantForm = hasGiantForm;
+    [this.topSrc, this.bottomSrc] = hasGiantForm
+      ? [image(this.slug, "top.png"), image(this.slug, "bottom.png")]
+      : [null, null];
   }
 
   static get id() {
@@ -169,12 +174,18 @@ class Module extends Card {
 }
 
 class Hero extends Card {
-  constructor(name, aspects, { alterEgo = null } = {}) {
+  constructor(name, aspects, { alterEgo = null, hasGiantForm = false } = {}) {
     const variant = alterEgo;
     const hasBack = true;
     const childCardCount = aspects.length;
     const defaultChildCards = aspects;
-    super(name, { variant, hasBack, childCardCount, defaultChildCards });
+    super(name, {
+      variant,
+      hasBack,
+      hasGiantForm,
+      childCardCount,
+      defaultChildCards,
+    });
   }
 
   static get namePlural() {

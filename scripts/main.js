@@ -1,10 +1,10 @@
-import { All } from "./options.js";
-import { scenarios, modules, heroes, aspects } from "./cards.js?latest=rogue";
+import { All } from "./options.js?v=giant";
+import { scenarios, modules, heroes, aspects } from "./cards.js?v=giant";
 
 const cardChangeDelayMs = Number(
-  getComputedStyle(document.documentElement).getPropertyValue(
-    "--card-change-delay-ms"
-  )
+  getComputedStyle(document.documentElement)
+    .getPropertyValue("--card-change-delay")
+    .slice(0, -1 * "ms".length)
 );
 
 function appendSectionTo(parent) {
@@ -201,6 +201,7 @@ class Section {
     if (animate) {
       this.disabled = true;
       this.root.classList.add("flipping");
+      this.root.classList.remove("giant");
       this.incomingCards = newCards;
       setTimeout(() => (this.cards = newCards), cardChangeDelayMs);
     } else {
@@ -281,8 +282,10 @@ class Slot {
   constructor(root) {
     this.root = root;
     this.name = root.querySelector(".name");
-    this.cardFront = root.querySelector("img.front");
-    this.cardBack = root.querySelector("img.back");
+    this.cardFront = root.querySelector(".front img.front");
+    this.cardBottom = root.querySelector(".front img.back");
+    this.cardBack = root.querySelector(".back img.front");
+    this.cardTop = root.querySelector(".back img.back");
   }
 
   get card() {
@@ -305,11 +308,14 @@ class Slot {
 
     this.show();
     this.root.classList.toggle("landscape", newCard.isLandscape);
+    this.root.classList.toggle("has-giant-form", newCard.hasGiantForm);
     this.name.innerText = newCard.name;
     this.cardFront.src = newCard.frontSrc;
     if (newCard.backSrc !== oldCard?.backSrc) {
       this.cardBack.src = newCard.backSrc;
     }
+    this.cardTop.src = newCard.topSrc || "";
+    this.cardBottom.src = newCard.bottomSrc || "";
   }
 
   show() {
@@ -388,5 +394,14 @@ window.addEventListener("click", (event) => {
 
 shuffleAllButton.addEventListener("click", () => shuffleAll());
 settingsButton.addEventListener("click", () => toggleSettings());
+
+const heroSection = document.getElementById("hero");
+const heroSlot = heroSection.querySelector(".slot");
+const heroCard = heroSection.querySelector(".card");
+heroCard.addEventListener("click", () => {
+  if (heroSlot.classList.contains("has-giant-form")) {
+    heroSection.classList.toggle("giant");
+  }
+});
 
 setTimeout(() => container.classList.remove("init"), 100);

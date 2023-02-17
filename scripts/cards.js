@@ -284,8 +284,8 @@ const heroes = [
     hero("Hawkeye", LEADERSHIP),
     hero("Spider-Woman", [AGGRESSION, JUSTICE])
   ),
-  hero("Ant-Man", LEADERSHIP),
-  hero("Wasp", AGGRESSION),
+  hero("Ant-Man", LEADERSHIP, { hasGiantForm: true }),
+  hero("Wasp", AGGRESSION, { hasGiantForm: true }),
   hero("Quicksilver", PROTECTION),
   hero("Scarlet Witch", JUSTICE),
   theGalaxysMostWanted(

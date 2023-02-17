@@ -27,15 +27,16 @@
   --card-height: calc(var(--base-card-height) * var(--layout-scale-factor));
   --slot-height-portrait: calc(var(--card-header-height) + var(--card-height));
   --slot-height-landscape: calc(var(--card-header-height) + var(--card-width));
+  --slot-height-giant: calc(var(--card-header-height) + 2 * var(--card-width));
 
   --flip-duration: 1000ms;
-  --card-change-delay-ms: 360; /* No units, so that value can be fetched in JavaScript. */
-  --card-change-duration: calc(
-    var(--flip-duration) - (var(--card-change-delay-ms) * 1ms)
-  );
+  --card-change-delay: 360ms;
+  --card-change-duration: calc(var(--flip-duration) - var(--card-change-delay));
+  --unfold-duration: 600ms;
 
   --portrait-cards-in-section: 0;
   --landscape-cards-in-section: 0;
+  --giant-cards-in-section: 0;
 }
 
 @font-face {
@@ -57,6 +58,10 @@ button {
 
 button:not(:disabled) {
   cursor: pointer;
+}
+
+img[src=""] {
+  display: none;
 }
 
 .keyboard-nav button:focus {
@@ -209,7 +214,13 @@ button#settings:disabled {
 }
 
 .section {
+  position: relative;
   margin: 10px 0;
+}
+
+#hero {
+  /* Non-zero z-index for giant card fold out. */
+  z-index: 1;
 }
 
 .options {
@@ -302,11 +313,18 @@ input:active ~ .checkmark {
     2 *
       (
         (var(--portrait-cards-in-section) * var(--slot-height-portrait)) +
-          (var(--landscape-cards-in-section) * var(--slot-height-landscape))
+          (var(--landscape-cards-in-section) * var(--slot-height-landscape)) +
+          (var(--giant-cards-in-section) * var(--slot-height-giant))
       )
   );
 
   transition: perspective var(--card-change-duration);
+}
+
+#hero.giant .slots {
+  --portrait-cards-in-section: 0;
+  --landscape-cards-in-section: 0;
+  --giant-cards-in-section: 1;
 }
 
 .slot {
@@ -324,6 +342,11 @@ input:active ~ .checkmark {
 .slot.landscape:not(.hidden) {
   width: var(--card-height);
   height: var(--slot-height-landscape);
+}
+
+#hero.giant .slot {
+  width: var(--card-height);
+  height: var(--slot-height-giant);
 }
 
 .flipping .slot {
@@ -364,12 +387,21 @@ h3.name {
   text-align: center;
 }
 
+.card-container {
+  transform-style: preserve-3d;
+  transform: translateZ(0.1px);
+}
+
 .card {
   width: var(--card-width);
   height: var(--card-height);
 
   transform-style: preserve-3d;
   transform-origin: calc(var(--card-height) / 2) calc(var(--card-height) / 2);
+}
+
+.slot.has-giant-form .card {
+  cursor: zoom-in;
 }
 
 .slot.landscape .card {
@@ -380,15 +412,41 @@ h3.name {
   transition: transform var(--card-change-duration);
 }
 
-img.front,
-img.back {
-  position: absolute;
-  width: 100%;
-  backface-visibility: hidden;
+#hero.giant .card {
+  transform: rotate(90deg);
+  cursor: zoom-out;
 }
 
-img.back {
+.front,
+.back {
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.card > .back {
+  transform: rotateY(-180deg) translateZ(0.1px);
+}
+
+.back {
   transform: rotateY(-180deg);
+}
+
+.card > .front {
+  transition: transform var(--unfold-duration);
+  transform-origin: right;
+}
+
+.flipping .card > .front {
+  transition: transform var(--card-change-delay);
+}
+
+#hero.giant .card > .front {
+  transform: rotateY(180deg);
 }
 
 @media (max-width: 1400px) {

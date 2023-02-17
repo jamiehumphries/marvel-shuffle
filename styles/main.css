@@ -389,7 +389,10 @@ h3.name {
 
 .card-container {
   transform-style: preserve-3d;
-  transform: translateZ(0.1px);
+}
+
+.slot.has-giant-form .card-container {
+  transform: translateZ(1px);
 }
 
 .card {
@@ -429,7 +432,7 @@ h3.name {
 }
 
 .card > .back {
-  transform: rotateY(-180deg) translateZ(0.1px);
+  transform: rotateY(-180deg) translateZ(1px);
 }
 
 .back {

@@ -309,6 +309,10 @@ input:active ~ .checkmark {
 }
 
 .slots {
+  transition: perspective var(--card-change-duration);
+}
+
+.flipping .slots {
   perspective: calc(
     2 *
       (
@@ -317,8 +321,6 @@ input:active ~ .checkmark {
           (var(--giant-cards-in-section) * var(--slot-height-giant))
       )
   );
-
-  transition: perspective var(--card-change-duration);
 }
 
 #hero.giant .slots {
@@ -335,8 +337,6 @@ input:active ~ .checkmark {
   margin: auto;
   width: var(--card-width);
   height: var(--slot-height-portrait);
-
-  transform-style: preserve-3d;
 }
 
 .slot.landscape:not(.hidden) {
@@ -351,6 +351,7 @@ input:active ~ .checkmark {
 
 .flipping .slot {
   transform: rotateY(720deg);
+  transform-style: preserve-3d;
 }
 
 .container:not(.init) .slot {
@@ -397,6 +398,10 @@ h3.name {
 
 .slot.has-giant-form .card {
   cursor: zoom-in;
+}
+
+.section:not(.flipping) .slot.has-giant-form .card {
+  perspective: calc(2 * var(--slot-height-giant));
 }
 
 .slot.landscape .card {

@@ -11,8 +11,10 @@
   --icon-button-text-color: #000000;
   --icon-button-background-color-hover: #e0e0e0;
   --icon-button-image-brightness-hover: 90%;
-  --checkbox-background-color-hover: #eeeeee;
   --checkbox-border-and-check-color: #000000;
+  --checkbox-background-color-hover: #eeeeee;
+  --checkbox-background-color-checked: #ddf0f6;
+  --checkbox-background-color-checked-hover: #c7e6f1;
 
   --outline: 2px solid #6586ff;
   --outline-offset: 1px;
@@ -271,6 +273,13 @@ button#settings:disabled {
   height: 20px;
 
   border: 2px solid var(--checkbox-border-and-check-color);
+}
+
+:checked ~ .checkmark {
+  --checkbox-background-color-hover: var(
+    --checkbox-background-color-checked-hover
+  );
+  background-color: var(--checkbox-background-color-checked);
 }
 
 .checkmark:after {

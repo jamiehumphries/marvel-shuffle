@@ -346,6 +346,8 @@ input:active ~ .checkmark {
   margin: auto;
   width: var(--card-width);
   height: var(--slot-height-portrait);
+
+  transform-style: preserve-3d;
 }
 
 .slot.landscape:not(.hidden) {
@@ -360,7 +362,6 @@ input:active ~ .checkmark {
 
 .flipping .slot {
   transform: rotateY(720deg);
-  transform-style: preserve-3d;
 }
 
 .container:not(.init) .slot {

@@ -356,6 +356,7 @@ function shuffleAll() {
 
 function toggleSettings() {
   const settingsVisible = container.classList.toggle("show-settings");
+  shuffleAllButton.disabled = settingsVisible;
   sections.forEach((section) => (section.button.disabled = settingsVisible));
   if (!settingsVisible) {
     requestPostAnimationFrame(() =>

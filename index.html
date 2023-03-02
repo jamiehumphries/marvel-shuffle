@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Marvel Shuffle</title>
-    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/main.css?v=sync" />
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
@@ -22,7 +22,7 @@
             <span class="settings-show">Settings</span>
           </button>
         </h1>
-        <button id="settings" ontouchstart>
+        <button id="settings" class="icon-button" ontouchstart>
           <img src="images/settings.svg" class="settings-hide" alt="" />
           <span class="settings-hide">Settings</span>
           <img src="images/done.svg" class="settings-show" alt="" />
@@ -64,8 +64,13 @@
           <div id="hero" class="section"></div>
           <div id="aspect" class="section"></div>
         </div>
+        <button id="copy-sync-url" class="settings-show">
+          Copy Sync URL
+          <img src="images/link.svg" alt="" />
+        </button>
+        <div id="sync-url" class="settings-show"></div>
       </div>
     </main>
-    <script type="module" src="scripts/main.js?v=giant"></script>
+    <script type="module" src="scripts/main.js?v=sync"></script>
   </body>
 </html>

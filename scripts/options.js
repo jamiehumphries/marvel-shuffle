@@ -1,3 +1,5 @@
+import { getItem, setItem } from "./storage.js?v=giant";
+
 class Option {
   constructor(name, { variant = null, type = null, children = null } = {}) {
     this.name = name;
@@ -9,7 +11,7 @@ class Option {
 
   get checked() {
     if (this._checked === undefined) {
-      this._checked = localStorage.getItem(this.id) === "true";
+      this._checked = getItem(this.id) === true;
     }
     return this._checked;
   }
@@ -55,7 +57,7 @@ class Option {
 
   setChecked(value, cascadeUp, cascadeDown) {
     this._checked = value;
-    localStorage.setItem(this.id, value);
+    setItem(this.id, value);
     if (this.checkbox) {
       this.checkbox.checked = value;
     }

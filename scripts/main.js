@@ -1,5 +1,14 @@
-import { All } from "./options.js?v=giant";
-import { scenarios, modules, heroes, aspects } from "./cards.js?v=giant";
+import copyTextToClipboard from "./lib/copy-text-to-clipboard.js";
+import { All } from "./options.js?v=sync";
+import { scenarios, modules, heroes, aspects } from "./cards.js?v=sync";
+import {
+  initializeStorage,
+  clearStorage,
+  getSyncUrl,
+  setUserId,
+  getItem,
+  setItem,
+} from "./storage.js?v=sync";
 
 const cardChangeDelayMs = Number(
   getComputedStyle(document.documentElement)
@@ -21,74 +30,8 @@ function appendSlotTo(parent) {
 
 class Section {
   constructor(cardsOrSets, parentSection = null) {
-    // Initialize data.
     this.cardsOrSets = cardsOrSets;
     this.parentSection = parentSection;
-    this.maxSlots = parentSection?.maxChildCardCount || 1;
-    if (this.parentSection) {
-      this.parentSection.childSection = this;
-    }
-
-    this.allCards = cardsOrSets.flatMap(
-      (cardOrSet) => cardOrSet.children || [cardOrSet]
-    );
-
-    this.type = this.allCards.reduce((type, card) => {
-      const cardType = card.constructor;
-      if (type === null || type === cardType) {
-        return cardType;
-      }
-      throw new Error("All cards for a section must be the same type.");
-    }, null);
-
-    if (this.parentSection?.minChildCardCount === 0) {
-      this.allCards.push(this.type.placeholder);
-    }
-
-    // Initialize layout.
-    this.root = document.getElementById(this.type.id);
-    appendSectionTo(this.root);
-
-    const nameText = this.type.name;
-    this.name = this.root.querySelector(".type-name");
-    this.name.innerText = nameText;
-    const selectText = `Select ${this.type.namePlural}`;
-    this.root.querySelector(".select").innerText = selectText;
-
-    const slotsContainer = this.root.querySelector(".slots");
-    for (let i = 0; i < this.maxSlots; i++) {
-      appendSlotTo(slotsContainer);
-    }
-
-    this.slots = Array.from(this.root.querySelectorAll(".slot")).map(
-      (element) => new Slot(element)
-    );
-
-    // Initialize options.
-    const options = this.root.querySelector(".options");
-    const all = new All(this);
-    all.appendTo(options);
-    this.cardsOrSets.forEach((cardOrSet) => cardOrSet.appendTo(options));
-    options.addEventListener("submit", (event) => {
-      event.preventDefault();
-      toggleSettings();
-    });
-    if (localStorage.getItem(this.type.id) === null) {
-      this.cardsOrSets[0].checked = true;
-    }
-
-    // Initialize shuffling.
-    this.button = this.root.querySelector("button");
-    this.button.addEventListener("click", () => {
-      this.shuffle({ preventRepeat: true });
-    });
-    this.root.addEventListener("transitionend", (event) =>
-      this.onTransitionEnd(event)
-    );
-
-    // Initialize cards.
-    this.cards = this.loadCards();
-    this.shuffleIfInvalid({ animate: false });
   }
 
   get minChildCardCount() {
@@ -171,6 +114,86 @@ class Section {
     for (let i = 0; i < this.slots.length; i++) {
       this.slots[i].card = slotCards[i];
     }
+  }
+
+  initialize() {
+    this.initializeData();
+    this.initializeLayout();
+    this.initializeOptions();
+    this.initializeShuffling();
+    this.initializeCards();
+  }
+
+  initializeData() {
+    this.maxSlots = this.parentSection?.maxChildCardCount || 1;
+    if (this.parentSection) {
+      this.parentSection.childSection = this;
+    }
+
+    this.allCards = this.cardsOrSets.flatMap(
+      (cardOrSet) => cardOrSet.children || [cardOrSet]
+    );
+
+    this.type = this.allCards.reduce((type, card) => {
+      const cardType = card.constructor;
+      if (type === null || type === cardType) {
+        return cardType;
+      }
+      throw new Error("All cards for a section must be the same type.");
+    }, null);
+
+    if (this.parentSection?.minChildCardCount === 0) {
+      this.allCards.push(this.type.placeholder);
+    }
+  }
+
+  initializeLayout() {
+    this.root = document.getElementById(this.type.id);
+    appendSectionTo(this.root);
+
+    const nameText = this.type.name;
+    this.name = this.root.querySelector(".type-name");
+    this.name.innerText = nameText;
+    const selectText = `Select ${this.type.namePlural}`;
+    this.root.querySelector(".select").innerText = selectText;
+
+    const slotsContainer = this.root.querySelector(".slots");
+    for (let i = 0; i < this.maxSlots; i++) {
+      appendSlotTo(slotsContainer);
+    }
+
+    this.slots = Array.from(this.root.querySelectorAll(".slot")).map(
+      (element) => new Slot(element)
+    );
+  }
+
+  initializeOptions() {
+    const options = this.root.querySelector(".options");
+    const all = new All(this);
+    all.appendTo(options);
+    this.cardsOrSets.forEach((cardOrSet) => cardOrSet.appendTo(options));
+    options.addEventListener("submit", (event) => {
+      event.preventDefault();
+      toggleSettings();
+    });
+    if (getItem(this.type.id) === null) {
+      this.cardsOrSets[0].checked = true;
+    }
+  }
+
+  initializeShuffling() {
+    this.button = this.root.querySelector("button");
+    this.button.addEventListener("click", () => {
+      this.shuffle({ preventRepeat: true });
+    });
+    this.root.addEventListener("transitionend", (event) =>
+      this.onTransitionEnd(event)
+    );
+  }
+
+  initializeCards() {
+    this.cards = this.loadCards();
+    this.shuffleIfInvalid({ animate: false });
   }
 
   shuffleIfInvalid({ animate = true } = {}) {
@@ -267,22 +290,21 @@ class Section {
 
   loadCards() {
     try {
-      const savedCardIds = JSON.parse(localStorage.getItem(this.type.id));
+      const savedCardIds = getItem(this.type.id);
       return savedCardIds
         ? savedCardIds
             .map((id) => this.allCards.find((card) => card.id === id))
             .filter((card) => card !== undefined)
         : [];
     } catch {
-      localStorage.clear();
+      clearStorage();
       return [];
     }
   }
 
   saveCards(cards) {
     const cardIds = cards.map((card) => card.id);
-    localStorage.setItem(this.type.id, JSON.stringify(cardIds));
-    return cards;
+    setItem(this.type.id, cardIds);
   }
 }
 
@@ -342,6 +364,7 @@ class Slot {
 const container = document.querySelector(".container");
 const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");
+const copySyncUrlButton = document.getElementById("copy-sync-url");
 let lastClickedButton = null;
 
 const scenario = new Section(scenarios);
@@ -385,31 +408,58 @@ function requestPostAnimationFrame(callback) {
   });
 }
 
-// Initialisation steps.
-
-window.addEventListener("keydown", () => {
-  container.classList.add("keyboard-nav");
-  lastClickedButton = null;
-});
-
-window.addEventListener("mousedown", () => {
-  container.classList.remove("keyboard-nav");
-  lastClickedButton = null;
-});
-
-window.addEventListener("click", (event) => {
-  lastClickedButton = event.target.tagName === "BUTTON" ? event.target : null;
-});
-
-shuffleAllButton.addEventListener("click", () => shuffleAll());
-settingsButton.addEventListener("click", () => toggleSettings());
-
-const heroSection = document.getElementById("hero");
-const heroSlot = heroSection.querySelector(".slot");
-heroSlot.addEventListener("click", () => {
-  if (heroSlot.classList.contains("has-giant-form")) {
-    heroSection.classList.toggle("giant");
+async function initialize() {
+  const overrideUserId = new URL(location.href).searchParams.get("id");
+  if (overrideUserId) {
+    // Save user ID and reload page.
+    setUserId(overrideUserId.toString());
+    location.href = location.origin + location.pathname;
+    return;
   }
-});
 
+  window.addEventListener("keydown", () => {
+    container.classList.add("keyboard-nav");
+    lastClickedButton = null;
+  });
+
+  window.addEventListener("mousedown", () => {
+    container.classList.remove("keyboard-nav");
+    lastClickedButton = null;
+  });
+
+  window.addEventListener("click", (event) => {
+    lastClickedButton = event.target.tagName === "BUTTON" ? event.target : null;
+  });
+
+  shuffleAllButton.addEventListener("click", () => shuffleAll());
+  settingsButton.addEventListener("click", () => toggleSettings());
+
+  copySyncUrlButton.addEventListener("click", async () => {
+    copySyncUrlButton.disabled = true;
+    const url = await getSyncUrl();
+    copyTextToClipboard(url.toString());
+    requestPostAnimationFrame(() => {
+      alert(
+        "Your unique sync URL was copied to the clipboard. " +
+          "If you use this URL to open Marvel Shuffle on another device or in another browser, " +
+          "your settings and shuffles will be synced."
+      );
+      copySyncUrlButton.disabled = false;
+      copySyncUrlButton.focus();
+    });
+  });
+
+  await initializeStorage();
+  sections.map((section) => section.initialize());
+
+  const heroSection = document.getElementById("hero");
+  const heroSlot = heroSection.querySelector(".slot");
+  heroSlot.addEventListener("click", () => {
+    if (heroSlot.classList.contains("has-giant-form")) {
+      heroSection.classList.toggle("giant");
+    }
+  });
+}
+
+await initialize();
 setTimeout(() => container.classList.remove("init"), 100);

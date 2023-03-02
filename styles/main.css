@@ -2,15 +2,33 @@
   --container-padding: 20px;
   --container-max-width: 1600px;
 
-  --button-background-color: #ffeba9;
-  --button-background-color-hover: #ffde65;
-  --button-background-color-disabled: #dddddd;
-  --button-background-color-settings: #c7e6f1;
-  --button-border-and-text-color: #000000;
-  --button-border-and-text-color-disabled: #444444;
+  --button-background-color: var(--button-background-color--default);
+  --button-background-color-hover: var(
+    --button-background-color-hover--default
+  );
+  --button-background-color-disabled: var(
+    --button-background-color-disabled--default
+  );
+  --button-border-and-text-color: var(--button-border-and-text-color--default);
+  --button-border-and-text-color-disabled: var(
+    --button-border-and-text-color-disabled--default
+  );
+
+  --button-background-color--default: #ffeba9;
+  --button-background-color-hover--default: #ffde65;
+  --button-background-color-disabled--default: #dddddd;
+  --button-border-and-text-color--default: #000000;
+  --button-border-and-text-color-disabled--default: #444444;
+
+  --button-background-color-disabled--settings: #c7e6f1;
+
+  --button-background-color--sync: #c7f1cb;
+  --button-background-color-hover--sync: #87ee91;
+
   --icon-button-text-color: #000000;
   --icon-button-background-color-hover: #e0e0e0;
   --icon-button-image-brightness-hover: 90%;
+
   --checkbox-border-and-check-color: #000000;
   --checkbox-background-color-hover: #eeeeee;
   --checkbox-background-color-checked: #ddf0f6;
@@ -93,7 +111,7 @@ h2 {
   margin: 0;
 }
 
-button.shuffle {
+button:not(.icon-button) {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,17 +122,37 @@ button.shuffle {
 
   background-color: var(--button-background-color);
   border: 3px solid var(--button-border-and-text-color);
+
   border-radius: calc(10px * var(--button-scale-factor)) 0;
   outline: none;
-
   font-size: calc(1rem * var(--button-scale-factor));
   color: var(--button-border-and-text-color);
 }
 
-button.shuffle img {
+button:not(.icon-button) img {
   margin-bottom: 0.1em;
   margin-left: 0.5em;
   height: 1.2em;
+}
+
+button:not(.icon-button):active {
+  background-color: var(--button-background-color-hover);
+}
+
+button:not(.icon-button):disabled {
+  border-color: var(--button-border-and-text-color-disabled);
+  background-color: var(--button-background-color-disabled);
+  color: var(--button-border-and-text-color-disabled);
+}
+
+@media (hover: hover) {
+  button:not(.icon-button):hover {
+    background-color: var(--button-background-color-hover);
+  }
+
+  button:not(.icon-button):hover:disabled {
+    background-color: var(--button-background-color-disabled);
+  }
 }
 
 button.shuffle#shuffle-all {
@@ -122,33 +160,20 @@ button.shuffle#shuffle-all {
   margin: 10px auto 20px;
 }
 
-button.shuffle:active {
-  background-color: var(--button-background-color-hover);
-}
-
-@media (hover: hover) {
-  button.shuffle:hover {
-    background-color: var(--button-background-color-hover);
-  }
-}
-
-button.shuffle:disabled {
-  background-color: var(--button-background-color-disabled);
-  border-color: var(--button-border-and-text-color-disabled);
-  color: var(--button-border-and-text-color-disabled);
-}
-
-.container.show-settings button.shuffle {
-  background-color: var(--button-background-color-settings);
-  border-color: var(--button-border-and-text-color);
-  color: var(--button-border-and-text-color);
+.container.show-settings button.shuffle:disabled {
+  --button-background-color-disabled: var(
+    --button-background-color-disabled--settings
+  );
+  --button-border-and-text-color-disabled: var(
+    --button-border-and-text-color--default
+  );
 }
 
 .container.show-settings .section button.shuffle {
   padding-top: 3px;
 }
 
-button#settings {
+button.icon-button {
   position: absolute;
   top: calc(var(--container-padding) / 2);
   right: var(--container-padding);
@@ -167,30 +192,30 @@ button#settings {
   color: var(--icon-button-text-color);
 }
 
-button#settings img {
+button.icon-button img {
   width: 50px;
   height: 50px;
 }
 
-button#settings:active {
+button.icon-button:active {
   background-color: var(--icon-button-background-color-hover);
 }
 
-button#settings:active img {
+button.icon-button:active img {
   filter: brightness(var(--icon-button-image-brightness-hover));
 }
 
 @media (hover: hover) {
-  button#settings:hover img {
+  button.icon-button:hover img {
     filter: brightness(var(--icon-button-image-brightness-hover));
   }
 }
 
-button#settings:disabled {
+button.icon-button:disabled {
   opacity: 0.6;
 }
 
-.container.show-settings button#settings {
+.container.show-settings button.icon-button {
   position: fixed;
   margin-right: max(
     0px,
@@ -204,6 +229,21 @@ button#settings:disabled {
 
 .container.show-settings .settings-hide {
   display: none;
+}
+
+button#copy-sync-url {
+  --button-background-color: var(--button-background-color--sync);
+  --button-background-color-hover: var(--button-background-color-hover--sync);
+
+  margin-top: 40px;
+  width: 200px;
+}
+
+#sync-url {
+  margin-top: 1rem;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  text-align: center;
 }
 
 .sections {

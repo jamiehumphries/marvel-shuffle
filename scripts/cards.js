@@ -1,29 +1,31 @@
 import { CardSet, Scenario, Module, Hero, Aspect } from "./options.js";
 
-const set = (name, ...cards) => new CardSet(name, cards);
+function cardSet(name) {
+  return (...cards) => new CardSet(name, cards);
+}
 
 // SETS
 
-const coreSet = set.bind(null, "Core Set");
-const theGreenGoblin = set.bind(null, "The Green Goblin");
-const theWreckingCrew = set.bind(null, "The Wrecking Crew");
-const theRiseOfRedSkull = set.bind(null, "The Rise of Red Skull");
-const theOnceAndFutureKang = set.bind(null, "The Once and Future Kang");
-const theGalaxysMostWanted = set.bind(null, "The Galaxy’s Most Wanted");
-const theMadTitansShadow = set.bind(null, "The Mad Titan’s Shadow");
-const theHood = set.bind(null, "The Hood");
-const sinisterMotives = set.bind(null, "Sinister Motives");
-const nova = set.bind(null, "Nova");
-const ironheart = set.bind(null, "Ironheart");
-const spiderHam = set.bind(null, "Spider-Ham");
-const spdr = set.bind(null, "Sp//dr");
-const mutantGenesis = set.bind(null, "Mutant Genesis");
-const mojoMania = set.bind(null, "MojoMania");
-const wolverine = set.bind(null, "Wolverine");
-const storm = set.bind(null, "Storm");
-const gambit = set.bind(null, "Gambit");
-const rogue = set.bind(null, "Rogue");
-const printAndPlay = set.bind(null, "Print-and-Play");
+const coreSet = cardSet("Core Set");
+const theGreenGoblin = cardSet("The Green Goblin");
+const theWreckingCrew = cardSet("The Wrecking Crew");
+const theRiseOfRedSkull = cardSet("The Rise of Red Skull");
+const theOnceAndFutureKang = cardSet("The Once and Future Kang");
+const theGalaxysMostWanted = cardSet("The Galaxy’s Most Wanted");
+const theMadTitansShadow = cardSet("The Mad Titan’s Shadow");
+const theHood = cardSet("The Hood");
+const sinisterMotives = cardSet("Sinister Motives");
+const nova = cardSet("Nova");
+const ironheart = cardSet("Ironheart");
+const spiderHam = cardSet("Spider-Ham");
+const spdr = cardSet("Sp//dr");
+const mutantGenesis = cardSet("Mutant Genesis");
+const mojoMania = cardSet("MojoMania");
+const wolverine = cardSet("Wolverine");
+const storm = cardSet("Storm");
+const gambit = cardSet("Gambit");
+const rogue = cardSet("Rogue");
+const printAndPlay = cardSet("Print-and-Play");
 
 // MODULES
 

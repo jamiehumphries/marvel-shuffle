@@ -36,7 +36,6 @@ async function initializeStorage() {
   await setUserId(userDoc.id);
   const snapshot = await getDoc(userDoc);
   const data = snapshot.data() || {};
-  updateDb("--last-used", new Date());
   for (const [key, value] of Object.entries(data)) {
     localStorage.setItem(key, value);
   }
@@ -100,6 +99,7 @@ function updateDb(key, value) {
   }
 
   updateTimeoutId = setTimeout(() => {
+    pendingUpdates["--updated-at"] = new Date();
     setDoc(userDoc, pendingUpdates, { merge: true });
     pendingUpdates = null;
     updateTimeoutId = null;

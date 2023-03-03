@@ -11,7 +11,9 @@ class Option {
 
   get checked() {
     if (this._checked === undefined) {
-      this._checked = getItem(this.id) === true;
+      this._checked = this.children
+        ? this.children.every((child) => child.checked)
+        : getItem(this.id) === true;
     }
     return this._checked;
   }
@@ -57,7 +59,9 @@ class Option {
 
   setChecked(value, cascadeUp, cascadeDown) {
     this._checked = value;
-    setItem(this.id, value);
+    if (!this.children) {
+      setItem(this.id, value);
+    }
     if (this.checkbox) {
       this.checkbox.checked = value;
     }
@@ -78,12 +82,6 @@ class All extends Option {
     const type = section.type;
     const children = section.cardsOrSets;
     super(name, { type, children });
-
-    this.setChecked(
-      children.every((child) => child.checked),
-      false,
-      false
-    );
   }
 
   appendTo(element) {

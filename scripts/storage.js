@@ -9,8 +9,6 @@ import {
   deleteDoc,
 } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 
-const USER_ID_KEY = "id";
-
 const app = initializeApp({
   apiKey: "AIzaSyBFYZluS920mE0zo85Qg4TeoTRYPXNJO3Y",
   authDomain: "marvel-shuffle.firebaseapp.com",
@@ -20,20 +18,25 @@ const app = initializeApp({
   appId: "1:280392379599:web:f72ad527a7f46f97571bba",
 });
 
+const USER_ID_KEY = "--user-id";
+const syncUrlElement = document.getElementById("sync-url");
+
 const db = getFirestore(app);
 const users = collection(db, "users");
+
+window.pendingUpdates = null;
+window.updateTimeoutId = null;
 
 async function initializeStorage() {
   const userDoc = getUserDoc();
   if (!userDoc) {
     return;
   }
-
   localStorage.clear();
-  setUserId(userDoc.id);
+  await setUserId(userDoc.id);
   const snapshot = await getDoc(userDoc);
   const data = snapshot.data() || {};
-  await setDoc(userDoc, { "--last-used": new Date() }, { merge: true });
+  updateDb("--last-used", new Date());
   for (const [key, value] of Object.entries(data)) {
     localStorage.setItem(key, value);
   }
@@ -51,7 +54,7 @@ async function getSyncUrl() {
   let userId = getUserId();
   if (!userId) {
     const doc = await addDoc(users, { ...localStorage });
-    userId = setUserId(doc.id);
+    userId = await setUserId(doc.id);
   }
   const url = new URL(window.location.origin);
   url.searchParams.append("id", userId);
@@ -67,11 +70,9 @@ function getUserId() {
   return localStorage.getItem(USER_ID_KEY);
 }
 
-function setUserId(value) {
+async function setUserId(value) {
   localStorage.setItem(USER_ID_KEY, value);
-  getSyncUrl().then(
-    (url) => (document.getElementById("sync-url").innerText = url)
-  );
+  syncUrlElement.innerText = await getSyncUrl();
   return value;
 }
 
@@ -82,10 +83,27 @@ function getItem(key) {
 function setItem(key, value) {
   value = JSON.stringify(value);
   localStorage.setItem(key, value);
+  updateDb(key, value);
+}
+
+function updateDb(key, value) {
   const userDoc = getUserDoc();
-  if (userDoc) {
-    setDoc(userDoc, Object.fromEntries([[key, value]]), { merge: true });
+  if (!userDoc) {
+    return;
   }
+
+  pendingUpdates ||= {};
+  pendingUpdates[key] = value;
+
+  if (updateTimeoutId !== null) {
+    clearTimeout(updateTimeoutId);
+  }
+
+  updateTimeoutId = setTimeout(() => {
+    setDoc(userDoc, pendingUpdates, { merge: true });
+    pendingUpdates = null;
+    updateTimeoutId = null;
+  }, 500);
 }
 
 export {

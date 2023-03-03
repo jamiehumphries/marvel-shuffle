@@ -1,6 +1,6 @@
 import copyTextToClipboard from "./lib/copy-text-to-clipboard.js";
-import { All } from "./options.js?v=sync";
-import { scenarios, modules, heroes, aspects } from "./cards.js?v=sync";
+import { All } from "./options.js?v=db";
+import { scenarios, modules, heroes, aspects } from "./cards.js?v=db";
 import {
   initializeStorage,
   clearStorage,
@@ -8,7 +8,7 @@ import {
   setUserId,
   getItem,
   setItem,
-} from "./storage.js?v=sync";
+} from "./storage.js?v=db";
 
 const cardChangeDelayMs = Number(
   getComputedStyle(document.documentElement)
@@ -411,9 +411,8 @@ function requestPostAnimationFrame(callback) {
 async function initialize() {
   const overrideUserId = new URL(location.href).searchParams.get("id");
   if (overrideUserId) {
-    // Save user ID and reload page.
-    setUserId(overrideUserId.toString());
-    location.href = location.origin + location.pathname;
+    await setUserId(overrideUserId.toString());
+    location.href = location.origin + location.pathname; // Reload page without id override.
     return;
   }
 

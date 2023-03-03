@@ -436,12 +436,16 @@ async function initialize() {
   copySyncUrlButton.addEventListener("click", async () => {
     copySyncUrlButton.disabled = true;
     const url = await getSyncUrl();
-    copyTextToClipboard(url.toString());
+    const success = copyTextToClipboard(url.toString());
     requestPostAnimationFrame(() => {
+      const copyResultMessage = success
+        ? "Your unique sync URL has been copied to the clipboard."
+        : "Your unique sync URL has been generated, but copying to the" +
+          " clipboard failed. You can manually copy it from below.";
       alert(
-        "Your unique sync URL was copied to the clipboard. " +
-          "If you use this URL to open Marvel Shuffle on another device or in another browser, " +
-          "your settings and shuffles will be synced."
+        copyResultMessage +
+          " If you use this URL to open Marvel Shuffle on another device or" +
+          " in another browser, your settings and shuffles will be synced."
       );
       copySyncUrlButton.disabled = false;
       copySyncUrlButton.focus();

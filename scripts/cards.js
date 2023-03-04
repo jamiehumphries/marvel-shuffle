@@ -160,7 +160,7 @@ const findModule = (name) => {
   }
   const matchingModule = allModules.find((module) => module.name === name);
   if (!matchingModule) {
-    throw new Error(`Could not find moduled named '${name}'.`);
+    throw new Error(`Could not find moduled named "${name}".`);
   }
   return matchingModule;
 };

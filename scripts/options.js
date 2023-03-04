@@ -139,7 +139,7 @@ class Card extends Option {
   }
 
   static get namePlural() {
-    return (this._name ||= `${this.name}s`);
+    return (this._namePlural ||= `${this.name}s`);
   }
 }
 
@@ -164,12 +164,12 @@ class Module extends Card {
   }
 
   static get placeholder() {
-    if (this._placeholder) {
-      return this._placeholder;
+    if (!this._placeholder) {
+      const card = new this("No modules needed");
+      card.frontSrc = card.backSrc = `images/${this.slug}/back.png`;
+      this._placeholder = card;
     }
-    const card = new this(`No modules needed`);
-    card.frontSrc = card.backSrc = `images/${this.slug}/back.png`;
-    return (this._placeholder = card);
+    return this._placeholder;
   }
 }
 

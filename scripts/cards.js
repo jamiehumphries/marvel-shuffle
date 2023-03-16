@@ -270,11 +270,11 @@ const hero = (name, aspects, options) => {
 // prettier-ignore
 const heroes = [
   coreSet(
-    hero("Black Panther", PROTECTION),
+    hero("Spider-Man", JUSTICE, { alterEgo: "Peter Parker" }),
     hero("Captain Marvel", LEADERSHIP),
-    hero("Iron Man", AGGRESSION),
     hero("She-Hulk", AGGRESSION),
-    hero("Spider-Man", JUSTICE, { alterEgo: "Peter Parker" })
+    hero("Iron Man", AGGRESSION),
+    hero("Black Panther", PROTECTION)
   ),
   hero("Captain America", LEADERSHIP),
   hero("Ms. Marvel", PROTECTION),

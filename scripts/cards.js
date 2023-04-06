@@ -25,6 +25,7 @@ const wolverine = cardSet("Wolverine");
 const storm = cardSet("Storm");
 const gambit = cardSet("Gambit");
 const rogue = cardSet("Rogue");
+const neXtEvolution = cardSet("NeXt Evolution");
 const printAndPlay = cardSet("Print-and-Play");
 
 // MODULES
@@ -239,6 +240,13 @@ const scenarios = [
     scenario("Spiral", 3, { exclude: nonMojoManiaModules, hasBack: true }),
     scenario("Mojo", 2, { exclude: nonMojoManiaModules })
   ),
+  neXtEvolution(
+    scenario("Morlock Siege", 0, { hasBack: true }),
+    scenario("On the Run", 0, { hasBack: true }),
+    scenario("Juggernaut", 0),
+    scenario("Mister Sinister", 0),
+    scenario("Stryfe", 0)
+  ),
 ];
 
 // ASPECTS
@@ -324,6 +332,10 @@ const heroes = [
   hero("Storm", LEADERSHIP),
   hero("Gambit", JUSTICE),
   hero("Rogue", PROTECTION),
+  neXtEvolution(
+    hero("Cable", LEADERSHIP),
+    hero("Domino", JUSTICE)
+  ),
 ];
 
 export { scenarios, modules, heroes, aspects };

@@ -338,6 +338,7 @@ const heroes = [
     hero("Domino", JUSTICE)
   ),
   hero("Psylocke", JUSTICE),
+  hero("Angel", PROTECTION),
 ];
 
 export { scenarios, modules, heroes, aspects };

@@ -231,6 +231,7 @@ class Section {
       this.disabled = true;
       this.root.classList.add("flipping");
       this.root.classList.remove("giant");
+      this.root.classList.remove("wide");
       this.incomingCards = newCards;
       setTimeout(() => (this.cards = newCards), cardChangeDelayMs);
     } else {
@@ -313,9 +314,9 @@ class Slot {
     this.root = root;
     this.name = root.querySelector(".name");
     this.cardFront = root.querySelector(".front img.front");
-    this.cardBottom = root.querySelector(".front img.back");
+    this.cardFrontInner = root.querySelector(".front img.back");
     this.cardBack = root.querySelector(".back img.front");
-    this.cardTop = root.querySelector(".back img.back");
+    this.cardBackInner = root.querySelector(".back img.back");
   }
 
   get card() {
@@ -339,13 +340,14 @@ class Slot {
     this.show();
     this.root.classList.toggle("landscape", newCard.isLandscape);
     this.root.classList.toggle("has-giant-form", newCard.hasGiantForm);
+    this.root.classList.toggle("has-wide-form", newCard.hasWideForm);
     this.name.innerText = newCard.name;
     this.cardFront.src = newCard.frontSrc;
     if (newCard.backSrc !== oldCard?.backSrc) {
       this.cardBack.src = newCard.backSrc;
     }
-    this.cardTop.src = newCard.topSrc || "";
-    this.cardBottom.src = newCard.bottomSrc || "";
+    this.cardFrontInner.src = newCard.frontInnerSrc || "";
+    this.cardBackInner.src = newCard.backInnerSrc || "";
   }
 
   show() {
@@ -460,6 +462,8 @@ async function initialize() {
   heroSlot.addEventListener("click", () => {
     if (heroSlot.classList.contains("has-giant-form")) {
       heroSection.classList.toggle("giant");
+    } else if (heroSlot.classList.contains("has-wide-form")) {
+      heroSection.classList.toggle("wide");
     }
   });
 }

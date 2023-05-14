@@ -114,6 +114,7 @@ class Card extends Option {
       defaultChildCards = null,
       hasBack = false,
       hasGiantForm = false,
+      hasWideForm = false,
     } = {}
   ) {
     super(name, { variant });
@@ -121,12 +122,19 @@ class Card extends Option {
     this.childCardCount = childCardCount;
     this.excludedChildCards = excludedChildCards;
     this.defaultChildCards = defaultChildCards;
+    this.hasGiantForm = hasGiantForm;
+    this.hasWideForm = hasWideForm;
+
     const image = (...path) => `images/${this.type.slug}/${path.join("/")}`;
     this.frontSrc = image(this.slug, "front.png");
     this.backSrc = hasBack ? image(this.slug, "back.png") : image("back.png");
-    this.hasGiantForm = hasGiantForm;
-    [this.topSrc, this.bottomSrc] = hasGiantForm
-      ? [image(this.slug, "top.png"), image(this.slug, "bottom.png")]
+
+    const hasInnerForm = hasGiantForm || hasWideForm;
+    [this.frontInnerSrc, this.backInnerSrc] = hasInnerForm
+      ? [
+          image(this.slug, "front-inner.png"),
+          image(this.slug, "back-inner.png"),
+        ]
       : [null, null];
   }
 
@@ -174,7 +182,11 @@ class Module extends Card {
 }
 
 class Hero extends Card {
-  constructor(name, aspects, { alterEgo = null, hasGiantForm = false } = {}) {
+  constructor(
+    name,
+    aspects,
+    { alterEgo = null, hasGiantForm = false, hasWideForm = false } = {}
+  ) {
     const variant = alterEgo;
     const hasBack = true;
     const childCardCount = aspects.length;
@@ -183,6 +195,7 @@ class Hero extends Card {
       variant,
       hasBack,
       hasGiantForm,
+      hasWideForm,
       childCardCount,
       defaultChildCards,
     });

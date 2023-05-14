@@ -338,7 +338,7 @@ const heroes = [
     hero("Domino", JUSTICE)
   ),
   hero("Psylocke", JUSTICE),
-  hero("Angel", PROTECTION),
+  hero("Angel", PROTECTION, { hasWideForm: true }),
 ];
 
 export { scenarios, modules, heroes, aspects };

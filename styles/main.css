@@ -400,6 +400,10 @@ input:active ~ .checkmark {
   height: var(--slot-height-giant);
 }
 
+#hero.wide .slot {
+  width: calc(2 * var(--card-width));
+}
+
 .flipping .slot {
   transform: rotateY(720deg);
 }
@@ -446,16 +450,22 @@ h3.name {
   transform-origin: calc(var(--card-height) / 2) calc(var(--card-height) / 2);
 }
 
-.slot.has-giant-form {
+.slot.has-giant-form,
+.slot.has-wide-form {
   cursor: zoom-in;
 }
 
-#hero.giant .slot {
+#hero.giant .slot,
+#hero.wide .slot {
   cursor: zoom-out;
 }
 
 .section:not(.flipping) .slot.has-giant-form .card {
   perspective: calc(2 * var(--slot-height-giant));
+}
+
+.section:not(.flipping) .slot.has-wide-form .card {
+  perspective: calc(2 * var(--slot-height-portrait));
 }
 
 .slot.landscape .card {
@@ -498,7 +508,8 @@ h3.name {
   transition: transform var(--card-change-delay);
 }
 
-#hero.giant .card > .front {
+#hero.giant .card > .front,
+#hero.wide .card > .front {
   transform: rotateY(180deg);
 }
 

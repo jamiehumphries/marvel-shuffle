@@ -16,18 +16,6 @@ const cardChangeDelayMs = Number(
     .slice(0, -1 * "ms".length)
 );
 
-function appendSectionTo(parent) {
-  const template = document.getElementById("section");
-  const element = template.content.cloneNode(true);
-  parent.appendChild(element);
-}
-
-function appendSlotTo(parent) {
-  const template = document.getElementById("slot");
-  const element = template.content.firstElementChild.cloneNode(true);
-  parent.appendChild(element);
-}
-
 class Section {
   constructor(cardsOrSets, parentSection = null) {
     this.cardsOrSets = cardsOrSets;
@@ -149,7 +137,9 @@ class Section {
 
   initializeLayout() {
     this.root = document.getElementById(this.type.id);
-    appendSectionTo(this.root);
+    const sectionTemplate = document.getElementById("section");
+    const element = sectionTemplate.content.cloneNode(true);
+    this.root.appendChild(element);
 
     const nameText = this.type.name;
     this.name = this.root.querySelector(".type-name");
@@ -158,8 +148,10 @@ class Section {
     this.root.querySelector(".select").innerText = selectText;
 
     const slotsContainer = this.root.querySelector(".slots");
+    const slotTemplate = document.getElementById("slot");
     for (let i = 0; i < this.maxSlots; i++) {
-      appendSlotTo(slotsContainer);
+      const element = slotTemplate.content.firstElementChild.cloneNode(true);
+      slotsContainer.appendChild(element);
     }
 
     this.slots = Array.from(this.root.querySelectorAll(".slot")).map(
@@ -404,9 +396,9 @@ function maybeReturnFocusAfterShuffle() {
 
 function requestPostAnimationFrame(callback) {
   requestAnimationFrame(() => {
-    const messageChannel = new MessageChannel();
-    messageChannel.port1.onmessage = callback;
-    messageChannel.port2.postMessage(undefined);
+    const { port1, port2 } = new MessageChannel();
+    port1.onmessage = callback;
+    port2.postMessage(undefined);
   });
 }
 
@@ -460,6 +452,9 @@ async function initialize() {
   const heroSection = document.getElementById("hero");
   const heroSlot = heroSection.querySelector(".slot");
   heroSlot.addEventListener("click", () => {
+    if (heroSection.classList.contains("flipping")) {
+      return;
+    }
     if (heroSlot.classList.contains("has-giant-form")) {
       heroSection.classList.toggle("giant");
     } else if (heroSlot.classList.contains("has-wide-form")) {

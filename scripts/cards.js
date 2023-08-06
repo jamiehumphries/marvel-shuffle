@@ -258,6 +258,7 @@ const AGGRESSION = aspect("Aggression");
 const JUSTICE = aspect("Justice");
 const LEADERSHIP = aspect("Leadership");
 const PROTECTION = aspect("Protection");
+const POOL = aspect("‘Pool");
 
 // prettier-ignore
 const aspects = [
@@ -265,8 +266,9 @@ const aspects = [
     AGGRESSION,
     JUSTICE,
     LEADERSHIP,
-    PROTECTION
+    PROTECTION,
   ),
+  POOL,
 ];
 
 // HEROES
@@ -340,6 +342,7 @@ const heroes = [
   hero("Psylocke", JUSTICE),
   hero("Angel", PROTECTION, { hasWideForm: true }),
   hero("X-23", AGGRESSION),
+  hero("Deadpool", POOL),
 ];
 
 export { scenarios, modules, heroes, aspects };

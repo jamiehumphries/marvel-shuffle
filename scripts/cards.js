@@ -138,6 +138,18 @@ const modules = [
   rogue(
     module("Reavers", { isLandscape: true })
   ),
+  neXtEvolution(
+    module("Hope Summers"),
+    module("Flight"),
+    module("Super Strength"),
+    module("Telepathy"),
+    module("Military Grade"),
+    module("Mutant Slayers"),
+    module("Nasty Boys"),
+    module("Black Tom Cassidy"),
+    module("Extreme Measures"),
+    module("Mutant Insurrection")
+  ),
   printAndPlay(
     module("Kree Fanatic")
   ),
@@ -242,11 +254,11 @@ const scenarios = [
     scenario("Mojo", 2, { exclude: nonMojoManiaModules })
   ),
   neXtEvolution(
-    scenario("Morlock Siege", 0, { hasBack: true }),
-    scenario("On the Run", 0, { hasBack: true }),
-    scenario("Juggernaut", 0),
-    scenario("Mister Sinister", 0),
-    scenario("Stryfe", 0)
+    scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], { hasBack: true }),
+    scenario("On the Run", ["Military Grade", "Nasty Boys"], { hasBack: true }),
+    scenario("Juggernaut", "Black Tom Cassidy"),
+    scenario("Mister Sinister", "Nasty Boys"),
+    scenario("Stryfe", ["Extreme Measures", "Mutant Insurrection"])
   ),
 ];
 

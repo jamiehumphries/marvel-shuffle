@@ -1,10 +1,14 @@
 import { CardSet, Scenario, Module, Hero, Aspect } from "./options.js";
 
-function cardSet(name) {
-  return (...cards) => new CardSet(name, cards);
+function ensureArray(arrayOrString) {
+  return Array.isArray(arrayOrString) ? arrayOrString : [arrayOrString];
 }
 
 // SETS
+
+function cardSet(name) {
+  return (...cards) => new CardSet(name, cards);
+}
 
 const coreSet = cardSet("Core Set");
 const theGreenGoblin = cardSet("The Green Goblin");
@@ -31,7 +35,9 @@ const printAndPlay = cardSet("Print-and-Play");
 
 // MODULES
 
-const module = (name, options) => new Module(name, options);
+function module(name, options) {
+  return new Module(name, options);
+}
 
 // prettier-ignore
 const modules = [
@@ -168,23 +174,19 @@ const nonMojoManiaModules = modules.flatMap((cardOrSet) => {
   return cardOrSet.children?.map((card) => card.name) || [cardOrSet.name];
 });
 
-const findModule = (name) => {
-  if (name === null) {
-    return null;
-  }
+function findModules(names) {
+  return ensureArray(names).map((name) => findModule(name));
+}
+
+function findModule(name) {
   const matchingModule = allModules.find((module) => module.name === name);
   if (!matchingModule) {
     throw new Error(`Could not find moduled named "${name}".`);
   }
   return matchingModule;
-};
+}
 
-const findModules = (names) => {
-  names = Array.isArray(names) ? names : [names];
-  return (names = names.map((name) => findModule(name)));
-};
-
-const scenario = (name, moduleNamesOrNumber, options = {}) => {
+function scenario(name, moduleNamesOrNumber, options = {}) {
   options.exclude &&= findModules(options.exclude);
 
   if (typeof moduleNamesOrNumber === "number") {
@@ -192,9 +194,10 @@ const scenario = (name, moduleNamesOrNumber, options = {}) => {
     return new Scenario(name, number, options);
   }
 
-  const modules = findModules(moduleNamesOrNumber);
+  const moduleNames = moduleNamesOrNumber;
+  const modules = findModules(moduleNames);
   return new Scenario(name, modules, options);
-};
+}
 
 // prettier-ignore
 const scenarios = [
@@ -267,7 +270,9 @@ const scenarios = [
 
 // ASPECTS
 
-const aspect = (name) => new Aspect(name);
+function aspect(name) {
+  return new Aspect(name);
+}
 
 const AGGRESSION = aspect("Aggression");
 const JUSTICE = aspect("Justice");
@@ -281,17 +286,17 @@ const aspects = [
     AGGRESSION,
     JUSTICE,
     LEADERSHIP,
-    PROTECTION,
+    PROTECTION
   ),
   POOL,
 ];
 
 // HEROES
 
-const hero = (name, aspects, options) => {
-  aspects = Array.isArray(aspects) ? aspects : [aspects];
+function hero(name, aspects, options) {
+  aspects = ensureArray(aspects);
   return new Hero(name, aspects, options);
-};
+}
 
 // prettier-ignore
 const heroes = [

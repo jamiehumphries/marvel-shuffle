@@ -258,10 +258,10 @@ const scenarios = [
   ),
   neXtEvolution(
     scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], { hasBack: true }),
-    scenario("On the Run", ["Military Grade", "Nasty Boys"], { hasBack: true }),
-    scenario("Juggernaut", "Black Tom Cassidy"),
-    scenario("Mister Sinister", "Nasty Boys"),
-    scenario("Stryfe", ["Extreme Measures", "Mutant Insurrection"])
+    scenario("On the Run", ["Military Grade", "Nasty Boys"], { exclude: "Mutant Slayers", hasBack: true }),
+    scenario("Juggernaut", "Black Tom Cassidy", { exclude: "Hope Summers" }),
+    scenario("Mister Sinister", "Nasty Boys", { exclude: ["Flight", "Super Strength", "Telepathy", "Hope Summers"] }),
+    scenario("Stryfe", ["Extreme Measures", "Mutant Insurrection"], { exclude: "Hope Summers" })
   ),
 ];
 

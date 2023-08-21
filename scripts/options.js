@@ -174,7 +174,7 @@ class Module extends Card {
   static get placeholder() {
     if (!this._placeholder) {
       const card = new this("No modules needed");
-      card.frontSrc = card.backSrc = `images/${this.slug}/back.png`;
+      card.frontSrc = card.backSrc = "images/module/back.png";
       this._placeholder = card;
     }
     return this._placeholder;

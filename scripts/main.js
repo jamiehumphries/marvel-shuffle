@@ -27,10 +27,6 @@ class Section {
     this.parentSection = parentSection;
   }
 
-  get minChildCardCount() {
-    return Math.max(...this.allCards.map((card) => card.childCardCount));
-  }
-
   get maxChildCardCount() {
     return Math.max(...this.allCards.map((card) => card.childCardCount));
   }
@@ -134,10 +130,6 @@ class Section {
       }
       throw new Error("All cards for a section must be the same type.");
     }, null);
-
-    if (this.parentSection?.minChildCardCount === 0) {
-      this.allCards.push(this.type.placeholder);
-    }
   }
 
   initializeLayout() {

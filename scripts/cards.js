@@ -1,4 +1,10 @@
-import { CardSet, Scenario, Module, Hero, Aspect } from "./options.js";
+import {
+  CardSet,
+  Scenario,
+  Module,
+  Hero,
+  Aspect,
+} from "./options.js?v=next-evolution";
 
 function ensureArray(arrayOrString) {
   return Array.isArray(arrayOrString) ? arrayOrString : [arrayOrString];

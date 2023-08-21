@@ -1,6 +1,11 @@
 import copyTextToClipboard from "./lib/copy-text-to-clipboard.js";
-import { All } from "./options.js?v=db";
-import { scenarios, modules, heroes, aspects } from "./cards.js?v=db";
+import { All } from "./options.js?v=next-evolution";
+import {
+  scenarios,
+  modules,
+  heroes,
+  aspects,
+} from "./cards.js?v=next-evolution";
 import {
   initializeStorage,
   clearStorage,
@@ -8,7 +13,7 @@ import {
   setUserId,
   getItem,
   setItem,
-} from "./storage.js?v=db";
+} from "./storage.js?v=next-evolution";
 
 const cardChangeDelayMs = Number(
   getComputedStyle(document.documentElement)

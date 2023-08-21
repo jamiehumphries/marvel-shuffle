@@ -179,17 +179,20 @@ const findModule = (name) => {
   return matchingModule;
 };
 
+const findModules = (names) => {
+  names = Array.isArray(names) ? names : [names];
+  return (names = names.map((name) => findModule(name)));
+};
+
 const scenario = (name, moduleNamesOrNumber, options = {}) => {
-  options.exclude &&= options.exclude.map((name) => findModule(name));
+  options.exclude &&= findModules(options.exclude);
 
   if (typeof moduleNamesOrNumber === "number") {
     const number = moduleNamesOrNumber;
     return new Scenario(name, number, options);
   }
 
-  let moduleNames = moduleNamesOrNumber;
-  moduleNames = Array.isArray(moduleNames) ? moduleNames : [moduleNames];
-  const modules = moduleNames.map((name) => findModule(name));
+  const modules = findModules(moduleNamesOrNumber);
   return new Scenario(name, modules, options);
 };
 
@@ -208,9 +211,9 @@ const scenarios = [
     scenario("Wrecking Crew", 0)
   ),
   theRiseOfRedSkull(
-    scenario("Crossbones", ["Hydra Assault", "Weapon Master", "Legions of Hydra"], { exclude: ["Experimental Weapons"] }),
+    scenario("Crossbones", ["Hydra Assault", "Weapon Master", "Legions of Hydra"], { exclude: "Experimental Weapons" }),
     scenario("Absorbing Man", "Hydra Patrol"),
-    scenario("Taskmaster", "Weapon Master", { exclude: ["Hydra Patrol"] }),
+    scenario("Taskmaster", "Weapon Master", { exclude: "Hydra Patrol" }),
     scenario("Zola", "Under Attack"),
     scenario("Red Skull", ["Hydra Assault", "Hydra Patrol"])
   ),
@@ -218,34 +221,34 @@ const scenarios = [
     scenario("Kang", "Temporal")
   ),
   theGalaxysMostWanted(
-    scenario("Brotherhood of Badoon", "Band of Badoon", { exclude: ["Ship Command"] }),
-    scenario("Infiltrate the Museum", "Menagerie Medley", { exclude: ["Galactic Artifacts"] }),
+    scenario("Brotherhood of Badoon", "Band of Badoon", { exclude: "Ship Command" }),
+    scenario("Infiltrate the Museum", "Menagerie Medley", { exclude: "Galactic Artifacts" }),
     scenario("Escape the Museum", "Menagerie Medley", { exclude: ["Galactic Artifacts", "Ship Command"], hasBack: true }),
-    scenario("Nebula", "Space Pirates", { exclude: ["Ship Command"] }),
-    scenario("Ronan the Accuser", "Kree Militants", { exclude: ["Ship Command"] })
+    scenario("Nebula", "Space Pirates", { exclude: "Ship Command" }),
+    scenario("Ronan the Accuser", "Kree Militants", { exclude: "Ship Command" })
   ),
   theMadTitansShadow(
     scenario("Ebony Maw", ["Armies of Titan", "Black Order"]),
     scenario("Tower Defense", "Armies of Titan", { hasBack: true }),
-    scenario("Thanos", ["Black Order", "Children of Thanos"], { exclude: ["Infinity Gauntlet"] }),
+    scenario("Thanos", ["Black Order", "Children of Thanos"], { exclude: "Infinity Gauntlet" }),
     scenario("Hela", ["Legions of Hel", "Frost Giants"], { hasBack: true }),
-    scenario("Loki", ["Enchantress", "Frost Giants"], { exclude: ["Infinity Gauntlet"] })
+    scenario("Loki", ["Enchantress", "Frost Giants"], { exclude: "Infinity Gauntlet" })
   ),
   theHood(
     scenario("The Hood", 7)
   ),
   sinisterMotives(
-    scenario("Sandman", "Down to Earth", { exclude: ["City in Chaos"] }),
-    scenario("Venom", "Down to Earth", { exclude: ["Symbiotic Strength"] }),
-    scenario("Mysterio", "Whispers of Paranoia", { exclude: ["Personal Nightmare"] }),
-    scenario("The Sinister Six", 0, { exclude: ["Guerilla Tactics"] }),
-    scenario("Venom Goblin", "Goblin Gear", { exclude: ["Symbiotic Strength"] })
+    scenario("Sandman", "Down to Earth", { exclude: "City in Chaos" }),
+    scenario("Venom", "Down to Earth", { exclude: "Symbiotic Strength" }),
+    scenario("Mysterio", "Whispers of Paranoia", { exclude: "Personal Nightmare" }),
+    scenario("The Sinister Six", 0, { exclude: "Guerilla Tactics" }),
+    scenario("Venom Goblin", "Goblin Gear", { exclude: "Symbiotic Strength" })
   ),
   mutantGenesis(
     scenario("Sabretooth", ["Brotherhood", "Mystique"]),
-    scenario("Project Wideawake", "Sentinels", { exclude: ["Zero Tolerance"] }),
-    scenario("Master Mold", "Zero Tolerance", { exclude: ["Sentinels"] }),
-    scenario("Mansion Attack", "Mystique", { exclude: ["Brotherhood"], hasBack: true }),
+    scenario("Project Wideawake", "Sentinels", { exclude: "Zero Tolerance" }),
+    scenario("Master Mold", "Zero Tolerance", { exclude: "Sentinels" }),
+    scenario("Mansion Attack", "Mystique", { exclude: "Brotherhood", hasBack: true }),
     scenario("Magneto", "Acolytes")
   ),
   mojoMania(

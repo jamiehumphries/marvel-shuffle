@@ -151,7 +151,7 @@ const modules = [
     module("Reavers", { isLandscape: true })
   ),
   neXtEvolution(
-    module("Hope Summers"),
+    module("Hope Summers", { hasBack: true }),
     module("Flight"),
     module("Super Strength"),
     module("Telepathy"),

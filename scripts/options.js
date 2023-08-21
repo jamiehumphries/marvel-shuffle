@@ -167,8 +167,8 @@ class Scenario extends Card {
 }
 
 class Module extends Card {
-  constructor(name, { isLandscape = false } = {}) {
-    super(name, { isLandscape });
+  constructor(name, { isLandscape = false, hasBack = false } = {}) {
+    super(name, { isLandscape, hasBack });
   }
 
   static get placeholder() {

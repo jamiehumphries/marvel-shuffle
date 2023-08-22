@@ -156,11 +156,11 @@ const modules = [
     module("Super Strength"),
     module("Telepathy"),
     module("Military Grade"),
-    module("Mutant Slayers"),
-    module("Nasty Boys"),
+    module("Mutant Slayers", { isLandscape: true }),
+    module("Nasty Boys", { isLandscape: true }),
     module("Black Tom Cassidy"),
-    module("Extreme Measures"),
-    module("Mutant Insurrection")
+    module("Extreme Measures", { isLandscape: true }),
+    module("Mutant Insurrection", { isLandscape: true })
   ),
   printAndPlay(
     module("Kree Fanatic")

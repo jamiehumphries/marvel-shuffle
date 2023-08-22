@@ -78,6 +78,7 @@ const modules = [
     module("Menagerie Medley"),
     module("Space Pirates"),
     module("Ship Command"),
+    module("Power Stone"),
     module("Badoon Headhunter")
   ),
   theMadTitansShadow(

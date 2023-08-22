@@ -77,7 +77,8 @@ const modules = [
     module("Kree Militants"),
     module("Menagerie Medley"),
     module("Space Pirates"),
-    module("Ship Command")
+    module("Ship Command"),
+    module("Badoon Headhunter")
   ),
   theMadTitansShadow(
     module("Black Order", { isLandscape: true }),

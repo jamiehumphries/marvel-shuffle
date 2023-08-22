@@ -228,7 +228,7 @@ class Section {
     }
   }
 
-  randomCard({ exclude = [], preferExclude = null, available = null } = []) {
+  randomCard({ exclude = [], preferExclude = null, available = null } = {}) {
     available ||= this.allCards.filter((card) => card.checked);
     available = available.filter((card) => !exclude.includes(card));
 

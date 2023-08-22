@@ -185,24 +185,20 @@ function findModules(names) {
 }
 
 function findModule(name) {
-  const matchingModule = allModules.find((module) => module.name === name);
-  if (!matchingModule) {
+  const module = allModules.find((module) => module.name === name);
+  if (!module) {
     throw new Error(`Could not find moduled named "${name}".`);
   }
-  return matchingModule;
+  return module;
 }
 
 function scenario(name, moduleNamesOrNumber, options = {}) {
   options.exclude &&= findModules(options.exclude);
-
-  if (typeof moduleNamesOrNumber === "number") {
-    const number = moduleNamesOrNumber;
-    return new Scenario(name, number, options);
-  }
-
-  const moduleNames = moduleNamesOrNumber;
-  const modules = findModules(moduleNames);
-  return new Scenario(name, modules, options);
+  const modulesOrNumber =
+    typeof moduleNamesOrNumber === "number"
+      ? moduleNamesOrNumber
+      : findModules(moduleNamesOrNumber);
+  return new Scenario(name, modulesOrNumber, options);
 }
 
 // prettier-ignore

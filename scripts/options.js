@@ -125,7 +125,7 @@ class Card extends Option {
     this.hasGiantForm = hasGiantForm;
     this.hasWideForm = hasWideForm;
 
-    const image = (...path) => `images/${this.type.slug}/${path.join("/")}`;
+    const image = (...path) => ["images", this.type.slug, ...path].join("/");
     this.frontSrc = image(this.slug, "front.png");
     this.backSrc = hasBack ? image(this.slug, "back.png") : image("back.png");
 

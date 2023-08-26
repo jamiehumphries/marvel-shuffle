@@ -124,7 +124,7 @@ class Section {
     );
 
     this.type = this.allCards.reduce((type, card) => {
-      const cardType = card.constructor;
+      const cardType = card.type;
       if (type === null || type === cardType) {
         return cardType;
       }

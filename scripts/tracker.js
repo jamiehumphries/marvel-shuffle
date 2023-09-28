@@ -13,13 +13,7 @@ function appendHeaderRows(thead) {
   const firstRow = createRow();
   const secondRow = createRow();
 
-  const progressTotalCell = createCell({ colspan: 2, header: true });
-  firstRow.appendChild(progressTotalCell);
-
-  const progressStandardCell = createCell({ header: true });
-  const progressExpertCell = createCell({ header: true });
-  secondRow.appendChild(progressStandardCell);
-  secondRow.appendChild(progressExpertCell);
+  appendProgressCells(firstRow, secondRow);
 
   for (const set of scenarios) {
     for (let i = 0; i < set.children.length; i++) {
@@ -52,6 +46,55 @@ function appendHeaderRows(thead) {
 
   thead.appendChild(firstRow);
   thead.appendChild(secondRow);
+}
+
+function appendProgressCells(firstRow, secondRow) {
+  const scenarioCount = scenarios.flatMap((set) => set.children).length;
+  const heroCount = heroes.flatMap(
+    (cardOrSet) => cardOrSet.children || [cardOrSet]
+  ).length;
+
+  const totalCombinations = scenarioCount * heroCount;
+
+  // TODO: Load from database.
+  const standardCleared = 47;
+  const expertCleared = 18;
+
+  const percentageCleared = (cleared) =>
+    `${((cleared / totalCombinations) * 100).toFixed(2)}%`;
+
+  const totalCleared = standardCleared + expertCleared;
+  const totalPercentage = percentageCleared(totalCleared / 2);
+  const content = document.createElement("div");
+
+  const percentageDiv = document.createElement("div");
+  percentageDiv.innerText = totalPercentage;
+  content.appendChild(percentageDiv);
+
+  const fractionDiv = document.createElement("div");
+  fractionDiv.innerText = `(${totalCleared} / ${totalCombinations * 2})`;
+  content.appendChild(fractionDiv);
+
+  const progressTotalCell = createCell({
+    contentDiv: content,
+    colspan: 2,
+    header: true,
+  });
+  firstRow.appendChild(progressTotalCell);
+
+  const standardPercentage = percentageCleared(standardCleared);
+  const progressStandardCell = createCell({
+    text: standardPercentage,
+    header: true,
+  });
+  secondRow.appendChild(progressStandardCell);
+
+  const expertPercentage = percentageCleared(expertCleared);
+  const progressExpertCell = createCell({
+    text: expertPercentage,
+    header: true,
+  });
+  secondRow.appendChild(progressExpertCell);
 }
 
 function appendBodyRows(tbody) {
@@ -101,6 +144,7 @@ function createRow({ rowbreak = false } = {}) {
 }
 
 function createCell({
+  contentDiv = null,
   text = null,
   color = null,
   colspan = 1,
@@ -118,7 +162,7 @@ function createCell({
     cell.classList.add("col-break");
   }
 
-  const div = document.createElement("div");
+  const div = contentDiv || document.createElement("div");
 
   if (text) {
     div.innerText = text;

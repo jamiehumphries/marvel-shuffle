@@ -60,16 +60,15 @@
 }
 
 @font-face {
-  font-family: "Back Issues BB";
   src: url(fonts/BackIssuesBB_reg.otf);
+  font-family: "Back Issues BB";
 }
 
 body {
   margin: 0;
   padding: 0;
-
-  font-family: "Back Issues BB", sans-serif;
   overflow-y: scroll;
+  font-family: "Back Issues BB", sans-serif;
 }
 
 button {
@@ -113,20 +112,22 @@ h2 {
 
 button:not(.icon-button) {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 
   margin: 0 auto;
+
+  outline: none;
+  border: 3px solid var(--button-border-and-text-color);
+  border-radius: calc(10px * var(--button-scale-factor)) 0;
+
+  background-color: var(--button-background-color);
+
   width: calc(150px * var(--button-scale-factor));
   height: calc(50px * var(--button-scale-factor));
 
-  background-color: var(--button-background-color);
-  border: 3px solid var(--button-border-and-text-color);
-
-  border-radius: calc(10px * var(--button-scale-factor)) 0;
-  outline: none;
-  font-size: calc(1rem * var(--button-scale-factor));
   color: var(--button-border-and-text-color);
+  font-size: calc(1rem * var(--button-scale-factor));
 }
 
 button:not(.icon-button) img {
@@ -174,22 +175,24 @@ button.shuffle#shuffle-all {
 }
 
 button.icon-button {
+  display: flex;
   position: absolute;
   top: calc(var(--container-padding) / 2);
   right: var(--container-padding);
 
-  display: flex;
   flex-direction: column;
   align-items: center;
 
-  background: none;
   border: none;
   border-radius: 10px;
-  width: 70px;
-  padding: 10px 0;
 
-  font-size: 0.7rem;
+  background: none;
+
+  padding: 10px 0;
+  width: 70px;
+
   color: var(--icon-button-text-color);
+  font-size: 0.7rem;
 }
 
 button.icon-button img {
@@ -241,15 +244,15 @@ button#copy-sync-url {
 
 #sync-url {
   margin-top: 1rem;
-  font-family: "Courier New", Courier, monospace;
   font-weight: bold;
+  font-family: "Courier New", Courier, monospace;
   text-align: center;
 }
 
 .sections {
   display: grid;
-  justify-content: center;
   grid-template-columns: auto auto auto auto;
+  justify-content: center;
   gap: 0 calc(20px * var(--layout-scale-factor));
 
   margin-top: 30px;
@@ -272,13 +275,13 @@ button#copy-sync-url {
 }
 
 .option {
-  position: relative;
   display: flex;
+  position: relative;
   align-items: center;
 
-  margin: 0.5rem 0;
-
   cursor: pointer;
+
+  margin: 0.5rem 0;
 }
 
 .option.all {
@@ -296,23 +299,23 @@ button#copy-sync-url {
 .option input {
   position: absolute;
 
-  height: 0;
-  width: 0;
-
   opacity: 0;
   cursor: pointer;
+
+  width: 0;
+  height: 0;
 }
 
 .checkmark {
   position: relative;
   flex: none;
-  margin-right: 8px;
 
   box-sizing: border-box;
-  width: 20px;
-  height: 20px;
+  margin-right: 8px;
 
   border: 2px solid var(--checkbox-border-and-check-color);
+  width: 20px;
+  height: 20px;
 }
 
 :checked ~ .checkmark {
@@ -323,19 +326,20 @@ button#copy-sync-url {
 }
 
 .checkmark:after {
-  content: "";
+  display: none;
 
   position: absolute;
-  display: none;
   left: 5px;
 
-  width: 5px;
-  height: 10px;
+  transform: rotate(40deg);
 
   border: solid var(--checkbox-border-and-check-color);
   border-width: 0 2px 2px 0;
 
-  transform: rotate(40deg);
+  width: 5px;
+  height: 10px;
+
+  content: "";
 }
 
 :checked ~ .checkmark:after {
@@ -381,13 +385,13 @@ input:active ~ .checkmark {
 .slot {
   position: relative;
 
+  transform-style: preserve-3d;
+
   opacity: 1;
 
   margin: auto;
   width: var(--card-width);
   height: var(--slot-height-portrait);
-
-  transform-style: preserve-3d;
 }
 
 .slot.landscape:not(.hidden) {
@@ -409,8 +413,11 @@ input:active ~ .checkmark {
 }
 
 .container:not(.init) .slot {
-  transition: transform var(--flip-duration), width var(--card-change-duration),
-    height var(--card-change-duration), opacity var(--card-change-duration);
+  transition:
+    transform var(--flip-duration),
+    width var(--card-change-duration),
+    height var(--card-change-duration),
+    opacity var(--card-change-duration);
 }
 
 .container:not(.init) .flipped .slot {
@@ -418,8 +425,8 @@ input:active ~ .checkmark {
 }
 
 .slot.hidden {
-  height: 0;
   opacity: 0;
+  height: 0;
   overflow: hidden;
 }
 
@@ -429,25 +436,26 @@ input:active ~ .checkmark {
   justify-content: center;
 
   box-sizing: border-box;
-  height: var(--card-header-height);
   padding-top: 3px;
+
+  height: var(--card-header-height);
 }
 
 h3.name {
   margin: 0;
   padding: 0 10px;
 
-  font-size: 1.2rem;
   font-weight: normal;
+  font-size: 1.2rem;
   text-align: center;
 }
 
 .card {
+  transform-origin: calc(var(--card-height) / 2) calc(var(--card-height) / 2);
+  transform-style: preserve-3d;
+
   width: var(--card-width);
   height: var(--card-height);
-
-  transform-style: preserve-3d;
-  transform-origin: calc(var(--card-height) / 2) calc(var(--card-height) / 2);
 }
 
 .slot.has-giant-form,
@@ -484,11 +492,11 @@ h3.name {
 .back {
   position: absolute;
 
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+
   width: 100%;
   height: 100%;
-
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
 }
 
 .card > .back {
@@ -500,8 +508,8 @@ h3.name {
 }
 
 .card > .front {
-  transition: transform var(--unfold-duration);
   transform-origin: right;
+  transition: transform var(--unfold-duration);
 }
 
 .flipping .card > .front {
@@ -542,14 +550,14 @@ h3.name {
 
 @media (max-width: 600px) {
   img#logo {
-    position: relative;
     display: block;
+    position: relative;
 
     margin: 0 auto 20px auto;
   }
 
   .sections {
-    grid-template-columns: auto;
     row-gap: 10px;
+    grid-template-columns: auto;
   }
 }

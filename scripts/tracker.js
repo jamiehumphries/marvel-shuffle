@@ -24,19 +24,27 @@ function appendHeaderRows(thead) {
   for (const set of scenarios) {
     for (let i = 0; i < set.children.length; i++) {
       const scenario = set.children[i];
+
+      const { name: text, color } = scenario;
       const colbreak = i === 0;
       const header = true;
 
       const scenarioCell = createCell({
-        text: scenario.name,
+        text,
+        color,
         colspan: 2,
         colbreak,
         header,
       });
       firstRow.appendChild(scenarioCell);
 
-      const standardCell = createCell({ text: "Standard", colbreak, header });
-      const expertCell = createCell({ text: "Expert", header });
+      const standardCell = createCell({
+        text: "Standard",
+        color,
+        colbreak,
+        header,
+      });
+      const expertCell = createCell({ text: "Expert", color, header });
       secondRow.appendChild(standardCell);
       secondRow.appendChild(expertCell);
     }
@@ -67,7 +75,8 @@ function appendBodyRows(tbody) {
 function appendHeroRow(tbody, hero, { rowbreak } = {}) {
   const row = createRow({ rowbreak });
 
-  const heroCell = createCell({ text: hero.name, colspan: 2, header: true });
+  const { name: text, color } = hero;
+  const heroCell = createCell({ text, color, colspan: 2, header: true });
   row.appendChild(heroCell);
 
   for (const set of scenarios) {
@@ -92,7 +101,8 @@ function createRow({ rowbreak = false } = {}) {
 }
 
 function createCell({
-  text = "",
+  text = null,
+  color = null,
   colspan = 1,
   colbreak = false,
   header = false,
@@ -109,10 +119,36 @@ function createCell({
   }
 
   const div = document.createElement("div");
-  div.innerText = text;
+
+  if (text) {
+    div.innerText = text;
+  }
+
+  if (color) {
+    div.style.backgroundColor = color;
+    div.style.color = chooseTextColor(color);
+  }
+
   cell.appendChild(div);
 
   return cell;
+}
+
+function chooseTextColor(backgroundColorHex) {
+  // See: https://stackoverflow.com/a/3943023/1213714
+  const { r, g, b } = hexToRgb(backgroundColorHex);
+  return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? "#000000" : "#ffffff";
+}
+
+function hexToRgb(hex) {
+  var result = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hex);
+  return result
+    ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16),
+      }
+    : null;
 }
 
 renderTable();

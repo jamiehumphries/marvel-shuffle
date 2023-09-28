@@ -194,81 +194,81 @@ function findModule(name) {
   return module;
 }
 
-function scenario(name, moduleNamesOrNumber, options = {}) {
+function scenario(name, moduleNamesOrNumber, color, options = {}) {
   options.exclude &&= findModules(options.exclude);
   const modulesOrNumber =
     typeof moduleNamesOrNumber === "number"
       ? moduleNamesOrNumber
       : findModules(moduleNamesOrNumber);
-  return new Scenario(name, modulesOrNumber, options);
+  return new Scenario(name, modulesOrNumber, color, options);
 }
 
 // prettier-ignore
 const scenarios = [
   coreSet(
-    scenario("Rhino", "Bomb Scare"),
-    scenario("Klaw", "Masters of Evil"),
-    scenario("Ultron", "Under Attack")
+    scenario("Rhino", "Bomb Scare", "#d0cece"),
+    scenario("Klaw", "Masters of Evil", "#7030a0"),
+    scenario("Ultron", "Under Attack", "#ed7d31")
   ),
   theGreenGoblin(
-    scenario("Risky Business", "Goblin Gimmicks",  { hasBack: true }),
-    scenario("Mutagen Formula", "Goblin Gimmicks")
+    scenario("Risky Business", "Goblin Gimmicks", "#00b050",  { hasBack: true }),
+    scenario("Mutagen Formula", "Goblin Gimmicks", "#660066")
   ),
   theWreckingCrew(
-    scenario("Wrecking Crew", 0)
+    scenario("Wrecking Crew", 0, "#ffc000")
   ),
   theRiseOfRedSkull(
-    scenario("Crossbones", ["Hydra Assault", "Weapon Master", "Legions of Hydra"], { exclude: "Experimental Weapons" }),
-    scenario("Absorbing Man", "Hydra Patrol"),
-    scenario("Taskmaster", "Weapon Master", { exclude: "Hydra Patrol" }),
-    scenario("Zola", "Under Attack"),
-    scenario("Red Skull", ["Hydra Assault", "Hydra Patrol"])
+    scenario("Crossbones", ["Hydra Assault", "Weapon Master", "Legions of Hydra"], "#404040", { exclude: "Experimental Weapons" }),
+    scenario("Absorbing Man", "Hydra Patrol", "#7030a0"),
+    scenario("Taskmaster", "Weapon Master", "#c9c9c9", { exclude: "Hydra Patrol" }),
+    scenario("Zola", "Under Attack", "#adc1e5"),
+    scenario("Red Skull", ["Hydra Assault", "Hydra Patrol"], "#ff0000")
   ),
   theOnceAndFutureKang(
-    scenario("Kang", "Temporal")
+    scenario("Kang", "Temporal", "#00b050")
   ),
   theGalaxysMostWanted(
-    scenario("Brotherhood of Badoon", "Band of Badoon", { exclude: "Ship Command" }),
-    scenario("Infiltrate the Museum", "Menagerie Medley", { exclude: "Galactic Artifacts" }),
-    scenario("Escape the Museum", "Menagerie Medley", { exclude: ["Galactic Artifacts", "Ship Command"], hasBack: true }),
-    scenario("Nebula", "Space Pirates", { exclude: "Ship Command" }),
-    scenario("Ronan the Accuser", "Kree Militants", { exclude: "Ship Command" })
+    scenario("Brotherhood of Badoon", "Band of Badoon", "#660066", { exclude: "Ship Command" }),
+    scenario("Infiltrate the Museum", "Menagerie Medley", "#c00000", { exclude: "Galactic Artifacts" }),
+    scenario("Escape the Museum", "Menagerie Medley", "#afdc7e", { exclude: ["Galactic Artifacts", "Ship Command"], hasBack: true }),
+    scenario("Nebula", "Space Pirates", "#a9cbe9", { exclude: "Ship Command" }),
+    scenario("Ronan the Accuser", "Kree Militants", "#305496", { exclude: "Ship Command" })
   ),
   theMadTitansShadow(
-    scenario("Ebony Maw", ["Armies of Titan", "Black Order"]),
-    scenario("Tower Defense", "Armies of Titan", { hasBack: true }),
-    scenario("Thanos", ["Black Order", "Children of Thanos"], { exclude: "Infinity Gauntlet" }),
-    scenario("Hela", ["Legions of Hel", "Frost Giants"], { hasBack: true }),
-    scenario("Loki", ["Enchantress", "Frost Giants"], { exclude: "Infinity Gauntlet" })
+    scenario("Ebony Maw", ["Armies of Titan", "Black Order"], "#404040"),
+    scenario("Tower Defense", "Armies of Titan", "#c7d0db", { hasBack: true }),
+    scenario("Thanos", ["Black Order", "Children of Thanos"], "#9900ff", { exclude: "Infinity Gauntlet" }),
+    scenario("Hela", ["Legions of Hel", "Frost Giants"], "#B4D79D", { hasBack: true }),
+    scenario("Loki", ["Enchantress", "Frost Giants"], "#ffc000", { exclude: "Infinity Gauntlet" })
   ),
   theHood(
-    scenario("The Hood", 7)
+    scenario("The Hood", 7, "#c00000")
   ),
   sinisterMotives(
-    scenario("Sandman", "Down to Earth", { exclude: "City in Chaos" }),
-    scenario("Venom", "Down to Earth", { exclude: "Symbiotic Strength" }),
-    scenario("Mysterio", "Whispers of Paranoia", { exclude: "Personal Nightmare" }),
-    scenario("The Sinister Six", 0, { exclude: "Guerilla Tactics" }),
-    scenario("Venom Goblin", "Goblin Gear", { exclude: "Symbiotic Strength" })
+    scenario("Sandman", "Down to Earth", "#ffcc66", { exclude: "City in Chaos" }),
+    scenario("Venom", "Down to Earth", "#404040", { exclude: "Symbiotic Strength" }),
+    scenario("Mysterio", "Whispers of Paranoia", "#7030a0", { exclude: "Personal Nightmare" }),
+    scenario("The Sinister Six", 0, "#F4AD7C", { exclude: "Guerilla Tactics" }),
+    scenario("Venom Goblin", "Goblin Gear", "#375623", { exclude: "Symbiotic Strength" })
   ),
   mutantGenesis(
-    scenario("Sabretooth", ["Brotherhood", "Mystique"]),
-    scenario("Project Wideawake", "Sentinels", { exclude: "Zero Tolerance" }),
-    scenario("Master Mold", "Zero Tolerance", { exclude: "Sentinels" }),
-    scenario("Mansion Attack", "Mystique", { exclude: "Brotherhood", hasBack: true }),
-    scenario("Magneto", "Acolytes")
+    scenario("Sabretooth", ["Brotherhood", "Mystique"], "#ffc000"),
+    scenario("Project Wideawake", "Sentinels", "#9933ff", { exclude: "Zero Tolerance" }),
+    scenario("Master Mold", "Zero Tolerance", "#7030a0", { exclude: "Sentinels" }),
+    scenario("Mansion Attack", "Mystique", "#d0cece", { exclude: "Brotherhood", hasBack: true }),
+    scenario("Magneto", "Acolytes", "#c00000")
   ),
   mojoMania(
-    scenario("Magog", 1, { hasBack: true }),
-    scenario("Spiral", 3, { exclude: nonMojoManiaModules, hasBack: true }),
-    scenario("Mojo", 2, { exclude: nonMojoManiaModules })
+    scenario("Magog", 1, "#e66914", { hasBack: true }),
+    scenario("Spiral", 3, "#acccea", { exclude: nonMojoManiaModules, hasBack: true }),
+    scenario("Mojo", 2, "#ffcc00", { exclude: nonMojoManiaModules })
   ),
   neXtEvolution(
-    scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], { hasBack: true }),
-    scenario("On the Run", ["Military Grade", "Nasty Boys"], { exclude: "Mutant Slayers", hasBack: true }),
-    scenario("Juggernaut", "Black Tom Cassidy", { exclude: "Hope Summers" }),
-    scenario("Mister Sinister", "Nasty Boys", { exclude: ["Flight", "Super Strength", "Telepathy", "Hope Summers"] }),
-    scenario("Stryfe", ["Extreme Measures", "Mutant Insurrection"], { exclude: "Hope Summers" })
+    scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], "#00b050", { hasBack: true }),
+    scenario("On the Run", ["Military Grade", "Nasty Boys"], "#7030a0", { exclude: "Mutant Slayers", hasBack: true }),
+    scenario("Juggernaut", "Black Tom Cassidy", "#c00000", { exclude: "Hope Summers" }),
+    scenario("Mister Sinister", "Nasty Boys", "#305496", { exclude: ["Flight", "Super Strength", "Telepathy", "Hope Summers"] }),
+    scenario("Stryfe", ["Extreme Measures", "Mutant Insurrection"], "#ff0000", { exclude: "Hope Summers" })
   ),
 ];
 
@@ -297,76 +297,76 @@ const aspects = [
 
 // HEROES
 
-function hero(name, aspects, options) {
+function hero(name, aspects, color, options) {
   aspects = ensureArray(aspects);
-  return new Hero(name, aspects, options);
+  return new Hero(name, aspects, color, options);
 }
 
 // prettier-ignore
 const heroes = [
   coreSet(
-    hero("Spider-Man", JUSTICE, { alterEgo: "Peter Parker" }),
-    hero("Captain Marvel", LEADERSHIP),
-    hero("She-Hulk", AGGRESSION),
-    hero("Iron Man", AGGRESSION),
-    hero("Black Panther", PROTECTION)
+    hero("Spider-Man", JUSTICE, "#ff0000", { alterEgo: "Peter Parker" }),
+    hero("Captain Marvel", LEADERSHIP, "#0070c0"),
+    hero("She-Hulk", AGGRESSION, "#00b050"),
+    hero("Iron Man", AGGRESSION, "#ffc000"),
+    hero("Black Panther", PROTECTION, "#404040")
   ),
-  hero("Captain America", LEADERSHIP),
-  hero("Ms. Marvel", PROTECTION),
-  hero("Thor", AGGRESSION),
-  hero("Black Widow", JUSTICE),
-  hero("Doctor Strange", PROTECTION),
-  hero("Hulk", AGGRESSION),
+  hero("Captain America", LEADERSHIP, "#0070c0"),
+  hero("Ms. Marvel", PROTECTION, "#ff0000"),
+  hero("Thor", AGGRESSION, "#ffc000"),
+  hero("Black Widow", JUSTICE, "#404040"),
+  hero("Doctor Strange", PROTECTION, "#c00000"),
+  hero("Hulk", AGGRESSION, "#00b050"),
   theRiseOfRedSkull(
-    hero("Hawkeye", LEADERSHIP),
-    hero("Spider-Woman", [AGGRESSION, JUSTICE])
+    hero("Hawkeye", LEADERSHIP, "#7030a0"),
+    hero("Spider-Woman", [AGGRESSION, JUSTICE], "#ffc000")
   ),
-  hero("Ant-Man", LEADERSHIP, { hasGiantForm: true }),
-  hero("Wasp", AGGRESSION, { hasGiantForm: true }),
-  hero("Quicksilver", PROTECTION),
-  hero("Scarlet Witch", JUSTICE),
+  hero("Ant-Man", LEADERSHIP, "#c00000", { hasGiantForm: true }),
+  hero("Wasp", AGGRESSION, "#404040", { hasGiantForm: true }),
+  hero("Quicksilver", PROTECTION, "#81deff"),
+  hero("Scarlet Witch", JUSTICE, "#ff0000"),
   theGalaxysMostWanted(
-    hero("Groot", PROTECTION),
-    hero("Rocket Raccoon", AGGRESSION)
+    hero("Groot", PROTECTION, "#996633"),
+    hero("Rocket Raccoon", AGGRESSION, "#c00000")
   ),
-  hero("Star-Lord", LEADERSHIP),
-  hero("Gamora", AGGRESSION),
-  hero("Drax", PROTECTION),
-  hero("Venom", JUSTICE),
+  hero("Star-Lord", LEADERSHIP, "#c4cdda"),
+  hero("Gamora", AGGRESSION, "#00b050"),
+  hero("Drax", PROTECTION, "#afdc7e"),
+  hero("Venom", JUSTICE, "#404040"),
   theMadTitansShadow(
-    hero("Spectrum", LEADERSHIP),
-    hero("Adam Warlock", [AGGRESSION, JUSTICE, LEADERSHIP, PROTECTION])
+    hero("Spectrum", LEADERSHIP, "#f2f2f2"),
+    hero("Adam Warlock", [AGGRESSION, JUSTICE, LEADERSHIP, PROTECTION], "#c00000")
   ),
-  hero("Nebula", JUSTICE),
-  hero("War Machine", LEADERSHIP),
-  hero("Valkyrie", AGGRESSION),
-  hero("Vision", PROTECTION),
+  hero("Nebula", JUSTICE, "#a9cbe9"),
+  hero("War Machine", LEADERSHIP, "#808080"),
+  hero("Valkyrie", AGGRESSION, "#404040"),
+  hero("Vision", PROTECTION, "#ff3300"),
   sinisterMotives(
-    hero("Ghost-Spider", PROTECTION),
-    hero("Spider-Man", JUSTICE, { alterEgo: "Miles Morales" })
+    hero("Ghost-Spider", PROTECTION, "#f2f2f2"),
+    hero("Spider-Man", JUSTICE, "#404040", { alterEgo: "Miles Morales" })
   ),
-  hero("Nova", AGGRESSION),
-  hero("Ironheart", LEADERSHIP),
-  hero("Spider-Ham", JUSTICE),
-  hero("SP//dr", PROTECTION),
+  hero("Nova", AGGRESSION, "#ffc000"),
+  hero("Ironheart", LEADERSHIP, "#b4c6e7"),
+  hero("Spider-Ham", JUSTICE, "#ff99cc"),
+  hero("SP//dr", PROTECTION, "#ff0000"),
   mutantGenesis(
-    hero("Colossus", PROTECTION),
-    hero("Shadowcat", AGGRESSION)
+    hero("Colossus", PROTECTION, "#c7d0db"),
+    hero("Shadowcat", AGGRESSION, "#ffc000")
   ),
-  hero("Cyclops", LEADERSHIP),
-  hero("Phoenix", JUSTICE),
-  hero("Wolverine", AGGRESSION),
-  hero("Storm", LEADERSHIP),
-  hero("Gambit", JUSTICE),
-  hero("Rogue", PROTECTION),
+  hero("Cyclops", LEADERSHIP, "#ff0000"),
+  hero("Phoenix", JUSTICE, "#00b050"),
+  hero("Wolverine", AGGRESSION, "#fcf600"),
+  hero("Storm", LEADERSHIP, "#404040"),
+  hero("Gambit", JUSTICE, "#d60093"),
+  hero("Rogue", PROTECTION, "#f2f2f2"),
   neXtEvolution(
-    hero("Cable", LEADERSHIP),
-    hero("Domino", JUSTICE)
+    hero("Cable", LEADERSHIP, "#c7d0db"),
+    hero("Domino", JUSTICE, "#f2f2f2")
   ),
-  hero("Psylocke", JUSTICE),
-  hero("Angel", PROTECTION, { hasWideForm: true }),
-  hero("X-23", AGGRESSION),
-  hero("Deadpool", POOL),
+  hero("Psylocke", JUSTICE, "#ff97ff"),
+  hero("Angel", PROTECTION, "#0070c0", { hasWideForm: true }),
+  hero("X-23", AGGRESSION, "#404040"),
+  hero("Deadpool", POOL, "#ff3737"),
 ];
 
 export { scenarios, modules, heroes, aspects };

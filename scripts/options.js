@@ -108,6 +108,7 @@ class Card extends Option {
     name,
     {
       variant = null,
+      color = null,
       isLandscape = false,
       childCardCount = 0,
       excludedChildCards = [],
@@ -118,6 +119,7 @@ class Card extends Option {
     } = {}
   ) {
     super(name, { variant });
+    this.color = color;
     this.isLandscape = isLandscape;
     this.childCardCount = childCardCount;
     this.excludedChildCards = excludedChildCards;
@@ -152,12 +154,18 @@ class Card extends Option {
 }
 
 class Scenario extends Card {
-  constructor(name, modulesOrNumber, { exclude = [], hasBack = false } = {}) {
+  constructor(
+    name,
+    modulesOrNumber,
+    color,
+    { exclude = [], hasBack = false } = {}
+  ) {
     const [childCardCount, defaultChildCards] = Array.isArray(modulesOrNumber)
       ? [modulesOrNumber.length, modulesOrNumber]
       : [modulesOrNumber, null];
     const excludedChildCards = exclude;
     super(name, {
+      color,
       hasBack,
       childCardCount,
       defaultChildCards,
@@ -185,6 +193,7 @@ class Hero extends Card {
   constructor(
     name,
     aspects,
+    color,
     { alterEgo = null, hasGiantForm = false, hasWideForm = false } = {}
   ) {
     const variant = alterEgo;
@@ -193,6 +202,7 @@ class Hero extends Card {
     const defaultChildCards = aspects;
     super(name, {
       variant,
+      color,
       hasBack,
       hasGiantForm,
       hasWideForm,

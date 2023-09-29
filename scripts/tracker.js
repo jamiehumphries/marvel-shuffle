@@ -1,4 +1,9 @@
 import { scenarios, heroes } from "./cards.js?v=next-evolution";
+import {
+  initializeStorage,
+  getItem,
+  setItem,
+} from "./storage.js?v=next-evolution";
 
 const table = document.getElementById("tracker");
 const thead = table.querySelector("thead");
@@ -210,32 +215,30 @@ function hexToRgb(hex) {
 function setUpIndeterminateCheckboxes() {
   const checkboxes = document.getElementsByTagName("input");
   for (const checkbox of checkboxes) {
-    checkbox.dataset.state = "?";
+    const state = getItem(checkbox.id);
+    applyStateToCheckbox(checkbox, state);
     checkbox.addEventListener("click", handleCheckboxClick);
   }
 }
 
 function handleCheckboxClick(event) {
   const checkbox = event.target;
-  const { state } = checkbox.dataset;
-  switch (state) {
-    case "?":
-      checkbox.dataset.state = "✓";
-      checkbox.indeterminate = false;
-      checkbox.checked = true;
-      break;
-    case "✓":
-      checkbox.dataset.state = "✗";
-      checkbox.indeterminate = false;
-      checkbox.checked = false;
-      break;
-    case "✗":
-      checkbox.dataset.state = "?";
-      checkbox.indeterminate = true;
-      checkbox.checked = false;
-      break;
-  }
+  const newState = nextCheckboxState(checkbox.dataset.state);
+  setItem(checkbox.id, newState);
+  applyStateToCheckbox(checkbox, newState);
   updateProgress();
+}
+
+function nextCheckboxState(state) {
+  const states = ["?", "✓", "✗"];
+  return states[(states.indexOf(state) + 1) % states.length];
+}
+
+function applyStateToCheckbox(checkbox, state) {
+  state ||= "?";
+  checkbox.dataset.state = state;
+  checkbox.indeterminate = state === "?";
+  checkbox.checked = state === "✓";
 }
 
 function updateProgress() {
@@ -264,5 +267,6 @@ function updateProgress() {
   expertPercentageDiv.innerText = expertPercentage;
 }
 
+await initializeStorage();
 renderTable();
 updateProgress();

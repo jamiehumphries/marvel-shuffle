@@ -71,7 +71,9 @@ function getUserId() {
 
 async function setUserId(value) {
   localStorage.setItem(USER_ID_KEY, value);
-  syncUrlElement.innerText = await getSyncUrl();
+  if (syncUrlElement) {
+    syncUrlElement.innerText = await getSyncUrl();
+  }
   return value;
 }
 

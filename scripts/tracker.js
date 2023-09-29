@@ -1,9 +1,5 @@
-import { scenarios, heroes } from "./cards.js?v=next-evolution";
-import {
-  initializeStorage,
-  getItem,
-  setItem,
-} from "./storage.js?v=next-evolution";
+import { scenarios, heroes } from "./cards.js?v=tracker";
+import { initializeStorage, getItem, setItem } from "./storage.js?v=tracker";
 
 const table = document.getElementById("tracker");
 const thead = table.querySelector("thead");

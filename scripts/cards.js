@@ -4,7 +4,7 @@ import {
   Module,
   Hero,
   Aspect,
-} from "./options.js?v=next-evolution";
+} from "./options.js?v=tracker";
 
 function ensureArray(arrayOrString) {
   return Array.isArray(arrayOrString) ? arrayOrString : [arrayOrString];

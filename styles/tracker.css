@@ -16,6 +16,11 @@
   --border--dashed: var(--border-width) dashed var(--border-color);
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 /* Table settings */
 
 table {

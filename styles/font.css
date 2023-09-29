@@ -1,0 +1,8 @@
+@font-face {
+  src: url(fonts/BackIssuesBB_reg.otf);
+  font-family: "Back Issues BB";
+}
+
+body {
+  font-family: "Back Issues BB", sans-serif;
+}

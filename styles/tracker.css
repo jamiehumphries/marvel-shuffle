@@ -42,10 +42,49 @@ td > div {
 
   background-color: #f2f2f2;
 
-  padding: calc(var(--cell-height) / 10) calc(var(--cell-width) / 10);
-
   width: var(--cell-width);
   height: var(--cell-height);
+}
+
+th > div {
+  padding: calc(var(--cell-height) / 10) calc(var(--cell-width) / 10);
+}
+
+td > input[type="checkbox"] {
+  position: absolute;
+  z-index: -1;
+}
+
+td > div > label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: calc(var(--cell-height) * 0.4);
+
+  cursor: pointer;
+}
+
+td > input[type="checkbox"]:checked ~ div {
+  background-color: #c6e0b4;
+}
+
+td > input[type="checkbox"]:checked ~ div > label::after {
+  content: "✓";
+}
+
+td > input[type="checkbox"]:not(:checked):not(:indeterminate) ~ div {
+  background-color: #ffcccc;
+}
+
+td
+  > input[type="checkbox"]:not(:checked):not(:indeterminate)
+  ~ div
+  > label::after {
+  content: "✗";
 }
 
 /* Top left cells (Progress) */

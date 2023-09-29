@@ -4,9 +4,15 @@ const table = document.getElementById("tracker");
 const thead = table.querySelector("thead");
 const tbody = table.querySelector("tbody");
 
+let totalPercentageDiv;
+let totalFractionDiv;
+let standardPercentageDiv;
+let expertPercentageDiv;
+
 function renderTable() {
   appendHeaderRows(thead);
   appendBodyRows(tbody);
+  setUpIndeterminateCheckboxes();
 }
 
 function appendHeaderRows(thead) {
@@ -49,49 +55,31 @@ function appendHeaderRows(thead) {
 }
 
 function appendProgressCells(firstRow, secondRow) {
-  const scenarioCount = scenarios.flatMap((set) => set.children).length;
-  const heroCount = heroes.flatMap(
-    (cardOrSet) => cardOrSet.children || [cardOrSet]
-  ).length;
+  const contentDiv = document.createElement("div");
 
-  const totalCombinations = scenarioCount * heroCount;
+  totalPercentageDiv = document.createElement("div");
+  contentDiv.appendChild(totalPercentageDiv);
 
-  // TODO: Load from database.
-  const standardCleared = 47;
-  const expertCleared = 18;
-
-  const percentageCleared = (cleared) =>
-    `${((cleared / totalCombinations) * 100).toFixed(2)}%`;
-
-  const totalCleared = standardCleared + expertCleared;
-  const totalPercentage = percentageCleared(totalCleared / 2);
-  const content = document.createElement("div");
-
-  const percentageDiv = document.createElement("div");
-  percentageDiv.innerText = totalPercentage;
-  content.appendChild(percentageDiv);
-
-  const fractionDiv = document.createElement("div");
-  fractionDiv.innerText = `(${totalCleared} / ${totalCombinations * 2})`;
-  content.appendChild(fractionDiv);
+  totalFractionDiv = document.createElement("div");
+  contentDiv.appendChild(totalFractionDiv);
 
   const progressTotalCell = createCell({
-    contentDiv: content,
+    contentDiv,
     colspan: 2,
     header: true,
   });
   firstRow.appendChild(progressTotalCell);
 
-  const standardPercentage = percentageCleared(standardCleared);
+  standardPercentageDiv = document.createElement("div");
   const progressStandardCell = createCell({
-    text: standardPercentage,
+    contentDiv: standardPercentageDiv,
     header: true,
   });
   secondRow.appendChild(progressStandardCell);
 
-  const expertPercentage = percentageCleared(expertCleared);
+  expertPercentageDiv = document.createElement("div");
   const progressExpertCell = createCell({
-    text: expertPercentage,
+    contentDiv: expertPercentageDiv,
     header: true,
   });
   secondRow.appendChild(progressExpertCell);
@@ -124,9 +112,12 @@ function appendHeroRow(tbody, hero, { rowbreak } = {}) {
 
   for (const set of scenarios) {
     for (let i = 0; i < set.children.length; i++) {
+      const scenario = set.children[i];
       const colbreak = i === 0;
-      const standardCell = createCell({ colbreak });
-      const expertCell = createCell();
+      const standardCell = createGameCell(scenario, hero, "standard", {
+        colbreak,
+      });
+      const expertCell = createGameCell(scenario, hero, "expert");
       row.appendChild(standardCell);
       row.appendChild(expertCell);
     }
@@ -141,6 +132,27 @@ function createRow({ rowbreak = false } = {}) {
     row.classList.add("row-break");
   }
   return row;
+}
+
+function createGameCell(scenario, hero, difficulty, options = {}) {
+  const gameId = `game--${scenario.id}--${hero.id}--${difficulty}`;
+
+  const contentDiv = document.createElement("div");
+  const label = document.createElement("label");
+  label.htmlFor = gameId;
+  contentDiv.appendChild(label);
+
+  options.contentDiv = contentDiv;
+  const cell = createCell(options);
+
+  const input = document.createElement("input");
+  input.type = "checkbox";
+  input.id = gameId;
+  input.indeterminate = true;
+  input.dataset.difficulty = difficulty;
+
+  cell.prepend(input);
+  return cell;
 }
 
 function createCell({
@@ -195,4 +207,62 @@ function hexToRgb(hex) {
     : null;
 }
 
+function setUpIndeterminateCheckboxes() {
+  const checkboxes = document.getElementsByTagName("input");
+  for (const checkbox of checkboxes) {
+    checkbox.dataset.state = "?";
+    checkbox.addEventListener("click", handleCheckboxClick);
+  }
+}
+
+function handleCheckboxClick(event) {
+  const checkbox = event.target;
+  const { state } = checkbox.dataset;
+  switch (state) {
+    case "?":
+      checkbox.dataset.state = "✓";
+      checkbox.indeterminate = false;
+      checkbox.checked = true;
+      break;
+    case "✓":
+      checkbox.dataset.state = "✗";
+      checkbox.indeterminate = false;
+      checkbox.checked = false;
+      break;
+    case "✗":
+      checkbox.dataset.state = "?";
+      checkbox.indeterminate = true;
+      checkbox.checked = false;
+      break;
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  const totalCombinations = document.querySelectorAll("input").length;
+  const toPercentage = (decimal) => `${(decimal * 100).toFixed(2)}%`;
+
+  const standardCleared = document.querySelectorAll(
+    'input:checked[data-difficulty="standard"]'
+  ).length;
+  const expertCleared = document.querySelectorAll(
+    'input:checked[data-difficulty="expert"]'
+  ).length;
+  const totalCleared = standardCleared + expertCleared;
+
+  const totalPercentage = toPercentage(totalCleared / totalCombinations);
+  const standardPercentage = toPercentage(
+    standardCleared / (totalCombinations / 2)
+  );
+  const expertPercentage = toPercentage(
+    expertCleared / (totalCombinations / 2)
+  );
+
+  totalPercentageDiv.innerText = totalPercentage;
+  totalFractionDiv.innerText = `(${totalCleared} / ${totalCombinations})`;
+  standardPercentageDiv.innerText = standardPercentage;
+  expertPercentageDiv.innerText = expertPercentage;
+}
+
 renderTable();
+updateProgress();

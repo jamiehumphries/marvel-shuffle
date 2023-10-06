@@ -557,7 +557,7 @@ h3.name {
   }
 
   .sections {
-    row-gap: 10px;
     grid-template-columns: auto;
+    row-gap: 10px;
   }
 }

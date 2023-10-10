@@ -23,20 +23,20 @@ body {
 
 /* Table settings */
 
-table {
+#tracker {
   border-collapse: collapse;
 }
 
 /* Standard cells */
 
-th,
-td {
+#tracker th,
+#tracker td {
   padding: 0;
   font-weight: normal;
 }
 
-th > div,
-td > div {
+#tracker th > div,
+#tracker td > div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,16 +51,16 @@ td > div {
   height: var(--cell-height);
 }
 
-th > div {
+#tracker th > div {
   padding: calc(var(--cell-height) / 10) calc(var(--cell-width) / 10);
 }
 
-td > input[type="checkbox"] {
+#tracker td > input[type="checkbox"] {
   position: absolute;
   z-index: -1;
 }
 
-td > div > label {
+#tracker td > div > label {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,19 +73,20 @@ td > div > label {
   font-size: calc(var(--cell-height) * 0.4);
 }
 
-td > input[type="checkbox"]:checked ~ div {
+#tracker td > input[type="checkbox"]:checked ~ div {
   background-color: #c6e0b4;
 }
 
-td > input[type="checkbox"]:checked ~ div > label::after {
+#tracker td > input[type="checkbox"]:checked ~ div > label::after {
   content: "✓";
 }
 
-td > input[type="checkbox"]:not(:checked):not(:indeterminate) ~ div {
+#tracker td > input[type="checkbox"]:not(:checked):not(:indeterminate) ~ div {
   background-color: #ffcccc;
 }
 
-td
+#tracker
+  td
   > input[type="checkbox"]:not(:checked):not(:indeterminate)
   ~ div
   > label::after {
@@ -94,36 +95,44 @@ td
 
 /* Top left cells (Progress) */
 
-thead > tr > th:first-child,
-thead > tr:nth-child(2) > th:nth-child(2) {
+#tracker thead > tr > th:first-child,
+#tracker thead > tr:nth-child(2) > th:nth-child(2) {
   z-index: 1;
 }
 
-thead > tr:first-child > th:first-child > div {
+#tracker thead > tr:first-child > th:first-child > div {
   flex-direction: column;
   padding-bottom: 0;
 }
 
-thead > tr:first-child > th:first-child > div div:first-child {
+#tracker #total-percentage {
   font-size: 1.2rem;
 }
 
-thead > tr:first-child > th:first-child > div div:nth-child(2),
-thead > tr:nth-child(2) > th:first-child > div,
-thead > tr:nth-child(2) > th:nth-child(2) > div {
+#tracker #total-fraction > span::before {
+  content: "(";
+}
+
+#tracker #total-fraction > span::after {
+  content: ")";
+}
+
+#tracker #total-fraction,
+#tracker #standard-percentage,
+#tracker #expert-percentage {
   font-size: 0.75rem;
 }
 
 /* First row cells (Progress + Scenario) */
 
-thead > tr:first-child > th {
+#tracker thead > tr:first-child > th {
   position: sticky;
   top: 0;
   background-color: white;
   padding-top: var(--table-padding);
 }
 
-thead > tr:first-child > th > div {
+#tracker thead > tr:first-child > th > div {
   border-top: var(--border--solid);
   border-bottom: none;
 
@@ -133,82 +142,82 @@ thead > tr:first-child > th > div {
 
 /* Second row cells (Progress + Difficulty) */
 
-thead > tr:nth-child(2) > th {
+#tracker thead > tr:nth-child(2) > th {
   position: sticky;
   top: calc(var(--table-padding) + var(--scenario-cell-height));
   background-color: white;
 }
 
-thead > tr:nth-child(2) > th:nth-child(2) {
+#tracker thead > tr:nth-child(2) > th:nth-child(2) {
   position: sticky;
   left: calc(var(--table-padding) + var(--cell-width));
   background-color: white;
 }
 
-thead > tr:nth-child(2) > th > div {
+#tracker thead > tr:nth-child(2) > th > div {
   height: var(--difficulty-cell-height);
   font-size: 0.7rem;
 }
 
-thead > tr:nth-child(2) > th:nth-child(odd) > div {
+#tracker thead > tr:nth-child(2) > th:nth-child(odd) > div {
   border-right: none;
 }
 
 /* First column cells (Progress + Hero) */
 
-tr > th:first-child {
+#tracker tr > th:first-child {
   position: sticky;
   left: 0;
   background-color: white;
   padding-left: var(--table-padding);
 }
 
-tr > th:first-child > div {
+#tracker tr > th:first-child > div {
   border-left: var(--border--solid);
 }
 
-tbody > tr > th:first-child > div {
+#tracker tbody > tr > th:first-child > div {
   width: calc(var(--cell-width) * 2);
 }
 
 /* Last row cells */
 
-tbody > tr:last-child > th,
-tbody > tr:last-child > td {
+#tracker tbody > tr:last-child > th,
+#tracker tbody > tr:last-child > td {
   padding-bottom: var(--table-padding);
 }
 
 /* Last column cells */
 
-thead > tr > th:last-child,
-tbody > tr > td:last-child {
+#tracker thead > tr > th:last-child,
+#tracker tbody > tr > td:last-child {
   padding-right: var(--table-padding);
 }
 
 /* Body cells */
 
-tbody > tr > td:nth-child(even) > div {
+#tracker tbody > tr > td:nth-child(even) > div {
   border-right: var(--border--dashed);
 }
 
 /* Row and column breaks */
 
-tr.row-break > th,
-tr.row-break > td {
+#tracker tr.row-break > th,
+#tracker tr.row-break > td {
   padding-top: var(--break-size);
 }
 
-tr.row-break > th > div,
-tr.row-break > td > div {
+#tracker tr.row-break > th > div,
+#tracker tr.row-break > td > div {
   border-top: var(--border--solid);
 }
 
-th.col-break,
-td.col-break {
+#tracker th.col-break,
+#tracker td.col-break {
   padding-left: var(--break-size);
 }
 
-th.col-break > div,
-td.col-break > div {
+#tracker th.col-break > div,
+#tracker td.col-break > div {
   border-left: var(--border--solid);
 }

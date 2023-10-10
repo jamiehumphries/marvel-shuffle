@@ -1,5 +1,5 @@
 import copyTextToClipboard from "./lib/copy-text-to-clipboard.js";
-import { All } from "./options.js?v=tracker";
+import { All, CardSet } from "./options.js?v=tracker";
 import { scenarios, modules, heroes, aspects } from "./cards.js?v=tracker";
 import {
   initializeStorage,
@@ -9,6 +9,7 @@ import {
   getItem,
   setItem,
 } from "./storage.js?v=tracker";
+import { renderTable } from "./tracker.js?v=tracker";
 
 const cardChangeDelayMs = Number(
   getComputedStyle(document.documentElement)
@@ -98,6 +99,8 @@ class Section {
     for (let i = 0; i < this.slots.length; i++) {
       this.slots[i].card = slotCards[i];
     }
+
+    updateTrackingTable();
   }
 
   initialize() {
@@ -213,6 +216,7 @@ class Section {
 
     if (animate) {
       this.disabled = true;
+      document.body.classList.add("shuffling");
       this.root.classList.add("flipping");
       this.root.classList.remove("giant");
       this.root.classList.remove("wide");
@@ -262,6 +266,7 @@ class Section {
       return;
     }
 
+    document.body.classList.remove("shuffling");
     this.root.classList.remove("flipping");
     this.root.classList.add("flipped");
     this.disabled = false;
@@ -384,6 +389,14 @@ function maybeReturnFocusAfterShuffle() {
   if (lastClickedButton && !lastClickedButton.disabled) {
     lastClickedButton.focus();
   }
+}
+
+function updateTrackingTable() {
+  if (scenario.cards.length === 0 || hero.cards.length === 0) {
+    return;
+  }
+  const cardSet = ({ cards }) => [new CardSet("", cards)];
+  renderTable(cardSet(scenario), cardSet(hero));
 }
 
 function requestPostAnimationFrame(callback) {

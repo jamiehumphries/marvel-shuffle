@@ -521,6 +521,38 @@ h3.name {
   transform: rotateY(180deg);
 }
 
+#tracker {
+  opacity: 1;
+  transition: opacity calc(var(--card-change-duration) * 0.75);
+  margin: auto;
+}
+
+.shuffling #tracker {
+  opacity: 0;
+}
+
+#tracker thead > tr:first-child > th:first-child > div {
+  justify-content: flex-end;
+}
+
+#tracker #total-fraction {
+  font-size: 1.2rem;
+}
+
+#tracker #total-fraction > span::before {
+  content: "";
+}
+
+#tracker #total-fraction > span::after {
+  content: "";
+}
+
+#tracker #total-percentage > span,
+#tracker #standard-percentage > span,
+#tracker #expert-percentage > span {
+  display: none;
+}
+
 @media (max-width: 1400px) {
   :root {
     --layout-scale-factor: 0.85;

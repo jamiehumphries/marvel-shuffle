@@ -1,22 +1,25 @@
-import { scenarios, heroes } from "./cards.js?v=tracker";
-import { initializeStorage, getItem, setItem } from "./storage.js?v=tracker";
+import { getItem, setItem } from "./storage.js?v=tracker";
 
 const table = document.getElementById("tracker");
-const thead = table.querySelector("thead");
-const tbody = table.querySelector("tbody");
 
-let totalPercentageDiv;
-let totalFractionDiv;
-let standardPercentageDiv;
-let expertPercentageDiv;
+let totalPercentageSpan;
+let totalFractionSpan;
+let standardPercentageSpan;
+let expertPercentageSpan;
 
-function renderTable() {
-  appendHeaderRows(thead);
-  appendBodyRows(tbody);
+function renderTable(scenarios, heroes) {
+  table.innerHTML = "";
+  const thead = document.createElement("thead");
+  const tbody = document.createElement("tbody");
+  table.appendChild(thead);
+  table.appendChild(tbody);
+  appendHeaderRows(thead, scenarios);
+  appendBodyRows(tbody, scenarios, heroes);
   setUpIndeterminateCheckboxes();
+  updateProgress();
 }
 
-function appendHeaderRows(thead) {
+function appendHeaderRows(thead, scenarios) {
   const firstRow = createRow();
   const secondRow = createRow();
 
@@ -58,11 +61,18 @@ function appendHeaderRows(thead) {
 function appendProgressCells(firstRow, secondRow) {
   const contentDiv = document.createElement("div");
 
-  totalPercentageDiv = document.createElement("div");
-  contentDiv.appendChild(totalPercentageDiv);
+  const progressDiv = (span, id) => {
+    const div = document.createElement("div");
+    div.id = id;
+    div.appendChild(span);
+    return div;
+  };
 
-  totalFractionDiv = document.createElement("div");
-  contentDiv.appendChild(totalFractionDiv);
+  totalPercentageSpan = document.createElement("span");
+  contentDiv.appendChild(progressDiv(totalPercentageSpan, "total-percentage"));
+
+  totalFractionSpan = document.createElement("span");
+  contentDiv.appendChild(progressDiv(totalFractionSpan, "total-fraction"));
 
   const progressTotalCell = createCell({
     contentDiv,
@@ -71,22 +81,22 @@ function appendProgressCells(firstRow, secondRow) {
   });
   firstRow.appendChild(progressTotalCell);
 
-  standardPercentageDiv = document.createElement("div");
+  standardPercentageSpan = document.createElement("span");
   const progressStandardCell = createCell({
-    contentDiv: standardPercentageDiv,
+    contentDiv: progressDiv(standardPercentageSpan, "standard-percentage"),
     header: true,
   });
   secondRow.appendChild(progressStandardCell);
 
-  expertPercentageDiv = document.createElement("div");
+  expertPercentageSpan = document.createElement("span");
   const progressExpertCell = createCell({
-    contentDiv: expertPercentageDiv,
+    contentDiv: progressDiv(expertPercentageSpan, "expert-percentage"),
     header: true,
   });
   secondRow.appendChild(progressExpertCell);
 }
 
-function appendBodyRows(tbody) {
+function appendBodyRows(tbody, scenarios, heroes) {
   for (let i = 0; i < heroes.length; i++) {
     const cardOrSet = heroes[i];
     if (cardOrSet.children) {
@@ -94,17 +104,17 @@ function appendBodyRows(tbody) {
       for (let j = 0; j < setHeroes.length; j++) {
         const hero = setHeroes[j];
         const rowbreak = j === 0;
-        appendHeroRow(tbody, hero, { rowbreak });
+        appendHeroRow(tbody, scenarios, hero, { rowbreak });
       }
     } else {
       const hero = cardOrSet;
       const rowbreak = i === 1; // Special case for first wave after core set.
-      appendHeroRow(tbody, hero, { rowbreak });
+      appendHeroRow(tbody, scenarios, hero, { rowbreak });
     }
   }
 }
 
-function appendHeroRow(tbody, hero, { rowbreak } = {}) {
+function appendHeroRow(tbody, scenarios, hero, { rowbreak } = {}) {
   const row = createRow({ rowbreak });
 
   const { name: text, color } = hero;
@@ -238,7 +248,7 @@ function applyStateToCheckbox(checkbox, state) {
 }
 
 function updateProgress() {
-  const totalCombinations = document.querySelectorAll("input").length;
+  const totalCombinations = table.querySelectorAll("input").length;
   const toPercentage = (decimal) => `${(decimal * 100).toFixed(2)}%`;
 
   const standardCleared = document.querySelectorAll(
@@ -257,12 +267,10 @@ function updateProgress() {
     expertCleared / (totalCombinations / 2)
   );
 
-  totalPercentageDiv.innerText = totalPercentage;
-  totalFractionDiv.innerText = `(${totalCleared} / ${totalCombinations})`;
-  standardPercentageDiv.innerText = standardPercentage;
-  expertPercentageDiv.innerText = expertPercentage;
+  totalPercentageSpan.innerText = totalPercentage;
+  totalFractionSpan.innerText = `${totalCleared} / ${totalCombinations}`;
+  standardPercentageSpan.innerText = standardPercentage;
+  expertPercentageSpan.innerText = expertPercentage;
 }
 
-await initializeStorage();
-renderTable();
-updateProgress();
+export { renderTable };

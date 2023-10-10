@@ -1,3 +1,8 @@
+:root {
+  --outline: 2px solid #6586ff;
+  --outline-offset: 1px;
+}
+
 @font-face {
   src: url(fonts/BackIssuesBB_reg.otf);
   font-family: "Back Issues BB";

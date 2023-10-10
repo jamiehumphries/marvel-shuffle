@@ -14,6 +14,13 @@
   --border-color: black;
   --border--solid: var(--border-width) solid var(--border-color);
   --border--dashed: var(--border-width) dashed var(--border-color);
+
+  --cell-background-color--default: #f2f2f2;
+  --cell-background-color-hover--default: #e6e6e6;
+  --cell-background-color--yes: #c6e0b4;
+  --cell-background-color-hover--yes: #bcd5ab;
+  --cell-background-color--no: #ffcccc;
+  --cell-background-color-hover--no: #f2c2c2;
 }
 
 body {
@@ -45,7 +52,9 @@ body {
   border-right: var(--border--solid);
   border-bottom: var(--border--solid);
 
-  background-color: #f2f2f2;
+  --cell-background-color: var(--cell-background-color--default);
+  --cell-background-color-hover: var(--cell-background-color-hover--default);
+  background-color: var(--cell-background-color);
 
   width: var(--cell-width);
   height: var(--cell-height);
@@ -73,8 +82,21 @@ body {
   font-size: calc(var(--cell-height) * 0.4);
 }
 
+.keyboard-nav #tracker td > input[type="checkbox"]:focus ~ div {
+  outline: var(--outline);
+  outline-offset: -1px;
+  background-color: var(--cell-background-color-hover);
+}
+
+@media (hover: hover) {
+  #tracker td > input[type="checkbox"]:hover ~ div {
+    background-color: var(--cell-background-color-hover);
+  }
+}
+
 #tracker td > input[type="checkbox"]:checked ~ div {
-  background-color: #c6e0b4;
+  --cell-background-color: var(--cell-background-color--yes);
+  --cell-background-color-hover: var(--cell-background-color-hover--yes);
 }
 
 #tracker td > input[type="checkbox"]:checked ~ div > label::after {
@@ -82,7 +104,8 @@ body {
 }
 
 #tracker td > input[type="checkbox"]:not(:checked):not(:indeterminate) ~ div {
-  background-color: #ffcccc;
+  --cell-background-color: var(--cell-background-color--no);
+  --cell-background-color-hover: var(--cell-background-color-hover--no);
 }
 
 #tracker

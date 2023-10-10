@@ -14,7 +14,7 @@ import { renderTable } from "./tracker.js?v=tracker";
 const cardChangeDelayMs = Number(
   getComputedStyle(document.documentElement)
     .getPropertyValue("--card-change-delay")
-    .slice(0, -1 * "ms".length)
+    .slice(0, -1 * "ms".length),
 );
 
 class Section {
@@ -61,7 +61,7 @@ class Section {
     return this.cards.every((card, i) =>
       i < includedCheckedCards.length
         ? includedCheckedCards.includes(card)
-        : includedDefaultCards.includes(card)
+        : includedDefaultCards.includes(card),
     );
   }
 
@@ -118,7 +118,7 @@ class Section {
     }
 
     this.allCards = this.cardsOrSets.flatMap(
-      (cardOrSet) => cardOrSet.children || [cardOrSet]
+      (cardOrSet) => cardOrSet.children || [cardOrSet],
     );
 
     this.type = this.allCards.reduce((type, card) => {
@@ -150,7 +150,7 @@ class Section {
     }
 
     this.slots = Array.from(this.root.querySelectorAll(".slot")).map(
-      (element) => new Slot(element)
+      (element) => new Slot(element),
     );
   }
 
@@ -174,7 +174,7 @@ class Section {
       this.shuffle({ preventRepeat: true });
     });
     this.root.addEventListener("transitionend", (event) =>
-      this.onTransitionEnd(event)
+      this.onTransitionEnd(event),
     );
   }
 
@@ -250,7 +250,7 @@ class Section {
     }
 
     const parentSet = this.cardsOrSets.find(
-      (set) => set.name === parentCard?.parent?.name
+      (set) => set.name === parentCard?.parent?.name,
     );
     if (parentSet) {
       return parentSet.children;
@@ -374,7 +374,7 @@ function toggleSettings() {
   sections.forEach((section) => (section.button.disabled = settingsVisible));
   if (!settingsVisible) {
     requestPostAnimationFrame(() =>
-      sections.forEach((section) => section.shuffleIfInvalid())
+      sections.forEach((section) => section.shuffleIfInvalid()),
     );
   }
 }
@@ -416,12 +416,10 @@ async function initialize() {
   }
 
   window.addEventListener("keydown", () => {
-    container.classList.add("keyboard-nav");
     lastClickedButton = null;
   });
 
   window.addEventListener("mousedown", () => {
-    container.classList.remove("keyboard-nav");
     lastClickedButton = null;
   });
 
@@ -444,7 +442,7 @@ async function initialize() {
       alert(
         copyResultMessage +
           " If you use this URL to open Marvel Shuffle on another device or" +
-          " in another browser, your settings and shuffles will be synced."
+          " in another browser, your settings and shuffles will be synced.",
       );
       copySyncUrlButton.disabled = false;
       copySyncUrlButton.focus();

@@ -99,12 +99,6 @@ a:focus {
   }
 }
 
-.keyboard-nav button:focus,
-.keyboard-nav a:focus {
-  outline: var(--outline);
-  outline-offset: var(--outline-offset);
-}
-
 .container {
   position: relative;
 

@@ -11,3 +11,9 @@
 body {
   font-family: "Back Issues BB", sans-serif;
 }
+.keyboard-nav button:focus,
+.keyboard-nav a:focus {
+  outline: var(--outline);
+  outline-offset: var(--outline-offset);
+}
+

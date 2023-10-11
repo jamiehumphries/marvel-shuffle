@@ -23,9 +23,8 @@
 
 /* Top left cells (Progress) */
 
-#tracker thead > tr:first-child > th:first-child,
-#tracker thead > tr:nth-child(2) > th:first-child,
-#tracker thead > tr:nth-child(2) > th:nth-child(2) {
+#tracker thead > tr:first-child > th.progress,
+#tracker thead > tr:nth-child(2) > th.progress {
   z-index: 2;
 }
 
@@ -55,6 +54,12 @@
   z-index: 1;
   background-color: white;
   padding-left: var(--table-padding);
+}
+
+#tracker tr > th:not(:first-child).progress {
+  position: sticky;
+  left: calc(var(--table-padding) + var(--block-index) * var(--cell-width));
+  z-index: 1;
 }
 
 /* Last row cells */

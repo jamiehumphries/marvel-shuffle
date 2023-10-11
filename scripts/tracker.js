@@ -9,9 +9,15 @@ const WIN = "✓";
 const LOSS = "✗";
 const UNPLAYED = "?";
 
-const STANDARD = "standard";
-const EXPERT = "expert";
-const DIFFICULTIES = [STANDARD, EXPERT];
+const difficulties = [
+  { id: "standard", label: "Standard" },
+  { id: "expert", label: "Expert" },
+];
+
+document.documentElement.style.setProperty(
+  "--number-of-difficulties",
+  difficulties.length,
+);
 
 const table = document.getElementById("tracker");
 
@@ -20,8 +26,6 @@ const allHeroes = flatten(heroOptions);
 
 let totalPercentageSpan;
 let totalFractionSpan;
-let standardPercentageSpan;
-let expertPercentageSpan;
 
 function renderTable(scenarios, heroes) {
   table.innerHTML = "";
@@ -52,21 +56,23 @@ function appendHeaderRows(thead, scenarios) {
       const scenarioCell = createCell({
         text,
         color,
-        colspan: 2,
+        colspan: difficulties.length,
         colbreak,
         header,
       });
       firstRow.appendChild(scenarioCell);
 
-      const standardCell = createCell({
-        text: "Standard",
-        color,
-        colbreak,
-        header,
-      });
-      const expertCell = createCell({ text: "Expert", color, header });
-      secondRow.appendChild(standardCell);
-      secondRow.appendChild(expertCell);
+      for (let j = 0; j < difficulties.length; j++) {
+        const { label } = difficulties[j];
+        const cell = createCell({
+          text: label,
+          colbreak: colbreak && j == 0,
+          blockIndex: j,
+          color,
+          header,
+        });
+        secondRow.appendChild(cell);
+      }
     }
   }
 
@@ -80,6 +86,7 @@ function appendProgressCells(firstRow, secondRow) {
   const progressDiv = (span, id) => {
     const div = document.createElement("div");
     div.id = id;
+    div.class = "progress-cell";
     div.appendChild(span);
     return div;
   };
@@ -92,24 +99,27 @@ function appendProgressCells(firstRow, secondRow) {
 
   const progressTotalCell = createCell({
     contentDiv,
-    colspan: 2,
+    colspan: difficulties.length,
     header: true,
+    progress: true,
   });
   firstRow.appendChild(progressTotalCell);
 
-  standardPercentageSpan = document.createElement("span");
-  const progressStandardCell = createCell({
-    contentDiv: progressDiv(standardPercentageSpan, "standard-percentage"),
-    header: true,
-  });
-  secondRow.appendChild(progressStandardCell);
+  for (let i = 0; i < difficulties.length; i++) {
+    const difficulty = difficulties[i];
 
-  expertPercentageSpan = document.createElement("span");
-  const progressExpertCell = createCell({
-    contentDiv: progressDiv(expertPercentageSpan, "expert-percentage"),
-    header: true,
-  });
-  secondRow.appendChild(progressExpertCell);
+    difficulty.span = document.createElement("span");
+    const { id, span } = difficulty;
+
+    const cell = createCell({
+      contentDiv: progressDiv(span, `${id}-percentage`),
+      header: true,
+      blockIndex: i,
+      progress: true,
+    });
+
+    secondRow.appendChild(cell);
+  }
 }
 
 function appendBodyRows(tbody, scenarios, heroes) {
@@ -134,19 +144,26 @@ function appendHeroRow(tbody, scenarios, hero, { rowbreak } = {}) {
   const row = createRow({ rowbreak });
 
   const { name: text, color } = hero;
-  const heroCell = createCell({ text, color, colspan: 2, header: true });
+  const heroCell = createCell({
+    text,
+    color,
+    colspan: difficulties.length,
+    header: true,
+  });
   row.appendChild(heroCell);
 
   for (const set of scenarios) {
     for (let i = 0; i < set.children.length; i++) {
       const scenario = set.children[i];
       const colbreak = i === 0;
-      const standardCell = createGameCell(scenario, hero, STANDARD, {
-        colbreak,
-      });
-      const expertCell = createGameCell(scenario, hero, EXPERT);
-      row.appendChild(standardCell);
-      row.appendChild(expertCell);
+      for (let j = 0; j < difficulties.length; j++) {
+        const difficulty = difficulties[j];
+        const cell = createGameCell(scenario, hero, difficulty, {
+          colbreak: colbreak && j === 0,
+          blockIndex: j,
+        });
+        row.appendChild(cell);
+      }
     }
   }
 
@@ -177,7 +194,7 @@ function createGameCell(scenario, hero, difficulty, options = {}) {
   input.type = "checkbox";
   input.id = gameId;
   input.indeterminate = true;
-  input.dataset.difficulty = difficulty;
+  input.dataset.difficulty = difficulty.id;
 
   cell.prepend(input);
   return cell;
@@ -190,9 +207,13 @@ function createCell({
   colspan = 1,
   colbreak = false,
   header = false,
+  progress = false,
+  blockIndex = null,
 } = {}) {
   const tag = header ? "th" : "td";
   const cell = document.createElement(tag);
+  const div = contentDiv || document.createElement("div");
+  cell.appendChild(div);
 
   if (colspan != 1) {
     cell.setAttribute("colspan", colspan);
@@ -202,7 +223,16 @@ function createCell({
     cell.classList.add("col-break");
   }
 
-  const div = contentDiv || document.createElement("div");
+  if (blockIndex !== null) {
+    if (blockIndex === difficulties.length - 1) {
+      cell.classList.add("block-end");
+    }
+  }
+
+  if (progress) {
+    cell.style.setProperty("--block-index", blockIndex);
+    cell.classList.add("progress");
+  }
 
   if (text) {
     div.innerText = text;
@@ -212,8 +242,6 @@ function createCell({
     div.style.backgroundColor = color;
     div.style.color = chooseTextColor(color);
   }
-
-  cell.appendChild(div);
 
   return cell;
 }
@@ -268,26 +296,21 @@ function updateProgress() {
   const totalCombinations = table.querySelectorAll("input").length;
   const toPercentage = (decimal) => `${(decimal * 100).toFixed(2)}%`;
 
-  const cleared = (difficulty) =>
-    table.querySelectorAll(`input:checked[data-difficulty="${difficulty}"]`)
-      .length;
+  let totalCleared = 0;
 
-  const standardCleared = cleared(STANDARD);
-  const expertCleared = cleared(EXPERT);
-  const totalCleared = standardCleared + expertCleared;
+  const combinationsPerDifficulty = totalCombinations / difficulties.length;
+  for (const { id, span } of difficulties) {
+    const cleared = table.querySelectorAll(
+      `input:checked[data-difficulty="${id}"]`,
+    ).length;
+    const percentage = toPercentage(cleared / combinationsPerDifficulty);
+    span.innerText = percentage;
+    totalCleared += cleared;
+  }
 
   const totalPercentage = toPercentage(totalCleared / totalCombinations);
-  const standardPercentage = toPercentage(
-    standardCleared / (totalCombinations / 2),
-  );
-  const expertPercentage = toPercentage(
-    expertCleared / (totalCombinations / 2),
-  );
-
   totalPercentageSpan.innerText = totalPercentage;
   totalFractionSpan.innerText = `${totalCleared} / ${totalCombinations}`;
-  standardPercentageSpan.innerText = standardPercentage;
-  expertPercentageSpan.innerText = expertPercentage;
 }
 
 function getUncompletedScenarios(hero) {
@@ -303,14 +326,14 @@ function isGameCompleted(scenario, hero, difficulty = null) {
     const gameId = getGameId(scenario, hero, difficulty);
     return getItem(gameId) === WIN;
   } else {
-    return DIFFICULTIES.every((difficulty) =>
+    return difficulties.every((difficulty) =>
       isGameCompleted(scenario, hero, difficulty),
     );
   }
 }
 
 function getGameId(scenario, hero, difficulty) {
-  return `game--${scenario.id}--${hero.id}--${difficulty}`;
+  return `game--${scenario.id}--${hero.id}--${difficulty.id}`;
 }
 
 export {

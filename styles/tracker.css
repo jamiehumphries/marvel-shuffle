@@ -164,24 +164,18 @@ body {
   border-top: var(--border--solid);
   border-bottom: none;
 
-  width: calc(var(--cell-width) * 2);
+  width: calc(var(--cell-width) * var(--number-of-difficulties));
   height: var(--scenario-cell-height);
 }
 
 /* Second row cells (Progress + Difficulty) */
-
-#tracker thead > tr:nth-child(2) > th:nth-child(2) {
-  position: sticky;
-  left: calc(var(--table-padding) + var(--cell-width));
-  background-color: white;
-}
 
 #tracker thead > tr:nth-child(2) > th > div {
   height: var(--difficulty-cell-height);
   font-size: 0.7rem;
 }
 
-#tracker thead > tr:nth-child(2) > th:nth-child(odd) > div {
+#tracker thead > tr:nth-child(2) > th:not(.block-end) > div {
   border-right: none;
 }
 
@@ -192,12 +186,12 @@ body {
 }
 
 #tracker tbody > tr > th:first-child > div {
-  width: calc(var(--cell-width) * 2);
+  width: calc(var(--cell-width) * var(--number-of-difficulties));
 }
 
 /* Body cells */
 
-#tracker tbody > tr > td:nth-child(even) > div {
+#tracker tbody > tr > td:not(.block-end) > div {
   border-right: var(--border--dashed);
 }
 

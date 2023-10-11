@@ -18,6 +18,7 @@ import {
 import {
   getUncompletedHeroes,
   getUncompletedScenarios,
+  isGameCompleted,
   renderTable,
 } from "./tracker.js?v=tracker";
 
@@ -267,7 +268,7 @@ class Section {
       return this.randomCard({ exclude, preferUse, preferExclude, available });
     }
 
-    return available[Math.floor(Math.random() * available.length)];
+    return chooseRandom(available);
   }
 
   getDefaultOptions() {
@@ -416,7 +417,49 @@ const aspectSection = new AspectSection(aspects, heroSection);
 const sections = [scenarioSection, moduleSection, heroSection, aspectSection];
 
 function shuffleAll() {
-  sections.forEach((section) => section.shuffle());
+  const { scenario, hero } = randomGame();
+  scenarioSection.shuffle({ preferUse: [scenario] });
+  moduleSection.shuffle();
+  heroSection.shuffle({ preferUse: [hero] });
+  aspectSection.shuffle();
+}
+
+function randomGame() {
+  const availableCards = (section) => {
+    const allCheckedCards = section.allCards.filter((card) => card.checked);
+    return allCheckedCards.length > 0
+      ? allCheckedCards
+      : section.getDefaultOptions();
+  };
+
+  const availableScenarios = availableCards(scenarioSection);
+  const availableHeroes = availableCards(heroSection);
+
+  let availableGames = availableScenarios.flatMap((scenario) =>
+    availableHeroes.map((hero) => {
+      return { scenario, hero };
+    }),
+  );
+
+  const uncompletedAvailableGames = availableGames.filter(
+    ({ scenario, hero }) => !isGameCompleted(scenario, hero),
+  );
+
+  if (uncompletedAvailableGames.length > 0) {
+    availableGames = uncompletedAvailableGames;
+  }
+
+  const newAvailableGames = availableGames.filter(({ scenario, hero }) => {
+    const isNewScenario = scenario !== scenarioSection.cards[0];
+    const isNewHero = hero !== heroSection.cards[0];
+    return isNewScenario || isNewHero;
+  });
+
+  if (newAvailableGames.length > 0) {
+    availableGames = newAvailableGames;
+  }
+
+  return chooseRandom(availableGames);
 }
 
 function toggleSettings() {
@@ -456,6 +499,10 @@ function requestPostAnimationFrame(callback) {
     port1.onmessage = callback;
     port2.postMessage(undefined);
   });
+}
+
+function chooseRandom(array) {
+  return array[Math.floor(Math.random() * array.length)];
 }
 
 async function initialize() {

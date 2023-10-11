@@ -298,7 +298,7 @@ function getUncompletedHeroes(scenario) {
   return allHeroes.filter((hero) => !isGameCompleted(scenario, hero));
 }
 
-function isGameCompleted(scenario, hero, difficulty) {
+function isGameCompleted(scenario, hero, difficulty = null) {
   if (difficulty) {
     const gameId = getGameId(scenario, hero, difficulty);
     return getItem(gameId) === WIN;
@@ -313,4 +313,9 @@ function getGameId(scenario, hero, difficulty) {
   return `game--${scenario.id}--${hero.id}--${difficulty}`;
 }
 
-export { getUncompletedHeroes, getUncompletedScenarios, renderTable };
+export {
+  getUncompletedHeroes,
+  getUncompletedScenarios,
+  isGameCompleted,
+  renderTable,
+};

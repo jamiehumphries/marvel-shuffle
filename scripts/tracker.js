@@ -1,6 +1,22 @@
+import {
+  scenarios as scenarioOptions,
+  heroes as heroOptions,
+  flatten,
+} from "./cards.js?v=tracker";
 import { getItem, setItem } from "./storage.js?v=tracker";
 
+const WIN = "✓";
+const LOSS = "✗";
+const UNPLAYED = "?";
+
+const STANDARD = "standard";
+const EXPERT = "expert";
+const DIFFICULTIES = [STANDARD, EXPERT];
+
 const table = document.getElementById("tracker");
+
+const allScenarios = flatten(scenarioOptions);
+const allHeroes = flatten(heroOptions);
 
 let totalPercentageSpan;
 let totalFractionSpan;
@@ -125,10 +141,10 @@ function appendHeroRow(tbody, scenarios, hero, { rowbreak } = {}) {
     for (let i = 0; i < set.children.length; i++) {
       const scenario = set.children[i];
       const colbreak = i === 0;
-      const standardCell = createGameCell(scenario, hero, "standard", {
+      const standardCell = createGameCell(scenario, hero, STANDARD, {
         colbreak,
       });
-      const expertCell = createGameCell(scenario, hero, "expert");
+      const expertCell = createGameCell(scenario, hero, EXPERT);
       row.appendChild(standardCell);
       row.appendChild(expertCell);
     }
@@ -146,7 +162,7 @@ function createRow({ rowbreak = false } = {}) {
 }
 
 function createGameCell(scenario, hero, difficulty, options = {}) {
-  const gameId = `game--${scenario.id}--${hero.id}--${difficulty}`;
+  const gameId = getGameId(scenario, hero, difficulty);
 
   const contentDiv = document.createElement("div");
   const label = document.createElement("label");
@@ -237,27 +253,27 @@ function handleCheckboxClick(event) {
 }
 
 function nextCheckboxState(state) {
-  const states = ["?", "✓", "✗"];
+  const states = [UNPLAYED, WIN, LOSS];
   return states[(states.indexOf(state) + 1) % states.length];
 }
 
 function applyStateToCheckbox(checkbox, state) {
-  state ||= "?";
+  state ||= UNPLAYED;
   checkbox.dataset.state = state;
-  checkbox.indeterminate = state === "?";
-  checkbox.checked = state === "✓";
+  checkbox.indeterminate = state === UNPLAYED;
+  checkbox.checked = state === WIN;
 }
 
 function updateProgress() {
   const totalCombinations = table.querySelectorAll("input").length;
   const toPercentage = (decimal) => `${(decimal * 100).toFixed(2)}%`;
 
-  const standardCleared = table.querySelectorAll(
-    'input:checked[data-difficulty="standard"]',
-  ).length;
-  const expertCleared = table.querySelectorAll(
-    'input:checked[data-difficulty="expert"]',
-  ).length;
+  const cleared = (difficulty) =>
+    table.querySelectorAll(`input:checked[data-difficulty="${difficulty}"]`)
+      .length;
+
+  const standardCleared = cleared(STANDARD);
+  const expertCleared = cleared(EXPERT);
   const totalCleared = standardCleared + expertCleared;
 
   const totalPercentage = toPercentage(totalCleared / totalCombinations);
@@ -274,4 +290,27 @@ function updateProgress() {
   expertPercentageSpan.innerText = expertPercentage;
 }
 
-export { renderTable };
+function getUncompletedScenarios(hero) {
+  return allScenarios.filter((scenario) => !isGameCompleted(scenario, hero));
+}
+
+function getUncompletedHeroes(scenario) {
+  return allHeroes.filter((hero) => !isGameCompleted(scenario, hero));
+}
+
+function isGameCompleted(scenario, hero, difficulty) {
+  if (difficulty) {
+    const gameId = getGameId(scenario, hero, difficulty);
+    return getItem(gameId) === WIN;
+  } else {
+    return DIFFICULTIES.every((difficulty) =>
+      isGameCompleted(scenario, hero, difficulty),
+    );
+  }
+}
+
+function getGameId(scenario, hero, difficulty) {
+  return `game--${scenario.id}--${hero.id}--${difficulty}`;
+}
+
+export { getUncompletedHeroes, getUncompletedScenarios, renderTable };

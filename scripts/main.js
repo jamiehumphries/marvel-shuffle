@@ -1,6 +1,12 @@
 import copyTextToClipboard from "./lib/copy-text-to-clipboard.js";
 import { All } from "./options.js?v=tracker";
-import { scenarios, modules, heroes, aspects } from "./cards.js?v=tracker";
+import {
+  scenarios,
+  modules,
+  heroes,
+  aspects,
+  flatten,
+} from "./cards.js?v=tracker";
 import {
   initializeStorage,
   clearStorage,
@@ -9,7 +15,11 @@ import {
   getItem,
   setItem,
 } from "./storage.js?v=tracker";
-import { renderTable } from "./tracker.js?v=tracker";
+import {
+  getUncompletedHeroes,
+  getUncompletedScenarios,
+  renderTable,
+} from "./tracker.js?v=tracker";
 
 const cardChangeDelayMs = Number(
   getComputedStyle(document.documentElement)
@@ -117,9 +127,7 @@ class Section {
       this.parentSection.childSection = this;
     }
 
-    this.allCards = this.cardsOrSets.flatMap(
-      (cardOrSet) => cardOrSet.children || [cardOrSet],
-    );
+    this.allCards = flatten(this.cardsOrSets);
 
     this.type = this.allCards.reduce((type, card) => {
       const cardType = card.type;
@@ -195,7 +203,7 @@ class Section {
     }
   }
 
-  shuffle({ animate = true, preventRepeat = false } = {}) {
+  shuffle({ animate = true, preventRepeat = false, preferUse = [] } = {}) {
     const parentSection = this.parentSection;
     const cardCount = parentSection ? parentSection.childCardCount : 1;
     const exclude = parentSection ? [...parentSection.excludedChildCards] : [];
@@ -204,7 +212,7 @@ class Section {
     for (let i = 0; i < cardCount; i++) {
       const oldCard = this.cards[i];
       const preferExclude = preventRepeat ? oldCard : null;
-      const newCard = this.randomCard({ exclude, preferExclude });
+      const newCard = this.randomCard({ exclude, preferExclude, preferUse });
       newCards.push(newCard);
       exclude.push(newCard);
 
@@ -233,9 +241,22 @@ class Section {
     }
   }
 
-  randomCard({ exclude = [], preferExclude = null, available = null } = {}) {
+  randomCard({
+    exclude = [],
+    preferUse = [],
+    preferExclude = null,
+    available = null,
+  } = {}) {
     available ||= this.allCards.filter((card) => card.checked);
     available = available.filter((card) => !exclude.includes(card));
+
+    const preferredAvailable = available.filter((card) =>
+      preferUse.includes(card),
+    );
+
+    if (preferredAvailable.length > 0) {
+      available = preferredAvailable;
+    }
 
     if (preferExclude !== null && available.length > 1) {
       available = available.filter((card) => card !== preferExclude);
@@ -243,7 +264,7 @@ class Section {
 
     if (available.length === 0) {
       available = this.getDefaultOptions();
-      return this.randomCard({ exclude, preferExclude, available });
+      return this.randomCard({ exclude, preferUse, preferExclude, available });
     }
 
     return available[Math.floor(Math.random() * available.length)];
@@ -303,6 +324,30 @@ class Section {
     setItem(this.type.id, cardIds);
   }
 }
+
+class ScenarioSection extends Section {
+  shuffle({ animate = true, preventRepeat = false, preferUse = null } = {}) {
+    const currentHero = heroSection.cards[0];
+    if (currentHero && !preferUse) {
+      preferUse = getUncompletedScenarios(currentHero);
+    }
+    super.shuffle({ animate, preventRepeat, preferUse });
+  }
+}
+
+class ModuleSection extends Section {}
+
+class HeroSection extends Section {
+  shuffle({ animate = true, preventRepeat = false, preferUse = null } = {}) {
+    const currentScenario = scenarioSection.cards[0];
+    if (currentScenario && !preferUse) {
+      preferUse = getUncompletedHeroes(currentScenario);
+    }
+    super.shuffle({ animate, preventRepeat, preferUse });
+  }
+}
+
+class AspectSection extends Section {}
 
 class Slot {
   constructor(root) {
@@ -364,11 +409,11 @@ const shuffleAllButton = document.getElementById("shuffle-all");
 const copyBookmarkUrlButton = document.getElementById("copy-bookmark-url");
 let lastClickedButton = null;
 
-const scenario = new Section(scenarios);
-const module = new Section(modules, scenario);
-const hero = new Section(heroes);
-const aspect = new Section(aspects, hero);
-const sections = [scenario, module, hero, aspect];
+const scenarioSection = new ScenarioSection(scenarios);
+const moduleSection = new ModuleSection(modules, scenarioSection);
+const heroSection = new HeroSection(heroes);
+const aspectSection = new AspectSection(aspects, heroSection);
+const sections = [scenarioSection, moduleSection, heroSection, aspectSection];
 
 function shuffleAll() {
   sections.forEach((section) => section.shuffle());
@@ -398,11 +443,11 @@ function maybeReturnFocusAfterShuffle() {
 }
 
 function updateTrackingTable() {
-  if (scenario.cards.length === 0 || hero.cards.length === 0) {
+  if (scenarioSection.cards.length === 0 || heroSection.cards.length === 0) {
     return;
   }
   const cardSet = ({ cards }) => [{ children: cards }];
-  renderTable(cardSet(scenario), cardSet(hero));
+  renderTable(cardSet(scenarioSection), cardSet(heroSection));
 }
 
 function requestPostAnimationFrame(callback) {

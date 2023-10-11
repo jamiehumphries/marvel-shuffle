@@ -172,7 +172,7 @@ const modules = [
 // SCENARIOS
 
 const allModules = modules.flatMap(
-  (cardOrSet) => cardOrSet.children || [cardOrSet]
+  (cardOrSet) => cardOrSet.children || [cardOrSet],
 );
 
 const nonMojoManiaModules = modules.flatMap((cardOrSet) => {
@@ -369,4 +369,8 @@ const heroes = [
   hero("Deadpool", POOL, "#ff3737"),
 ];
 
-export { scenarios, modules, heroes, aspects };
+function flatten(cardsOrSets) {
+  return cardsOrSets.flatMap((cardOrSet) => cardOrSet.children || [cardOrSet]);
+}
+
+export { scenarios, modules, heroes, aspects, flatten };

@@ -226,15 +226,20 @@ button.icon-button:disabled {
   display: none !important;
 }
 
-button#copy-sync-url {
+button#copy-bookmark-url {
   --button-background-color: var(--button-background-color--sync);
   --button-background-color-hover: var(--button-background-color-hover--sync);
 
   margin-top: 40px;
-  width: 200px;
+  width: 280px;
 }
 
-#sync-url {
+#bookmark-url-hint {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+#bookmark-url {
   margin-top: 1rem;
   font-weight: bold;
   font-family: "Courier New", Courier, monospace;

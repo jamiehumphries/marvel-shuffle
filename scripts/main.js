@@ -4,7 +4,7 @@ import { scenarios, modules, heroes, aspects } from "./cards.js?v=tracker";
 import {
   initializeStorage,
   clearStorage,
-  getSyncUrl,
+  getBookmarkUrl,
   setUserId,
   getItem,
   setItem,
@@ -361,7 +361,7 @@ class Slot {
 const container = document.querySelector(".container");
 const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");
-const copySyncUrlButton = document.getElementById("copy-sync-url");
+const copyBookmarkUrlButton = document.getElementById("copy-bookmark-url");
 let lastClickedButton = null;
 
 const scenario = new Section(scenarios);
@@ -436,22 +436,18 @@ async function initialize() {
   shuffleAllButton.addEventListener("click", () => shuffleAll());
   settingsButton.addEventListener("click", () => toggleSettings());
 
-  copySyncUrlButton.addEventListener("click", async () => {
-    copySyncUrlButton.disabled = true;
-    const url = await getSyncUrl();
+  copyBookmarkUrlButton.addEventListener("click", async () => {
+    copyBookmarkUrlButton.disabled = true;
+    const url = await getBookmarkUrl();
     const success = copyTextToClipboard(url.toString());
     requestPostAnimationFrame(() => {
       const copyResultMessage = success
-        ? "Your unique sync URL has been copied to the clipboard."
-        : "Your unique sync URL has been generated, but copying to the" +
+        ? "Your bookmark URL has been copied to the clipboard."
+        : "Your bookmark URL has been generated, but copying to the" +
           " clipboard failed. You can manually copy it from below.";
-      alert(
-        copyResultMessage +
-          " If you use this URL to open Marvel Shuffle on another device or" +
-          " in another browser, your settings and shuffles will be synced.",
-      );
-      copySyncUrlButton.disabled = false;
-      copySyncUrlButton.focus();
+      alert(copyResultMessage);
+      copyBookmarkUrlButton.disabled = false;
+      copyBookmarkUrlButton.focus();
     });
   });
 

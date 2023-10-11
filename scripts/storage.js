@@ -19,7 +19,10 @@ const app = initializeApp({
 });
 
 const USER_ID_KEY = "--user-id";
-const syncUrlElement = document.getElementById("sync-url");
+const createOrCopyBookmarkUrl = document.getElementById(
+  "create-or-copy-bookmark-url",
+);
+const bookmarkUrlElement = document.getElementById("bookmark-url");
 
 const db = getFirestore(app);
 const users = collection(db, "users");
@@ -49,7 +52,7 @@ async function clearStorage() {
   }
 }
 
-async function getSyncUrl() {
+async function getBookmarkUrl() {
   let userId = getUserId();
   if (!userId) {
     const doc = await addDoc(users, { ...localStorage });
@@ -71,8 +74,12 @@ function getUserId() {
 
 async function setUserId(value) {
   localStorage.setItem(USER_ID_KEY, value);
-  if (syncUrlElement) {
-    syncUrlElement.innerText = await getSyncUrl();
+  if (createOrCopyBookmarkUrl) {
+    createOrCopyBookmarkUrl.innerText =
+      createOrCopyBookmarkUrl.innerText.replace("Create", "Copy");
+  }
+  if (bookmarkUrlElement) {
+    bookmarkUrlElement.innerText = await getBookmarkUrl();
   }
   return value;
 }
@@ -111,7 +118,7 @@ function updateDb(key, value) {
 export {
   initializeStorage,
   clearStorage,
-  getSyncUrl,
+  getBookmarkUrl,
   getItem,
   setItem,
   setUserId,

@@ -220,7 +220,7 @@ function hexToRgb(hex) {
 }
 
 function setUpIndeterminateCheckboxes() {
-  const checkboxes = document.getElementsByTagName("input");
+  const checkboxes = table.getElementsByTagName("input");
   for (const checkbox of checkboxes) {
     const state = getItem(checkbox.id);
     applyStateToCheckbox(checkbox, state);
@@ -252,10 +252,10 @@ function updateProgress() {
   const totalCombinations = table.querySelectorAll("input").length;
   const toPercentage = (decimal) => `${(decimal * 100).toFixed(2)}%`;
 
-  const standardCleared = document.querySelectorAll(
+  const standardCleared = table.querySelectorAll(
     'input:checked[data-difficulty="standard"]',
   ).length;
-  const expertCleared = document.querySelectorAll(
+  const expertCleared = table.querySelectorAll(
     'input:checked[data-difficulty="expert"]',
   ).length;
   const totalCleared = standardCleared + expertCleared;

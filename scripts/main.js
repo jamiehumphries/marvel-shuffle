@@ -1,5 +1,5 @@
 import copyTextToClipboard from "./lib/copy-text-to-clipboard.js";
-import { All, CardSet } from "./options.js?v=tracker";
+import { All } from "./options.js?v=tracker";
 import { scenarios, modules, heroes, aspects } from "./cards.js?v=tracker";
 import {
   initializeStorage,
@@ -401,7 +401,7 @@ function updateTrackingTable() {
   if (scenario.cards.length === 0 || hero.cards.length === 0) {
     return;
   }
-  const cardSet = ({ cards }) => [new CardSet("", cards)];
+  const cardSet = ({ cards }) => [{ children: cards }];
   renderTable(cardSet(scenario), cardSet(hero));
 }
 

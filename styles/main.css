@@ -521,6 +521,8 @@ h3.name {
 
   opacity: 1;
   transition: opacity calc(var(--card-change-duration) * 0.75);
+
+  margin-top: 20px;
 }
 
 .shuffling #tracking {
@@ -547,12 +549,6 @@ h3.name {
 #tracker #standard-percentage > span,
 #tracker #expert-percentage > span {
   display: none;
-}
-
-#tracking a {
-  display: block;
-  border-radius: 3px;
-  padding: 5px;
 }
 
 @media (max-width: 1400px) {

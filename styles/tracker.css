@@ -10,7 +10,7 @@
 
   --break-size: calc(var(--cell-width) / 10);
 
-  --border-width: 1px;
+  --border-width: 2px;
   --border-color: black;
   --border--solid: var(--border-width) solid var(--border-color);
   --border--dashed: var(--border-width) dashed var(--border-color);
@@ -101,9 +101,20 @@ body {
 }
 
 .keyboard-nav #tracker td > input[type="checkbox"]:focus ~ div {
-  outline: var(--outline);
-  outline-offset: -1px;
+  position: relative;
   background-color: var(--cell-background-color-hover);
+}
+
+.keyboard-nav #tracker td > input[type="checkbox"]:focus ~ div::before {
+  --pseudo-outline-width: calc(var(--border-width) + 1px);
+  --pseudo-outline-offset: calc(0px - var(--pseudo-outline-width));
+  position: absolute;
+  top: var(--pseudo-outline-offset);
+  right: var(--pseudo-outline-offset);
+  bottom: var(--pseudo-outline-offset);
+  left: var(--pseudo-outline-offset);
+  border: calc(var(--pseudo-outline-width)) solid var(--outline-color);
+  content: "";
 }
 
 @media (hover: hover) {
@@ -123,11 +134,6 @@ body {
 }
 
 /* Top left cells (Progress) */
-
-#tracker thead > tr > th:first-child,
-#tracker thead > tr:nth-child(2) > th:nth-child(2) {
-  z-index: 1;
-}
 
 #tracker thead > tr:first-child > th:first-child > div {
   flex-direction: column;
@@ -154,13 +160,6 @@ body {
 
 /* First row cells (Progress + Scenario) */
 
-#tracker thead > tr:first-child > th {
-  position: sticky;
-  top: 0;
-  background-color: white;
-  padding-top: var(--table-padding);
-}
-
 #tracker thead > tr:first-child > th > div {
   border-top: var(--border--solid);
   border-bottom: none;
@@ -170,12 +169,6 @@ body {
 }
 
 /* Second row cells (Progress + Difficulty) */
-
-#tracker thead > tr:nth-child(2) > th {
-  position: sticky;
-  top: calc(var(--table-padding) + var(--scenario-cell-height));
-  background-color: white;
-}
 
 #tracker thead > tr:nth-child(2) > th:nth-child(2) {
   position: sticky;
@@ -194,33 +187,12 @@ body {
 
 /* First column cells (Progress + Hero) */
 
-#tracker tr > th:first-child {
-  position: sticky;
-  left: 0;
-  background-color: white;
-  padding-left: var(--table-padding);
-}
-
 #tracker tr > th:first-child > div {
   border-left: var(--border--solid);
 }
 
 #tracker tbody > tr > th:first-child > div {
   width: calc(var(--cell-width) * 2);
-}
-
-/* Last row cells */
-
-#tracker tbody > tr:last-child > th,
-#tracker tbody > tr:last-child > td {
-  padding-bottom: var(--table-padding);
-}
-
-/* Last column cells */
-
-#tracker thead > tr > th:last-child,
-#tracker tbody > tr > td:last-child {
-  padding-right: var(--table-padding);
 }
 
 /* Body cells */

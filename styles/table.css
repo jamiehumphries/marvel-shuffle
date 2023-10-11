@@ -1,0 +1,72 @@
+:root {
+  --nav-bar-height: calc(1rem + 2 * var(--table-padding));
+}
+
+.nav-bar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  align-items: center;
+  z-index: 2;
+
+  box-sizing: border-box;
+  background-color: white;
+  padding: 0 var(--table-padding);
+  width: 100%;
+  height: var(--nav-bar-height);
+}
+
+#tracker {
+  margin-top: var(--nav-bar-height);
+}
+
+/* Top left cells (Progress) */
+
+#tracker thead > tr:first-child > th:first-child,
+#tracker thead > tr:nth-child(2) > th:first-child,
+#tracker thead > tr:nth-child(2) > th:nth-child(2) {
+  z-index: 2;
+}
+
+/* First row cells (Progress + Scenario) */
+
+#tracker thead > tr:first-child > th {
+  position: sticky;
+  top: var(--nav-bar-height);
+  z-index: 1;
+  background-color: white;
+}
+
+/* Second row cells (Progress + Difficulty) */
+
+#tracker thead > tr:nth-child(2) > th {
+  position: sticky;
+  top: calc(var(--nav-bar-height) + var(--scenario-cell-height));
+  z-index: 1;
+  background-color: white;
+}
+
+/* First column cells (Progress + Hero) */
+
+#tracker tr > th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: white;
+  padding-left: var(--table-padding);
+}
+
+/* Last row cells */
+
+#tracker tbody > tr:last-child > th,
+#tracker tbody > tr:last-child > td {
+  padding-bottom: var(--table-padding);
+}
+
+/* Last column cells */
+
+#tracker thead > tr > th:last-child,
+#tracker tbody > tr > td:last-child {
+  padding-right: var(--table-padding);
+}

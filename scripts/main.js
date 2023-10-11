@@ -156,6 +156,12 @@ class Section {
 
   initializeOptions() {
     const options = this.root.querySelector(".options");
+    if (this.parentSection) {
+      const optionsHint = document.createElement("p");
+      optionsHint.classList.add("options-hint");
+      optionsHint.innerText = `Deselect all to use default ${this.type.namePlural} for each ${this.parentSection.type.name}`;
+      options.appendChild(optionsHint);
+    }
     const all = new All(this);
     all.appendTo(options);
     this.cardsOrSets.forEach((cardOrSet) => cardOrSet.appendTo(options));

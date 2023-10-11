@@ -276,6 +276,12 @@ button#copy-sync-url {
   margin: 0.5rem 0;
 }
 
+.options .options-hint {
+  font-style: italic;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
 .option.all {
   font-weight: bold;
 }

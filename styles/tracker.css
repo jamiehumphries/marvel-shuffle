@@ -79,7 +79,25 @@ body {
   width: 100%;
   height: 100%;
 
-  font-size: calc(var(--cell-height) * 0.4);
+  font-size: calc(var(--cell-height) * 0.5);
+}
+
+#tracker td > input[type="checkbox"]:indeterminate ~ div > label::before {
+  display: none;
+}
+
+#tracker td > input[type="checkbox"]:checked ~ div > label::before {
+  -webkit-mask-image: var(--icon-yes);
+  mask-image: var(--icon-yes);
+}
+
+#tracker
+  td
+  > input[type="checkbox"]:not(:checked):not(:indeterminate)
+  ~ div
+  > label::before {
+  -webkit-mask-image: var(--icon-no);
+  mask-image: var(--icon-no);
 }
 
 .keyboard-nav #tracker td > input[type="checkbox"]:focus ~ div {
@@ -99,21 +117,9 @@ body {
   --cell-background-color-hover: var(--cell-background-color-hover--yes);
 }
 
-#tracker td > input[type="checkbox"]:checked ~ div > label::after {
-  content: "✓";
-}
-
 #tracker td > input[type="checkbox"]:not(:checked):not(:indeterminate) ~ div {
   --cell-background-color: var(--cell-background-color--no);
   --cell-background-color-hover: var(--cell-background-color-hover--no);
-}
-
-#tracker
-  td
-  > input[type="checkbox"]:not(:checked):not(:indeterminate)
-  ~ div
-  > label::after {
-  content: "✗";
 }
 
 /* Top left cells (Progress) */

@@ -151,6 +151,7 @@ function createGameCell(scenario, hero, difficulty, options = {}) {
   const contentDiv = document.createElement("div");
   const label = document.createElement("label");
   label.htmlFor = gameId;
+  label.classList.add("icon");
   contentDiv.appendChild(label);
 
   options.contentDiv = contentDiv;
@@ -252,19 +253,19 @@ function updateProgress() {
   const toPercentage = (decimal) => `${(decimal * 100).toFixed(2)}%`;
 
   const standardCleared = document.querySelectorAll(
-    'input:checked[data-difficulty="standard"]'
+    'input:checked[data-difficulty="standard"]',
   ).length;
   const expertCleared = document.querySelectorAll(
-    'input:checked[data-difficulty="expert"]'
+    'input:checked[data-difficulty="expert"]',
   ).length;
   const totalCleared = standardCleared + expertCleared;
 
   const totalPercentage = toPercentage(totalCleared / totalCombinations);
   const standardPercentage = toPercentage(
-    standardCleared / (totalCombinations / 2)
+    standardCleared / (totalCombinations / 2),
   );
   const expertPercentage = toPercentage(
-    expertCleared / (totalCombinations / 2)
+    expertCleared / (totalCombinations / 2),
   );
 
   totalPercentageSpan.innerText = totalPercentage;

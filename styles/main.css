@@ -2,9 +2,6 @@
   --container-padding: 20px;
   --container-max-width: 1600px;
 
-  --link-color: #093156;
-  --link-color-hover: #5da2bf;
-
   --button-background-color: var(--button-background-color--default);
   --button-background-color-hover: var(
     --button-background-color-hover--default
@@ -81,22 +78,6 @@ button:not(:disabled) {
 
 img[src=""] {
   display: none;
-}
-
-a {
-  color: var(--link-color);
-  text-decoration: none;
-}
-
-a:hover,
-a:focus {
-  text-decoration: underline;
-}
-
-@media (hover: hover) {
-  a:hover {
-    color: var(--link-color-hover);
-  }
 }
 
 .container {

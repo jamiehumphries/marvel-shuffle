@@ -3,21 +3,19 @@ import {
   heroes as heroOptions,
   flatten,
 } from "./cards.js?v=tracker";
+import { Setting } from "./options.js?v=tracker";
 import { getItem, setItem } from "./storage.js?v=tracker";
 
 const WIN = "✓";
 const LOSS = "✗";
 const UNPLAYED = "?";
 
-const difficulties = [
-  { id: "standard", label: "Standard" },
-  { id: "expert", label: "Expert" },
+const allDifficulties = [
+  { id: "standard", label: "Standard", defaultValue: true },
+  { id: "expert", label: "Expert", defaultValue: true },
+  { id: "standard-ii", label: "Standard II" },
+  { id: "expert-ii", label: "Expert II" },
 ];
-
-document.documentElement.style.setProperty(
-  "--number-of-difficulties",
-  difficulties.length,
-);
 
 const table = document.getElementById("tracker");
 
@@ -28,22 +26,55 @@ let totalPercentageSpan;
 let totalFractionSpan;
 
 function renderTable(scenarios, heroes) {
-  table.innerHTML = "";
+  const difficulties = getTrackedDifficulties();
+  document.documentElement.style.setProperty(
+    "--number-of-difficulties",
+    difficulties.length,
+  );
+
+  clearTable();
   const thead = document.createElement("thead");
   const tbody = document.createElement("tbody");
   table.appendChild(thead);
   table.appendChild(tbody);
-  appendHeaderRows(thead, scenarios);
-  appendBodyRows(tbody, scenarios, heroes);
+  appendHeaderRows(thead, scenarios, difficulties);
+  appendBodyRows(tbody, scenarios, heroes, difficulties);
+
   setUpIndeterminateCheckboxes();
   updateProgress();
 }
 
-function appendHeaderRows(thead, scenarios) {
+function clearTable() {
+  table.innerHTML = "";
+}
+
+function initializeDifficultySettings() {
+  for (const difficulty of allDifficulties) {
+    const id = `track-difficulty-${difficulty.id}`;
+    const label = `Track ${difficulty.label}`;
+    const { defaultValue } = difficulty;
+    difficulty.setting = new Setting(id, label, { defaultValue });
+  }
+  return allDifficulties.map((difficulty) => difficulty.setting);
+}
+
+function getTrackedDifficulties() {
+  if (allDifficulties.some((difficulty) => !difficulty.setting)) {
+    initializeDifficultySettings();
+  }
+  const trackedDifficulties = allDifficulties.filter(
+    (difficulty) => difficulty.setting.checked,
+  );
+  return trackedDifficulties.length > 0
+    ? trackedDifficulties
+    : allDifficulties.filter((difficulty) => difficulty.defaultValue);
+}
+
+function appendHeaderRows(thead, scenarios, difficulties) {
   const firstRow = createRow();
   const secondRow = createRow();
 
-  appendProgressCells(firstRow, secondRow);
+  appendProgressCells(firstRow, secondRow, difficulties);
 
   for (const set of scenarios) {
     for (let i = 0; i < set.children.length; i++) {
@@ -67,7 +98,7 @@ function appendHeaderRows(thead, scenarios) {
         const cell = createCell({
           text: label,
           colbreak: colbreak && j == 0,
-          blockIndex: j,
+          blockEnd: j === difficulties.length - 1,
           color,
           header,
         });
@@ -80,7 +111,7 @@ function appendHeaderRows(thead, scenarios) {
   thead.appendChild(secondRow);
 }
 
-function appendProgressCells(firstRow, secondRow) {
+function appendProgressCells(firstRow, secondRow, difficulties) {
   const contentDiv = document.createElement("div");
 
   const progressDiv = (span, id) => {
@@ -115,14 +146,16 @@ function appendProgressCells(firstRow, secondRow) {
       contentDiv: progressDiv(span, `${id}-percentage`),
       header: true,
       blockIndex: i,
+      blockEnd: i === difficulties.length - 1,
       progress: true,
+      difficulty: true,
     });
 
     secondRow.appendChild(cell);
   }
 }
 
-function appendBodyRows(tbody, scenarios, heroes) {
+function appendBodyRows(tbody, scenarios, heroes, difficulties) {
   for (let i = 0; i < heroes.length; i++) {
     const cardOrSet = heroes[i];
     if (cardOrSet.children) {
@@ -130,17 +163,23 @@ function appendBodyRows(tbody, scenarios, heroes) {
       for (let j = 0; j < setHeroes.length; j++) {
         const hero = setHeroes[j];
         const rowbreak = j === 0;
-        appendHeroRow(tbody, scenarios, hero, { rowbreak });
+        appendHeroRow(tbody, scenarios, hero, difficulties, { rowbreak });
       }
     } else {
       const hero = cardOrSet;
       const rowbreak = i === 1; // Special case for first wave after core set.
-      appendHeroRow(tbody, scenarios, hero, { rowbreak });
+      appendHeroRow(tbody, scenarios, hero, difficulties, { rowbreak });
     }
   }
 }
 
-function appendHeroRow(tbody, scenarios, hero, { rowbreak } = {}) {
+function appendHeroRow(
+  tbody,
+  scenarios,
+  hero,
+  difficulties,
+  { rowbreak } = {},
+) {
   const row = createRow({ rowbreak });
 
   const { name: text, color } = hero;
@@ -160,7 +199,7 @@ function appendHeroRow(tbody, scenarios, hero, { rowbreak } = {}) {
         const difficulty = difficulties[j];
         const cell = createGameCell(scenario, hero, difficulty, {
           colbreak: colbreak && j === 0,
-          blockIndex: j,
+          blockEnd: j === difficulties.length - 1,
         });
         row.appendChild(cell);
       }
@@ -208,6 +247,8 @@ function createCell({
   colbreak = false,
   header = false,
   progress = false,
+  difficulty = false,
+  blockEnd = false,
   blockIndex = null,
 } = {}) {
   const tag = header ? "th" : "td";
@@ -215,23 +256,23 @@ function createCell({
   const div = contentDiv || document.createElement("div");
   cell.appendChild(div);
 
+  const classMap = {
+    "block-end": blockEnd,
+    "col-break": colbreak,
+    progress,
+    difficulty,
+  };
+
+  Object.entries(classMap).map(([className, toggle]) => {
+    cell.classList.toggle(className, toggle);
+  });
+
   if (colspan != 1) {
     cell.setAttribute("colspan", colspan);
   }
 
-  if (colbreak) {
-    cell.classList.add("col-break");
-  }
-
-  if (blockIndex !== null) {
-    if (blockIndex === difficulties.length - 1) {
-      cell.classList.add("block-end");
-    }
-  }
-
-  if (progress) {
-    cell.style.setProperty("--block-index", blockIndex);
-    cell.classList.add("progress");
+  if (progress && blockIndex) {
+    cell.style.setProperty("--progress-col", blockIndex);
   }
 
   if (text) {
@@ -293,6 +334,7 @@ function applyStateToCheckbox(checkbox, state) {
 }
 
 function updateProgress() {
+  const difficulties = getTrackedDifficulties();
   const totalCombinations = table.querySelectorAll("input").length;
   const toPercentage = (decimal) => `${(decimal * 100).toFixed(2)}%`;
 
@@ -314,22 +356,23 @@ function updateProgress() {
 }
 
 function getUncompletedScenarios(hero) {
-  return allScenarios.filter((scenario) => !isGameCompleted(scenario, hero));
+  return allScenarios.filter((scenario) => !isPairingCompleted(scenario, hero));
 }
 
 function getUncompletedHeroes(scenario) {
-  return allHeroes.filter((hero) => !isGameCompleted(scenario, hero));
+  return allHeroes.filter((hero) => !isPairingCompleted(scenario, hero));
 }
 
-function isGameCompleted(scenario, hero, difficulty = null) {
-  if (difficulty) {
-    const gameId = getGameId(scenario, hero, difficulty);
-    return getItem(gameId) === WIN;
-  } else {
-    return difficulties.every((difficulty) =>
-      isGameCompleted(scenario, hero, difficulty),
-    );
-  }
+function isPairingCompleted(scenario, hero) {
+  const trackedDifficulties = getTrackedDifficulties();
+  return trackedDifficulties.every((difficulty) =>
+    isGameCompleted(scenario, hero, difficulty),
+  );
+}
+
+function isGameCompleted(scenario, hero, difficulty) {
+  const gameId = getGameId(scenario, hero, difficulty);
+  return getItem(gameId) === WIN;
 }
 
 function getGameId(scenario, hero, difficulty) {
@@ -337,8 +380,10 @@ function getGameId(scenario, hero, difficulty) {
 }
 
 export {
+  initializeDifficultySettings,
   getUncompletedHeroes,
   getUncompletedScenarios,
-  isGameCompleted,
+  isPairingCompleted,
+  clearTable,
   renderTable,
 };

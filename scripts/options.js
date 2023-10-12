@@ -9,6 +9,7 @@ class Option {
       slug = null,
       children = null,
       onChange = null,
+      defaultValue = null,
     } = {},
   ) {
     this.name = name;
@@ -17,13 +18,17 @@ class Option {
     this.id = `${this.type.slug}--${this.slug}`;
     this.children = children;
     this._onChange = onChange;
+    this.defaultValue = defaultValue;
   }
 
   get checked() {
     if (this._checked === undefined) {
-      this._checked = this.children
-        ? this.children.every((child) => child.checked)
-        : getItem(this.id) === true;
+      if (this.children) {
+        this._checked = this.children.every((child) => child.checked);
+      } else {
+        const storedValue = getItem(this.id);
+        this._checked = storedValue === null ? this.defaultValue : storedValue;
+      }
     }
     return this._checked;
   }
@@ -95,8 +100,8 @@ class Option {
 }
 
 class Setting extends Option {
-  constructor(slug, label, onChange = null) {
-    super(label, { slug, onChange });
+  constructor(slug, label, { onChange = null, defaultValue = null } = {}) {
+    super(label, { slug, onChange, defaultValue });
   }
 
   static get slug() {

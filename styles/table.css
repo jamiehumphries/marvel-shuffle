@@ -58,7 +58,7 @@
 
 #tracker tr > th:not(:first-child).progress {
   position: sticky;
-  left: calc(var(--table-padding) + var(--block-index) * var(--cell-width));
+  left: calc(var(--table-padding) + var(--progress-col) * var(--cell-width));
   z-index: 1;
 }
 

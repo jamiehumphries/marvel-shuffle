@@ -57,6 +57,7 @@ body {
   background-color: var(--cell-background-color);
 
   width: var(--cell-width);
+  min-width: calc(10rem / var(--number-of-difficulties));
   height: var(--cell-height);
 }
 
@@ -152,9 +153,8 @@ body {
   content: ")";
 }
 
-#tracker #total-fraction,
-#tracker #standard-percentage,
-#tracker #expert-percentage {
+#tracker thead #total-fraction,
+#tracker thead > tr:nth-child(2) > th.progress.difficulty > div {
   font-size: 0.75rem;
 }
 

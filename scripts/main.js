@@ -16,9 +16,11 @@ import {
   setItem,
 } from "./storage.js?v=tracker";
 import {
+  initializeDifficultySettings,
   getUncompletedHeroes,
   getUncompletedScenarios,
-  isGameCompleted,
+  isPairingCompleted,
+  clearTable,
   renderTable,
 } from "./tracker.js?v=tracker";
 
@@ -417,21 +419,36 @@ class Settings {
     return this._showTrackerSetting.checked;
   }
 
+  get anyDifficultiesTracked() {
+    return this._difficultSettings.some((setting) => setting.checked);
+  }
+
   initialize() {
     const preferencesElement = document.getElementById("preferences");
 
     this._showTrackerSetting = new Setting(
       "show-tracker",
       "Show game tracker under shuffle",
-      (checked) => container.classList.toggle("show-tracker", checked),
+      {
+        onChange: (checked) =>
+          container.classList.toggle("show-tracker", checked),
+      },
     );
+
+    this._difficultSettings = initializeDifficultySettings();
+
     this._avoidCompletedSetting = new Setting(
       "avoid-completed",
       "Avoid completed games when shuffling",
     );
 
-    const allSettings = [this._showTrackerSetting, this._avoidCompletedSetting];
-    allSettings.forEach((setting) => setting.appendTo(preferencesElement));
+    const settings = [
+      this._showTrackerSetting,
+      ...this._difficultSettings,
+      this._avoidCompletedSetting,
+    ];
+
+    settings.forEach((setting) => setting.appendTo(preferencesElement));
   }
 }
 
@@ -475,7 +492,7 @@ function randomGame() {
 
   if (settings.avoidCompleted) {
     const uncompletedAvailableGames = availableGames.filter(
-      ({ scenario, hero }) => !isGameCompleted(scenario, hero),
+      ({ scenario, hero }) => !isPairingCompleted(scenario, hero),
     );
 
     if (uncompletedAvailableGames.length > 0) {
@@ -504,6 +521,7 @@ function toggleSettings() {
     requestPostAnimationFrame(() =>
       sections.forEach((section) => section.shuffleIfInvalid()),
     );
+    updateTrackingTable();
   }
 }
 
@@ -524,7 +542,11 @@ function updateTrackingTable() {
     return;
   }
   const cardSet = ({ cards }) => [{ children: cards }];
-  renderTable(cardSet(scenarioSection), cardSet(heroSection));
+  if (settings.anyDifficultiesTracked) {
+    renderTable(cardSet(scenarioSection), cardSet(heroSection));
+  } else {
+    clearTable();
+  }
 }
 
 function requestPostAnimationFrame(callback) {

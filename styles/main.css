@@ -232,6 +232,16 @@ button.icon-button:disabled {
   display: none !important;
 }
 
+label[for^="setting--track-difficulty-"] {
+  margin-left: 30px;
+}
+
+.container:not(.show-tracker) label[for="setting--avoid-completed"],
+.container:not(.show-tracker) label[for^="setting--track-difficulty-"] {
+  height: 0;
+  overflow: hidden;
+}
+
 button#copy-bookmark-url {
   --button-background-color: var(--button-background-color--sync);
   --button-background-color-hover: var(--button-background-color-hover--sync);
@@ -540,11 +550,6 @@ h3.name {
   display: none;
 }
 
-.container:not(.show-tracker) label[for="setting--avoid-completed"] {
-  height: 0;
-  overflow: hidden;
-}
-
 .shuffling #tracking {
   opacity: 0;
 }
@@ -553,7 +558,7 @@ h3.name {
   justify-content: flex-end;
 }
 
-#tracker #total-fraction {
+#tracker thead > tr:first-child > th:first-child #total-fraction {
   font-size: 1.2rem;
 }
 
@@ -565,9 +570,8 @@ h3.name {
   content: "";
 }
 
-#tracker #total-percentage > span,
-#tracker #standard-percentage > span,
-#tracker #expert-percentage > span {
+#tracker #total-percentage span,
+#tracker .progress.difficulty span {
   display: none;
 }
 

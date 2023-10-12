@@ -1,4 +1,4 @@
-import { getItem, setItem } from "./storage.js?v=tracker";
+import { getItem, setItem } from "./storage.js?v=2.0";
 
 class Option {
   constructor(

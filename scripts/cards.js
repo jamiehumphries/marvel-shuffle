@@ -1,10 +1,4 @@
-import {
-  CardSet,
-  Scenario,
-  Module,
-  Hero,
-  Aspect,
-} from "./options.js?v=tracker";
+import { CardSet, Scenario, Module, Hero, Aspect } from "./options.js?v=2.0";
 
 function ensureArray(arrayOrString) {
   return Array.isArray(arrayOrString) ? arrayOrString : [arrayOrString];

@@ -24,63 +24,73 @@
             <span class="settings-show">Settings</span>
           </button>
         </h1>
-        <button id="copy-bookmark-url" class="settings-show">
-          <span id="create-or-copy-bookmark-url">Create Bookmark URL</span>
-          <img src="images/link.svg" alt="" />
-        </button>
-        <div id="bookmark-url" class="settings-show"></div>
-        <p id="bookmark-url-hint" class="settings-show">
-          Your individual bookmark URL allows you to save and sync your data
-        </p>
+        <div class="settings-show container-block">
+          <h2>Preferences</h2>
+          <div id="preferences"></div>
+        </div>
+        <div class="settings-show container-block">
+          <h2>Saving</h2>
+          <button id="copy-bookmark-url">
+            <span id="create-or-copy-bookmark-url">Create Bookmark URL</span>
+            <img src="images/link.svg" alt="" />
+          </button>
+          <div id="bookmark-url" class="settings-show"></div>
+          <p id="bookmark-url-hint" class="settings-show">
+            Your individual bookmark URL allows you to save and sync your data
+          </p>
+        </div>
         <button id="settings" class="icon-button" ontouchstart>
           <img src="images/settings.svg" class="settings-hide" alt="" />
           <span class="settings-hide">Settings</span>
           <img src="images/done.svg" class="settings-show" alt="" />
           <span class="settings-show">Done</span>
         </button>
-        <div class="sections">
-          <template id="section">
-            <h2>
-              <button class="shuffle">
-                <span class="settings-hide type-name"></span>
-                <img src="images/shuffle.svg" class="settings-hide" alt="" />
-                <span class="settings-show select"></span>
-              </button>
-            </h2>
-            <form class="options settings-show">
-              <input type="submit" hidden />
-            </form>
-            <div class="slots"></div>
-          </template>
-          <template id="slot">
-            <div class="slot settings-hide">
-              <div class="header">
-                <h3 class="name"></h3>
-              </div>
-              <div class="card">
-                <div class="front">
-                  <img class="front" alt="" />
-                  <img class="back" alt="" />
+        <div class="container-block">
+          <h2 class="settings-show">Selection</h2>
+          <div class="sections">
+            <template id="section">
+              <h3>
+                <button class="shuffle">
+                  <span class="settings-hide type-name"></span>
+                  <img src="images/shuffle.svg" class="settings-hide" alt="" />
+                  <span class="settings-show select"></span>
+                </button>
+              </h3>
+              <form class="options settings-show">
+                <input type="submit" hidden />
+              </form>
+              <div class="slots"></div>
+            </template>
+            <template id="slot">
+              <div class="slot settings-hide">
+                <div class="header">
+                  <h3 class="name"></h3>
                 </div>
-                <div class="back">
-                  <img class="front" alt="" />
-                  <img class="back" alt="" />
+                <div class="card">
+                  <div class="front">
+                    <img class="front" alt="" />
+                    <img class="back" alt="" />
+                  </div>
+                  <div class="back">
+                    <img class="front" alt="" />
+                    <img class="back" alt="" />
+                  </div>
                 </div>
               </div>
-            </div>
-          </template>
-          <div id="scenario" class="section"></div>
-          <div id="module" class="section"></div>
-          <div id="hero" class="section"></div>
-          <div id="aspect" class="section"></div>
+            </template>
+            <div id="scenario" class="section"></div>
+            <div id="module" class="section"></div>
+            <div id="hero" class="section"></div>
+            <div id="aspect" class="section"></div>
+          </div>
         </div>
-        <div id="tracking" class="settings-hide">
+        <div id="tracking" class="settings-hide container-block">
           <table id="tracker">
             <thead></thead>
             <tbody></tbody>
           </table>
           <a href="/tracker" class="link-button">
-            Game tracker <i class="fa-solid fa-arrow-right"></i>
+            Full game tracker <i class="fa-solid fa-arrow-right"></i>
           </a>
         </div>
       </div>

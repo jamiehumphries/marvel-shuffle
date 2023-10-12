@@ -1,5 +1,5 @@
 import copyTextToClipboard from "./lib/copy-text-to-clipboard.js";
-import { All } from "./options.js?v=tracker";
+import { Setting, All } from "./options.js?v=tracker";
 import {
   scenarios,
   modules,
@@ -207,7 +207,7 @@ class Section {
     }
   }
 
-  shuffle({ animate = true, preventRepeat = false, preferUse = [] } = {}) {
+  shuffle({ animate = true, preventRepeat = false, preferUse = null } = {}) {
     const parentSection = this.parentSection;
     const cardCount = parentSection ? parentSection.childCardCount : 1;
     const exclude = parentSection ? [...parentSection.excludedChildCards] : [];
@@ -247,19 +247,20 @@ class Section {
 
   randomCard({
     exclude = [],
-    preferUse = [],
+    preferUse = null,
     preferExclude = null,
     available = null,
   } = {}) {
     available ||= this.allCards.filter((card) => card.checked);
     available = available.filter((card) => !exclude.includes(card));
 
-    const preferredAvailable = available.filter((card) =>
-      preferUse.includes(card),
-    );
-
-    if (preferredAvailable.length > 0) {
-      available = preferredAvailable;
+    if (settings.avoidCompleted && preferUse) {
+      const preferredAvailable = available.filter((card) =>
+        preferUse.includes(card),
+      );
+      if (preferredAvailable.length > 0) {
+        available = preferredAvailable;
+      }
     }
 
     if (preferExclude !== null && available.length > 1) {
@@ -407,12 +408,40 @@ class Slot {
   }
 }
 
+class Settings {
+  get avoidCompleted() {
+    return this.showTracker && this._avoidCompletedSetting.checked;
+  }
+
+  get showTracker() {
+    return this._showTrackerSetting.checked;
+  }
+
+  initialize() {
+    const preferencesElement = document.getElementById("preferences");
+
+    this._showTrackerSetting = new Setting(
+      "show-tracker",
+      "Show game tracker under shuffle",
+      (checked) => container.classList.toggle("show-tracker", checked),
+    );
+    this._avoidCompletedSetting = new Setting(
+      "avoid-completed",
+      "Avoid completed games when shuffling",
+    );
+
+    const allSettings = [this._showTrackerSetting, this._avoidCompletedSetting];
+    allSettings.forEach((setting) => setting.appendTo(preferencesElement));
+  }
+}
+
 const container = document.querySelector(".container");
 const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");
 const copyBookmarkUrlButton = document.getElementById("copy-bookmark-url");
 let lastClickedButton = null;
 
+const settings = new Settings();
 const scenarioSection = new ScenarioSection(scenarios);
 const moduleSection = new ModuleSection(modules, scenarioSection);
 const heroSection = new HeroSection(heroes);
@@ -428,15 +457,15 @@ function shuffleAll() {
 }
 
 function randomGame() {
-  const availableCards = (section) => {
+  const available = (section) => {
     const allCheckedCards = section.allCards.filter((card) => card.checked);
     return allCheckedCards.length > 0
       ? allCheckedCards
       : section.getDefaultOptions();
   };
 
-  const availableScenarios = availableCards(scenarioSection);
-  const availableHeroes = availableCards(heroSection);
+  const availableScenarios = available(scenarioSection);
+  const availableHeroes = available(heroSection);
 
   let availableGames = availableScenarios.flatMap((scenario) =>
     availableHeroes.map((hero) => {
@@ -444,12 +473,14 @@ function randomGame() {
     }),
   );
 
-  const uncompletedAvailableGames = availableGames.filter(
-    ({ scenario, hero }) => !isGameCompleted(scenario, hero),
-  );
+  if (settings.avoidCompleted) {
+    const uncompletedAvailableGames = availableGames.filter(
+      ({ scenario, hero }) => !isGameCompleted(scenario, hero),
+    );
 
-  if (uncompletedAvailableGames.length > 0) {
-    availableGames = uncompletedAvailableGames;
+    if (uncompletedAvailableGames.length > 0) {
+      availableGames = uncompletedAvailableGames;
+    }
   }
 
   const newAvailableGames = availableGames.filter(({ scenario, hero }) => {
@@ -547,6 +578,7 @@ async function initialize() {
   });
 
   await initializeStorage();
+  settings.initialize();
   sections.map((section) => section.initialize());
 
   const heroSection = document.getElementById("hero");

@@ -1,12 +1,22 @@
 import { getItem, setItem } from "./storage.js?v=tracker";
 
 class Option {
-  constructor(name, { variant = null, type = null, children = null } = {}) {
+  constructor(
+    name,
+    {
+      variant = null,
+      type = null,
+      slug = null,
+      children = null,
+      onChange = null,
+    } = {},
+  ) {
     this.name = name;
     this.type = type || this.constructor;
-    this.slug = slug(this.name, variant);
+    this.slug = slug || getSlug(this.name, variant);
     this.id = `${this.type.slug}--${this.slug}`;
     this.children = children;
+    this._onChange = onChange;
   }
 
   get checked() {
@@ -41,6 +51,7 @@ class Option {
     input.id = this.id;
     input.type = "checkbox";
     input.checked = this.checked;
+    this.onChange(this.checked);
 
     const checkmark = document.createElement("div");
     checkmark.classList.add("checkmark");
@@ -57,8 +68,15 @@ class Option {
     element.appendChild(label);
   }
 
+  onChange(checked) {
+    if (this._onChange) {
+      this._onChange(checked);
+    }
+  }
+
   setChecked(value, cascadeUp, cascadeDown) {
     this._checked = value;
+    this.onChange(value);
     if (!this.children) {
       setItem(this.id, value);
     }
@@ -73,6 +91,16 @@ class Option {
       const allSiblingsChecked = siblings.every((child) => child.checked);
       this.parent.setChecked(allSiblingsChecked, true, false);
     }
+  }
+}
+
+class Setting extends Option {
+  constructor(slug, label, onChange = null) {
+    super(label, { slug, onChange });
+  }
+
+  static get slug() {
+    return "setting";
   }
 }
 
@@ -116,7 +144,7 @@ class Card extends Option {
       hasBack = false,
       hasGiantForm = false,
       hasWideForm = false,
-    } = {}
+    } = {},
   ) {
     super(name, { variant });
     this.color = color;
@@ -145,7 +173,7 @@ class Card extends Option {
   }
 
   static get slug() {
-    return (this._slug ||= slug(this.name));
+    return (this._slug ||= getSlug(this.name));
   }
 
   static get namePlural() {
@@ -158,7 +186,7 @@ class Scenario extends Card {
     name,
     modulesOrNumber,
     color,
-    { exclude = [], hasBack = false } = {}
+    { exclude = [], hasBack = false } = {},
   ) {
     const [childCardCount, defaultChildCards] = Array.isArray(modulesOrNumber)
       ? [modulesOrNumber.length, modulesOrNumber]
@@ -194,7 +222,7 @@ class Hero extends Card {
     name,
     aspects,
     color,
-    { alterEgo = null, hasGiantForm = false, hasWideForm = false } = {}
+    { alterEgo = null, hasGiantForm = false, hasWideForm = false } = {},
   ) {
     const variant = alterEgo;
     const hasBack = true;
@@ -222,7 +250,7 @@ class Aspect extends Card {
   }
 }
 
-function slug(...names) {
+function getSlug(...names) {
   return names
     .join()
     .toLowerCase()
@@ -231,4 +259,4 @@ function slug(...names) {
     .replaceAll(/(^\-+|\-+$)/g, ""); // Strip any leading and trailing "-".
 }
 
-export { All, CardSet, Scenario, Module, Hero, Aspect };
+export { Setting, All, CardSet, Scenario, Module, Hero, Aspect };

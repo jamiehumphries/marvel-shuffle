@@ -16,12 +16,11 @@ import {
   setItem,
 } from "./storage.js?v=tracker";
 import {
-  initializeDifficultySettings,
-  getUncompletedHeroes,
-  getUncompletedScenarios,
-  isPairingCompleted,
   clearTable,
   renderTable,
+  initializeDifficultySettings,
+  getTrackedDifficulties,
+  isGameCompleted,
 } from "./tracker.js?v=tracker";
 
 const cardChangeDelayMs = Number(
@@ -256,13 +255,8 @@ class Section {
     available ||= this.allCards.filter((card) => card.checked);
     available = available.filter((card) => !exclude.includes(card));
 
-    if (settings.avoidCompleted && preferUse) {
-      const preferredAvailable = available.filter((card) =>
-        preferUse.includes(card),
-      );
-      if (preferredAvailable.length > 0) {
-        available = preferredAvailable;
-      }
+    if (preferUse && available.includes(preferUse)) {
+      return preferUse;
     }
 
     if (preferExclude !== null && available.length > 1) {
@@ -336,7 +330,8 @@ class ScenarioSection extends Section {
   shuffle({ animate = true, preventRepeat = false, preferUse = null } = {}) {
     const currentHero = heroSection.cards[0];
     if (currentHero && !preferUse) {
-      preferUse = getUncompletedScenarios(currentHero);
+      const { scenario } = randomGame({ availableHeroes: [currentHero] });
+      preferUse = scenario;
     }
     super.shuffle({ animate, preventRepeat, preferUse });
   }
@@ -348,7 +343,8 @@ class HeroSection extends Section {
   shuffle({ animate = true, preventRepeat = false, preferUse = null } = {}) {
     const currentScenario = scenarioSection.cards[0];
     if (currentScenario && !preferUse) {
-      preferUse = getUncompletedHeroes(currentScenario);
+      const { hero } = randomGame({ availableScenarios: [currentScenario] });
+      preferUse = hero;
     }
     super.shuffle({ animate, preventRepeat, preferUse });
   }
@@ -467,13 +463,16 @@ const sections = [scenarioSection, moduleSection, heroSection, aspectSection];
 
 function shuffleAll() {
   const { scenario, hero } = randomGame();
-  scenarioSection.shuffle({ preferUse: [scenario] });
+  scenarioSection.shuffle({ preferUse: scenario });
   moduleSection.shuffle();
-  heroSection.shuffle({ preferUse: [hero] });
+  heroSection.shuffle({ preferUse: hero });
   aspectSection.shuffle();
 }
 
-function randomGame() {
+function randomGame({
+  availableScenarios = null,
+  availableHeroes = null,
+} = {}) {
   const available = (section) => {
     const allCheckedCards = section.allCards.filter((card) => card.checked);
     return allCheckedCards.length > 0
@@ -481,19 +480,24 @@ function randomGame() {
       : section.getDefaultOptions();
   };
 
-  const availableScenarios = available(scenarioSection);
-  const availableHeroes = available(heroSection);
+  availableScenarios ||= available(scenarioSection);
+  availableHeroes ||= available(heroSection);
+
+  const trackedDifficulties = getTrackedDifficulties();
 
   let availableGames = availableScenarios.flatMap((scenario) =>
-    availableHeroes.map((hero) => {
-      return { scenario, hero };
-    }),
+    availableHeroes.flatMap((hero) =>
+      trackedDifficulties.map((difficulty) => {
+        return { scenario, hero, difficulty };
+      }),
+    ),
   );
 
   if (settings.avoidCompleted) {
-    const uncompletedAvailableGames = availableGames.filter(
-      ({ scenario, hero }) => !isPairingCompleted(scenario, hero),
-    );
+    const uncompletedAvailableGames = availableGames.filter((game) => {
+      const { scenario, hero, difficulty } = game;
+      return !isGameCompleted(scenario, hero, difficulty);
+    });
 
     if (uncompletedAvailableGames.length > 0) {
       availableGames = uncompletedAvailableGames;

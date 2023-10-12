@@ -12,15 +12,12 @@ const UNPLAYED = "?";
 
 const allDifficulties = [
   { id: "standard", label: "Standard", defaultValue: true },
-  { id: "expert", label: "Expert", defaultValue: true },
+  { id: "expert", label: "Expert" },
   { id: "standard-ii", label: "Standard II" },
   { id: "expert-ii", label: "Expert II" },
 ];
 
 const table = document.getElementById("tracker");
-
-const allScenarios = flatten(scenarioOptions);
-const allHeroes = flatten(heroOptions);
 
 let totalPercentageSpan;
 let totalFractionSpan;
@@ -355,21 +352,6 @@ function updateProgress() {
   totalFractionSpan.innerText = `${totalCleared} / ${totalCombinations}`;
 }
 
-function getUncompletedScenarios(hero) {
-  return allScenarios.filter((scenario) => !isPairingCompleted(scenario, hero));
-}
-
-function getUncompletedHeroes(scenario) {
-  return allHeroes.filter((hero) => !isPairingCompleted(scenario, hero));
-}
-
-function isPairingCompleted(scenario, hero) {
-  const trackedDifficulties = getTrackedDifficulties();
-  return trackedDifficulties.every((difficulty) =>
-    isGameCompleted(scenario, hero, difficulty),
-  );
-}
-
 function isGameCompleted(scenario, hero, difficulty) {
   const gameId = getGameId(scenario, hero, difficulty);
   return getItem(gameId) === WIN;
@@ -380,10 +362,9 @@ function getGameId(scenario, hero, difficulty) {
 }
 
 export {
-  initializeDifficultySettings,
-  getUncompletedHeroes,
-  getUncompletedScenarios,
-  isPairingCompleted,
   clearTable,
   renderTable,
+  initializeDifficultySettings,
+  getTrackedDifficulties,
+  isGameCompleted,
 };

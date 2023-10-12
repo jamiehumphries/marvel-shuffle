@@ -554,12 +554,44 @@ h3.name {
   opacity: 0;
 }
 
+#tracker-container {
+  display: flex;
+  width: 100%;
+  overflow-y: auto;
+}
+
+#tracker {
+  margin: auto;
+}
+
 #tracker thead > tr:first-child > th:first-child > div {
   justify-content: flex-end;
 }
 
 #tracker thead > tr:first-child > th:first-child #total-fraction {
   font-size: 1.2rem;
+}
+
+#tracker tr > th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+#tracker th.progress.difficulty.block-end {
+  position: sticky;
+  left: var(--cell-width);
+  z-index: 1;
+}
+
+#tracker tr > th:first-child > div {
+  max-width: calc(var(--cell-width) * 2);
+}
+
+#tracker .progress.difficulty:not(:first-child):not(.block-end) div {
+  padding: 0;
+  width: 0;
+  min-width: 0;
 }
 
 #tracker #total-fraction > span::before {

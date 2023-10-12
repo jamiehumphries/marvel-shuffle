@@ -165,8 +165,8 @@ class Section {
     optionsHint.classList.add("options-hint");
     optionsHint.innerText = `If no ${this.type.namePlural} are selected, `;
     optionsHint.innerText += this.parentSection
-      ? `the ${this.parentSection.type.name} default will be used`
-      : `only the Core Set will be used`;
+      ? `the ${this.parentSection.type.name} default(s) will be used`
+      : `the Core Set ${this.type.namePlural} will be used`;
     options.appendChild(optionsHint);
 
     const all = new All(this);

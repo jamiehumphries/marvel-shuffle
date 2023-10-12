@@ -238,6 +238,7 @@ label[for^="setting--track-difficulty-"] {
 
 .container:not(.show-tracker) label[for="setting--avoid-completed"],
 .container:not(.show-tracker) label[for^="setting--track-difficulty-"] {
+  margin: 0;
   height: 0;
   overflow: hidden;
 }

@@ -165,12 +165,15 @@ class Section {
 
   initializeOptions() {
     const options = this.root.querySelector(".options");
-    if (this.parentSection) {
-      const optionsHint = document.createElement("p");
-      optionsHint.classList.add("options-hint");
-      optionsHint.innerText = `Deselect all to use default ${this.type.namePlural} for each ${this.parentSection.type.name}`;
-      options.appendChild(optionsHint);
-    }
+
+    const optionsHint = document.createElement("p");
+    optionsHint.classList.add("options-hint");
+    optionsHint.innerText = `If no ${this.type.namePlural} are selected, `;
+    optionsHint.innerText += this.parentSection
+      ? `the ${this.parentSection.type.name} default will be used`
+      : `only the Core Set will be used`;
+    options.appendChild(optionsHint);
+
     const all = new All(this);
     all.appendTo(options);
     this.cardsOrSets.forEach((cardOrSet) => cardOrSet.appendTo(options));

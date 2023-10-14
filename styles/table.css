@@ -1,5 +1,7 @@
 :root {
   --nav-bar-height: calc(1rem + 2 * var(--table-padding));
+  --scroll-buffer: 20rem;
+  --background-color: white;
 }
 
 .nav-bar {
@@ -11,10 +13,28 @@
   z-index: 2;
 
   box-sizing: border-box;
-  background-color: white;
+  background-color: var(--background-color);
   padding: 0 var(--table-padding);
   width: 100%;
   height: var(--nav-bar-height);
+}
+
+*[class^="scroll-mask-"] {
+  position: fixed;
+  top: calc(-1 * var(--scroll-buffer));
+  left: calc(-1 * var(--scroll-buffer));
+  z-index: 10;
+  background-color: var(--background-color);
+}
+
+.scroll-mask-top {
+  right: calc(-1 * var(--scroll-buffer));
+  height: var(--scroll-buffer);
+}
+
+.scroll-mask-left {
+  bottom: calc(-1 * var(--scroll-buffer));
+  width: var(--scroll-buffer);
 }
 
 #tracker {
@@ -34,7 +54,7 @@
   position: sticky;
   top: var(--nav-bar-height);
   z-index: 1;
-  background-color: white;
+  background-color: var(--background-color);
 }
 
 /* Second row cells (Progress + Difficulty) */
@@ -43,7 +63,7 @@
   position: sticky;
   top: calc(var(--nav-bar-height) + var(--scenario-cell-height));
   z-index: 1;
-  background-color: white;
+  background-color: var(--background-color);
 }
 
 /* First column cells (Progress + Hero) */
@@ -52,7 +72,7 @@
   position: sticky;
   left: 0;
   z-index: 1;
-  background-color: white;
+  background-color: var(--background-color);
   padding-left: var(--table-padding);
 }
 

@@ -108,7 +108,7 @@ body {
 
 .keyboard-nav #tracker td > input[type="checkbox"]:focus ~ div::before {
   --pseudo-outline-width: calc(var(--border-width) + 1px);
-  --pseudo-outline-offset: calc(0px - var(--pseudo-outline-width));
+  --pseudo-outline-offset: calc(-1 * var(--pseudo-outline-width));
   position: absolute;
   top: var(--pseudo-outline-offset);
   right: var(--pseudo-outline-offset);

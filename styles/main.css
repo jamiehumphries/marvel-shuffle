@@ -578,7 +578,7 @@ h3.name {
   z-index: 1;
 }
 
-#tracker th.progress.difficulty.block-end {
+#tracker th:not(:first-child).progress.difficulty.block-end {
   position: sticky;
   left: var(--cell-width);
   z-index: 1;

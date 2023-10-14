@@ -1,6 +1,12 @@
 import copyTextToClipboard from "./lib/copy-text-to-clipboard.js";
-import { Setting, All } from "./options.js?v=2.0";
-import { scenarios, modules, heroes, aspects, flatten } from "./cards.js?v=2.0";
+import { Setting, All } from "./options.js?v=2.0.1";
+import {
+  scenarios,
+  modules,
+  heroes,
+  aspects,
+  flatten,
+} from "./cards.js?v=2.0.1";
 import {
   initializeStorage,
   clearStorage,
@@ -8,14 +14,14 @@ import {
   setUserId,
   getItem,
   setItem,
-} from "./storage.js?v=2.0";
+} from "./storage.js?v=2.0.1";
 import {
   clearTable,
   renderTable,
   initializeDifficultySettings,
   getTrackedDifficulties,
   isGameCompleted,
-} from "./tracker.js?v=2.0";
+} from "./tracker.js?v=2.0.1";
 
 const cardChangeDelayMs = Number(
   getComputedStyle(document.documentElement)

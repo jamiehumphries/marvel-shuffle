@@ -2,9 +2,9 @@ import {
   scenarios as scenarioOptions,
   heroes as heroOptions,
   flatten,
-} from "./cards.js?v=2.0.1";
-import { Setting } from "./options.js?v=2.0.1";
-import { getItem, setItem } from "./storage.js?v=2.0.1";
+} from "./cards.js?v=2.0.2";
+import { Setting } from "./options.js?v=2.0.2";
+import { getItem, setItem } from "./storage.js?v=2.0.2";
 
 const WIN = "✓";
 const LOSS = "✗";

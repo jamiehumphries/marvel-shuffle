@@ -46,7 +46,8 @@ class Toggleable {
 class Section extends Toggleable {
   constructor(
     cardsOrSets,
-    { nthOfType = 1, previousSiblingSection = null, parentSection = null } = {},
+    nthOfType,
+    { previousSiblingSection = null, parentSection = null } = {},
   ) {
     super();
     this.cardsOrSets = cardsOrSets;
@@ -539,46 +540,30 @@ let lastClickedButton = null;
 
 const settings = new Settings();
 
-const scenarioSection = new ScenarioSection(scenarios);
-
-const moduleSection = new ModuleSection(modules, {
+const scenarioSection = new ScenarioSection(scenarios, 1);
+const moduleSection = new ModuleSection(modules, 1, {
   parentSection: scenarioSection,
 });
-
-const heroSection1 = new HeroSection(heroes);
-
-const aspectSection1 = new AspectSection(aspects, {
-  nthOfType: 1,
+const heroSection1 = new HeroSection(heroes, 1);
+const aspectSection1 = new AspectSection(aspects, 1, {
   parentSection: heroSection1,
 });
-
-const heroSection2 = new HeroSection(heroes, {
-  nthOfType: 2,
+const heroSection2 = new HeroSection(heroes, 2, {
   previousSiblingSection: heroSection1,
 });
-
-const aspectSection2 = new AspectSection(aspects, {
-  nthOfType: 2,
+const aspectSection2 = new AspectSection(aspects, 2, {
   parentSection: heroSection2,
 });
-
-const heroSection3 = new HeroSection(heroes, {
-  nthOfType: 3,
+const heroSection3 = new HeroSection(heroes, 3, {
   previousSiblingSection: heroSection2,
 });
-
-const aspectSection3 = new AspectSection(aspects, {
-  nthOfType: 3,
+const aspectSection3 = new AspectSection(aspects, 3, {
   parentSection: heroSection3,
 });
-
-const heroSection4 = new HeroSection(heroes, {
-  nthOfType: 4,
+const heroSection4 = new HeroSection(heroes, 4, {
   previousSiblingSection: heroSection3,
 });
-
-const aspectSection4 = new AspectSection(aspects, {
-  nthOfType: 4,
+const aspectSection4 = new AspectSection(aspects, 4, {
   parentSection: heroSection4,
 });
 

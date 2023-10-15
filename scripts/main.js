@@ -29,15 +29,69 @@ const cardChangeDelayMs = Number(
     .slice(0, -1 * "ms".length),
 );
 
-class Section {
+class Toggleable {
+  show() {
+    this.toggleVisibility(true);
+  }
+
+  hide() {
+    this.toggleVisibility(false);
+  }
+
+  toggleVisibility(value) {
+    this.root.classList.toggle("hidden", !value);
+  }
+}
+
+class Section extends Toggleable {
   constructor(
     cardsOrSets,
     { nthOfType = 1, previousSiblingSection = null, parentSection = null } = {},
   ) {
+    super();
     this.cardsOrSets = cardsOrSets;
     this.nthOfType = nthOfType;
     this.previousSiblingSection = previousSiblingSection;
     this.parentSection = parentSection;
+
+    this.maxSlots = this.parentSection?.maxChildCardCount || 1;
+
+    if (this.parentSection) {
+      this.parentSection.childSection = this;
+    }
+
+    this.previousSiblingSections = [];
+    this.allSiblingSections = [];
+    if (this.previousSiblingSection) {
+      this.previousSiblingSections.push(
+        this.previousSiblingSection,
+        ...this.previousSiblingSection.previousSiblingSections,
+      );
+      this.allSiblingSections.push(
+        this.previousSiblingSection,
+        ...this.previousSiblingSection.allSiblingSections,
+      );
+      this.allSiblingSections.forEach((siblingSection) =>
+        siblingSection.allSiblingSections.push(this),
+      );
+    }
+
+    this.allCards = flatten(this.cardsOrSets);
+
+    this.type = this.allCards.reduce((type, card) => {
+      const cardType = card.type;
+      if (type === null || type === cardType) {
+        return cardType;
+      }
+      throw new Error("All cards for a section must be the same type.");
+    }, null);
+
+    this.id = this.type.id;
+    if (this.nthOfType !== 1) {
+      this.id += `-${this.nthOfType}`;
+    }
+
+    this.root = document.getElementById(this.id);
   }
 
   get maxChildCardCount() {
@@ -82,6 +136,10 @@ class Section {
     );
   }
 
+  get visible() {
+    return !this.root.classList.contains("hidden");
+  }
+
   get disabled() {
     return this.button.disabled;
   }
@@ -121,52 +179,13 @@ class Section {
   }
 
   initialize() {
-    this.initializeData();
     this.initializeLayout();
     this.initializeOptions();
     this.initializeShuffling();
     this.initializeCards();
   }
 
-  initializeData() {
-    this.maxSlots = this.parentSection?.maxChildCardCount || 1;
-
-    if (this.parentSection) {
-      this.parentSection.childSection = this;
-    }
-
-    this.previousSiblingSections = [];
-    this.allSiblingSections = [];
-    if (this.previousSiblingSection) {
-      this.previousSiblingSections.push(
-        this.previousSiblingSection,
-        ...this.previousSiblingSection.previousSiblingSections,
-      );
-      this.allSiblingSections.push(
-        this.previousSiblingSection,
-        ...this.previousSiblingSection.allSiblingSections,
-      );
-      this.allSiblingSections.forEach((siblingSection) =>
-        siblingSection.allSiblingSections.push(this),
-      );
-    }
-
-    this.allCards = flatten(this.cardsOrSets);
-
-    this.type = this.allCards.reduce((type, card) => {
-      const cardType = card.type;
-      if (type === null || type === cardType) {
-        return cardType;
-      }
-      throw new Error("All cards for a section must be the same type.");
-    }, null);
-
-    this.id =
-      this.nthOfType === 1 ? this.type.id : `${this.type.id}-${this.nthOfType}`;
-  }
-
   initializeLayout() {
-    this.root = document.getElementById(this.id);
     const sectionTemplate = document.getElementById("section");
     const element = sectionTemplate.content.cloneNode(true);
     this.root.appendChild(element);
@@ -388,8 +407,9 @@ class HeroSection extends Section {
 
 class AspectSection extends Section {}
 
-class Slot {
+class Slot extends Toggleable {
   constructor(root) {
+    super();
     this.root = root;
     this.name = root.querySelector(".name");
     this.cardFront = root.querySelector(".front img.front");
@@ -428,18 +448,6 @@ class Slot {
     this.cardFrontInner.src = newCard.frontInnerSrc || "";
     this.cardBackInner.src = newCard.backInnerSrc || "";
   }
-
-  show() {
-    this.toggleVisibility(true);
-  }
-
-  hide() {
-    this.toggleVisibility(false);
-  }
-
-  toggleVisibility(value) {
-    this.root.classList.toggle("hidden", !value);
-  }
 }
 
 class Settings {
@@ -456,27 +464,42 @@ class Settings {
   }
 
   initialize() {
-    this.initializeNumberOfPlayers();
+    this.initializeNumberOfHeroes();
     this.initializeTrackerSettings();
   }
 
-  initializeNumberOfPlayers() {
+  initializeNumberOfHeroes() {
     const id = "setting--number-of-heroes";
     const fieldset = document.getElementById(id);
+    const radios = fieldset.querySelectorAll("input");
 
-    this.numberOfHeroes = getItem(id) || 1;
+    const values = [...radios].map((radio) => Number(radio.value));
+
+    this.numberOfHeroes = getItem(id);
+    if (!values.includes(this.numberOfHeroes)) {
+      this.numberOfHeroes = values[0];
+    }
+
+    const toggleHeroSectionVisibility = () => {
+      for (let i = 0; i < heroSections.length; i++) {
+        const heroSection = heroSections[i];
+        heroSection.toggleVisibility(i < this.numberOfHeroes);
+      }
+    };
 
     const onChange = (event) => {
       const value = Number(event.target.value);
       this.numberOfHeroes = value;
       setItem(id, value);
+      toggleHeroSectionVisibility();
     };
 
-    const radios = fieldset.querySelectorAll("input");
     radios.forEach((radio) => {
       radio.checked = radio.value === this.numberOfHeroes.toString();
       radio.addEventListener("change", onChange);
     });
+
+    toggleHeroSectionVisibility();
   }
 
   initializeTrackerSettings() {
@@ -572,6 +595,14 @@ const sections = [
   aspectSection4,
 ];
 
+const heroSections = sections.filter(
+  (section) => section.constructor === HeroSection,
+);
+
+function getVisibleHeroSections() {
+  return heroSections.filter((section) => section.visible);
+}
+
 function shuffleAll() {
   const { scenario, hero } = randomGame();
   scenarioSection.shuffle({ isShuffleAll: true, preferUse: scenario });
@@ -657,9 +688,13 @@ function maybeReturnFocusAfterShuffle() {
 }
 
 function updateTrackingTable() {
-  const heroSections = [heroSection1, heroSection2, heroSection3, heroSection4];
   const scenariosReady = scenarioSection.cards.length > 0;
-  const heroesReady = heroSections.every((section) => section.cards.length > 0);
+
+  const visibleHeroSections = getVisibleHeroSections();
+  const heroesReady = visibleHeroSections.every(
+    (section) => section.cards.length > 0,
+  );
+
   if (!scenariosReady || !heroesReady) {
     return;
   }
@@ -667,7 +702,7 @@ function updateTrackingTable() {
   if (settings.anyDifficultiesTracked) {
     const scenarioSet = { children: scenarioSection.cards };
     const heroSet = {
-      children: heroSections.flatMap((section) => section.cards),
+      children: visibleHeroSections.flatMap((section) => section.cards),
     };
     renderTable([scenarioSet], [heroSet]);
   } else {
@@ -729,17 +764,18 @@ async function initialize() {
   settings.initialize();
   sections.map((section) => section.initialize());
 
-  const heroSections = document.querySelectorAll(".section.hero");
   for (const heroSection of heroSections) {
-    const heroSlot = heroSection.querySelector(".slot");
-    heroSlot.addEventListener("click", () => {
-      if (heroSection.classList.contains("flipping")) {
+    const heroSlot = heroSection.slots[0];
+    const sectionClassList = heroSection.root.classList;
+    const slotClassList = heroSlot.root.classList;
+    heroSlot.root.addEventListener("click", () => {
+      if (sectionClassList.contains("flipping")) {
         return;
       }
-      if (heroSlot.classList.contains("has-giant-form")) {
-        heroSection.classList.toggle("giant");
-      } else if (heroSlot.classList.contains("has-wide-form")) {
-        heroSection.classList.toggle("wide");
+      if (slotClassList.contains("has-giant-form")) {
+        sectionClassList.toggle("giant");
+      } else if (slotClassList.contains("has-wide-form")) {
+        sectionClassList.toggle("wide");
       }
     });
   }

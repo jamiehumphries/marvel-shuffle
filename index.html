@@ -24,9 +24,43 @@
             <span class="settings-show">Settings</span>
           </button>
         </h1>
+        <button id="settings" class="icon-button" ontouchstart>
+          <img src="images/settings.svg" class="settings-hide" alt="" />
+          <span class="settings-hide">Settings</span>
+          <img src="images/done.svg" class="settings-show" alt="" />
+          <span class="settings-show">Done</span>
+        </button>
         <div class="settings-show container-block">
           <h2>Preferences</h2>
-          <div id="preferences"></div>
+          <div id="preferences">
+            <fieldset id="setting--number-of-heroes">
+              <legend>Number of heroes:</legend>
+              <input
+                type="radio"
+                name="number-of-heroes"
+                id="number-of-heroes-1"
+                value="1"
+              /><label for="number-of-heroes-1">1</label>
+              <input
+                type="radio"
+                name="number-of-heroes"
+                id="number-of-heroes-2"
+                value="2"
+              /><label for="number-of-heroes-2">2</label>
+              <input
+                type="radio"
+                name="number-of-heroes"
+                id="number-of-heroes-3"
+                value="3"
+              /><label for="number-of-heroes-3">3</label>
+              <input
+                type="radio"
+                name="number-of-heroes"
+                id="number-of-heroes-4"
+                value="4"
+              /><label for="number-of-heroes-4">4</label>
+            </fieldset>
+          </div>
         </div>
         <div class="settings-show container-block">
           <h2>Saving</h2>
@@ -39,12 +73,6 @@
             Your individual bookmark URL allows you to save and sync your data
           </p>
         </div>
-        <button id="settings" class="icon-button" ontouchstart>
-          <img src="images/settings.svg" class="settings-hide" alt="" />
-          <span class="settings-hide">Settings</span>
-          <img src="images/done.svg" class="settings-show" alt="" />
-          <span class="settings-show">Done</span>
-        </button>
         <div class="container-block">
           <h2 class="settings-show">Selection</h2>
           <div class="sections">

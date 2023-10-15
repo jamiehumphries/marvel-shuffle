@@ -456,6 +456,30 @@ class Settings {
   }
 
   initialize() {
+    this.initializeNumberOfPlayers();
+    this.initializeTrackerSettings();
+  }
+
+  initializeNumberOfPlayers() {
+    const id = "setting--number-of-heroes";
+    const fieldset = document.getElementById(id);
+
+    this.numberOfHeroes = getItem(id) || 1;
+
+    const onChange = (event) => {
+      const value = Number(event.target.value);
+      this.numberOfHeroes = value;
+      setItem(id, value);
+    };
+
+    const radios = fieldset.querySelectorAll("input");
+    radios.forEach((radio) => {
+      radio.checked = radio.value === this.numberOfHeroes.toString();
+      radio.addEventListener("change", onChange);
+    });
+  }
+
+  initializeTrackerSettings() {
     const preferencesElement = document.getElementById("preferences");
 
     this._showTrackerSetting = new Setting(

@@ -29,10 +29,10 @@
   --icon-button-background-color-hover: #e0e0e0;
   --icon-button-image-brightness-hover: 90%;
 
-  --checkbox-border-and-check-color: #000000;
-  --checkbox-background-color-hover: #eeeeee;
-  --checkbox-background-color-checked: #ddf0f6;
-  --checkbox-background-color-checked-hover: #c7e6f1;
+  --option-border-and-check-color: #000000;
+  --option-background-color-hover: #eeeeee;
+  --option-background-color-checked: #ddf0f6;
+  --option-background-color-checked-hover: #c7e6f1;
 
   --button-scale-factor: 1;
   --layout-scale-factor: 1;
@@ -45,6 +45,8 @@
   --slot-height-portrait: calc(var(--card-header-height) + var(--card-height));
   --slot-height-landscape: calc(var(--card-header-height) + var(--card-width));
   --slot-height-giant: calc(var(--card-header-height) + 2 * var(--card-width));
+
+  --option-inset: 30px;
 
   --flip-duration: 1000ms;
   --card-change-delay: 360ms;
@@ -233,7 +235,7 @@ button.icon-button:disabled {
 }
 
 label[for^="setting--track-difficulty-"] {
-  margin-left: 30px;
+  margin-left: var(--option-inset);
 }
 
 .container:not(.show-tracker) label[for="setting--avoid-completed"],
@@ -289,6 +291,61 @@ button#copy-bookmark-url {
   z-index: 1;
 }
 
+#setting--number-of-heroes {
+  border: none;
+  padding: 0;
+}
+
+#setting--number-of-heroes label:first-of-type {
+  margin-left: var(--option-inset);
+}
+
+#setting--number-of-heroes input {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+
+  width: 0;
+  height: 0;
+}
+
+#setting--number-of-heroes label {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+  margin: 0.25rem 0.25rem 0.5rem 0;
+
+  border: 1px solid var(--option-border-and-check-color);
+  border-radius: 50%;
+
+  width: 2rem;
+  height: 2rem;
+}
+
+#setting--number-of-heroes input:checked + label {
+  border-width: 2px;
+  background-color: var(--option-background-color-checked);
+  font-weight: bold;
+}
+
+.keyboard-nav #setting--number-of-heroes input:focus + label {
+  outline: var(--outline);
+  outline-offset: var(--outline-offset);
+}
+
+@media (hover: hover) {
+  #setting--number-of-heroes label:hover {
+    background-color: var(--option-background-color-hover);
+  }
+  #setting--number-of-heroes input:checked + label:hover {
+    background-color: var(--option-background-color-checked-hover);
+  }
+}
+
 .options {
   margin: 20px auto 0;
   padding: 0 10px;
@@ -320,13 +377,14 @@ button#copy-bookmark-url {
 }
 
 .option.set-member {
-  margin-left: 30px;
+  margin-left: var(--option-inset);
 }
 
 .option input {
   position: absolute;
 
   opacity: 0;
+  z-index: -1;
   cursor: pointer;
 
   width: 0;
@@ -340,16 +398,14 @@ button#copy-bookmark-url {
   box-sizing: border-box;
   margin-right: 8px;
 
-  border: 2px solid var(--checkbox-border-and-check-color);
+  border: 2px solid var(--option-border-and-check-color);
   width: 20px;
   height: 20px;
 }
 
-:checked ~ .checkmark {
-  --checkbox-background-color-hover: var(
-    --checkbox-background-color-checked-hover
-  );
-  background-color: var(--checkbox-background-color-checked);
+input:checked + .checkmark {
+  --option-background-color-hover: var(--option-background-color-checked-hover);
+  background-color: var(--option-background-color-checked);
 }
 
 .checkmark:after {
@@ -360,7 +416,7 @@ button#copy-bookmark-url {
 
   transform: rotate(40deg);
 
-  border: solid var(--checkbox-border-and-check-color);
+  border: solid var(--option-border-and-check-color);
   border-width: 0 2px 2px 0;
 
   width: 5px;
@@ -369,22 +425,22 @@ button#copy-bookmark-url {
   content: "";
 }
 
-:checked ~ .checkmark:after {
+input:checked + .checkmark:after {
   display: block;
 }
 
-.keyboard-nav input:focus ~ .checkmark {
+.keyboard-nav input:focus + .checkmark {
   outline: var(--outline);
   outline-offset: var(--outline-offset);
 }
 
-input:active ~ .checkmark {
-  background-color: var(--checkbox-background-color-hover);
+input:active + .checkmark {
+  background-color: var(--option-background-color-hover);
 }
 
 @media (hover: hover) {
-  label:hover input ~ .checkmark {
-    background-color: var(--checkbox-background-color-hover);
+  label:hover input + .checkmark {
+    background-color: var(--option-background-color-hover);
   }
 }
 

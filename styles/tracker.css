@@ -84,11 +84,11 @@ body {
   font-size: calc(var(--cell-height) * 0.5);
 }
 
-#tracker td > input[type="checkbox"]:indeterminate ~ div > label::before {
+#tracker td > input[type="checkbox"]:indeterminate + div > label::before {
   display: none;
 }
 
-#tracker td > input[type="checkbox"]:checked ~ div > label::before {
+#tracker td > input[type="checkbox"]:checked + div > label::before {
   -webkit-mask-image: var(--icon-yes);
   mask-image: var(--icon-yes);
 }
@@ -96,18 +96,18 @@ body {
 #tracker
   td
   > input[type="checkbox"]:not(:checked):not(:indeterminate)
-  ~ div
+  + div
   > label::before {
   -webkit-mask-image: var(--icon-no);
   mask-image: var(--icon-no);
 }
 
-.keyboard-nav #tracker td > input[type="checkbox"]:focus ~ div {
+.keyboard-nav #tracker td > input[type="checkbox"]:focus + div {
   position: relative;
   background-color: var(--cell-background-color-hover);
 }
 
-.keyboard-nav #tracker td > input[type="checkbox"]:focus ~ div::before {
+.keyboard-nav #tracker td > input[type="checkbox"]:focus + div::before {
   --pseudo-outline-width: calc(var(--border-width) + 1px);
   --pseudo-outline-offset: calc(-1 * var(--pseudo-outline-width));
   position: absolute;
@@ -120,17 +120,17 @@ body {
 }
 
 @media (hover: hover) {
-  #tracker td > input[type="checkbox"]:hover ~ div {
+  #tracker td > input[type="checkbox"]:hover + div {
     background-color: var(--cell-background-color-hover);
   }
 }
 
-#tracker td > input[type="checkbox"]:checked ~ div {
+#tracker td > input[type="checkbox"]:checked + div {
   --cell-background-color: var(--cell-background-color--yes);
   --cell-background-color-hover: var(--cell-background-color-hover--yes);
 }
 
-#tracker td > input[type="checkbox"]:not(:checked):not(:indeterminate) ~ div {
+#tracker td > input[type="checkbox"]:not(:checked):not(:indeterminate) + div {
   --cell-background-color: var(--cell-background-color--no);
   --cell-background-color-hover: var(--cell-background-color-hover--no);
 }

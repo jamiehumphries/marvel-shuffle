@@ -555,10 +555,15 @@ h3.name {
   opacity: 0;
 }
 
+#tracking {
+  position: relative;
+  overflow: hidden;
+}
+
 #tracker-container {
   display: flex;
   width: 100%;
-  overflow-y: auto;
+  overflow: auto;
 }
 
 #tracker {

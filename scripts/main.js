@@ -30,8 +30,13 @@ const cardChangeDelayMs = Number(
 );
 
 class Section {
-  constructor(cardsOrSets, parentSection = null) {
+  constructor(
+    cardsOrSets,
+    { nthOfType = 1, previousSiblingSection = null, parentSection = null } = {},
+  ) {
     this.cardsOrSets = cardsOrSets;
+    this.nthOfType = nthOfType;
+    this.previousSiblingSection = previousSiblingSection;
     this.parentSection = parentSection;
   }
 
@@ -39,20 +44,20 @@ class Section {
     return Math.max(...this.allCards.map((card) => card.childCardCount));
   }
 
-  get primaryCard() {
-    return (this.incomingCards || this.cards)[0];
+  get trueCard() {
+    return this.maxSlots === 1 ? (this.incomingCards || this.cards)[0] : null;
   }
 
   get childCardCount() {
-    return this.primaryCard?.childCardCount || 0;
+    return this.trueCard?.childCardCount || 0;
   }
 
   get excludedChildCards() {
-    return this.primaryCard?.excludedChildCards || [];
+    return this.trueCard?.excludedChildCards || [];
   }
 
   get defaultChildCards() {
-    return this.primaryCard?.defaultChildCards;
+    return this.trueCard?.defaultChildCards;
   }
 
   get valid() {
@@ -125,8 +130,25 @@ class Section {
 
   initializeData() {
     this.maxSlots = this.parentSection?.maxChildCardCount || 1;
+
     if (this.parentSection) {
       this.parentSection.childSection = this;
+    }
+
+    this.previousSiblingSections = [];
+    this.allSiblingSections = [];
+    if (this.previousSiblingSection) {
+      this.previousSiblingSections.push(
+        this.previousSiblingSection,
+        ...this.previousSiblingSection.previousSiblingSections,
+      );
+      this.allSiblingSections.push(
+        this.previousSiblingSection,
+        ...this.previousSiblingSection.allSiblingSections,
+      );
+      this.allSiblingSections.forEach((siblingSection) =>
+        siblingSection.allSiblingSections.push(this),
+      );
     }
 
     this.allCards = flatten(this.cardsOrSets);
@@ -138,10 +160,13 @@ class Section {
       }
       throw new Error("All cards for a section must be the same type.");
     }, null);
+
+    this.id =
+      this.nthOfType === 1 ? this.type.id : `${this.type.id}-${this.nthOfType}`;
   }
 
   initializeLayout() {
-    this.root = document.getElementById(this.type.id);
+    this.root = document.getElementById(this.id);
     const sectionTemplate = document.getElementById("section");
     const element = sectionTemplate.content.cloneNode(true);
     this.root.appendChild(element);
@@ -165,6 +190,10 @@ class Section {
   }
 
   initializeOptions() {
+    if (this.nthOfType !== 1) {
+      return;
+    }
+
     const options = this.root.querySelector(".options");
 
     const optionsHint = document.createElement("p");
@@ -182,7 +211,8 @@ class Section {
       event.preventDefault();
       toggleSettings();
     });
-    if (getItem(this.type.id) === null) {
+
+    if (getItem(this.id) === null) {
       this.cardsOrSets[0].checked = true;
     }
   }
@@ -190,7 +220,7 @@ class Section {
   initializeShuffling() {
     this.button = this.root.querySelector("button");
     this.button.addEventListener("click", () => {
-      this.shuffle({ preventRepeat: true });
+      this.shuffle({ isShuffleAll: false });
     });
     this.root.addEventListener("transitionend", (event) =>
       this.onTransitionEnd(event),
@@ -208,15 +238,21 @@ class Section {
     }
   }
 
-  shuffle({ animate = true, preventRepeat = false, preferUse = null } = {}) {
+  shuffle({ animate = true, isShuffleAll = false, preferUse = null } = {}) {
     const parentSection = this.parentSection;
+    const exclusiveSiblingSections = isShuffleAll
+      ? this.previousSiblingSections
+      : this.allSiblingSections;
     const cardCount = parentSection ? parentSection.childCardCount : 1;
-    const exclude = parentSection ? [...parentSection.excludedChildCards] : [];
+    const exclude = parentSection
+      ? [...parentSection.excludedChildCards]
+      : exclusiveSiblingSections.flatMap((section) => section.trueCard);
+
     const newCards = [];
 
     for (let i = 0; i < cardCount; i++) {
       const oldCard = this.cards[i];
-      const preferExclude = preventRepeat ? oldCard : null;
+      const preferExclude = !isShuffleAll ? oldCard : null;
       const newCard = this.randomCard({ exclude, preferExclude, preferUse });
       newCards.push(newCard);
       exclude.push(newCard);
@@ -272,7 +308,7 @@ class Section {
   }
 
   getDefaultOptions() {
-    const parentCard = this.parentSection?.primaryCard;
+    const parentCard = this.parentSection?.trueCard;
     if (parentCard?.defaultChildCards) {
       return parentCard.defaultChildCards;
     }
@@ -308,7 +344,7 @@ class Section {
 
   loadCards() {
     try {
-      const savedCardIds = getItem(this.type.id);
+      const savedCardIds = getItem(this.id);
       return savedCardIds
         ? savedCardIds
             .map((id) => this.allCards.find((card) => card.id === id))
@@ -322,31 +358,31 @@ class Section {
 
   saveCards(cards) {
     const cardIds = cards.map((card) => card.id);
-    setItem(this.type.id, cardIds);
+    setItem(this.id, cardIds);
   }
 }
 
 class ScenarioSection extends Section {
-  shuffle({ animate = true, preventRepeat = false, preferUse = null } = {}) {
-    const currentHero = heroSection.cards[0];
-    if (currentHero && !preferUse) {
+  shuffle({ animate = true, isShuffleAll = false, preferUse = null } = {}) {
+    const currentHero = heroSection1.trueCard;
+    if (!preferUse && currentHero && settings.avoidCompleted) {
       const { scenario } = randomGame({ availableHeroes: [currentHero] });
       preferUse = scenario;
     }
-    super.shuffle({ animate, preventRepeat, preferUse });
+    super.shuffle({ animate, isShuffleAll, preferUse });
   }
 }
 
 class ModuleSection extends Section {}
 
 class HeroSection extends Section {
-  shuffle({ animate = true, preventRepeat = false, preferUse = null } = {}) {
-    const currentScenario = scenarioSection.cards[0];
-    if (currentScenario && !preferUse) {
+  shuffle({ animate = true, isShuffleAll = false, preferUse = null } = {}) {
+    const currentScenario = scenarioSection.trueCard;
+    if (!preferUse && currentScenario && settings.avoidCompleted) {
       const { hero } = randomGame({ availableScenarios: [currentScenario] });
       preferUse = hero;
     }
-    super.shuffle({ animate, preventRepeat, preferUse });
+    super.shuffle({ animate, isShuffleAll, preferUse });
   }
 }
 
@@ -455,18 +491,73 @@ const copyBookmarkUrlButton = document.getElementById("copy-bookmark-url");
 let lastClickedButton = null;
 
 const settings = new Settings();
+
 const scenarioSection = new ScenarioSection(scenarios);
-const moduleSection = new ModuleSection(modules, scenarioSection);
-const heroSection = new HeroSection(heroes);
-const aspectSection = new AspectSection(aspects, heroSection);
-const sections = [scenarioSection, moduleSection, heroSection, aspectSection];
+
+const moduleSection = new ModuleSection(modules, {
+  parentSection: scenarioSection,
+});
+
+const heroSection1 = new HeroSection(heroes);
+
+const aspectSection1 = new AspectSection(aspects, {
+  nthOfType: 1,
+  parentSection: heroSection1,
+});
+
+const heroSection2 = new HeroSection(heroes, {
+  nthOfType: 2,
+  previousSiblingSection: heroSection1,
+});
+
+const aspectSection2 = new AspectSection(aspects, {
+  nthOfType: 2,
+  parentSection: heroSection2,
+});
+
+const heroSection3 = new HeroSection(heroes, {
+  nthOfType: 3,
+  previousSiblingSection: heroSection2,
+});
+
+const aspectSection3 = new AspectSection(aspects, {
+  nthOfType: 3,
+  parentSection: heroSection3,
+});
+
+const heroSection4 = new HeroSection(heroes, {
+  nthOfType: 4,
+  previousSiblingSection: heroSection3,
+});
+
+const aspectSection4 = new AspectSection(aspects, {
+  nthOfType: 4,
+  parentSection: heroSection4,
+});
+
+const sections = [
+  scenarioSection,
+  moduleSection,
+  heroSection1,
+  aspectSection1,
+  heroSection2,
+  aspectSection2,
+  heroSection3,
+  aspectSection3,
+  heroSection4,
+  aspectSection4,
+];
 
 function shuffleAll() {
   const { scenario, hero } = randomGame();
-  scenarioSection.shuffle({ preferUse: scenario });
-  moduleSection.shuffle();
-  heroSection.shuffle({ preferUse: hero });
-  aspectSection.shuffle();
+  scenarioSection.shuffle({ isShuffleAll: true, preferUse: scenario });
+  heroSection1.shuffle({ isShuffleAll: true, preferUse: hero });
+  for (const section of sections) {
+    if ([scenarioSection, heroSection1].includes(section)) {
+      continue;
+    }
+    section.shuffle({ isShuffleAll: true });
+  }
 }
 
 function randomGame({
@@ -481,7 +572,7 @@ function randomGame({
   };
 
   availableScenarios ||= available(scenarioSection);
-  availableHeroes ||= available(heroSection);
+  availableHeroes ||= available(heroSection1);
 
   const trackedDifficulties = getTrackedDifficulties();
 
@@ -505,8 +596,8 @@ function randomGame({
   }
 
   const newAvailableGames = availableGames.filter(({ scenario, hero }) => {
-    const isNewScenario = scenario !== scenarioSection.cards[0];
-    const isNewHero = hero !== heroSection.cards[0];
+    const isNewScenario = scenario !== scenarioSection.trueCard;
+    const isNewHero = hero !== heroSection1.trueCard;
     return isNewScenario || isNewHero;
   });
 
@@ -542,12 +633,19 @@ function maybeReturnFocusAfterShuffle() {
 }
 
 function updateTrackingTable() {
-  if (scenarioSection.cards.length === 0 || heroSection.cards.length === 0) {
+  const heroSections = [heroSection1, heroSection2, heroSection3, heroSection4];
+  const scenariosReady = scenarioSection.cards.length > 0;
+  const heroesReady = heroSections.every((section) => section.cards.length > 0);
+  if (!scenariosReady || !heroesReady) {
     return;
   }
-  const cardSet = ({ cards }) => [{ children: cards }];
+
   if (settings.anyDifficultiesTracked) {
-    renderTable(cardSet(scenarioSection), cardSet(heroSection));
+    const scenarioSet = { children: scenarioSection.cards };
+    const heroSet = {
+      children: heroSections.flatMap((section) => section.cards),
+    };
+    renderTable([scenarioSet], [heroSet]);
   } else {
     clearTable();
   }
@@ -607,18 +705,20 @@ async function initialize() {
   settings.initialize();
   sections.map((section) => section.initialize());
 
-  const heroSection = document.getElementById("hero");
-  const heroSlot = heroSection.querySelector(".slot");
-  heroSlot.addEventListener("click", () => {
-    if (heroSection.classList.contains("flipping")) {
-      return;
-    }
-    if (heroSlot.classList.contains("has-giant-form")) {
-      heroSection.classList.toggle("giant");
-    } else if (heroSlot.classList.contains("has-wide-form")) {
-      heroSection.classList.toggle("wide");
-    }
-  });
+  const heroSections = document.querySelectorAll(".section.hero");
+  for (const heroSection of heroSections) {
+    const heroSlot = heroSection.querySelector(".slot");
+    heroSlot.addEventListener("click", () => {
+      if (heroSection.classList.contains("flipping")) {
+        return;
+      }
+      if (heroSlot.classList.contains("has-giant-form")) {
+        heroSection.classList.toggle("giant");
+      } else if (heroSlot.classList.contains("has-wide-form")) {
+        heroSection.classList.toggle("wide");
+      }
+    });
+  }
 }
 
 await initialize();

@@ -118,6 +118,12 @@ class Section extends Toggleable {
     return this.trueCard?.defaultChildCards;
   }
 
+  get visibleSiblingCards() {
+    return this.allSiblingSections
+      .filter((section) => section.visible)
+      .map((section) => section.trueCard);
+  }
+
   get valid() {
     const parentSection = this.parentSection;
 
@@ -128,11 +134,16 @@ class Section extends Toggleable {
       return false;
     }
 
-    const exclude = parentSection?.excludedChildCards || [];
+    const exclude = parentSection
+      ? parentSection.excludedChildCards
+      : this.visibleSiblingCards;
     const included = (cards) => cards.filter((card) => !exclude.includes(card));
+
     const allCheckedCards = this.allCards.filter((card) => card.checked);
     const includedCheckedCards = included(allCheckedCards);
+
     const includedDefaultCards = included(this.getDefaultOptions());
+
     return this.cards.every((card, i) =>
       i < includedCheckedCards.length
         ? includedCheckedCards.includes(card)
@@ -222,11 +233,15 @@ class Section extends Toggleable {
     const options = this.root.querySelector(".options");
 
     const optionsHint = document.createElement("p");
+    const noOrTooFew =
+      this.maxSlots === 1 && this.allSiblingSections.length === 0
+        ? "no"
+        : "too few";
     optionsHint.classList.add("options-hint");
-    optionsHint.innerText = `If no ${this.type.namePlural} are selected, `;
+    optionsHint.innerText = `If ${noOrTooFew} ${this.type.namePlural} are selected, `;
     optionsHint.innerText += this.parentSection
-      ? `the ${this.parentSection.type.name} default(s) will be used`
-      : `the Core Set ${this.type.namePlural} will be used`;
+      ? `${this.parentSection.type.name} default(s) will be used`
+      : `Core Set ${this.type.namePlural} will be used`;
     options.appendChild(optionsHint);
 
     const all = new All(this);
@@ -256,7 +271,7 @@ class Section extends Toggleable {
   }
 
   shuffleIfInvalid({ animate = true } = {}) {
-    if (!this.valid && !this.disabled && this.visible) {
+    if (!this.valid && !this.disabled) {
       this.shuffle({ animate });
     }
   }
@@ -266,10 +281,10 @@ class Section extends Toggleable {
 
     const exclusiveSiblingSections = isShuffleAll
       ? this.previousSiblingSections
-      : this.allSiblingSections;
+      : this.allSiblingSections.filter((section) => section.visible);
 
     const exclude = parentSection
-      ? [...parentSection.excludedChildCards]
+      ? parentSection.excludedChildCards.slice()
       : exclusiveSiblingSections.flatMap((section) => section.trueCard);
 
     const cardCount = parentSection ? parentSection.childCardCount : 1;

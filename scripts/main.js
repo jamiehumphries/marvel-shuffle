@@ -472,15 +472,19 @@ class Settings {
 
   initializeNumberOfHeroes() {
     const id = "setting--number-of-heroes";
-    const fieldset = document.getElementById(id);
-    const radios = fieldset.querySelectorAll("input");
 
-    const values = [...radios].map((radio) => Number(radio.value));
+    this.maxNumberOfHeroes = 4;
+    const allowedValues = Array.from(
+      { length: this.maxNumberOfHeroes },
+      (_, i) => i + 1,
+    );
 
     this.numberOfHeroes = getItem(id);
-    if (!values.includes(this.numberOfHeroes)) {
-      this.numberOfHeroes = values[0];
+    if (!allowedValues.includes(this.numberOfHeroes)) {
+      this.numberOfHeroes = allowedValues[0];
     }
+
+    const fieldset = document.getElementById(id);
 
     const toggleHeroSectionVisibility = () => {
       for (let i = 0; i < heroSections.length; i++) {
@@ -496,10 +500,24 @@ class Settings {
       toggleHeroSectionVisibility();
     };
 
-    radios.forEach((radio) => {
-      radio.checked = radio.value === this.numberOfHeroes.toString();
+    for (let i = 1; i <= this.maxNumberOfHeroes; i++) {
+      const inputId = `number-of-heroes-${i}`;
+
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.id = inputId;
+      radio.name = "number-of-heroes";
+      radio.value = i;
+      radio.checked = i === this.numberOfHeroes;
+      fieldset.appendChild(radio);
+
+      const label = document.createElement("label");
+      label.htmlFor = inputId;
+      label.innerText = i;
+      fieldset.appendChild(label);
+
       radio.addEventListener("change", onChange);
-    });
+    }
 
     toggleHeroSectionVisibility();
   }

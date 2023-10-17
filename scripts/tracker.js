@@ -1,8 +1,3 @@
-import {
-  scenarios as scenarioOptions,
-  heroes as heroOptions,
-  flatten,
-} from "./cards.js?v=2.0.3";
 import { Setting } from "./options.js?v=2.0.3";
 import { getItem, setItem } from "./storage.js?v=2.0.3";
 

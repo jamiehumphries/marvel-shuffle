@@ -94,6 +94,10 @@ class Section extends Toggleable {
     this.root = document.getElementById(this.id);
   }
 
+  get allCheckedCards() {
+    return this.allCards.filter((card) => card.checked);
+  }
+
   get maxChildCardCount() {
     return Math.max(
       ...this.allCards.map((card) =>
@@ -137,9 +141,7 @@ class Section extends Toggleable {
       : this.visibleSiblingSections.map((section) => section.trueCard);
     const included = (cards) => cards.filter((card) => !exclude.includes(card));
 
-    const allCheckedCards = this.allCards.filter((card) => card.checked);
-    const includedCheckedCards = included(allCheckedCards);
-
+    const includedCheckedCards = included(this.allCheckedCards);
     const includedDefaultCards = included(this.getDefaultOptions());
 
     return this.cards.every((card, i) =>
@@ -291,7 +293,7 @@ class Section extends Toggleable {
     for (let i = 0; i < cardCount; i++) {
       const oldCard = this.cards[i];
       const preferExclude = !isShuffleAll ? oldCard : null;
-      const newCard = this.randomCard({ exclude, preferExclude });
+      const newCard = this.randomCard({ isShuffleAll, exclude, preferExclude });
       newCards.push(newCard);
       exclude.push(newCard);
 
@@ -320,8 +322,13 @@ class Section extends Toggleable {
     }
   }
 
-  randomCard({ exclude = [], preferExclude = null, available = null } = {}) {
-    available ||= this.allCards.filter((card) => card.checked);
+  randomCard({
+    isShuffleAll = false,
+    exclude = [],
+    preferExclude = null,
+    available = null,
+  } = {}) {
+    available ||= this.allCheckedCards;
     available = available.filter((card) => !exclude.includes(card));
 
     if (preferExclude !== null && available.length > 1) {
@@ -333,7 +340,18 @@ class Section extends Toggleable {
       return this.randomCard({ exclude, preferExclude, available });
     }
 
+    const prioritisedAvailable = available.flatMap((card) =>
+      Array(this.getPriority(card, isShuffleAll)).fill(card),
+    );
+    if (prioritisedAvailable.length > 0) {
+      available = prioritisedAvailable;
+    }
+
     return chooseRandom(available);
+  }
+
+  getPriority() {
+    return 1;
   }
 
   getDefaultOptions() {
@@ -391,11 +409,31 @@ class Section extends Toggleable {
   }
 }
 
-class ScenarioSection extends Section {}
+class ScenarioSection extends Section {
+  getPriority(scenario, isShuffleAll) {
+    if (!settings.avoidCompleted) {
+      return 1;
+    }
+    const heroes = isShuffleAll
+      ? heroSection1.allCheckedCards
+      : heroSections
+          .filter((section) => section.visible)
+          .map((section) => section.trueCard);
+    return getNumberOfIncompleteGames([scenario], heroes);
+  }
+}
 
 class ModuleSection extends Section {}
 
-class HeroSection extends Section {}
+class HeroSection extends Section {
+  getPriority(hero) {
+    if (!settings.avoidCompleted) {
+      return 1;
+    }
+    const scenario = scenarioSection.trueCard;
+    return getNumberOfIncompleteGames([scenario], [hero]);
+  }
+}
 
 class AspectSection extends Section {}
 
@@ -633,6 +671,23 @@ function maybeReturnFocusAfterShuffle() {
   if (lastClickedButton && !lastClickedButton.disabled) {
     lastClickedButton.focus();
   }
+}
+
+function getNumberOfIncompleteGames(scenarios, heroes) {
+  const difficulties = getTrackedDifficulties();
+
+  let incompleteCount = 0;
+  for (const scenario of scenarios) {
+    for (const hero of heroes) {
+      for (const difficulty of difficulties) {
+        if (!isGameCompleted(scenario, hero, difficulty)) {
+          incompleteCount++;
+        }
+      }
+    }
+  }
+
+  return incompleteCount;
 }
 
 function updateTrackingTable() {

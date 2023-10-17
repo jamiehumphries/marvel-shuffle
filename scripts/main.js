@@ -591,9 +591,12 @@ const sections = [
   aspectSection4,
 ];
 
-const heroSections = sections.filter(
-  (section) => section.constructor === HeroSection,
-);
+const heroSections = sectionsOfType(HeroSection);
+const aspectSections = sectionsOfType(AspectSection);
+
+function sectionsOfType(type) {
+  return sections.filter((section) => section.constructor === type);
+}
 
 function shuffleAll() {
   for (const section of sections) {
@@ -605,10 +608,19 @@ function toggleSettings() {
   const settingsVisible = container.classList.toggle("show-settings");
   shuffleAllButton.disabled = settingsVisible;
   sections.forEach((section) => (section.button.disabled = settingsVisible));
-  if (!settingsVisible) {
-    requestPostAnimationFrame(() =>
-      sections.forEach((section) => section.shuffleIfInvalid()),
+  if (settingsVisible) {
+    settings.previousNumberOfHeroes = settings.numberOfHeroes;
+  } else {
+    const newHeroAndAspectSections = [
+      ...heroSections.slice(settings.previousNumberOfHeroes),
+      ...aspectSections.slice(settings.previousNumberOfHeroes),
+    ];
+    newHeroAndAspectSections.forEach((section) =>
+      section.shuffle({ isShuffleAll: true, animate: false }),
     );
+    requestPostAnimationFrame(() => {
+      sections.forEach((section) => section.shuffleIfInvalid());
+    });
     updateTrackingTable();
   }
 }

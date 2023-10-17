@@ -56,8 +56,6 @@ class Section extends Toggleable {
     this.previousSiblingSection = previousSiblingSection;
     this.parentSection = parentSection;
 
-    this.maxSlots = this.parentSection?.maxChildCardCount || 1;
-
     if (this.parentSection) {
       this.parentSection.childSection = this;
     }
@@ -97,7 +95,11 @@ class Section extends Toggleable {
   }
 
   get maxChildCardCount() {
-    return Math.max(...this.allCards.map((card) => card.childCardCount));
+    return Math.max(
+      ...this.allCards.map((card) =>
+        card.childCardCount(settings.maxNumberOfHeroes),
+      ),
+    );
   }
 
   get trueCard() {
@@ -105,7 +107,7 @@ class Section extends Toggleable {
   }
 
   get childCardCount() {
-    return this.trueCard?.childCardCount || 0;
+    return this.trueCard?.childCardCount(settings.numberOfHeroes) || 0;
   }
 
   get excludedChildCards() {
@@ -188,6 +190,8 @@ class Section extends Toggleable {
   }
 
   initializeLayout() {
+    this.maxSlots = this.parentSection?.maxChildCardCount || 1;
+
     const sectionTemplate = document.getElementById("section");
     const element = sectionTemplate.content.cloneNode(true);
     this.root.appendChild(element);

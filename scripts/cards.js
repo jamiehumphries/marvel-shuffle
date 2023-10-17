@@ -255,7 +255,7 @@ const scenarios = [
   mojoMania(
     scenario("Magog", 1, "#e66914", { hasBack: true }),
     scenario("Spiral", 3, "#acccea", { exclude: nonMojoManiaModules, hasBack: true }),
-    scenario("Mojo", 2, "#ffcc00", { exclude: nonMojoManiaModules })
+    scenario("Mojo", 1, "#ffcc00", { exclude: nonMojoManiaModules, additionalModulesPerHero: 1 })
   ),
   neXtEvolution(
     scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], "#00b050", { hasBack: true }),

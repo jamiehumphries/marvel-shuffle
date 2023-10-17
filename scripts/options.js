@@ -143,9 +143,10 @@ class Card extends Option {
       variant = null,
       color = null,
       isLandscape = false,
-      childCardCount = 0,
+      baseChildCardCount = 0,
       excludedChildCards = [],
       defaultChildCards = null,
+      additionalChildCardsPerHero = 0,
       hasBack = false,
       hasGiantForm = false,
       hasWideForm = false,
@@ -154,9 +155,10 @@ class Card extends Option {
     super(name, { variant });
     this.color = color;
     this.isLandscape = isLandscape;
-    this.childCardCount = childCardCount;
+    this.baseChildCardCount = baseChildCardCount;
     this.excludedChildCards = excludedChildCards;
     this.defaultChildCards = defaultChildCards;
+    this.additionalChildCardsPerHero = additionalChildCardsPerHero;
     this.hasGiantForm = hasGiantForm;
     this.hasWideForm = hasWideForm;
 
@@ -184,6 +186,13 @@ class Card extends Option {
   static get namePlural() {
     return (this._namePlural ||= `${this.name}s`);
   }
+
+  childCardCount(numberOfHeroes) {
+    return (
+      this.baseChildCardCount +
+      this.additionalChildCardsPerHero * numberOfHeroes
+    );
+  }
 }
 
 class Scenario extends Card {
@@ -191,18 +200,22 @@ class Scenario extends Card {
     name,
     modulesOrNumber,
     color,
-    { exclude = [], hasBack = false } = {},
+    { exclude = [], hasBack = false, additionalModulesPerHero = 0 } = {},
   ) {
-    const [childCardCount, defaultChildCards] = Array.isArray(modulesOrNumber)
+    const [baseChildCardCount, defaultChildCards] = Array.isArray(
+      modulesOrNumber,
+    )
       ? [modulesOrNumber.length, modulesOrNumber]
       : [modulesOrNumber, null];
     const excludedChildCards = exclude;
+    const additionalChildCardsPerHero = additionalModulesPerHero;
     super(name, {
       color,
       hasBack,
-      childCardCount,
+      baseChildCardCount,
       defaultChildCards,
       excludedChildCards,
+      additionalChildCardsPerHero,
     });
   }
 }
@@ -231,7 +244,7 @@ class Hero extends Card {
   ) {
     const variant = alterEgo;
     const hasBack = true;
-    const childCardCount = aspects.length;
+    const baseChildCardCount = aspects.length;
     const defaultChildCards = aspects;
     super(name, {
       variant,
@@ -239,7 +252,7 @@ class Hero extends Card {
       hasBack,
       hasGiantForm,
       hasWideForm,
-      childCardCount,
+      baseChildCardCount,
       defaultChildCards,
     });
   }

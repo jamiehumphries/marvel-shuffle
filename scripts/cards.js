@@ -6,30 +6,30 @@ function ensureArray(arrayOrString) {
 
 // SETS
 
-function cardSet(name) {
+function cardSet(name, isCampaign = false) {
   return (...cards) => new CardSet(name, cards);
 }
 
 const coreSet = cardSet("Core Set");
 const theGreenGoblin = cardSet("The Green Goblin");
 const theWreckingCrew = cardSet("The Wrecking Crew");
-const theRiseOfRedSkull = cardSet("The Rise of Red Skull");
+const theRiseOfRedSkull = cardSet("The Rise of Red Skull", true);
 const theOnceAndFutureKang = cardSet("The Once and Future Kang");
-const theGalaxysMostWanted = cardSet("The Galaxy’s Most Wanted");
-const theMadTitansShadow = cardSet("The Mad Titan’s Shadow");
+const theGalaxysMostWanted = cardSet("The Galaxy’s Most Wanted", true);
+const theMadTitansShadow = cardSet("The Mad Titan’s Shadow", true);
 const theHood = cardSet("The Hood");
-const sinisterMotives = cardSet("Sinister Motives");
+const sinisterMotives = cardSet("Sinister Motives", true);
 const nova = cardSet("Nova");
 const ironheart = cardSet("Ironheart");
 const spiderHam = cardSet("Spider-Ham");
 const spdr = cardSet("Sp//dr");
-const mutantGenesis = cardSet("Mutant Genesis");
-const mojoMania = cardSet("MojoMania");
+const mutantGenesis = cardSet("Mutant Genesis", true);
+const mojoMania = cardSet("MojoMania", true);
 const wolverine = cardSet("Wolverine");
 const storm = cardSet("Storm");
 const gambit = cardSet("Gambit");
 const rogue = cardSet("Rogue");
-const neXtEvolution = cardSet("NeXt Evolution");
+const neXtEvolution = cardSet("NeXt Evolution", true);
 
 const printAndPlay = cardSet("Print-and-Play");
 

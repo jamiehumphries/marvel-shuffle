@@ -244,9 +244,7 @@ class Section extends Toggleable {
 
   initializeShuffling() {
     this.button = this.root.querySelector("button");
-    this.button.addEventListener("click", () => {
-      this.shuffle({ isShuffleAll: false });
-    });
+    this.button.addEventListener("click", () => this.shuffle());
     this.root.addEventListener("transitionend", (event) =>
       this.onTransitionEnd(event),
     );
@@ -263,26 +261,28 @@ class Section extends Toggleable {
     }
   }
 
-  shuffle({ animate = true, isShuffleAll = false, preferUse = null } = {}) {
+  shuffle({ animate = true, isShuffleAll = false } = {}) {
     const parentSection = this.parentSection;
+
     const exclusiveSiblingSections = isShuffleAll
       ? this.previousSiblingSections
       : this.allSiblingSections;
-    const cardCount = parentSection ? parentSection.childCardCount : 1;
+
     const exclude = parentSection
       ? [...parentSection.excludedChildCards]
       : exclusiveSiblingSections.flatMap((section) => section.trueCard);
 
+    const cardCount = parentSection ? parentSection.childCardCount : 1;
     const newCards = [];
 
     for (let i = 0; i < cardCount; i++) {
       const oldCard = this.cards[i];
       const preferExclude = !isShuffleAll ? oldCard : null;
-      const newCard = this.randomCard({ exclude, preferExclude, preferUse });
+      const newCard = this.randomCard({ exclude, preferExclude });
       newCards.push(newCard);
       exclude.push(newCard);
 
-      if (!animate) {
+      if (!animate || !this.visible) {
         continue;
       }
 
@@ -294,7 +294,7 @@ class Section extends Toggleable {
       }
     }
 
-    if (animate) {
+    if (animate && this.visible) {
       this.disabled = true;
       document.body.classList.add("shuffling");
       this.root.classList.add("flipping");
@@ -307,18 +307,9 @@ class Section extends Toggleable {
     }
   }
 
-  randomCard({
-    exclude = [],
-    preferUse = null,
-    preferExclude = null,
-    available = null,
-  } = {}) {
+  randomCard({ exclude = [], preferExclude = null, available = null } = {}) {
     available ||= this.allCards.filter((card) => card.checked);
     available = available.filter((card) => !exclude.includes(card));
-
-    if (preferUse && available.includes(preferUse)) {
-      return preferUse;
-    }
 
     if (preferExclude !== null && available.length > 1) {
       available = available.filter((card) => card !== preferExclude);
@@ -326,7 +317,7 @@ class Section extends Toggleable {
 
     if (available.length === 0) {
       available = this.getDefaultOptions();
-      return this.randomCard({ exclude, preferUse, preferExclude, available });
+      return this.randomCard({ exclude, preferExclude, available });
     }
 
     return chooseRandom(available);
@@ -387,29 +378,11 @@ class Section extends Toggleable {
   }
 }
 
-class ScenarioSection extends Section {
-  shuffle({ animate = true, isShuffleAll = false, preferUse = null } = {}) {
-    const currentHero = heroSection1.trueCard;
-    if (!preferUse && currentHero && settings.avoidCompleted) {
-      const { scenario } = randomGame({ availableHeroes: [currentHero] });
-      preferUse = scenario;
-    }
-    super.shuffle({ animate, isShuffleAll, preferUse });
-  }
-}
+class ScenarioSection extends Section {}
 
 class ModuleSection extends Section {}
 
-class HeroSection extends Section {
-  shuffle({ animate = true, isShuffleAll = false, preferUse = null } = {}) {
-    const currentScenario = scenarioSection.trueCard;
-    if (!preferUse && currentScenario && settings.avoidCompleted) {
-      const { hero } = randomGame({ availableScenarios: [currentScenario] });
-      preferUse = hero;
-    }
-    super.shuffle({ animate, isShuffleAll, preferUse });
-  }
-}
+class HeroSection extends Section {}
 
 class AspectSection extends Section {}
 
@@ -607,71 +580,10 @@ const heroSections = sections.filter(
   (section) => section.constructor === HeroSection,
 );
 
-function getVisibleHeroSections() {
-  return heroSections.filter((section) => section.visible);
-}
-
 function shuffleAll() {
-  const { scenario, hero } = randomGame();
-  scenarioSection.shuffle({ isShuffleAll: true, preferUse: scenario });
-  heroSection1.shuffle({ isShuffleAll: true, preferUse: hero });
   for (const section of sections) {
-    if ([scenarioSection, heroSection1].includes(section)) {
-      continue;
-    }
-    if (!section.visible) {
-      continue;
-    }
     section.shuffle({ isShuffleAll: true });
   }
-}
-
-function randomGame({
-  availableScenarios = null,
-  availableHeroes = null,
-} = {}) {
-  const available = (section) => {
-    const allCheckedCards = section.allCards.filter((card) => card.checked);
-    return allCheckedCards.length > 0
-      ? allCheckedCards
-      : section.getDefaultOptions();
-  };
-
-  availableScenarios ||= available(scenarioSection);
-  availableHeroes ||= available(heroSection1);
-
-  const trackedDifficulties = getTrackedDifficulties();
-
-  let availableGames = availableScenarios.flatMap((scenario) =>
-    availableHeroes.flatMap((hero) =>
-      trackedDifficulties.map((difficulty) => {
-        return { scenario, hero, difficulty };
-      }),
-    ),
-  );
-
-  if (settings.avoidCompleted) {
-    const uncompletedAvailableGames = availableGames.filter((game) => {
-      const { scenario, hero, difficulty } = game;
-      return !isGameCompleted(scenario, hero, difficulty);
-    });
-
-    if (uncompletedAvailableGames.length > 0) {
-      availableGames = uncompletedAvailableGames;
-    }
-  }
-
-  const newAvailableGames = availableGames.filter(({ scenario, hero }) => {
-    const isNewScenario = scenario !== scenarioSection.trueCard;
-    const isNewHero = hero !== heroSection1.trueCard;
-    return isNewScenario || isNewHero;
-  });
-
-  if (newAvailableGames.length > 0) {
-    availableGames = newAvailableGames;
-  }
-
-  return chooseRandom(availableGames);
 }
 
 function toggleSettings() {
@@ -701,7 +613,7 @@ function maybeReturnFocusAfterShuffle() {
 function updateTrackingTable() {
   const scenariosReady = scenarioSection.cards.length > 0;
 
-  const visibleHeroSections = getVisibleHeroSections();
+  const visibleHeroSections = heroSections.filter((section) => section.visible);
   const heroesReady = visibleHeroSections.every(
     (section) => section.cards.length > 0,
   );

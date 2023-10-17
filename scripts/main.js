@@ -40,6 +40,7 @@ class Toggleable {
 
   toggleVisibility(value) {
     this.root.classList.toggle("hidden", !value);
+    this.childSection?.toggleVisibility(value);
   }
 }
 
@@ -594,6 +595,9 @@ function shuffleAll() {
   heroSection1.shuffle({ isShuffleAll: true, preferUse: hero });
   for (const section of sections) {
     if ([scenarioSection, heroSection1].includes(section)) {
+      continue;
+    }
+    if (!section.visible) {
       continue;
     }
     section.shuffle({ isShuffleAll: true });

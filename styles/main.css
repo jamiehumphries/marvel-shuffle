@@ -291,11 +291,7 @@ button#copy-bookmark-url {
   z-index: 1;
 }
 
-.section.hero.hidden {
-  display: none;
-}
-
-.section.hero.hidden + .section.aspect {
+.section.hidden {
   display: none;
 }
 

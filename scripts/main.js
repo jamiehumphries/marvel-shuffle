@@ -118,10 +118,8 @@ class Section extends Toggleable {
     return this.trueCard?.defaultChildCards;
   }
 
-  get visibleSiblingCards() {
-    return this.allSiblingSections
-      .filter((section) => section.visible)
-      .map((section) => section.trueCard);
+  get visibleSiblingSections() {
+    return this.allSiblingSections.filter((section) => section.visible);
   }
 
   get valid() {
@@ -136,7 +134,7 @@ class Section extends Toggleable {
 
     const exclude = parentSection
       ? parentSection.excludedChildCards
-      : this.visibleSiblingCards;
+      : this.visibleSiblingSections.map((section) => section.trueCard);
     const included = (cards) => cards.filter((card) => !exclude.includes(card));
 
     const allCheckedCards = this.allCards.filter((card) => card.checked);
@@ -281,7 +279,7 @@ class Section extends Toggleable {
 
     const exclusiveSiblingSections = isShuffleAll
       ? this.previousSiblingSections
-      : this.allSiblingSections.filter((section) => section.visible);
+      : this.visibleSiblingSections;
 
     const exclude = parentSection
       ? parentSection.excludedChildCards.slice()

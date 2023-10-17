@@ -407,13 +407,24 @@ button#copy-bookmark-url {
   height: 20px;
 }
 
+input:indeterminate + .checkmark,
 input:checked + .checkmark {
   --option-background-color-hover: var(--option-background-color-checked-hover);
   background-color: var(--option-background-color-checked);
 }
 
-.checkmark:after {
-  display: none;
+input:indeterminate + .checkmark:after {
+  display: block;
+  width: 100%;
+  content: "-";
+
+  font-style: normal;
+  font-weight: normal;
+  text-align: center;
+}
+
+input:checked + .checkmark:after {
+  display: block;
 
   position: absolute;
   left: 5px;
@@ -427,10 +438,6 @@ input:checked + .checkmark {
   height: 10px;
 
   content: "";
-}
-
-input:checked + .checkmark:after {
-  display: block;
 }
 
 .keyboard-nav input:focus + .checkmark {

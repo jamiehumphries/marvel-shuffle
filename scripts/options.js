@@ -46,6 +46,15 @@ class Option {
     value?.forEach((child) => (child.parent = this));
   }
 
+  get anyDescendantChecked() {
+    if (!this.children) {
+      return false;
+    }
+    return this.children.some(
+      (child) => child.checked || child.anyDescendantChecked,
+    );
+  }
+
   appendTo(element, ...classes) {
     const label = document.createElement("label");
     label.htmlFor = this.id;
@@ -71,6 +80,8 @@ class Option {
 
     this.checkbox = input;
     element.appendChild(label);
+
+    this.updateIndeterminateState();
   }
 
   onChange(checked) {
@@ -96,6 +107,11 @@ class Option {
       const allSiblingsChecked = siblings.every((child) => child.checked);
       this.parent.setChecked(allSiblingsChecked, true, false);
     }
+    this.updateIndeterminateState();
+  }
+
+  updateIndeterminateState() {
+    this.checkbox.indeterminate = !this.checked && this.anyDescendantChecked;
   }
 }
 

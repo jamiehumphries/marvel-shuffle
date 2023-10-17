@@ -254,7 +254,7 @@ class Section extends Toggleable {
   }
 
   shuffleIfInvalid({ animate = true } = {}) {
-    if (!this.valid && !this.disabled) {
+    if (!this.valid && !this.disabled && this.visible) {
       this.shuffle({ animate });
     }
   }

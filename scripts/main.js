@@ -648,11 +648,18 @@ function toggleSettings() {
     settings.previousNumberOfHeroes = settings.numberOfHeroes;
   } else {
     const newHeroAndAspectSections = [
-      ...heroSections.slice(settings.previousNumberOfHeroes),
-      ...aspectSections.slice(settings.previousNumberOfHeroes),
+      ...heroSections.slice(
+        settings.previousNumberOfHeroes,
+        settings.numberOfHeroes,
+      ),
+      ...aspectSections.slice(
+        settings.previousNumberOfHeroes,
+        settings.numberOfHeroes,
+      ),
     ];
+    console.log(newHeroAndAspectSections);
     newHeroAndAspectSections.forEach((section) =>
-      section.shuffle({ isShuffleAll: true, animate: false }),
+      section.shuffle({ isShuffleAll: true }),
     );
     requestPostAnimationFrame(() => {
       sections.forEach((section) => section.shuffleIfInvalid());

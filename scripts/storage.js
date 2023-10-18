@@ -18,7 +18,9 @@ const app = initializeApp({
   appId: "1:280392379599:web:f72ad527a7f46f97571bba",
 });
 
+const LOCAL_KEY_PREFIX = "marvel-shuffle--";
 const USER_ID_KEY = "--user-id";
+
 const createOrCopyBookmarkUrl = document.getElementById(
   "create-or-copy-bookmark-url",
 );
@@ -40,7 +42,7 @@ async function initializeStorage() {
   const snapshot = await getDoc(userDoc);
   const data = snapshot.data() || {};
   for (const [key, value] of Object.entries(data)) {
-    localStorage.setItem(key, value);
+    localStorage.setItem(LOCAL_KEY_PREFIX + key, value);
   }
 }
 
@@ -55,7 +57,17 @@ async function clearStorage() {
 async function getBookmarkUrl() {
   let userId = getUserId();
   if (!userId) {
-    const doc = await addDoc(users, { ...localStorage });
+    const localPrefixPattern = new RegExp("^" + LOCAL_KEY_PREFIX);
+    const dataEntries = Object.entries(localStorage).filter(([key, _]) =>
+      localPrefixPattern.test(key),
+    );
+    const data = Object.fromEntries(
+      dataEntries.map(([key, value]) => [
+        key.replace(localPrefixPattern, ""),
+        value,
+      ]),
+    );
+    const doc = await addDoc(users, data);
     userId = await setUserId(doc.id);
   }
   const url = new URL(window.location.origin);
@@ -85,12 +97,12 @@ async function setUserId(value) {
 }
 
 function getItem(key) {
-  return JSON.parse(localStorage.getItem(key));
+  return JSON.parse(localStorage.getItem(LOCAL_KEY_PREFIX + key));
 }
 
 function setItem(key, value) {
   value = JSON.stringify(value);
-  localStorage.setItem(key, value);
+  localStorage.setItem(LOCAL_KEY_PREFIX + key, value);
   updateDb(key, value);
 }
 

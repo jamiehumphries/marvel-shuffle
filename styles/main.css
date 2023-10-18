@@ -90,7 +90,7 @@ img[src=""] {
   max-width: var(--container-max-width);
 }
 
-.container.init {
+body.init .container {
   visibility: hidden;
 }
 
@@ -159,7 +159,7 @@ button.shuffle#shuffle-all {
   margin: 10px auto 20px;
 }
 
-.container.show-settings button.shuffle:disabled {
+body.show-settings button.shuffle:disabled {
   --button-background-color-disabled: var(
     --button-background-color-disabled--settings
   );
@@ -218,7 +218,7 @@ button.icon-button:disabled {
   opacity: 0.6;
 }
 
-.container.show-settings button.icon-button {
+body.show-settings button.icon-button {
   position: fixed;
   margin-right: max(
     0px,
@@ -226,11 +226,11 @@ button.icon-button:disabled {
   );
 }
 
-.container:not(.show-settings) .settings-show {
+body:not(.show-settings) .settings-show {
   display: none !important;
 }
 
-.container.show-settings .settings-hide {
+body.show-settings .settings-hide {
   display: none !important;
 }
 
@@ -238,18 +238,18 @@ label[for^="setting--track-difficulty-"] {
   margin-left: var(--option-inset);
 }
 
-.container:not(.show-tracker) label[for="setting--avoid-completed"],
-.container:not(.show-tracker) label[for^="setting--track-difficulty-"] {
+body:not(.show-tracker) label[for="setting--avoid-completed"],
+body:not(.show-tracker) label[for^="setting--track-difficulty-"] {
   margin: 0;
   height: 0;
   overflow: hidden;
 }
 
-.container:not(.has-user-id) .show-if-has-user-id {
+body:not(.has-user-id) .show-if-has-user-id {
   display: none !important;
 }
 
-.container.has-user-id .hide-if-has-user-id {
+body.has-user-id .hide-if-has-user-id {
   display: none !important;
 }
 
@@ -515,7 +515,7 @@ input:active + .checkmark {
   transform: rotateY(720deg);
 }
 
-.container:not(.init) .slot {
+body:not(.init) .slot {
   transition:
     transform var(--flip-duration),
     width var(--card-change-duration),
@@ -523,7 +523,7 @@ input:active + .checkmark {
     opacity var(--card-change-duration);
 }
 
-.container:not(.init) .flipped .slot {
+body:not(.init) .flipped .slot {
   transition: none;
 }
 
@@ -583,7 +583,7 @@ h3.name {
   transform: rotate(90deg);
 }
 
-.container:not(.init) .card {
+body:not(.init) .card {
   transition: transform var(--card-change-duration);
 }
 
@@ -633,7 +633,7 @@ h3.name {
   margin-top: 20px;
 }
 
-.container:not(.show-tracker) #tracking {
+body:not(.show-tracker) #tracking {
   display: none;
 }
 

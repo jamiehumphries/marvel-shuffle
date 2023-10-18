@@ -557,7 +557,7 @@ class Settings {
       "Show game tracker under shuffle",
       {
         onChange: (checked) =>
-          container.classList.toggle("show-tracker", checked),
+          document.body.classList.toggle("show-tracker", checked),
       },
     );
 
@@ -578,11 +578,11 @@ class Settings {
   }
 }
 
-const container = document.querySelector(".container");
 const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");
 const copyBookmarkUrlButton = document.getElementById("copy-bookmark-url");
 const useBookmarkUrlButton = document.getElementById("use-bookmark-url");
+const bookmarkUrlElement = document.getElementById("bookmark-url");
 
 let lastClickedButton = null;
 
@@ -642,7 +642,7 @@ function shuffleAll() {
 }
 
 function toggleSettings() {
-  const settingsVisible = container.classList.toggle("show-settings");
+  const settingsVisible = document.body.classList.toggle("show-settings");
   shuffleAllButton.disabled = settingsVisible;
   sections.forEach((section) => (section.button.disabled = settingsVisible));
   if (settingsVisible) {
@@ -659,7 +659,7 @@ function toggleSettings() {
       ),
     ];
     newHeroAndAspectSections.forEach((section) =>
-      section.shuffleIfInvalid({ animate: false }),
+      section.shuffle({ isShuffleAll: true, animate: false }),
     );
     requestPostAnimationFrame(() => {
       sections.forEach((section) => section.shuffleIfInvalid());
@@ -769,12 +769,11 @@ async function initialize() {
   copyBookmarkUrlButton.addEventListener("click", async () => {
     copyBookmarkUrlButton.disabled = true;
     const url = await getBookmarkUrl();
-    await navigator.clipboard.writeText(url.toString());
-    requestPostAnimationFrame(() => {
-      alert("Your bookmark URL has been copied to the clipboard.");
-      copyBookmarkUrlButton.disabled = false;
-      copyBookmarkUrlButton.focus();
-    });
+    bookmarkUrlElement.innerText = url;
+    await navigator.clipboard.writeText(url);
+    alert("Your bookmark URL has been copied to the clipboard.");
+    copyBookmarkUrlButton.disabled = false;
+    copyBookmarkUrlButton.focus();
   });
 
   useBookmarkUrlButton.addEventListener("click", async () => {
@@ -787,7 +786,8 @@ async function initialize() {
     }
   });
 
-  await initializeStorage();
+  const bookmarkUrl = await initializeStorage();
+  bookmarkUrlElement.innerText = bookmarkUrl;
   settings.initialize();
   sections.map((section) => section.initialize());
 
@@ -809,4 +809,4 @@ async function initialize() {
 }
 
 await initialize();
-setTimeout(() => container.classList.remove("init"), 100);
+setTimeout(() => document.body.classList.remove("init"), 100);

@@ -21,9 +21,6 @@ const app = initializeApp({
 const LOCAL_KEY_PREFIX = "marvel-shuffle--";
 const USER_ID_KEY = "--user-id";
 
-const bookmarkUrlElement = document.getElementById("bookmark-url");
-const container = document.querySelector(".container");
-
 const db = getFirestore(app);
 const users = collection(db, "users");
 
@@ -33,7 +30,7 @@ window.updateTimeoutId = null;
 async function initializeStorage() {
   const userDoc = getUserDoc();
   if (!userDoc) {
-    return;
+    return null;
   }
   localStorage.clear();
   await setUserId(userDoc.id);
@@ -42,6 +39,7 @@ async function initializeStorage() {
   for (const [key, value] of Object.entries(data)) {
     localStorage.setItem(LOCAL_KEY_PREFIX + key, value);
   }
+  return await getBookmarkUrl();
 }
 
 async function clearStorage() {
@@ -70,7 +68,7 @@ async function getBookmarkUrl() {
   }
   const url = new URL(window.location.origin);
   url.searchParams.append("id", userId);
-  return url;
+  return url.toString();
 }
 
 function getUserDoc() {
@@ -84,12 +82,7 @@ function getUserId() {
 
 async function setUserId(value) {
   localStorage.setItem(USER_ID_KEY, value);
-  if (container) {
-    container.classList.add("has-user-id");
-  }
-  if (bookmarkUrlElement) {
-    bookmarkUrlElement.innerText = await getBookmarkUrl();
-  }
+  document.body.classList.add("has-user-id");
   return value;
 }
 

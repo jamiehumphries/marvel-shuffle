@@ -580,8 +580,9 @@ class Settings {
 
 const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");
-const copyBookmarkUrlButton = document.getElementById("copy-bookmark-url");
+const createBookmarkUrlButton = document.getElementById("create-bookmark-url");
 const useBookmarkUrlButton = document.getElementById("use-bookmark-url");
+const copyBookmarkUrlButton = document.getElementById("copy-bookmark-url");
 const bookmarkUrlElement = document.getElementById("bookmark-url");
 
 let lastClickedButton = null;
@@ -766,20 +767,19 @@ async function initialize() {
   shuffleAllButton.addEventListener("click", () => shuffleAll());
   settingsButton.addEventListener("click", () => toggleSettings());
 
-  copyBookmarkUrlButton.addEventListener("click", async () => {
-    copyBookmarkUrlButton.disabled = true;
+  createBookmarkUrlButton.addEventListener("click", async () => {
     const url = await getBookmarkUrl();
     bookmarkUrlElement.innerText = url;
+  });
+
+  copyBookmarkUrlButton.addEventListener("click", async () => {
+    const url = await getBookmarkUrl();
     await navigator.clipboard.writeText(url);
     alert("Your bookmark URL has been copied to the clipboard.");
-    copyBookmarkUrlButton.disabled = false;
-    copyBookmarkUrlButton.focus();
   });
 
   useBookmarkUrlButton.addEventListener("click", async () => {
-    const url = prompt(
-      "Paste your bookmark URL here. This will reload the page.",
-    );
+    const url = prompt("Paste your bookmark URL here. The page will reload.");
     const success = await tryUseBookmarkUrl(url);
     if (!success) {
       alert("Invalid bookmark URL.");

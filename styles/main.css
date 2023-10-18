@@ -262,6 +262,7 @@ button.sync-button {
 
 .divider {
   margin: 0.5rem 0;
+  text-align: center;
 }
 
 #bookmark-url-hint {

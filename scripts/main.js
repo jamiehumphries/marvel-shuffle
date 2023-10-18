@@ -648,21 +648,20 @@ function toggleSettings() {
   if (settingsVisible) {
     settings.previousNumberOfHeroes = settings.numberOfHeroes;
   } else {
-    const newHeroAndAspectSections = [
-      ...heroSections.slice(
-        settings.previousNumberOfHeroes,
-        settings.numberOfHeroes,
-      ),
-      ...aspectSections.slice(
-        settings.previousNumberOfHeroes,
-        settings.numberOfHeroes,
-      ),
-    ];
-    console.log(newHeroAndAspectSections);
-    newHeroAndAspectSections.forEach((section) =>
-      section.shuffle({ isShuffleAll: true }),
-    );
     requestPostAnimationFrame(() => {
+      const newHeroAndAspectSections = [
+        ...heroSections.slice(
+          settings.previousNumberOfHeroes,
+          settings.numberOfHeroes,
+        ),
+        ...aspectSections.slice(
+          settings.previousNumberOfHeroes,
+          settings.numberOfHeroes,
+        ),
+      ];
+      newHeroAndAspectSections.forEach((section) =>
+        section.shuffle({ isShuffleAll: true }),
+      );
       sections.forEach((section) => section.shuffleIfInvalid());
     });
     updateTrackingTable();

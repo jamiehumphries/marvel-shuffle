@@ -296,12 +296,9 @@ button#copy-bookmark-url {
 }
 
 #setting--number-of-heroes {
-  border: none;
-  padding: 0;
-}
-
-#setting--number-of-heroes label:first-of-type {
-  margin-left: var(--option-inset);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 #setting--number-of-heroes input {
@@ -321,7 +318,7 @@ button#copy-bookmark-url {
   cursor: pointer;
 
   box-sizing: border-box;
-  margin: 0.25rem 0.25rem 0.5rem 0;
+  margin-bottom: 0.25rem;
 
   border: 1px solid var(--option-border-and-check-color);
   border-radius: 50%;

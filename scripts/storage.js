@@ -21,10 +21,8 @@ const app = initializeApp({
 const LOCAL_KEY_PREFIX = "marvel-shuffle--";
 const USER_ID_KEY = "--user-id";
 
-const createOrCopyBookmarkUrl = document.getElementById(
-  "create-or-copy-bookmark-url",
-);
 const bookmarkUrlElement = document.getElementById("bookmark-url");
+const container = document.querySelector(".container");
 
 const db = getFirestore(app);
 const users = collection(db, "users");
@@ -86,9 +84,8 @@ function getUserId() {
 
 async function setUserId(value) {
   localStorage.setItem(USER_ID_KEY, value);
-  if (createOrCopyBookmarkUrl) {
-    createOrCopyBookmarkUrl.innerText =
-      createOrCopyBookmarkUrl.innerText.replace("Create", "Copy");
+  if (container) {
+    container.classList.add("has-user-id");
   }
   if (bookmarkUrlElement) {
     bookmarkUrlElement.innerText = await getBookmarkUrl();

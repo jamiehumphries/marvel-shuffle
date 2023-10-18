@@ -1,4 +1,3 @@
-import copyTextToClipboard from "./lib/copy-text-to-clipboard.js";
 import { Setting, All } from "./options.js?v=2.1.0";
 import {
   scenarios,
@@ -583,6 +582,8 @@ const container = document.querySelector(".container");
 const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");
 const copyBookmarkUrlButton = document.getElementById("copy-bookmark-url");
+const useBookmarkUrlButton = document.getElementById("use-bookmark-url");
+
 let lastClickedButton = null;
 
 const settings = new Settings();
@@ -732,11 +733,22 @@ function chooseRandom(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-async function initialize() {
-  const overrideUserId = new URL(location.href).searchParams.get("id");
-  if (overrideUserId) {
-    await setUserId(overrideUserId.toString());
+async function tryUseBookmarkUrl(url) {
+  try {
+    const userId = new URL(url).searchParams.get("id");
+    if (!userId) {
+      return false;
+    }
+    await setUserId(userId.toString());
     location.href = location.origin + location.pathname; // Reload page without id override.
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function initialize() {
+  if (await tryUseBookmarkUrl(location.href)) {
     return;
   }
 
@@ -758,16 +770,22 @@ async function initialize() {
   copyBookmarkUrlButton.addEventListener("click", async () => {
     copyBookmarkUrlButton.disabled = true;
     const url = await getBookmarkUrl();
-    const success = copyTextToClipboard(url.toString());
+    await navigator.clipboard.writeText(url.toString());
     requestPostAnimationFrame(() => {
-      const copyResultMessage = success
-        ? "Your bookmark URL has been copied to the clipboard."
-        : "Your bookmark URL has been generated, but copying to the" +
-          " clipboard failed. You can manually copy it from below.";
-      alert(copyResultMessage);
+      alert("Your bookmark URL has been copied to the clipboard.");
       copyBookmarkUrlButton.disabled = false;
       copyBookmarkUrlButton.focus();
     });
+  });
+
+  useBookmarkUrlButton.addEventListener("click", async () => {
+    const url = prompt(
+      "Paste your bookmark URL here. This will reload the page.",
+    );
+    const success = await tryUseBookmarkUrl(url);
+    if (!success) {
+      alert("Invalid bookmark URL.");
+    }
   });
 
   await initializeStorage();

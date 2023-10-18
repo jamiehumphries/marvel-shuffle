@@ -245,11 +245,23 @@ label[for^="setting--track-difficulty-"] {
   overflow: hidden;
 }
 
-button#copy-bookmark-url {
+.container:not(.has-user-id) .show-if-has-user-id {
+  display: none !important;
+}
+
+.container.has-user-id .hide-if-has-user-id {
+  display: none !important;
+}
+
+button.sync-button {
   --button-background-color: var(--button-background-color--sync);
   --button-background-color-hover: var(--button-background-color-hover--sync);
 
-  width: 280px;
+  width: 320px;
+}
+
+.divider {
+  margin: 0.5rem 0;
 }
 
 #bookmark-url-hint {

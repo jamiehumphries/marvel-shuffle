@@ -1,6 +1,10 @@
 {
+  "scripts": {
+    "start": "serve"
+  },
   "devDependencies": {
-    "prettier-plugin-css-order": "2.0.1"
+    "prettier-plugin-css-order": "2.0.1",
+    "serve": "14.2.1"
   },
   "prettier": {
     "plugins": [

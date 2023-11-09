@@ -21,6 +21,8 @@ const app = initializeApp({
 const LOCAL_KEY_PREFIX = "marvel-shuffle--";
 const USER_ID_KEY = "--user-id";
 
+const HAS_USER_ID = "has-user-id";
+
 const db = getFirestore(app);
 const users = collection(db, "users");
 
@@ -82,8 +84,13 @@ function getUserId() {
 
 async function setUserId(value) {
   localStorage.setItem(USER_ID_KEY, value);
-  document.body.classList.add("has-user-id");
+  document.body.classList.add(HAS_USER_ID);
   return value;
+}
+
+function clearUserId() {
+  localStorage.removeItem(USER_ID_KEY);
+  document.body.classList.remove(HAS_USER_ID);
 }
 
 function getItem(key) {
@@ -124,4 +131,5 @@ export {
   getItem,
   setItem,
   setUserId,
+  clearUserId,
 };

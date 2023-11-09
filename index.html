@@ -56,10 +56,10 @@
           <h2>Saving</h2>
           <div class="hide-if-has-user-id">
             <button id="create-bookmark-url" class="sync-button">
-              Create Bookmark URL
+              Create bookmark URL
               <img src="images/link.svg" alt="" />
             </button>
-            <div class="divider hide-if-has-user-id">or</div>
+            <div class="divider">or</div>
             <button id="use-bookmark-url" class="sync-button">
               Use existing bookmark URL
               <img src="images/link.svg" alt="" />
@@ -67,10 +67,15 @@
           </div>
           <div class="show-if-has-user-id">
             <button id="copy-bookmark-url" class="sync-button">
-              Copy Bookmark URL
+              Copy bookmark URL
               <img src="images/link.svg" alt="" />
             </button>
-            <div id="bookmark-url" class="show-if-has-user-id"></div>
+            <div class="divider">or</div>
+            <button id="clear-bookmark-url" class="sync-button danger">
+              Clear bookmark URL
+              <img src="images/link.svg" alt="" />
+            </button>
+            <div id="bookmark-url"></div>
           </div>
           <p id="bookmark-url-hint">
             Your individual bookmark URL allows you to save and sync your data

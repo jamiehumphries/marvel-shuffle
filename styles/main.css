@@ -24,6 +24,8 @@
 
   --button-background-color--sync: #c7f1cb;
   --button-background-color-hover--sync: #87ee91;
+  --button-background-color--danger: #f1cbc7;
+  --button-background-color-hover--danger: #ee9187;
 
   --icon-button-text-color: #000000;
   --icon-button-background-color-hover: #e0e0e0;
@@ -258,6 +260,11 @@ button.sync-button {
   --button-background-color-hover: var(--button-background-color-hover--sync);
 
   width: 320px;
+}
+
+button.danger {
+  --button-background-color: var(--button-background-color--danger);
+  --button-background-color-hover: var(--button-background-color-hover--danger);
 }
 
 .divider {

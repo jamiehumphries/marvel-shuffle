@@ -10,6 +10,7 @@ import {
   initializeStorage,
   clearStorage,
   getBookmarkUrl,
+  clearUserId,
   setUserId,
   getItem,
   setItem,
@@ -597,6 +598,7 @@ const shuffleAllButton = document.getElementById("shuffle-all");
 const createBookmarkUrlButton = document.getElementById("create-bookmark-url");
 const useBookmarkUrlButton = document.getElementById("use-bookmark-url");
 const copyBookmarkUrlButton = document.getElementById("copy-bookmark-url");
+const clearBookmarkUrlButton = document.getElementById("clear-bookmark-url");
 const bookmarkUrlElement = document.getElementById("bookmark-url");
 
 let lastClickedButton = null;
@@ -786,17 +788,26 @@ async function initialize() {
     bookmarkUrlElement.innerText = url;
   });
 
+  useBookmarkUrlButton.addEventListener("click", async () => {
+    const url = prompt("Paste your bookmark URL here. The page will reload.");
+    const success = await tryUseBookmarkUrl(url);
+    if (!success) {
+      alert("Invalid bookmark URL.");
+    }
+  });
+
   copyBookmarkUrlButton.addEventListener("click", async () => {
     const url = await getBookmarkUrl();
     await navigator.clipboard.writeText(url);
     alert("Your bookmark URL has been copied to the clipboard.");
   });
 
-  useBookmarkUrlButton.addEventListener("click", async () => {
-    const url = prompt("Paste your bookmark URL here. The page will reload.");
-    const success = await tryUseBookmarkUrl(url);
-    if (!success) {
-      alert("Invalid bookmark URL.");
+  clearBookmarkUrlButton.addEventListener("click", async () => {
+    const confirmed = confirm(
+      "Your bookmark URL will be cleared from this browser. Click OK to confirm.",
+    );
+    if (confirmed) {
+      clearUserId();
     }
   });
 

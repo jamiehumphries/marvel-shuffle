@@ -92,6 +92,10 @@ img[src=""] {
   max-width: var(--container-max-width);
 }
 
+body.init * {
+  transition: none !important;
+}
+
 body.init .container {
   visibility: hidden;
 }
@@ -523,7 +527,7 @@ input:active + .checkmark {
   transform: rotateY(720deg);
 }
 
-body:not(.init) .slot {
+.slot {
   transition:
     transform var(--flip-duration),
     width var(--card-change-duration),
@@ -531,7 +535,7 @@ body:not(.init) .slot {
     opacity var(--card-change-duration);
 }
 
-body:not(.init) .flipped .slot {
+.flipped .slot {
   transition: none;
 }
 
@@ -591,7 +595,7 @@ h3.name {
   transform: rotate(90deg);
 }
 
-body:not(.init) .card {
+.card {
   transition: transform var(--card-change-duration);
 }
 

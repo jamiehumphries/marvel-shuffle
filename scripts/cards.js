@@ -190,6 +190,7 @@ function findModule(name) {
 
 function scenario(name, moduleNamesOrNumber, color, options = {}) {
   options.exclude &&= findModules(options.exclude);
+  options.required &&= findModules(options.required);
   const modulesOrNumber =
     typeof moduleNamesOrNumber === "number"
       ? moduleNamesOrNumber
@@ -212,9 +213,9 @@ const scenarios = [
     scenario("Wrecking Crew", 0, "#ffc000")
   ),
   theRiseOfRedSkull(
-    scenario("Crossbones", ["Hydra Assault", "Weapon Master", "Legions of Hydra"], "#404040", { exclude: "Experimental Weapons" }),
+    scenario("Crossbones", ["Hydra Assault", "Weapon Master", "Legions of Hydra"], "#404040", { required: "Experimental Weapons" }),
     scenario("Absorbing Man", "Hydra Patrol", "#7030a0"),
-    scenario("Taskmaster", "Weapon Master", "#c9c9c9", { exclude: "Hydra Patrol" }),
+    scenario("Taskmaster", "Weapon Master", "#c9c9c9", { required: "Hydra Patrol" }),
     scenario("Zola", "Under Attack", "#adc1e5"),
     scenario("Red Skull", ["Hydra Assault", "Hydra Patrol"], "#ff0000")
   ),
@@ -222,34 +223,34 @@ const scenarios = [
     scenario("Kang", "Temporal", "#00b050")
   ),
   theGalaxysMostWanted(
-    scenario("Brotherhood of Badoon", "Band of Badoon", "#660066", { exclude: "Ship Command" }),
-    scenario("Infiltrate the Museum", "Menagerie Medley", "#c00000", { exclude: "Galactic Artifacts" }),
-    scenario("Escape the Museum", "Menagerie Medley", "#afdc7e", { exclude: ["Galactic Artifacts", "Ship Command"], hasBack: true }),
-    scenario("Nebula", "Space Pirates", "#a9cbe9", { exclude: "Ship Command" }),
-    scenario("Ronan the Accuser", "Kree Militants", "#305496", { exclude: "Ship Command" })
+    scenario("Brotherhood of Badoon", "Band of Badoon", "#660066", { required: "Ship Command" }),
+    scenario("Infiltrate the Museum", "Menagerie Medley", "#c00000", { required: "Galactic Artifacts" }),
+    scenario("Escape the Museum", "Menagerie Medley", "#afdc7e", { required: ["Galactic Artifacts", "Ship Command"], hasBack: true }),
+    scenario("Nebula", "Space Pirates", "#a9cbe9", { required: "Ship Command" }),
+    scenario("Ronan the Accuser", "Kree Militants", "#305496", { required: "Ship Command" })
   ),
   theMadTitansShadow(
     scenario("Ebony Maw", ["Armies of Titan", "Black Order"], "#404040"),
     scenario("Tower Defense", "Armies of Titan", "#c7d0db", { hasBack: true }),
-    scenario("Thanos", ["Black Order", "Children of Thanos"], "#9900ff", { exclude: "Infinity Gauntlet" }),
+    scenario("Thanos", ["Black Order", "Children of Thanos"], "#9900ff", { required: "Infinity Gauntlet" }),
     scenario("Hela", ["Legions of Hel", "Frost Giants"], "#B4D79D", { hasBack: true }),
-    scenario("Loki", ["Enchantress", "Frost Giants"], "#ffc000", { exclude: "Infinity Gauntlet" })
+    scenario("Loki", ["Enchantress", "Frost Giants"], "#ffc000", { required: "Infinity Gauntlet" })
   ),
   theHood(
     scenario("The Hood", 7, "#c00000")
   ),
   sinisterMotives(
-    scenario("Sandman", "Down to Earth", "#ffcc66", { exclude: "City in Chaos" }),
-    scenario("Venom", "Down to Earth", "#404040", { exclude: "Symbiotic Strength" }),
-    scenario("Mysterio", "Whispers of Paranoia", "#7030a0", { exclude: "Personal Nightmare" }),
-    scenario("The Sinister Six", 0, "#F4AD7C", { exclude: "Guerilla Tactics" }),
-    scenario("Venom Goblin", "Goblin Gear", "#375623", { exclude: "Symbiotic Strength" })
+    scenario("Sandman", "Down to Earth", "#ffcc66", { required: "City in Chaos" }),
+    scenario("Venom", "Down to Earth", "#404040", { required: "Symbiotic Strength" }),
+    scenario("Mysterio", "Whispers of Paranoia", "#7030a0", { required: "Personal Nightmare" }),
+    scenario("The Sinister Six", 0, "#F4AD7C", { required: "Guerilla Tactics" }),
+    scenario("Venom Goblin", "Goblin Gear", "#375623", { required: "Symbiotic Strength" })
   ),
   mutantGenesis(
     scenario("Sabretooth", ["Brotherhood", "Mystique"], "#ffc000"),
-    scenario("Project Wideawake", "Sentinels", "#9933ff", { exclude: "Zero Tolerance" }),
-    scenario("Master Mold", "Zero Tolerance", "#7030a0", { exclude: "Sentinels" }),
-    scenario("Mansion Attack", "Mystique", "#d0cece", { exclude: "Brotherhood", hasBack: true }),
+    scenario("Project Wideawake", "Sentinels", "#9933ff", { required: "Zero Tolerance" }),
+    scenario("Master Mold", "Zero Tolerance", "#7030a0", { required: "Sentinels" }),
+    scenario("Mansion Attack", "Mystique", "#d0cece", { required: "Brotherhood", hasBack: true }),
     scenario("Magneto", "Acolytes", "#c00000")
   ),
   mojoMania(
@@ -259,10 +260,10 @@ const scenarios = [
   ),
   neXtEvolution(
     scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], "#00b050", { hasBack: true }),
-    scenario("On the Run", ["Military Grade", "Nasty Boys"], "#7030a0", { exclude: "Mutant Slayers", hasBack: true }),
-    scenario("Juggernaut", "Black Tom Cassidy", "#c00000", { exclude: "Hope Summers" }),
-    scenario("Mister Sinister", "Nasty Boys", "#305496", { exclude: ["Flight", "Super Strength", "Telepathy", "Hope Summers"] }),
-    scenario("Stryfe", ["Extreme Measures", "Mutant Insurrection"], "#ff0000", { exclude: "Hope Summers" })
+    scenario("On the Run", ["Military Grade", "Nasty Boys"], "#7030a0", { required: "Mutant Slayers", hasBack: true }),
+    scenario("Juggernaut", "Black Tom Cassidy", "#c00000", { required: "Hope Summers" }),
+    scenario("Mister Sinister", "Nasty Boys", "#305496", { required: ["Flight", "Super Strength", "Telepathy", "Hope Summers"] }),
+    scenario("Stryfe", ["Extreme Measures", "Mutant Insurrection"], "#ff0000", { required: "Hope Summers" })
   ),
 ];
 

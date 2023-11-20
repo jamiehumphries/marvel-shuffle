@@ -161,6 +161,7 @@ class Card extends Option {
       isLandscape = false,
       baseChildCardCount = 0,
       excludedChildCards = [],
+      requiredChildCards = [],
       defaultChildCards = null,
       additionalChildCardsPerHero = 0,
       hasBack = false,
@@ -173,6 +174,7 @@ class Card extends Option {
     this.isLandscape = isLandscape;
     this.baseChildCardCount = baseChildCardCount;
     this.excludedChildCards = excludedChildCards;
+    this.requiredChildCards = requiredChildCards;
     this.defaultChildCards = defaultChildCards;
     this.additionalChildCardsPerHero = additionalChildCardsPerHero;
     this.hasGiantForm = hasGiantForm;
@@ -205,6 +207,7 @@ class Card extends Option {
 
   childCardCount(numberOfHeroes) {
     return (
+      this.requiredChildCards.length +
       this.baseChildCardCount +
       this.additionalChildCardsPerHero * numberOfHeroes
     );
@@ -216,7 +219,12 @@ class Scenario extends Card {
     name,
     modulesOrNumber,
     color,
-    { exclude = [], hasBack = false, additionalModulesPerHero = 0 } = {},
+    {
+      exclude = [],
+      required = [],
+      hasBack = false,
+      additionalModulesPerHero = 0,
+    } = {},
   ) {
     const [baseChildCardCount, defaultChildCards] = Array.isArray(
       modulesOrNumber,
@@ -224,6 +232,7 @@ class Scenario extends Card {
       ? [modulesOrNumber.length, modulesOrNumber]
       : [modulesOrNumber, null];
     const excludedChildCards = exclude;
+    const requiredChildCards = required;
     const additionalChildCardsPerHero = additionalModulesPerHero;
     super(name, {
       color,
@@ -231,6 +240,7 @@ class Scenario extends Card {
       baseChildCardCount,
       defaultChildCards,
       excludedChildCards,
+      requiredChildCards,
       additionalChildCardsPerHero,
     });
   }

@@ -117,6 +117,10 @@ class Section extends Toggleable {
     return this.trueCard?.excludedChildCards || [];
   }
 
+  get requiredChildCards() {
+    return this.trueCard?.requiredChildCards || [];
+  }
+
   get defaultChildCards() {
     return this.trueCard?.defaultChildCards;
   }
@@ -135,6 +139,7 @@ class Section extends Toggleable {
       return false;
     }
 
+    const required = parentSection ? parentSection.requiredChildCards : [];
     const exclude = parentSection
       ? parentSection.excludedChildCards
       : this.visibleSiblingSections.map((section) => section.trueCard);
@@ -143,11 +148,15 @@ class Section extends Toggleable {
     const includedCheckedCards = included(this.allCheckedCards);
     const includedDefaultCards = included(this.getDefaultOptions());
 
-    return this.cards.every((card, i) =>
-      i < includedCheckedCards.length
-        ? includedCheckedCards.includes(card)
-        : includedDefaultCards.includes(card),
-    );
+    return this.cards.every(function (card, i) {
+      if (i < required.length) {
+        return card === required[i];
+      }
+      if (i < required.length + includedCheckedCards.length) {
+        return includedCheckedCards.includes(card);
+      }
+      return includedDefaultCards.includes(card);
+    });
   }
 
   get visible() {
@@ -282,6 +291,8 @@ class Section extends Toggleable {
       ? this.previousSiblingSections
       : this.visibleSiblingSections;
 
+    const required = parentSection ? parentSection.requiredChildCards : [];
+
     const exclude = parentSection
       ? parentSection.excludedChildCards.slice()
       : exclusiveSiblingSections.flatMap((section) => section.trueCard);
@@ -292,7 +303,10 @@ class Section extends Toggleable {
     for (let i = 0; i < cardCount; i++) {
       const oldCard = this.cards[i];
       const preferExclude = !isShuffleAll ? oldCard : null;
-      const newCard = this.randomCard({ isShuffleAll, exclude, preferExclude });
+      const newCard =
+        i < required.length
+          ? required[i]
+          : this.randomCard({ isShuffleAll, exclude, preferExclude });
       newCards.push(newCard);
       exclude.push(newCard);
 

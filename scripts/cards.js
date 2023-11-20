@@ -30,6 +30,7 @@ const storm = cardSet("Storm");
 const gambit = cardSet("Gambit");
 const rogue = cardSet("Rogue");
 const neXtEvolution = cardSet("NeXt Evolution", true);
+const ageOfApocalypse = cardSet("Age of Apocalypse", true);
 
 const printAndPlay = cardSet("Print-and-Play");
 
@@ -158,6 +159,9 @@ const modules = [
     module("Extreme Measures", { isLandscape: true }),
     module("Mutant Insurrection", { isLandscape: true })
   ),
+  ageOfApocalypse(
+    module("Infinites")
+  ),
   printAndPlay(
     module("Kree Fanatic")
   ),
@@ -262,6 +266,11 @@ const scenarios = [
     scenario("Mister Sinister", "Nasty Boys", "#305496", { required: ["Flight", "Super Strength", "Telepathy", "Hope Summers"] }),
     scenario("Stryfe", ["Extreme Measures", "Mutant Insurrection"], "#ff0000", { required: "Hope Summers" })
   ),
+  ageOfApocalypse(
+    scenario("Unus", 0, "#00b050"),
+    scenario("Four Horsemen", 0, "#ffc000", { hasBack: true }),
+    scenario("Apocalypse", 0, "#305496", { hasBack: true })
+  ),
 ];
 
 // ASPECTS
@@ -359,6 +368,10 @@ const heroes = [
   hero("Angel", PROTECTION, "#0070c0", { hasWideForm: true }),
   hero("X-23", AGGRESSION, "#404040"),
   hero("Deadpool", POOL, "#ff3737"),
+  ageOfApocalypse(
+    hero("Bishop", LEADERSHIP, "#0070c0"),
+    hero("Magik", AGGRESSION, "#ffc000")
+  ),
 ];
 
 function flatten(cardsOrSets) {

@@ -154,8 +154,7 @@ body {
   content: ")";
 }
 
-#tracker thead #total-fraction,
-#tracker thead > tr:nth-child(2) > th.progress.difficulty > div {
+#tracker thead #total-fraction {
   font-size: 0.75rem;
 }
 
@@ -173,7 +172,7 @@ body {
 
 #tracker thead > tr:nth-child(2) > th > div {
   height: var(--difficulty-cell-height);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
 }
 
 #tracker thead > tr:nth-child(2) > th:not(.block-end) > div {

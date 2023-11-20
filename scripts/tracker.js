@@ -333,13 +333,17 @@ function updateProgress() {
   let totalCleared = 0;
 
   const combinationsPerDifficulty = totalCombinations / difficulties.length;
-  for (const { id, span } of difficulties) {
+  for (const { id, label, span } of difficulties) {
     const cleared = table.querySelectorAll(
       `input:checked[data-difficulty="${id}"]`,
     ).length;
-    const percentage = toPercentage(cleared / combinationsPerDifficulty);
-    span.innerText = percentage;
     totalCleared += cleared;
+    if (difficulties.length > 1) {
+      const percentage = toPercentage(cleared / combinationsPerDifficulty);
+      span.innerText = percentage;
+    } else {
+      span.innerText = label;
+    }
   }
 
   const totalPercentage = toPercentage(totalCleared / totalCombinations);

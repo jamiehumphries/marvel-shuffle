@@ -169,13 +169,6 @@ const allModules = modules.flatMap(
   (cardOrSet) => cardOrSet.children || [cardOrSet],
 );
 
-const nonMojoManiaModules = modules.flatMap((cardOrSet) => {
-  if (cardOrSet.name === "MojoMania") {
-    return [];
-  }
-  return cardOrSet.children?.map((card) => card.name) || [cardOrSet.name];
-});
-
 function findModules(names) {
   return ensureArray(names).map((name) => findModule(name));
 }
@@ -189,7 +182,11 @@ function findModule(name) {
 }
 
 function scenario(name, moduleNamesOrNumber, color, options = {}) {
-  options.exclude &&= findModules(options.exclude);
+  if (options.restrictedSet) {
+    options.exclude = allModules.filter(
+      (module) => module.parent?.name !== options.restrictedSet,
+    );
+  }
   options.required &&= findModules(options.required);
   const modulesOrNumber =
     typeof moduleNamesOrNumber === "number"
@@ -255,8 +252,8 @@ const scenarios = [
   ),
   mojoMania(
     scenario("Magog", 1, "#e66914", { hasBack: true }),
-    scenario("Spiral", 3, "#acccea", { exclude: nonMojoManiaModules, hasBack: true }),
-    scenario("Mojo", 1, "#ffcc00", { exclude: nonMojoManiaModules, additionalModulesPerHero: 1 })
+    scenario("Spiral", 3, "#acccea", { restrictedSet: "MojoMania", hasBack: true }),
+    scenario("Mojo", 1, "#ffcc00", { restrictedSet: "MojoMania", additionalModulesPerHero: 1 })
   ),
   neXtEvolution(
     scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], "#00b050", { hasBack: true }),

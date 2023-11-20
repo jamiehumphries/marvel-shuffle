@@ -755,7 +755,7 @@ async function tryUseBookmarkUrl(url) {
     if (!userId) {
       return false;
     }
-    await setUserId(userId.toString());
+    setUserId(userId.toString());
     location.href = location.origin + location.pathname; // Reload page without id override.
     return true;
   } catch {

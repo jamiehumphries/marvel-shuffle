@@ -35,7 +35,7 @@ async function initializeStorage() {
     return null;
   }
   localStorage.clear();
-  await setUserId(userDoc.id);
+  setUserId(userDoc.id);
   const snapshot = await getDoc(userDoc);
   const data = snapshot.data() || {};
   for (const [key, value] of Object.entries(data)) {
@@ -66,7 +66,7 @@ async function getBookmarkUrl() {
       ]),
     );
     const doc = await addDoc(users, data);
-    userId = await setUserId(doc.id);
+    userId = setUserId(doc.id);
   }
   const url = new URL(window.location.origin);
   url.searchParams.append("id", userId);
@@ -82,7 +82,7 @@ function getUserId() {
   return localStorage.getItem(USER_ID_KEY);
 }
 
-async function setUserId(value) {
+function setUserId(value) {
   localStorage.setItem(USER_ID_KEY, value);
   document.body.classList.add(HAS_USER_ID);
   return value;

@@ -29,7 +29,7 @@
 
   --icon-button-text-color: #000000;
   --icon-button-background-color-hover: #e0e0e0;
-  --icon-button-image-brightness-hover: 90%;
+  --button-image-brightness-hover: 90%;
 
   --option-border-and-check-color: #000000;
   --option-background-color-hover: #eeeeee;
@@ -110,7 +110,7 @@ h2 {
   margin: 1rem 0;
 }
 
-button:not(.icon-button) {
+.button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -130,38 +130,38 @@ button:not(.icon-button) {
   font-size: calc(1rem * var(--button-scale-factor));
 }
 
-button:not(.icon-button) img {
+.button img {
   margin-bottom: 0.1em;
   margin-left: 0.5em;
   height: 1.2em;
 }
 
-button:not(.icon-button):active {
+.button:active {
   background-color: var(--button-background-color-hover);
 }
 
-button:not(.icon-button):disabled {
+.button:disabled {
   border-color: var(--button-border-and-text-color-disabled);
   background-color: var(--button-background-color-disabled);
   color: var(--button-border-and-text-color-disabled);
 }
 
 @media (hover: hover) {
-  button:not(.icon-button):hover {
+  .button:hover {
     background-color: var(--button-background-color-hover);
   }
 
-  button:not(.icon-button):hover:disabled {
+  .button:hover:disabled {
     background-color: var(--button-background-color-disabled);
   }
 }
 
-button.shuffle#shuffle-all {
+.button.shuffle#shuffle-all {
   --button-scale-factor: 1.2;
   margin: 10px auto 20px;
 }
 
-body.show-settings button.shuffle:disabled {
+body.show-settings .button.shuffle:disabled {
   --button-background-color-disabled: var(
     --button-background-color-disabled--settings
   );
@@ -176,7 +176,7 @@ body.show-settings button.shuffle:disabled {
   align-items: center;
 }
 
-button.icon-button {
+.icon-button {
   display: flex;
   position: absolute;
   top: calc(var(--container-padding) / 2);
@@ -197,30 +197,30 @@ button.icon-button {
   font-size: 0.7rem;
 }
 
-button.icon-button img {
+.icon-button img {
   width: 50px;
   height: 50px;
 }
 
-button.icon-button:active {
+.icon-button:active {
   background-color: var(--icon-button-background-color-hover);
 }
 
-button.icon-button:active img {
-  filter: brightness(var(--icon-button-image-brightness-hover));
+.icon-button:active img {
+  filter: brightness(var(--button-image-brightness-hover));
 }
 
 @media (hover: hover) {
-  button.icon-button:hover img {
-    filter: brightness(var(--icon-button-image-brightness-hover));
+  .icon-button:hover img {
+    filter: brightness(var(--button-image-brightness-hover));
   }
 }
 
-button.icon-button:disabled {
+.icon-button:disabled {
   opacity: 0.6;
 }
 
-body.show-settings button.icon-button {
+body.show-settings #settings {
   position: fixed;
   margin-right: max(
     0px,
@@ -255,7 +255,7 @@ body.has-user-id .hide-if-has-user-id {
   display: none !important;
 }
 
-button.sync-button {
+.sync-button {
   --button-background-color: var(--button-background-color--sync);
   --button-background-color-hover: var(--button-background-color-hover--sync);
 
@@ -630,6 +630,57 @@ body:not(.init) .card {
 .hero.giant .card > .front,
 .hero.wide .card > .front {
   transform: rotateY(180deg);
+}
+
+.scenario.flipping .next-scenario-button {
+  opacity: 0;
+}
+
+body:not(.has-next-scenario) .next-scenario-button {
+  opacity: 0;
+  height: 0;
+}
+
+.next-scenario-button {
+  --campaign-image-size: 50px;
+  --next-scenario-button-padding: 0.25rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  opacity: 1;
+  transition:
+    height var(--card-change-duration),
+    opacity var(--card-change-delay);
+
+  margin: 0.5rem auto 0 auto;
+  border: none;
+  border-radius: var(--next-scenario-button-padding);
+  background: none;
+  padding: var(--next-scenario-button-padding);
+
+  width: var(--card-width);
+  height: calc(
+    var(--campaign-image-size) + 2 * var(--next-scenario-button-padding)
+  );
+
+  font-size: 1rem;
+}
+
+.next-scenario-button:hover {
+  font-weight: bold;
+}
+
+.next-scenario-button:hover img {
+  filter: brightness(var(--button-image-brightness-hover));
+}
+
+.next-scenario-button img {
+  border-radius: 10%;
+  width: var(--campaign-image-size);
+  height: var(--campaign-image-size);
 }
 
 #tracking {

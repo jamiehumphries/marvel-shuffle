@@ -91,6 +91,8 @@ class Section extends Toggleable {
       this.id += `-${this.nthOfType}`;
     }
 
+    this.forcedSettingId = this.id + "--forced";
+
     this.root = document.getElementById(this.id);
   }
 
@@ -140,7 +142,11 @@ class Section extends Toggleable {
       return false;
     }
 
-    const required = parentSection ? parentSection.requiredChildCards : [];
+    if (this.forced) {
+      return true;
+    }
+
+    const required = parentSection ? parentSection?.requiredChildCards : [];
     const exclude = parentSection
       ? parentSection.excludedChildCards
       : this.visibleSiblingSections.map((section) => section.trueCard);
@@ -173,11 +179,23 @@ class Section extends Toggleable {
     setGlobalButtonsAvailability();
   }
 
+  get forced() {
+    return getItem(this.forcedSettingId);
+  }
+
+  set forced(value) {
+    setItem(this.forcedSettingId, value);
+  }
+
   get cards() {
     return this._cards || [];
   }
 
   set cards(value) {
+    this.setCards(value);
+  }
+
+  setCards(value) {
     this._cards = value;
     this.saveCards(value);
 
@@ -285,14 +303,15 @@ class Section extends Toggleable {
     }
   }
 
-  shuffle({ animate = true, isShuffleAll = false } = {}) {
+  shuffle({ animate = true, isShuffleAll = false, forcedCards = null } = {}) {
     const parentSection = this.parentSection;
 
     const exclusiveSiblingSections = isShuffleAll
       ? this.previousSiblingSections
       : this.visibleSiblingSections;
 
-    const required = parentSection ? parentSection.requiredChildCards : [];
+    this.forced = forcedCards !== null;
+    const required = forcedCards || parentSection?.requiredChildCards || [];
 
     const exclude = parentSection
       ? parentSection.excludedChildCards.slice()
@@ -424,6 +443,45 @@ class Section extends Toggleable {
 }
 
 class ScenarioSection extends Section {
+  get nextScenario() {
+    const cardSet = this.trueCard.parent;
+    if (!cardSet.isCampaign) {
+      return;
+    }
+
+    const scenarioIndex = cardSet.children.indexOf(this.trueCard);
+    if (scenarioIndex === cardSet.children.length - 1) {
+      return;
+    }
+
+    return cardSet.children[scenarioIndex + 1];
+  }
+
+  setCards(value) {
+    super.setCards(value);
+    const nextScenario = this.nextScenario;
+    this.campaignImage.src = nextScenario
+      ? `/images/campaign/${nextScenario.parent.slug.slice(0, -4)}.png`
+      : "";
+    document.body.classList.toggle("has-next-scenario", !!nextScenario);
+  }
+
+  initializeLayout() {
+    super.initializeLayout();
+    const buttonTemplate = document.getElementById("next-scenario-button");
+    const element = buttonTemplate.content.cloneNode(true);
+    this.root.appendChild(element);
+
+    const button = this.root.querySelector(".next-scenario-button");
+    button.addEventListener("click", () => this.goToNextScenario());
+
+    this.campaignImage = this.root.querySelector(".campaign-image");
+  }
+
+  goToNextScenario() {
+    this.shuffle({ forcedCards: [this.nextScenario] });
+  }
+
   getPriority(scenario, isShuffleAll) {
     if (!settings.avoidCompleted) {
       return 1;

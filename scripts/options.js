@@ -139,11 +139,12 @@ class All extends Option {
 }
 
 class CardSet extends Option {
-  constructor(name, cards) {
+  constructor(name, cards, isCampaign) {
     const variant = "set";
     const type = cards[0].constructor;
     const children = cards;
     super(name, { variant, type, children });
+    this.isCampaign = isCampaign;
   }
 
   appendTo(element) {
@@ -180,7 +181,7 @@ class Card extends Option {
     this.hasGiantForm = hasGiantForm;
     this.hasWideForm = hasWideForm;
 
-    const image = (...path) => ["images", this.type.slug, ...path].join("/");
+    const image = (...path) => ["/images", this.type.slug, ...path].join("/");
     this.frontSrc = image(this.slug, "front.png");
     this.backSrc = hasBack ? image(this.slug, "back.png") : image("back.png");
 
@@ -254,7 +255,7 @@ class Module extends Card {
   static get placeholder() {
     if (!this._placeholder) {
       const card = new this("No modules needed");
-      card.frontSrc = card.backSrc = "images/module/back.png";
+      card.frontSrc = card.backSrc = "/images/module/back.png";
       this._placeholder = card;
     }
     return this._placeholder;

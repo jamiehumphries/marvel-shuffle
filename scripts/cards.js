@@ -7,7 +7,7 @@ function ensureArray(arrayOrString) {
 // SETS
 
 function cardSet(name, isCampaign = false) {
-  return (...cards) => new CardSet(name, cards);
+  return (...cards) => new CardSet(name, cards, isCampaign);
 }
 
 const coreSet = cardSet("Core Set");

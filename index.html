@@ -30,18 +30,18 @@
   <body>
     <main>
       <div class="container init">
-        <img id="logo" src="images/logo.png" alt="Marvel Champions" />
+        <img id="logo" src="/images/logo.png" alt="Marvel Champions" />
         <h1>
-          <button id="shuffle-all" class="shuffle">
+          <button id="shuffle-all" class="shuffle button">
             <span class="settings-hide">Shuffle</span>
-            <img src="images/shuffle.svg" class="settings-hide" alt="" />
+            <img src="/images/shuffle.svg" class="settings-hide" alt="" />
             <span class="settings-show">Settings</span>
           </button>
         </h1>
         <button id="settings" class="icon-button" ontouchstart>
-          <img src="images/settings.svg" class="settings-hide" alt="" />
+          <img src="/images/settings.svg" class="settings-hide" alt="" />
           <span class="settings-hide">Settings</span>
-          <img src="images/done.svg" class="settings-show" alt="" />
+          <img src="/images/done.svg" class="settings-show" alt="" />
           <span class="settings-show">Done</span>
         </button>
         <div class="settings-show container-block">
@@ -55,23 +55,23 @@
         <div class="settings-show container-block">
           <h2>Saving</h2>
           <div class="hide-if-has-user-id">
-            <button id="create-bookmark-url" class="sync-button">
+            <button id="create-bookmark-url" class="button sync-button">
               Create bookmark URL
-              <img src="images/link.svg" alt="" />
+              <img src="/images/link.svg" alt="" />
             </button>
             <div class="divider">or</div>
-            <button id="use-bookmark-url" class="sync-button">
+            <button id="use-bookmark-url" class="button sync-button">
               Use existing bookmark URL
-              <img src="images/link.svg" alt="" />
+              <img src="/images/link.svg" alt="" />
             </button>
           </div>
           <div class="show-if-has-user-id">
-            <button id="copy-bookmark-url" class="sync-button">
+            <button id="copy-bookmark-url" class="button sync-button">
               Copy bookmark URL
-              <img src="images/link.svg" alt="" />
+              <img src="/images/link.svg" alt="" />
             </button>
             <div class="divider">or</div>
-            <button id="clear-bookmark-url" class="sync-button danger">
+            <button id="clear-bookmark-url" class="button sync-button danger">
               Clear bookmark URL
               <img src="images/link.svg" alt="" />
             </button>
@@ -86,19 +86,19 @@
           <div class="sections">
             <template id="section">
               <h3>
-                <button class="shuffle">
+                <button class="shuffle button">
                   <span class="settings-hide type-name"></span>
-                  <img src="images/shuffle.svg" class="settings-hide" alt="" />
+                  <img src="/images/shuffle.svg" class="settings-hide" alt="" />
                   <span class="settings-show select"></span>
                 </button>
               </h3>
               <form class="options settings-show">
                 <input type="submit" hidden />
               </form>
-              <div class="slots"></div>
+              <div class="slots settings-hide"></div>
             </template>
             <template id="slot">
-              <div class="slot settings-hide">
+              <div class="slot">
                 <div class="header">
                   <h3 class="name"></h3>
                 </div>
@@ -113,6 +113,15 @@
                   </div>
                 </div>
               </div>
+            </template>
+            <template id="next-scenario-button">
+              <button class="next-scenario-button settings-hide">
+                <img src="" alt="" class="campaign-image" />
+                <div>Next scenario in campaign</div>
+                <div>
+                  <i class="fa-solid fa-arrow-right"></i>
+                </div>
+              </button>
             </template>
             <div id="scenario" class="section scenario"></div>
             <div id="module" class="section module"></div>
@@ -135,7 +144,7 @@
               <tbody></tbody>
             </table>
           </div>
-          <a href="/tracker" class="link-button">
+          <a href="/tracker" class="link">
             Full game tracker <i class="fa-solid fa-arrow-right"></i>
           </a>
         </div>

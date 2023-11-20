@@ -444,8 +444,8 @@ class Section extends Toggleable {
 
 class ScenarioSection extends Section {
   get nextScenario() {
-    const cardSet = this.trueCard.parent;
-    if (!cardSet.isCampaign) {
+    const cardSet = this.trueCard?.parent;
+    if (!cardSet?.isCampaign) {
       return;
     }
 

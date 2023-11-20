@@ -666,21 +666,24 @@ body:not(.has-next-scenario) .next-scenario-button {
     var(--campaign-image-size) + 2 * var(--next-scenario-button-padding)
   );
 
+  color: var(--button-border-and-text-color);
   font-size: 1rem;
-}
-
-.next-scenario-button:hover {
-  font-weight: bold;
-}
-
-.next-scenario-button:hover img {
-  filter: brightness(var(--button-image-brightness-hover));
 }
 
 .next-scenario-button img {
   border-radius: 10%;
   width: var(--campaign-image-size);
   height: var(--campaign-image-size);
+}
+
+@media (hover: hover) {
+  .next-scenario-button:hover {
+    font-weight: bold;
+  }
+
+  .next-scenario-button:hover img {
+    filter: brightness(var(--button-image-brightness-hover));
+  }
 }
 
 #tracking {

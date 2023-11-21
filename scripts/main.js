@@ -447,12 +447,12 @@ class ScenarioSection extends Section {
   get nextScenario() {
     const cardSet = this.trueCard?.parent;
     if (!cardSet?.isCampaign) {
-      return;
+      return null;
     }
 
     const scenarioIndex = cardSet.children.indexOf(this.trueCard);
     if (scenarioIndex === cardSet.children.length - 1) {
-      return;
+      return null;
     }
 
     return cardSet.children[scenarioIndex + 1];
@@ -478,7 +478,7 @@ class ScenarioSection extends Section {
   }
 
   goToNextScenario() {
-    this.shuffle({ forcedCards: [this.nextScenario] });
+    this.shuffle({ forcedCards: this.nextScenario ? [this.nextScenario] : [] });
   }
 
   getPriority(scenario, isShuffleAll) {

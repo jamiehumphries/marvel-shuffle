@@ -245,6 +245,15 @@ class Scenario extends Card {
       additionalChildCardsPerHero,
     });
   }
+
+  get campaignImageSrc() {
+    const cardSet = this.parent;
+    if (!cardSet.isCampaign) {
+      return "";
+    }
+    const campaignSlug = cardSet.slug.slice(0, -"-set".length);
+    return `/images/campaign/${campaignSlug}.png`;
+  }
 }
 
 class Module extends Card {

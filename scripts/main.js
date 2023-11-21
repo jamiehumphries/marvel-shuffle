@@ -150,19 +150,20 @@ class Section extends Toggleable {
     const exclude = parentSection
       ? parentSection.excludedChildCards
       : this.visibleSiblingSections.map((section) => section.trueCard);
+    exclude.push(...required);
     const included = (cards) => cards.filter((card) => !exclude.includes(card));
 
-    const includedCheckedCards = included(this.allCheckedCards);
-    const includedDefaultCards = included(this.getDefaultOptions());
+    const includedChecked = included(this.allCheckedCards);
+    const includedDefault = included(this.getDefaultOptions());
 
     return this.cards.every(function (card, i) {
       if (i < required.length) {
         return card === required[i];
       }
-      if (i < required.length + includedCheckedCards.length) {
-        return includedCheckedCards.includes(card);
+      if (i < required.length + includedChecked.length) {
+        return includedChecked.includes(card);
       }
-      return includedDefaultCards.includes(card);
+      return includedDefault.includes(card);
     });
   }
 

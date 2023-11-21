@@ -71,8 +71,8 @@ const modules = [
     module("Kree Militants"),
     module("Menagerie Medley"),
     module("Space Pirates"),
-    module("Ship Command"),
     module("Power Stone"),
+    module("Ship Command"),
     module("Badoon Headhunter")
   ),
   theMadTitansShadow(
@@ -223,8 +223,8 @@ const scenarios = [
     scenario("Brotherhood of Badoon", "Band of Badoon", "#660066", { required: "Ship Command" }),
     scenario("Infiltrate the Museum", "Menagerie Medley", "#c00000", { required: "Galactic Artifacts" }),
     scenario("Escape the Museum", "Menagerie Medley", "#afdc7e", { required: ["Galactic Artifacts", "Ship Command"], hasBack: true }),
-    scenario("Nebula", "Space Pirates", "#a9cbe9", { required: "Ship Command" }),
-    scenario("Ronan the Accuser", "Kree Militants", "#305496", { required: "Ship Command" })
+    scenario("Nebula", "Space Pirates", "#a9cbe9", { required: ["Power Stone", "Ship Command"] }),
+    scenario("Ronan the Accuser", "Kree Militants", "#305496", { required: ["Power Stone", "Ship Command"] })
   ),
   theMadTitansShadow(
     scenario("Ebony Maw", ["Armies of Titan", "Black Order"], "#404040"),

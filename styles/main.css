@@ -727,6 +727,7 @@ body:not(.show-tracker) #tracking {
 
 #tracker-container {
   display: flex;
+  padding: 2px;
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;

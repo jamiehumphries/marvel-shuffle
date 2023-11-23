@@ -556,13 +556,26 @@ input:active + .checkmark {
   height: var(--card-header-height);
 }
 
-h3.name {
+.header h3.name {
   margin: 0;
   padding: 0 10px;
 
   font-weight: normal;
   font-size: 1.2rem;
   text-align: center;
+}
+
+.slot.is-required .header h3.name {
+  font-size: 1rem;
+}
+
+.header .required {
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.slot:not(.is-required) .header .required {
+  display: none;
 }
 
 .card {

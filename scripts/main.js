@@ -301,7 +301,9 @@ class Section extends Toggleable {
   shuffleIfInvalid({ animate = true } = {}) {
     if (!this.valid && !this.disabled) {
       this.shuffle({ animate });
+      return true;
     }
+    return false;
   }
 
   shuffle({ animate = true, isShuffleAll = false, forcedCards = null } = {}) {
@@ -494,7 +496,29 @@ class ScenarioSection extends Section {
   }
 }
 
-class ModuleSection extends Section {}
+class ModuleSection extends Section {
+  setCards(value) {
+    super.setCards(value);
+    this.updateRequiredLabels();
+  }
+
+  shuffleIfInvalid() {
+    const shuffled = super.shuffleIfInvalid();
+    if (!shuffled) {
+      this.updateRequiredLabels();
+    }
+  }
+
+  updateRequiredLabels() {
+    const required = this.parentSection.trueCard.requiredChildCards;
+    const slots = this.slots || [];
+    for (const slot of slots) {
+      const { root, card } = slot;
+      const isRequired = required.includes(card);
+      root.classList.toggle("is-required", isRequired);
+    }
+  }
+}
 
 class HeroSection extends Section {
   getPriority(hero) {

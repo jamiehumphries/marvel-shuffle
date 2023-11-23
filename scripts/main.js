@@ -502,8 +502,8 @@ class ModuleSection extends Section {
     this.updateRequiredLabels();
   }
 
-  shuffleIfInvalid() {
-    const shuffled = super.shuffleIfInvalid();
+  shuffleIfInvalid(options) {
+    const shuffled = super.shuffleIfInvalid(options);
     if (!shuffled) {
       this.updateRequiredLabels();
     }

@@ -507,6 +507,7 @@ class ModuleSection extends Section {
     if (!shuffled) {
       this.updateRequiredLabels();
     }
+    return shuffled;
   }
 
   updateRequiredLabels() {

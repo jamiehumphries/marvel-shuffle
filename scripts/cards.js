@@ -71,8 +71,8 @@ const modules = [
     module("Kree Militants"),
     module("Menagerie Medley"),
     module("Space Pirates"),
-    module("Power Stone"),
     module("Ship Command"),
+    module("Power Stone"),
     module("Badoon Headhunter")
   ),
   theMadTitansShadow(
@@ -147,14 +147,14 @@ const modules = [
     module("Reavers", { isLandscape: true })
   ),
   neXtEvolution(
-    module("Hope Summers", { hasBack: true }),
-    module("Flight"),
-    module("Super Strength"),
-    module("Telepathy"),
     module("Military Grade"),
     module("Mutant Slayers", { isLandscape: true }),
     module("Nasty Boys", { isLandscape: true }),
+    module("Hope Summers", { hasBack: true }),
     module("Black Tom Cassidy"),
+    module("Flight"),
+    module("Super Strength"),
+    module("Telepathy"),
     module("Extreme Measures", { isLandscape: true }),
     module("Mutant Insurrection", { isLandscape: true })
   ),

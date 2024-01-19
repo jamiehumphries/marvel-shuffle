@@ -31,6 +31,7 @@ const gambit = cardSet("Gambit");
 const rogue = cardSet("Rogue");
 const neXtEvolution = cardSet("NeXt Evolution", true);
 const ageOfApocalypse = cardSet("Age of Apocalypse", true);
+const iceman = cardSet("Iceman");
 
 const printAndPlay = cardSet("Print-and-Play");
 
@@ -162,6 +163,10 @@ const modules = [
   ageOfApocalypse(
     module("Infinites")
   ),
+  iceman(
+    module("Sauron")
+  ),
+
   printAndPlay(
     module("Kree Fanatic")
   ),
@@ -372,6 +377,7 @@ const heroes = [
     hero("Bishop", LEADERSHIP, "#0070c0"),
     hero("Magik", AGGRESSION, "#ffc000")
   ),
+  hero("Iceman", AGGRESSION, "#81deff"),
 ];
 
 function flatten(cardsOrSets) {

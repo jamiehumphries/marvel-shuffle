@@ -274,7 +274,8 @@ const scenarios = [
   ageOfApocalypse(
     scenario("Unus", 0, "#00b050"),
     scenario("Four Horsemen", 0, "#ffc000", { hasBack: true }),
-    scenario("Apocalypse", 0, "#305496", { hasBack: true })
+    scenario("Apocalypse", 0, "#305496", { hasBack: true }),
+    scenario("Dark Beast", 0, "#808080")
   ),
 ];
 

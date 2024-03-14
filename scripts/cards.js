@@ -32,6 +32,7 @@ const rogue = cardSet("Rogue");
 const neXtEvolution = cardSet("NeXt Evolution", true);
 const ageOfApocalypse = cardSet("Age of Apocalypse", true);
 const iceman = cardSet("Iceman");
+const jubilee = cardSet("Jubilee");
 
 const printAndPlay = cardSet("Print-and-Play");
 
@@ -165,6 +166,9 @@ const modules = [
   ),
   iceman(
     module("Sauron")
+  ),
+  jubilee(
+    module("Arcade")
   ),
 
   printAndPlay(
@@ -379,6 +383,7 @@ const heroes = [
     hero("Magik", AGGRESSION, "#ffc000")
   ),
   hero("Iceman", AGGRESSION, "#81deff"),
+  hero("Jubilee", JUSTICE, "#fcf600"),
 ];
 
 function flatten(cardsOrSets) {

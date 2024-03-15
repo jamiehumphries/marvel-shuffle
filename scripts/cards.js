@@ -162,7 +162,16 @@ const modules = [
     module("Mutant Insurrection", { isLandscape: true })
   ),
   ageOfApocalypse(
-    module("Infinites")
+    module("Infinites"),
+    module("Dystopian Nightmare", { isLandscape: true }),
+    module("Hounds", { isLandscape: true }),
+    module("Dark Riders", { isLandscape: true }),
+    module("Savage Land"),
+    module("Genosha"),
+    module("Blue Moon"),
+    module("Mission", { isLandscape: true }),
+    module("Prelates"),
+    module("Overseer")
   ),
   iceman(
     module("Sauron")

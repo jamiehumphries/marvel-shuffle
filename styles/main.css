@@ -310,6 +310,7 @@ button.danger {
   margin: 10px 0;
 }
 
+.section.scenario,
 .section.hero {
   /* Non-zero z-index for giant card fold out. */
   z-index: 1;
@@ -491,7 +492,7 @@ input:active + .checkmark {
   );
 }
 
-.hero.giant .slots {
+.section.giant .slots {
   --portrait-cards-in-section: 0;
   --landscape-cards-in-section: 0;
   --giant-cards-in-section: 1;
@@ -514,12 +515,12 @@ input:active + .checkmark {
   height: var(--slot-height-landscape);
 }
 
-.hero.giant .slot {
+.section.giant .slot {
   width: var(--card-height);
   height: var(--slot-height-giant);
 }
 
-.hero.wide .slot {
+.section.wide .slot {
   width: calc(2 * var(--card-width));
 }
 
@@ -591,8 +592,8 @@ input:active + .checkmark {
   cursor: zoom-in;
 }
 
-.hero.giant .slot,
-.hero.wide .slot {
+.section.giant .slot,
+.section.wide .slot {
   cursor: zoom-out;
 }
 
@@ -612,7 +613,7 @@ input:active + .checkmark {
   transition: transform var(--card-change-duration);
 }
 
-.hero.giant .card {
+.section.giant .card {
   transform: rotate(90deg);
 }
 
@@ -644,8 +645,8 @@ input:active + .checkmark {
   transition: transform var(--card-change-delay);
 }
 
-.hero.giant .card > .front,
-.hero.wide .card > .front {
+.section.giant .card > .front,
+.section.wide .card > .front {
   transform: rotateY(180deg);
 }
 

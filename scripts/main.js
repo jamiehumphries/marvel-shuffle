@@ -898,11 +898,11 @@ async function initialize() {
   settings.initialize();
   sections.map((section) => section.initialize());
 
-  for (const heroSection of heroSections) {
-    const heroSlot = heroSection.slots[0];
-    const sectionClassList = heroSection.root.classList;
-    const slotClassList = heroSlot.root.classList;
-    heroSlot.root.addEventListener("click", () => {
+  for (const section of [scenarioSection, ...heroSections]) {
+    const slot = section.slots[0];
+    const sectionClassList = section.root.classList;
+    const slotClassList = slot.root.classList;
+    slot.root.addEventListener("click", () => {
       if (sectionClassList.contains("flipping")) {
         return;
       }

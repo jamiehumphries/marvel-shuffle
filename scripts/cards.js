@@ -289,7 +289,7 @@ const scenarios = [
     scenario("Four Horsemen", ["Dystopian Nightmare", "Hounds"], "#ffc000", { hasBack: true }),
     scenario("Apocalypse", ["Dark Riders", "Infinites"], "#305496", { required: "Prelates", hasBack: true }),
     scenario("Dark Beast", ["Dystopian Nightmare"], "#808080", { required: ["Blue Moon", "Genosha", "Savage Land"] }),
-    scenario("En Sabah Nur", ["Celestial Tech", "Clan Akkaba"], "#1E365E", { hasBack: true })
+    scenario("En Sabah Nur", ["Celestial Tech", "Clan Akkaba"], "#1E365E", { hasBack: true, hasGiantForm: true })
   ),
 ];
 

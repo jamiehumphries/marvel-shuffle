@@ -224,6 +224,7 @@ class Scenario extends Card {
       exclude = [],
       required = [],
       hasBack = false,
+      hasGiantForm = false,
       additionalModulesPerHero = 0,
     } = {},
   ) {
@@ -238,6 +239,7 @@ class Scenario extends Card {
     super(name, {
       color,
       hasBack,
+      hasGiantForm,
       baseChildCardCount,
       defaultChildCards,
       excludedChildCards,

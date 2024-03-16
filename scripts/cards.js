@@ -169,9 +169,9 @@ const modules = [
     module("Savage Land"),
     module("Genosha"),
     module("Blue Moon"),
-    module("Mission", { isLandscape: true }),
-    module("Prelates"),
-    module("Overseer")
+    module("Celestial Tech"),
+    module("Clan Akkaba"),
+    module("Prelates", { hasBack: true })
   ),
   iceman(
     module("Sauron")
@@ -285,10 +285,11 @@ const scenarios = [
     scenario("Stryfe", ["Extreme Measures", "Mutant Insurrection"], "#ff0000", { required: "Hope Summers" })
   ),
   ageOfApocalypse(
-    scenario("Unus", 0, "#00b050"),
-    scenario("Four Horsemen", 0, "#ffc000", { hasBack: true }),
-    scenario("Apocalypse", 0, "#305496", { hasBack: true }),
-    scenario("Dark Beast", 0, "#808080")
+    scenario("Unus", ["Dystopian Nightmare"], "#00b050", { required: "Infinites" }),
+    scenario("Four Horsemen", ["Dystopian Nightmare", "Hounds"], "#ffc000", { hasBack: true }),
+    scenario("Apocalypse", ["Dark Riders", "Infinites"], "#305496", { required: "Prelates", hasBack: true }),
+    scenario("Dark Beast", ["Dystopian Nightmare"], "#808080", { required: ["Blue Moon", "Genosha", "Savage Land"] }),
+    scenario("En Sabah Nur", ["Celestial Tech", "Clan Akkaba"], "#1E365E", { hasBack: true })
   ),
 ];
 

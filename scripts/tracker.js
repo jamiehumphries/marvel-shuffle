@@ -10,6 +10,7 @@ const allDifficulties = [
   { id: "expert", label: "Expert" },
   { id: "standard-ii", label: "Standard II" },
   { id: "expert-ii", label: "Expert II" },
+  { id: "standard-iii", label: "Standard III" },
 ];
 
 const table = document.getElementById("tracker");

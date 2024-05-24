@@ -33,6 +33,7 @@ const neXtEvolution = cardSet("NeXt Evolution", true);
 const ageOfApocalypse = cardSet("Age of Apocalypse", true);
 const iceman = cardSet("Iceman");
 const jubilee = cardSet("Jubilee");
+const nightcrawler = cardSet("Nightcrawler");
 
 const printAndPlay = cardSet("Print-and-Play");
 
@@ -178,6 +179,9 @@ const modules = [
   ),
   jubilee(
     module("Arcade")
+  ),
+  nightcrawler(
+    module("Crazy Gang", { isLandscape: true })
   ),
 
   printAndPlay(
@@ -394,6 +398,7 @@ const heroes = [
   ),
   hero("Iceman", AGGRESSION, "#81deff"),
   hero("Jubilee", JUSTICE, "#fcf600"),
+  hero("Nightcrawler", PROTECTION, "#c00000"),
 ];
 
 function flatten(cardsOrSets) {

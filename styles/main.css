@@ -106,7 +106,8 @@ img#logo {
 }
 
 h1,
-h3 {
+h3,
+h4 {
   margin: 0;
 }
 
@@ -557,7 +558,7 @@ input:active + .checkmark {
   height: var(--card-header-height);
 }
 
-.header h3.name {
+.header h4.name {
   margin: 0;
   padding: 0 10px;
 
@@ -566,7 +567,7 @@ input:active + .checkmark {
   text-align: center;
 }
 
-.slot.is-required .header h3.name {
+.slot.is-required .header h4.name {
   font-size: 1rem;
 }
 

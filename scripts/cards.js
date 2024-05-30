@@ -13,6 +13,7 @@ function cardSet(name, isCampaign = false) {
 const coreSet = cardSet("Core Set");
 const theGreenGoblin = cardSet("The Green Goblin");
 const theWreckingCrew = cardSet("The Wrecking Crew");
+const printAndPlay = cardSet("Print-and-Play");
 const theRiseOfRedSkull = cardSet("The Rise of Red Skull", true);
 const theOnceAndFutureKang = cardSet("The Once and Future Kang");
 const theGalaxysMostWanted = cardSet("The Galaxy’s Most Wanted", true);
@@ -35,8 +36,6 @@ const iceman = cardSet("Iceman");
 const jubilee = cardSet("Jubilee");
 const nightcrawler = cardSet("Nightcrawler");
 
-const printAndPlay = cardSet("Print-and-Play");
-
 // MODULES
 
 function module(name, options) {
@@ -57,6 +56,9 @@ const modules = [
     module("A Mess of Things", { isLandscape: true }),
     module("Power Drain", { isLandscape: true }),
     module("Running Interference", { isLandscape: true })
+  ),
+  printAndPlay(
+    module("Kree Fanatic")
   ),
   theRiseOfRedSkull(
     module("Experimental Weapons"),
@@ -182,10 +184,6 @@ const modules = [
   ),
   nightcrawler(
     module("Crazy Gang", { isLandscape: true })
-  ),
-
-  printAndPlay(
-    module("Kree Fanatic")
   ),
 ];
 

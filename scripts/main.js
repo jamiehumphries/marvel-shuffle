@@ -537,6 +537,7 @@ class Slot extends Toggleable {
   constructor(root) {
     super();
     this.root = root;
+    this.header = root.querySelector(".header");
     this.name = root.querySelector(".name");
     this.cardFront = root.querySelector(".front img.front");
     this.cardFrontInner = root.querySelector(".front img.back");
@@ -558,21 +559,24 @@ class Slot extends Toggleable {
       return;
     }
 
-    if (newCard === oldCard) {
-      return;
-    }
-
     this.show();
     this.root.classList.toggle("landscape", newCard.isLandscape);
     this.root.classList.toggle("has-giant-form", newCard.hasGiantForm);
     this.root.classList.toggle("has-wide-form", newCard.hasWideForm);
-    this.name.innerText = newCard.name;
+
     this.cardFront.src = newCard.frontSrc;
     if (newCard.backSrc !== oldCard?.backSrc) {
       this.cardBack.src = newCard.backSrc;
     }
     this.cardFrontInner.src = newCard.frontInnerSrc || "";
     this.cardBackInner.src = newCard.backInnerSrc || "";
+
+    // Replacing the name element entirely fixes some animation bugs
+    // which were happening when just replacing the text.
+    this.name.remove();
+    this.name = this.name.cloneNode(true);
+    this.name.innerText = newCard.name;
+    requestPostAnimationFrame(() => this.header.prepend(this.name));
   }
 }
 

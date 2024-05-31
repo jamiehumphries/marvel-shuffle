@@ -648,7 +648,8 @@ input:active + .checkmark {
 
 .section.giant .card > .front,
 .section.wide .card > .front {
-  transform: rotateY(180deg);
+  /* 179.99deg fixes bug on iOS when using 180deg. */
+  transform: rotateY(179.99deg);
 }
 
 .scenario.flipping .next-scenario-button {

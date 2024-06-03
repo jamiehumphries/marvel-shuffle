@@ -615,7 +615,11 @@ input:active + .checkmark {
 }
 
 .section.giant .card {
-  transform: rotate(90deg);
+  transform: translateZ(10px) rotate(90deg);
+}
+
+.section.wide .card {
+  transform: translateZ(10px);
 }
 
 .front,

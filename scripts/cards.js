@@ -264,7 +264,7 @@ const scenarios = [
     scenario("Ebony Maw", ["Armies of Titan", "Black Order"], "#404040"),
     scenario("Tower Defense", "Armies of Titan", "#c7d0db", { hasBack }),
     scenario("Thanos", ["Black Order", "Children of Thanos"], "#9900ff", { required: "Infinity Gauntlet" }),
-    scenario("Hela", ["Legions of Hel", "Frost Giants"], "#B4D79D", { hasBack }),
+    scenario("Hela", ["Legions of Hel", "Frost Giants"], "#b4d79d", { hasBack }),
     scenario("Loki", ["Enchantress", "Frost Giants"], "#ffc000", { required: "Infinity Gauntlet" })
   ),
   theHood(
@@ -274,7 +274,7 @@ const scenarios = [
     scenario("Sandman", "Down to Earth", "#ffcc66", { required: "City in Chaos" }),
     scenario("Venom", "Down to Earth", "#404040", { required: "Symbiotic Strength" }),
     scenario("Mysterio", "Whispers of Paranoia", "#7030a0", { required: "Personal Nightmare" }),
-    scenario("The Sinister Six", 0, "#F4AD7C", { required: "Guerilla Tactics" }),
+    scenario("The Sinister Six", 0, "#f4ad7c", { required: "Guerilla Tactics" }),
     scenario("Venom Goblin", "Goblin Gear", "#375623", { required: "Symbiotic Strength" })
   ),
   mutantGenesis(
@@ -301,7 +301,7 @@ const scenarios = [
     scenario("Four Horsemen", ["Dystopian Nightmare", "Hounds"], "#ffc000", { hasBack }),
     scenario("Apocalypse", ["Dark Riders", "Infinites"], "#305496", { required: "Prelates", hasBack }),
     scenario("Dark Beast", ["Dystopian Nightmare"], "#808080", { required: ["Blue Moon", "Genosha", "Savage Land"] }),
-    scenario("En Sabah Nur", ["Celestial Tech", "Clan Akkaba"], "#1E365E", { hasBack, hasGiantForm })
+    scenario("En Sabah Nur", ["Celestial Tech", "Clan Akkaba"], "#1e365e", { hasBack, hasGiantForm })
   ),
 ];
 

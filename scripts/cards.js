@@ -4,6 +4,12 @@ function ensureArray(arrayOrString) {
   return Array.isArray(arrayOrString) ? arrayOrString : [arrayOrString];
 }
 
+// Display modifiers
+const isLandscape = true;
+const hasBack = true;
+const hasGiantForm = true;
+const hasWideForm = true;
+
 // SETS
 
 function cardSet(name, isCampaign = false) {
@@ -46,17 +52,17 @@ function module(name, options) {
 // prettier-ignore
 const modules = [
   coreSet(
-    module("Bomb Scare", { isLandscape: true }),
-    module("Masters of Evil", { isLandscape: true }),
-    module("Under Attack", { isLandscape: true }),
-    module("Legions of Hydra", { isLandscape: true }),
-    module("The Doomsday Chair", { isLandscape: true })
+    module("Bomb Scare", { isLandscape }),
+    module("Masters of Evil", { isLandscape }),
+    module("Under Attack", { isLandscape }),
+    module("Legions of Hydra", { isLandscape }),
+    module("The Doomsday Chair", { isLandscape })
   ),
   theGreenGoblin(
     module("Goblin Gimmicks"),
-    module("A Mess of Things", { isLandscape: true }),
-    module("Power Drain", { isLandscape: true }),
-    module("Running Interference", { isLandscape: true })
+    module("A Mess of Things", { isLandscape }),
+    module("Power Drain", { isLandscape }),
+    module("Running Interference", { isLandscape })
   ),
   printAndPlay(
     module("Kree Fanatic")
@@ -65,11 +71,11 @@ const modules = [
     module("Experimental Weapons"),
     module("Hydra Assault"),
     module("Weapon Master"),
-    module("Hydra Patrol", { isLandscape: true })
+    module("Hydra Patrol", { isLandscape })
   ),
   theOnceAndFutureKang(
-    module("Temporal", { isLandscape: true }),
-    module("Anachronauts", { isLandscape: true }),
+    module("Temporal", { isLandscape }),
+    module("Anachronauts", { isLandscape }),
     module("Master of Time")
   ),
   theGalaxysMostWanted(
@@ -83,16 +89,16 @@ const modules = [
     module("Badoon Headhunter")
   ),
   theMadTitansShadow(
-    module("Black Order", { isLandscape: true }),
+    module("Black Order", { isLandscape }),
     module("Armies of Titan"),
     module("Children of Thanos"),
     module("Infinity Gauntlet"),
-    module("Legions of Hel", { isLandscape: true }),
+    module("Legions of Hel", { isLandscape }),
     module("Frost Giants"),
     module("Enchantress")
   ),
   theHood(
-    module("Beasty Boys", { isLandscape: true }),
+    module("Beasty Boys", { isLandscape }),
     module("Brothers Grimm"),
     module("Crossfire’s Crew"),
     module("Mister Hyde"),
@@ -103,7 +109,7 @@ const modules = [
     module("Wrecking Crew")
   ),
   sinisterMotives(
-    module("City in Chaos", { isLandscape: true }),
+    module("City in Chaos", { isLandscape }),
     module("Down to Earth"),
     module("Goblin Gear"),
     module("Guerilla Tactics"),
@@ -126,12 +132,12 @@ const modules = [
     module("Iron Spider’s Sinister Six")
   ),
   mutantGenesis(
-    module("Brotherhood", { isLandscape: true }),
+    module("Brotherhood", { isLandscape }),
     module("Mystique"),
-    module("Zero Tolerance", { isLandscape: true }),
+    module("Zero Tolerance", { isLandscape }),
     module("Sentinels"),
-    module("Acolytes", { isLandscape: true }),
-    module("Future Past", { isLandscape: true })
+    module("Acolytes", { isLandscape }),
+    module("Future Past", { isLandscape })
   ),
   mojoMania(
     module("Crime"),
@@ -151,31 +157,31 @@ const modules = [
     module("Exodus")
   ),
   rogue(
-    module("Reavers", { isLandscape: true })
+    module("Reavers", { isLandscape })
   ),
   neXtEvolution(
     module("Military Grade"),
-    module("Mutant Slayers", { isLandscape: true }),
-    module("Nasty Boys", { isLandscape: true }),
-    module("Hope Summers", { hasBack: true }),
+    module("Mutant Slayers", { isLandscape }),
+    module("Nasty Boys", { isLandscape }),
+    module("Hope Summers", { hasBack }),
     module("Black Tom Cassidy"),
     module("Flight"),
     module("Super Strength"),
     module("Telepathy"),
-    module("Extreme Measures", { isLandscape: true }),
-    module("Mutant Insurrection", { isLandscape: true })
+    module("Extreme Measures", { isLandscape }),
+    module("Mutant Insurrection", { isLandscape })
   ),
   ageOfApocalypse(
     module("Infinites"),
-    module("Dystopian Nightmare", { isLandscape: true }),
-    module("Hounds", { isLandscape: true }),
-    module("Dark Riders", { isLandscape: true }),
+    module("Dystopian Nightmare", { isLandscape }),
+    module("Hounds", { isLandscape }),
+    module("Dark Riders", { isLandscape }),
     module("Savage Land"),
     module("Genosha"),
     module("Blue Moon"),
     module("Celestial Tech"),
     module("Clan Akkaba"),
-    module("Prelates", { hasBack: true })
+    module("Prelates", { hasBack })
   ),
   iceman(
     module("Sauron")
@@ -184,10 +190,10 @@ const modules = [
     module("Arcade")
   ),
   nightcrawler(
-    module("Crazy Gang", { isLandscape: true })
+    module("Crazy Gang", { isLandscape })
   ),
   magneto(
-    module("Hellfire", { isLandscape: true })
+    module("Hellfire", { isLandscape })
   ),
 ];
 
@@ -231,7 +237,7 @@ const scenarios = [
     scenario("Ultron", "Under Attack", "#ed7d31")
   ),
   theGreenGoblin(
-    scenario("Risky Business", "Goblin Gimmicks", "#00b050",  { hasBack: true }),
+    scenario("Risky Business", "Goblin Gimmicks", "#00b050",  { hasBack }),
     scenario("Mutagen Formula", "Goblin Gimmicks", "#660066")
   ),
   theWreckingCrew(
@@ -250,15 +256,15 @@ const scenarios = [
   theGalaxysMostWanted(
     scenario("Brotherhood of Badoon", "Band of Badoon", "#660066", { required: "Ship Command" }),
     scenario("Infiltrate the Museum", "Menagerie Medley", "#c00000", { required: "Galactic Artifacts" }),
-    scenario("Escape the Museum", "Menagerie Medley", "#afdc7e", { required: ["Galactic Artifacts", "Ship Command"], hasBack: true }),
+    scenario("Escape the Museum", "Menagerie Medley", "#afdc7e", { required: ["Galactic Artifacts", "Ship Command"], hasBack }),
     scenario("Nebula", "Space Pirates", "#a9cbe9", { required: ["Power Stone", "Ship Command"] }),
     scenario("Ronan the Accuser", "Kree Militants", "#305496", { required: ["Power Stone", "Ship Command"] })
   ),
   theMadTitansShadow(
     scenario("Ebony Maw", ["Armies of Titan", "Black Order"], "#404040"),
-    scenario("Tower Defense", "Armies of Titan", "#c7d0db", { hasBack: true }),
+    scenario("Tower Defense", "Armies of Titan", "#c7d0db", { hasBack }),
     scenario("Thanos", ["Black Order", "Children of Thanos"], "#9900ff", { required: "Infinity Gauntlet" }),
-    scenario("Hela", ["Legions of Hel", "Frost Giants"], "#B4D79D", { hasBack: true }),
+    scenario("Hela", ["Legions of Hel", "Frost Giants"], "#B4D79D", { hasBack }),
     scenario("Loki", ["Enchantress", "Frost Giants"], "#ffc000", { required: "Infinity Gauntlet" })
   ),
   theHood(
@@ -275,27 +281,27 @@ const scenarios = [
     scenario("Sabretooth", ["Brotherhood", "Mystique"], "#ffc000"),
     scenario("Project Wideawake", "Sentinels", "#9933ff", { required: "Zero Tolerance" }),
     scenario("Master Mold", "Zero Tolerance", "#7030a0", { required: "Sentinels" }),
-    scenario("Mansion Attack", "Mystique", "#d0cece", { required: "Brotherhood", hasBack: true }),
+    scenario("Mansion Attack", "Mystique", "#d0cece", { required: "Brotherhood", hasBack }),
     scenario("Magneto", "Acolytes", "#c00000")
   ),
   mojoMania(
-    scenario("Magog", 1, "#e66914", { hasBack: true }),
-    scenario("Spiral", 3, "#acccea", { restrictedSet: "MojoMania", hasBack: true }),
+    scenario("Magog", 1, "#e66914", { hasBack }),
+    scenario("Spiral", 3, "#acccea", { restrictedSet: "MojoMania", hasBack }),
     scenario("Mojo", 1, "#ffcc00", { restrictedSet: "MojoMania", additionalModulesPerHero: 1 })
   ),
   neXtEvolution(
-    scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], "#00b050", { hasBack: true }),
-    scenario("On the Run", ["Military Grade", "Nasty Boys"], "#7030a0", { required: "Mutant Slayers", hasBack: true }),
+    scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], "#00b050", { hasBack }),
+    scenario("On the Run", ["Military Grade", "Nasty Boys"], "#7030a0", { required: "Mutant Slayers", hasBack }),
     scenario("Juggernaut", "Black Tom Cassidy", "#c00000", { required: "Hope Summers" }),
     scenario("Mister Sinister", "Nasty Boys", "#305496", { required: ["Flight", "Super Strength", "Telepathy", "Hope Summers"] }),
     scenario("Stryfe", ["Extreme Measures", "Mutant Insurrection"], "#ff0000", { required: "Hope Summers" })
   ),
   ageOfApocalypse(
     scenario("Unus", ["Dystopian Nightmare"], "#00b050", { required: "Infinites" }),
-    scenario("Four Horsemen", ["Dystopian Nightmare", "Hounds"], "#ffc000", { hasBack: true }),
-    scenario("Apocalypse", ["Dark Riders", "Infinites"], "#305496", { required: "Prelates", hasBack: true }),
+    scenario("Four Horsemen", ["Dystopian Nightmare", "Hounds"], "#ffc000", { hasBack }),
+    scenario("Apocalypse", ["Dark Riders", "Infinites"], "#305496", { required: "Prelates", hasBack }),
     scenario("Dark Beast", ["Dystopian Nightmare"], "#808080", { required: ["Blue Moon", "Genosha", "Savage Land"] }),
-    scenario("En Sabah Nur", ["Celestial Tech", "Clan Akkaba"], "#1E365E", { hasBack: true, hasGiantForm: true })
+    scenario("En Sabah Nur", ["Celestial Tech", "Clan Akkaba"], "#1E365E", { hasBack, hasGiantForm })
   ),
 ];
 
@@ -348,8 +354,8 @@ const heroes = [
     hero("Hawkeye", LEADERSHIP, "#7030a0"),
     hero("Spider-Woman", [AGGRESSION, JUSTICE], "#ffc000")
   ),
-  hero("Ant-Man", LEADERSHIP, "#c00000", { hasGiantForm: true }),
-  hero("Wasp", AGGRESSION, "#404040", { hasGiantForm: true }),
+  hero("Ant-Man", LEADERSHIP, "#c00000", { hasGiantForm }),
+  hero("Wasp", AGGRESSION, "#404040", { hasGiantForm }),
   hero("Quicksilver", PROTECTION, "#81deff"),
   hero("Scarlet Witch", JUSTICE, "#ff0000"),
   theGalaxysMostWanted(
@@ -391,7 +397,7 @@ const heroes = [
     hero("Domino", JUSTICE, "#f2f2f2")
   ),
   hero("Psylocke", JUSTICE, "#ff97ff"),
-  hero("Angel", PROTECTION, "#0070c0", { hasWideForm: true }),
+  hero("Angel", PROTECTION, "#0070c0", { hasWideForm }),
   hero("X-23", AGGRESSION, "#404040"),
   hero("Deadpool", POOL, "#ff3737"),
   ageOfApocalypse(

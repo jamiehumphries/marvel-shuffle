@@ -35,6 +35,7 @@ const ageOfApocalypse = cardSet("Age of Apocalypse", true);
 const iceman = cardSet("Iceman");
 const jubilee = cardSet("Jubilee");
 const nightcrawler = cardSet("Nightcrawler");
+const magneto = cardSet("Magneto");
 
 // MODULES
 
@@ -184,6 +185,9 @@ const modules = [
   ),
   nightcrawler(
     module("Crazy Gang", { isLandscape: true })
+  ),
+  magneto(
+    module("Hellfire", { isLandscape: true })
   ),
 ];
 
@@ -397,6 +401,7 @@ const heroes = [
   hero("Iceman", AGGRESSION, "#81deff"),
   hero("Jubilee", JUSTICE, "#fcf600"),
   hero("Nightcrawler", PROTECTION, "#c00000"),
+  hero("Magneto", LEADERSHIP, "#c7d0db"),
 ];
 
 function flatten(cardsOrSets) {

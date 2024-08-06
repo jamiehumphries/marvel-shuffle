@@ -325,11 +325,10 @@ class Section extends Toggleable {
 
     for (let i = 0; i < cardCount; i++) {
       const oldCard = this.cards[i];
-      const preferExclude = !isShuffleAll ? oldCard : null;
       const newCard =
         i < required.length
           ? required[i]
-          : this.randomCard({ isShuffleAll, exclude, preferExclude });
+          : this.randomCard({ isShuffleAll, exclude });
       newCards.push(newCard);
       exclude.push(newCard);
 
@@ -358,22 +357,13 @@ class Section extends Toggleable {
     }
   }
 
-  randomCard({
-    isShuffleAll = false,
-    exclude = [],
-    preferExclude = null,
-    available = null,
-  } = {}) {
+  randomCard({ isShuffleAll = false, exclude = [], available = null } = {}) {
     available ||= this.allCheckedCards;
     available = available.filter((card) => !exclude.includes(card));
 
-    if (preferExclude !== null && available.length > 1) {
-      available = available.filter((card) => card !== preferExclude);
-    }
-
     if (available.length === 0) {
       available = this.getDefaultOptions();
-      return this.randomCard({ exclude, preferExclude, available });
+      return this.randomCard({ exclude, available });
     }
 
     const prioritisedAvailable = available.flatMap((card) =>

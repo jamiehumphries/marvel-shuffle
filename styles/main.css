@@ -86,7 +86,6 @@ img[src=""] {
 
 .container {
   position: relative;
-
   margin: auto;
   padding: var(--container-padding);
   max-width: var(--container-max-width);
@@ -119,18 +118,13 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-
   margin: 0 auto;
-
   outline: none;
   border: 3px solid var(--button-border-and-text-color);
   border-radius: calc(10px * var(--button-scale-factor)) 0;
-
   background-color: var(--button-background-color);
-
   width: calc(150px * var(--button-scale-factor));
   height: calc(50px * var(--button-scale-factor));
-
   color: var(--button-border-and-text-color);
   font-size: calc(1rem * var(--button-scale-factor));
 }
@@ -186,18 +180,13 @@ body.show-settings .button.shuffle:disabled {
   position: absolute;
   top: calc(var(--container-padding) / 2);
   right: var(--container-padding);
-
   flex-direction: column;
   align-items: center;
-
   border: none;
   border-radius: 10px;
-
   background: none;
-
   padding: 10px 0;
   width: 70px;
-
   color: var(--icon-button-text-color);
   font-size: 0.7rem;
 }
@@ -263,7 +252,6 @@ body.has-user-id .hide-if-has-user-id {
 .sync-button {
   --button-background-color: var(--button-background-color--sync);
   --button-background-color-hover: var(--button-background-color-hover--sync);
-
   width: 320px;
 }
 
@@ -331,7 +319,6 @@ button.danger {
   position: absolute;
   opacity: 0;
   z-index: -1;
-
   width: 0;
   height: 0;
 }
@@ -340,15 +327,11 @@ button.danger {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-
   cursor: pointer;
-
   box-sizing: border-box;
   margin-bottom: 0.25rem;
-
   border: 1px solid var(--option-border-and-check-color);
   border-radius: 50%;
-
   width: 2rem;
   height: 2rem;
 }
@@ -383,9 +366,7 @@ button.danger {
   display: flex;
   position: relative;
   align-items: center;
-
   cursor: pointer;
-
   margin: 0.5rem 0;
 }
 
@@ -409,11 +390,9 @@ button.danger {
 
 .option input {
   position: absolute;
-
   opacity: 0;
   z-index: -1;
   cursor: pointer;
-
   width: 0;
   height: 0;
 }
@@ -421,10 +400,8 @@ button.danger {
 .checkmark {
   position: relative;
   flex: none;
-
   box-sizing: border-box;
   margin-right: 8px;
-
   border: 2px solid var(--option-border-and-check-color);
   width: 20px;
   height: 20px;
@@ -440,7 +417,6 @@ input:indeterminate + .checkmark:after {
   display: block;
   width: 100%;
   content: "-";
-
   font-style: normal;
   font-weight: normal;
   text-align: center;
@@ -448,18 +424,13 @@ input:indeterminate + .checkmark:after {
 
 input:checked + .checkmark:after {
   display: block;
-
   position: absolute;
   left: 5px;
-
   transform: rotate(40deg);
-
   border: solid var(--option-border-and-check-color);
   border-width: 0 2px 2px 0;
-
   width: 5px;
   height: 10px;
-
   content: "";
 }
 
@@ -501,11 +472,8 @@ input:active + .checkmark {
 
 .slot {
   position: relative;
-
   transform-style: preserve-3d;
-
   opacity: 1;
-
   margin: auto;
   width: var(--card-width);
   height: var(--slot-height-portrait);
@@ -551,17 +519,14 @@ input:active + .checkmark {
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   box-sizing: border-box;
   padding-top: 3px;
-
   height: var(--card-header-height);
 }
 
 .header h4.name {
   margin: 0;
   padding: 0 10px;
-
   font-weight: normal;
   font-size: 1.2rem;
   text-align: center;
@@ -583,7 +548,6 @@ input:active + .checkmark {
 .card {
   transform-origin: calc(var(--card-height) / 2) calc(var(--card-height) / 2);
   transform-style: preserve-3d;
-
   width: var(--card-width);
   height: var(--card-height);
 }
@@ -625,10 +589,8 @@ input:active + .checkmark {
 .front,
 .back {
   position: absolute;
-
   transform-style: preserve-3d;
   backface-visibility: hidden;
-
   width: 100%;
   height: 100%;
 }
@@ -668,28 +630,23 @@ body:not(.has-next-scenario) .next-scenario-button {
 .next-scenario-button {
   --campaign-image-size: 50px;
   --next-scenario-button-padding: 0.25rem;
-
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-
   opacity: 1;
   transition:
     height var(--card-change-duration),
     opacity var(--card-change-delay);
-
   margin: 0.5rem auto 0 auto;
   border: none;
   border-radius: var(--next-scenario-button-padding);
   background: none;
   padding: var(--next-scenario-button-padding);
-
   width: var(--card-width);
   height: calc(
     var(--campaign-image-size) + 2 * var(--next-scenario-button-padding)
   );
-
   color: var(--button-border-and-text-color);
   font-size: 1rem;
 }
@@ -712,10 +669,8 @@ body:not(.has-next-scenario) .next-scenario-button {
 
 #tracking {
   gap: 4px;
-
   opacity: 1;
   transition: opacity calc(var(--card-change-duration) * 0.75);
-
   margin-top: 20px;
 }
 
@@ -817,7 +772,6 @@ body:not(.show-tracker) #tracking {
   img#logo {
     display: block;
     position: relative;
-
     margin: 0 auto 20px auto;
   }
 

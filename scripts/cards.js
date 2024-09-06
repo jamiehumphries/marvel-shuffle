@@ -37,6 +37,7 @@ const storm = cardSet("Storm");
 const gambit = cardSet("Gambit");
 const rogue = cardSet("Rogue");
 const neXtEvolution = cardSet("NeXt Evolution", true);
+const deadpool = cardSet("Deadpool");
 const ageOfApocalypse = cardSet("Age of Apocalypse", true);
 const iceman = cardSet("Iceman");
 const jubilee = cardSet("Jubilee");
@@ -325,7 +326,9 @@ const aspects = [
     LEADERSHIP,
     PROTECTION
   ),
-  POOL,
+  deadpool(
+    POOL
+  ),
 ];
 
 // HEROES

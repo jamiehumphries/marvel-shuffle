@@ -310,7 +310,7 @@ function getSlug(...names) {
   return names
     .join()
     .toLowerCase()
-    .replaceAll(/’/g, "") // Remove apostrophes.
+    .replaceAll(/[’\.]/g, "") // Remove apostrophes and full stops.
     .replaceAll(/[^a-zA-Z0-9]+/g, "-") // Replace all non-word characters with "-".
     .replaceAll(/(^\-+|\-+$)/g, ""); // Strip any leading and trailing "-".
 }

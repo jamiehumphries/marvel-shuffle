@@ -3,8 +3,9 @@
     "start": "serve"
   },
   "devDependencies": {
-    "prettier-plugin-css-order": "2.0.1",
-    "serve": "14.2.3"
+    "prettier": "3.3.3",
+    "prettier-plugin-css-order": "2.1.2",
+    "serve": "14.2.4"
   },
   "prettier": {
     "plugins": [

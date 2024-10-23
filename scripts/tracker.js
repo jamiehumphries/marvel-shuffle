@@ -7,10 +7,10 @@ const UNPLAYED = "?";
 
 const allDifficulties = [
   { id: "standard", label: "Standard", defaultValue: true },
-  { id: "expert", label: "Expert" },
   { id: "standard-ii", label: "Standard II" },
-  { id: "expert-ii", label: "Expert II" },
   { id: "standard-iii", label: "Standard III" },
+  { id: "expert", label: "Expert" },
+  { id: "expert-ii", label: "Expert II" },
 ];
 
 const table = document.getElementById("tracker");

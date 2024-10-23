@@ -348,8 +348,7 @@ class Section extends Toggleable {
       this.disabled = true;
       document.body.classList.add("shuffling");
       this.root.classList.add("flipping");
-      this.root.classList.remove("giant");
-      this.root.classList.remove("wide");
+      this.root.classList.remove("giant", "wide");
       this.incomingCards = newCards;
       setTimeout(() => (this.cards = newCards), cardChangeDelayMs);
     } else {

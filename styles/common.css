@@ -49,7 +49,7 @@ a.link {
   display: block;
   mask-size: cover;
   -webkit-mask-size: cover;
-  background: currentColor;
+  background: currentcolor;
   width: 1em;
   height: 1em;
   content: " ";

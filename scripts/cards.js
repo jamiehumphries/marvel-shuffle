@@ -211,7 +211,7 @@ function findModules(names) {
 function findModule(name) {
   const module = allModules.find((module) => module.name === name);
   if (!module) {
-    throw new Error(`Could not find moduled named "${name}".`);
+    throw new Error(`Could not find module named "${name}".`);
   }
   return module;
 }

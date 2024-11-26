@@ -419,7 +419,8 @@ const heroes = [
   hero("Nightcrawler", PROTECTION, "#c00000"),
   hero("Magneto", LEADERSHIP, "#c7d0db"),
   agentsOfShield(
-    hero("Maria Hill", LEADERSHIP, "#404040")
+    hero("Maria Hill", LEADERSHIP, "#404040"),
+    hero("Nick Fury", JUSTICE, "#c00000")
   ),
 ];
 

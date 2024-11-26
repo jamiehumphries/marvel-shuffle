@@ -70,6 +70,7 @@ body {
   padding: 0;
   overflow-y: scroll;
   font-family: "Back Issues BB", sans-serif;
+  text-transform: lowercase;
 }
 
 button {

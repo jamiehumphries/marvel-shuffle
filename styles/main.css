@@ -60,17 +60,10 @@
   --giant-cards-in-section: 0;
 }
 
-@font-face {
-  src: url(fonts/BackIssuesBB_reg.otf);
-  font-family: "Back Issues BB";
-}
-
 body {
   margin: 0;
   padding: 0;
   overflow-y: scroll;
-  font-family: "Back Issues BB", sans-serif;
-  text-transform: lowercase;
 }
 
 button {

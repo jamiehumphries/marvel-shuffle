@@ -1,5 +1,5 @@
-import { Setting } from "./options.js?v=2.4.7";
-import { getItem, setItem } from "./storage.js?v=2.4.7";
+import { Setting } from "./options.js?v=2.4.8";
+import { getItem, setItem } from "./storage.js?v=2.4.8";
 
 const WIN = "✓";
 const LOSS = "✗";

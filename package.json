@@ -1,5 +1,7 @@
 {
+  "type": "module",
   "scripts": {
+    "build": "node build.js",
     "start": "serve docs"
   },
   "prettier": {
@@ -12,8 +14,10 @@
     "serve": "14.2.4"
   },
   "devDependencies": {
+    "glob": "11.0.0",
     "prettier": "3.3.3",
     "prettier-plugin-css-order": "2.1.2",
-    "prettier-plugin-packagejson": "2.5.6"
+    "prettier-plugin-packagejson": "2.5.6",
+    "replace-in-file": "8.2.0"
   }
 }

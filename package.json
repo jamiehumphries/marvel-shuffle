@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "serve"
+    "start": "serve docs"
   },
   "prettier": {
     "plugins": [

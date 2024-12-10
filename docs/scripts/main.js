@@ -824,7 +824,7 @@ function chooseRandom(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-async function tryUseBookmarkUrl(url) {
+function tryUseBookmarkUrl(url) {
   try {
     const userId = new URL(url).searchParams.get("id");
     if (!userId) {
@@ -839,7 +839,7 @@ async function tryUseBookmarkUrl(url) {
 }
 
 async function initialize() {
-  if (await tryUseBookmarkUrl(location.href)) {
+  if (tryUseBookmarkUrl(location.href)) {
     return;
   }
 
@@ -863,9 +863,9 @@ async function initialize() {
     bookmarkUrlElement.innerText = url;
   });
 
-  useBookmarkUrlButton.addEventListener("click", async () => {
+  useBookmarkUrlButton.addEventListener("click", () => {
     const url = prompt("Paste your bookmark URL here. The page will reload.");
-    const success = await tryUseBookmarkUrl(url);
+    const success = tryUseBookmarkUrl(url);
     if (!success) {
       alert("Invalid bookmark URL.");
     }
@@ -877,7 +877,7 @@ async function initialize() {
     alert("Your bookmark URL has been copied to the clipboard.");
   });
 
-  clearBookmarkUrlButton.addEventListener("click", async () => {
+  clearBookmarkUrlButton.addEventListener("click", () => {
     const confirmed = confirm(
       "Your bookmark URL will be cleared from this browser. Click OK to confirm.",
     );

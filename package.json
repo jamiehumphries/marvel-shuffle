@@ -3,6 +3,7 @@
   "type": "module",
   "scripts": {
     "build": "node build.js",
+    "release": "git stash -u && npm run build && git commit -am 'Update release versions' && git stash pop",
     "start": "serve docs"
   },
   "prettier": {

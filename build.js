@@ -5,10 +5,14 @@ import { resolve } from "path";
 import { replaceInFileSync } from "replace-in-file";
 
 const assets = globSync("docs/**/*.{css,js}", { withFileTypes: true });
+updateVersions(assets);
 
-let changed = true;
-while (changed) {
-  changed = assets.some(updateVersion);
+function updateVersions(assets) {
+  const results = assets.map((asset) => updateVersion(asset));
+  const anyHasChanged = results.some((result) => result.hasChanged);
+  if (anyHasChanged) {
+    updateVersions(assets);
+  }
 }
 
 function updateVersion(asset) {
@@ -27,5 +31,6 @@ function updateVersion(asset) {
     to: hash,
   });
 
-  return results.some((result) => result.hasChanged);
+  const hasChanged = results.some((result) => result.hasChanged);
+  return { hasChanged };
 }

@@ -1,11 +1,30 @@
+import { execSync } from "child_process";
 import { createHash } from "crypto";
 import { readFileSync } from "fs";
 import { globSync } from "glob";
 import { resolve } from "path";
 import { replaceInFileSync } from "replace-in-file";
 
+const level = process.argv[2] || "patch";
+
+execSync("git stash --include-untracked --quiet");
+
+const version = execSync(`npm version ${level} --no-git-tag-version`)
+  .toString()
+  .trim();
+
+console.log(`Building ${version}`);
+console.log();
+
 const assets = globSync("docs/**/*.{css,js}", { withFileTypes: true });
 updateVersions(assets);
+
+execSync(`git commit --all --message="Build ${version}"`);
+execSync(`git tag ${version}`);
+
+try {
+  execSync("git stash pop --index --quiet");
+} catch {}
 
 function updateVersions(assets) {
   const results = assets.map((asset) => updateVersion(asset));

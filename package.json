@@ -4,8 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node build.js",
-    "release": "git stash -u && npm run build && git commit -am 'Update release versions' && git stash pop",
+    "build": "npm run build:patch",
+    "build:major": "node build.js major",
+    "build:minor": "node build.js minor",
+    "build:patch": "node build.js patch",
     "start": "serve docs"
   },
   "prettier": {

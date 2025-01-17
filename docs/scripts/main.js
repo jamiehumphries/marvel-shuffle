@@ -200,8 +200,8 @@ class Section extends Toggleable {
     this._cards = value;
     this.saveCards(value);
 
-    this.name.innerText =
-      value.length === 1 ? this.type.name : this.type.namePlural;
+    this.title.innerText =
+      value.length === 1 ? this.type.title : this.type.titlePlural;
 
     const slotCards =
       value.length === 0 && this.type.placeholder
@@ -235,10 +235,9 @@ class Section extends Toggleable {
     const element = sectionTemplate.content.cloneNode(true);
     this.root.appendChild(element);
 
-    const nameText = this.type.name;
-    this.name = this.root.querySelector(".type-name");
-    this.name.innerText = nameText;
-    const selectText = `Select ${this.type.namePlural}`;
+    this.title = this.root.querySelector(".type-title");
+    this.title.innerText = this.type.title;
+    const selectText = `Select ${this.type.titlePlural}`;
     this.root.querySelector(".select").innerText = selectText;
 
     const slotsContainer = this.root.querySelector(".slots");
@@ -266,10 +265,10 @@ class Section extends Toggleable {
         ? "no"
         : "too few";
     optionsHint.classList.add("options-hint");
-    optionsHint.innerText = `If ${noOrTooFew} ${this.type.namePlural} are selected, `;
+    optionsHint.innerText = `If ${noOrTooFew} ${this.type.titlePlural} are selected, `;
     optionsHint.innerText += this.parentSection
-      ? `${this.parentSection.type.name} default(s) will be used`
-      : `Core Set ${this.type.namePlural} will be used`;
+      ? `${this.parentSection.type.title} default(s) will be used`
+      : `Core Set ${this.type.titlePlural} will be used`;
     options.appendChild(optionsHint);
 
     const all = new All(this);
@@ -386,7 +385,7 @@ class Section extends Toggleable {
     }
 
     const parentSet = this.cardsOrSets.find(
-      (set) => set.name === parentCard?.parent?.name,
+      (set) => set.title === parentCard?.parent?.title,
     );
     if (parentSet) {
       return parentSet.children;
@@ -527,8 +526,8 @@ class Slot extends Toggleable {
     super();
     this.root = root;
     this.header = root.querySelector(".header");
-    this.name = root.querySelector(".name");
-    this.subname = root.querySelector(".subname");
+    this.title = root.querySelector(".title");
+    this.subtitle = root.querySelector(".subtitle");
     this.cardFront = root.querySelector(".front img.front");
     this.cardFrontInner = root.querySelector(".front img.back");
     this.cardBack = root.querySelector(".back img.front");
@@ -561,19 +560,19 @@ class Slot extends Toggleable {
     this.cardFrontInner.src = newCard.frontInnerSrc || "";
     this.cardBackInner.src = newCard.backInnerSrc || "";
 
-    // Replacing the name element entirely fixes some animation bugs
+    // Replacing the title element entirely fixes some animation bugs
     // which were happening when just replacing the text.
 
-    this.name.remove();
-    this.name = this.name.cloneNode(true);
-    this.name.innerText = newCard.name;
+    this.title.remove();
+    this.title = this.title.cloneNode(true);
+    this.title.innerText = newCard.title;
 
-    this.subname.remove();
-    this.subname = this.subname.cloneNode(true);
-    this.subname.innerText = newCard.subname;
+    this.subtitle.remove();
+    this.subtitle = this.subtitle.cloneNode(true);
+    this.subtitle.innerText = newCard.subtitle;
 
     requestPostAnimationFrame(() =>
-      this.header.prepend(this.name, this.subname),
+      this.header.prepend(this.title, this.subtitle),
     );
   }
 }

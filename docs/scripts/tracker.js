@@ -73,7 +73,7 @@ function appendHeaderRows(thead, scenarios, difficulties) {
     for (let i = 0; i < set.children.length; i++) {
       const scenario = set.children[i];
 
-      const { name: text, color } = scenario;
+      const { title: text, color } = scenario;
       const colbreak = i === 0;
       const header = true;
 
@@ -175,10 +175,10 @@ function appendHeroRow(
 ) {
   const row = createRow({ rowbreak });
 
-  const { name: text, subname: subname, color } = hero;
+  const { title: text, subtitle: subtitle, color } = hero;
   const heroCell = createCell({
     text,
-    subname,
+    subtitle,
     color,
     colspan: difficulties.length,
     header: true,
@@ -236,7 +236,7 @@ function createGameCell(scenario, hero, difficulty, options = {}) {
 function createCell({
   contentDiv = null,
   text = null,
-  subname = null,
+  subtitle = null,
   color = null,
   colspan = 1,
   colbreak = false,
@@ -275,11 +275,11 @@ function createCell({
     textDiv.innerText = text;
     div.appendChild(textDiv);
 
-    if (subname) {
-      const subnameDiv = document.createElement("div");
-      subnameDiv.innerText = subname;
-      subnameDiv.classList.add("subname");
-      div.appendChild(subnameDiv);
+    if (subtitle) {
+      const subtitleDiv = document.createElement("div");
+      subtitleDiv.innerText = subtitle;
+      subtitleDiv.classList.add("subtitle");
+      div.appendChild(subtitleDiv);
     }
   }
 

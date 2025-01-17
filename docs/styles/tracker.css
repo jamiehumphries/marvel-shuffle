@@ -66,7 +66,7 @@ body {
   padding: calc(var(--cell-height) / 10) calc(var(--cell-width) / 10);
 }
 
-#tracker th > div > .subname {
+#tracker th > div > .subtitle {
   margin-top: 0.2rem;
   font-size: 0.7rem;
 }

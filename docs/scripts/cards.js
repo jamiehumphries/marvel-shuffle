@@ -18,8 +18,8 @@ const hasWideForm = true;
 
 // SETS
 
-function cardSet(name, isCampaign = false) {
-  return (...cards) => new CardSet(name, cards, isCampaign);
+function cardSet(title, isCampaign = false) {
+  return (...cards) => new CardSet(title, cards, isCampaign);
 }
 
 const coreSet = cardSet("Core Set");
@@ -52,8 +52,8 @@ const magneto = cardSet("Magneto");
 
 // MODULES
 
-function module(name, options) {
-  return new Module(name, options);
+function module(title, options) {
+  return new Module(title, options);
 }
 
 // prettier-ignore
@@ -210,30 +210,30 @@ const allModules = modules.flatMap(
   (cardOrSet) => cardOrSet.children || [cardOrSet],
 );
 
-function findModules(names) {
-  return ensureArray(names).map((name) => findModule(name));
+function findModules(titles) {
+  return ensureArray(titles).map((title) => findModule(title));
 }
 
-function findModule(name) {
-  const module = allModules.find((module) => module.name === name);
+function findModule(title) {
+  const module = allModules.find((module) => module.title === title);
   if (!module) {
-    throw new Error(`Could not find module named "${name}".`);
+    throw new Error(`Could not find module titled "${title}".`);
   }
   return module;
 }
 
-function scenario(name, moduleNamesOrNumber, color, options = {}) {
+function scenario(title, moduleTitlesOrNumber, color, options = {}) {
   if (options.restrictedSet) {
     options.exclude = allModules.filter(
-      (module) => module.parent?.name !== options.restrictedSet,
+      (module) => module.parent?.title !== options.restrictedSet,
     );
   }
   options.required &&= findModules(options.required);
   const modulesOrNumber =
-    typeof moduleNamesOrNumber === "number"
-      ? moduleNamesOrNumber
-      : findModules(moduleNamesOrNumber);
-  return new Scenario(name, modulesOrNumber, color, options);
+    typeof moduleTitlesOrNumber === "number"
+      ? moduleTitlesOrNumber
+      : findModules(moduleTitlesOrNumber);
+  return new Scenario(title, modulesOrNumber, color, options);
 }
 
 // prettier-ignore
@@ -314,8 +314,8 @@ const scenarios = [
 
 // ASPECTS
 
-function aspect(name) {
-  return new Aspect(name);
+function aspect(title) {
+  return new Aspect(title);
 }
 
 const AGGRESSION = aspect("Aggression");
@@ -339,9 +339,9 @@ const aspects = [
 
 // HEROES
 
-function hero(name, aspects, color, options) {
+function hero(title, aspects, color, options) {
   aspects = ensureArray(aspects);
-  return new Hero(name, aspects, color, options);
+  return new Hero(title, aspects, color, options);
 }
 
 // prettier-ignore

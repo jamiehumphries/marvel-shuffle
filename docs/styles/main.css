@@ -392,7 +392,7 @@ button.danger {
   height: 0;
 }
 
-.option .subname {
+.option .subtitle {
   font-size: 0.7rem;
 }
 
@@ -523,7 +523,7 @@ input:active + .checkmark {
   height: var(--card-header-height);
 }
 
-.header h4.name {
+.header h4.title {
   margin: 0;
   padding: 0 10px;
   font-weight: normal;
@@ -531,11 +531,11 @@ input:active + .checkmark {
   text-align: center;
 }
 
-.slot.is-required .header h4.name {
+.slot.is-required .header h4.title {
   font-size: 1rem;
 }
 
-.header .subname,
+.header .subtitle,
 .header .required {
   font-size: 0.7rem;
   text-align: center;
@@ -747,7 +747,7 @@ body:not(.show-tracker) #tracking {
     --layout-scale-factor: 0.85;
   }
 
-  .name {
+  .title {
     font-size: 1.1rem;
   }
 }
@@ -757,7 +757,7 @@ body:not(.show-tracker) #tracking {
     --layout-scale-factor: 0.7;
   }
 
-  .name {
+  .title {
     font-size: 1rem;
   }
 }

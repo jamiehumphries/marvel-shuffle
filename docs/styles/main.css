@@ -392,6 +392,10 @@ button.danger {
   height: 0;
 }
 
+.option .subname {
+  font-size: 0.7rem;
+}
+
 .checkmark {
   position: relative;
   flex: none;
@@ -531,6 +535,7 @@ input:active + .checkmark {
   font-size: 1rem;
 }
 
+.header .subname,
 .header .required {
   font-size: 0.7rem;
   text-align: center;

@@ -528,6 +528,7 @@ class Slot extends Toggleable {
     this.root = root;
     this.header = root.querySelector(".header");
     this.name = root.querySelector(".name");
+    this.subname = root.querySelector(".subname");
     this.cardFront = root.querySelector(".front img.front");
     this.cardFrontInner = root.querySelector(".front img.back");
     this.cardBack = root.querySelector(".back img.front");
@@ -562,10 +563,18 @@ class Slot extends Toggleable {
 
     // Replacing the name element entirely fixes some animation bugs
     // which were happening when just replacing the text.
+
     this.name.remove();
     this.name = this.name.cloneNode(true);
     this.name.innerText = newCard.name;
-    requestPostAnimationFrame(() => this.header.prepend(this.name));
+
+    this.subname.remove();
+    this.subname = this.subname.cloneNode(true);
+    this.subname.innerText = newCard.subname;
+
+    requestPostAnimationFrame(() =>
+      this.header.prepend(this.name, this.subname),
+    );
   }
 }
 

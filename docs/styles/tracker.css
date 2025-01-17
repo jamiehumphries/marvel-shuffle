@@ -45,6 +45,7 @@ body {
 #tracker th > div,
 #tracker td > div {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -63,6 +64,11 @@ body {
 
 #tracker th > div {
   padding: calc(var(--cell-height) / 10) calc(var(--cell-width) / 10);
+}
+
+#tracker th > div > .subname {
+  margin-top: 0.2rem;
+  font-size: 0.7rem;
 }
 
 #tracker td > input[type="checkbox"] {

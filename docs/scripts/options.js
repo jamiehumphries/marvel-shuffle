@@ -4,6 +4,7 @@ class Option {
   constructor(
     name,
     {
+      subname = null,
       variant = null,
       type = null,
       slug = null,
@@ -13,8 +14,9 @@ class Option {
     } = {},
   ) {
     this.name = name;
+    this.subname = subname;
     this.type = type || this.constructor;
-    this.slug = slug || getSlug(this.name, variant);
+    this.slug = slug || getSlug(this.name, subname || variant);
     this.id = `${this.type.slug}--${this.slug}`;
     this.children = children;
     this._onChange = onChange;
@@ -72,7 +74,21 @@ class Option {
 
     label.appendChild(input);
     label.appendChild(checkmark);
-    label.append(this.name);
+
+    const textWrapperDiv = document.createElement("div");
+
+    const nameDiv = document.createElement("div");
+    nameDiv.innerText = this.name;
+    textWrapperDiv.append(nameDiv);
+
+    if (this.subname) {
+      const subnameDiv = document.createElement("div");
+      subnameDiv.innerText = this.subname;
+      subnameDiv.classList.add("subname");
+      textWrapperDiv.append(subnameDiv);
+    }
+
+    label.append(textWrapperDiv);
 
     input.addEventListener("click", (event) => {
       this.checked = event.target.checked;
@@ -157,7 +173,7 @@ class Card extends Option {
   constructor(
     name,
     {
-      variant = null,
+      subname = null,
       color = null,
       isLandscape = false,
       baseChildCardCount = 0,
@@ -170,7 +186,7 @@ class Card extends Option {
       hasWideForm = false,
     } = {},
   ) {
-    super(name, { variant });
+    super(name, { subname });
     this.color = color;
     this.isLandscape = isLandscape;
     this.baseChildCardCount = baseChildCardCount;
@@ -280,12 +296,12 @@ class Hero extends Card {
     color,
     { alterEgo = null, hasGiantForm = false, hasWideForm = false } = {},
   ) {
-    const variant = alterEgo;
+    const subname = alterEgo;
     const hasBack = true;
     const baseChildCardCount = aspects.length;
     const defaultChildCards = aspects;
     super(name, {
-      variant,
+      subname,
       color,
       hasBack,
       hasGiantForm,

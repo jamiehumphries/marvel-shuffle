@@ -91,7 +91,7 @@ const modules = [
     module("Kree Militants"),
     module("Menagerie Medley"),
     module("Space Pirates"),
-    module("Ship Command"),
+    module("Ship Command", { hasBack }),
     module("Power Stone"),
     module("Badoon Headhunter"),
   ),

@@ -4,7 +4,7 @@ import {
   Module,
   Hero,
   Aspect,
-} from "./options.js?v=97e39512";
+} from "./options.js?v=25b98cd5";
 
 function ensureArray(arrayOrString) {
   return Array.isArray(arrayOrString) ? arrayOrString : [arrayOrString];

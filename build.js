@@ -20,7 +20,7 @@ const assets = globSync("docs/**/*.{css,js}", { withFileTypes: true });
 updateVersions(assets);
 
 execSync(`git commit --all --message="Build ${version}"`);
-execSync(`git tag ${version}`);
+execSync(`git tag --force ${version}`);
 
 try {
   execSync("git stash pop --index --quiet");

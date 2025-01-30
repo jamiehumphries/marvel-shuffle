@@ -4,19 +4,17 @@ class Option {
   constructor(
     name,
     {
-      subname = null,
-      variant = null,
       type = null,
       slug = null,
+      slugModifier = null,
       children = null,
       onChange = null,
       defaultValue = null,
     } = {},
   ) {
     this.name = name;
-    this.subname = subname;
     this.type = type || this.constructor;
-    this.slug = slug || getSlug(this.name, subname || variant);
+    this.slug = slug || getSlug(this.name, slugModifier);
     this.id = `${this.type.slug}--${this.slug}`;
     this.children = children;
     this._onChange = onChange;
@@ -156,10 +154,10 @@ class All extends Option {
 
 class CardSet extends Option {
   constructor(name, cards, isCampaign) {
-    const variant = "set";
     const type = cards[0].constructor;
+    const slugModifier = "set";
     const children = cards;
-    super(name, { variant, type, children });
+    super(name, { type, slugModifier, children });
     this.isCampaign = isCampaign;
   }
 
@@ -186,7 +184,10 @@ class Card extends Option {
       hasWideForm = false,
     } = {},
   ) {
-    super(name, { subname });
+    const slugModifier = subname;
+    super(name, { slugModifier });
+
+    this.subname = subname;
     this.color = color;
     this.isLandscape = isLandscape;
     this.baseChildCardCount = baseChildCardCount;

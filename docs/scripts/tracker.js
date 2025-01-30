@@ -1,4 +1,4 @@
-import { Setting } from "./options.js?v=25b98cd5";
+import { Setting } from "./options.js?v=4e45bee9";
 import { getItem, setItem } from "./storage.js?v=00ea94bd";
 
 const WIN = "✓";

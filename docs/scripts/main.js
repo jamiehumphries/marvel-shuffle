@@ -235,9 +235,8 @@ class Section extends Toggleable {
     const element = sectionTemplate.content.cloneNode(true);
     this.root.appendChild(element);
 
-    const nameText = this.type.name;
     this.name = this.root.querySelector(".type-name");
-    this.name.innerText = nameText;
+    this.name.innerText = this.type.name;
     const selectText = `Select ${this.type.namePlural}`;
     this.root.querySelector(".select").innerText = selectText;
 

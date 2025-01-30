@@ -2,19 +2,21 @@ import { getItem, setItem } from "./storage.js?v=00ea94bd";
 
 class Option {
   constructor(
-    title,
+    name,
     {
+      subname = null,
+      variant = null,
       type = null,
       slug = null,
-      slugModifier = null,
       children = null,
       onChange = null,
       defaultValue = null,
     } = {},
   ) {
-    this.title = title;
+    this.name = name;
+    this.subname = subname;
     this.type = type || this.constructor;
-    this.slug = slug || getSlug(this.title, slugModifier);
+    this.slug = slug || getSlug(this.name, subname || variant);
     this.id = `${this.type.slug}--${this.slug}`;
     this.children = children;
     this._onChange = onChange;
@@ -75,15 +77,15 @@ class Option {
 
     const textWrapperDiv = document.createElement("div");
 
-    const titleDiv = document.createElement("div");
-    titleDiv.innerText = this.title;
-    textWrapperDiv.append(titleDiv);
+    const nameDiv = document.createElement("div");
+    nameDiv.innerText = this.name;
+    textWrapperDiv.append(nameDiv);
 
-    if (this.subtitle) {
-      const subtitleDiv = document.createElement("div");
-      subtitleDiv.innerText = this.subtitle;
-      subtitleDiv.classList.add("subtitle");
-      textWrapperDiv.append(subtitleDiv);
+    if (this.subname) {
+      const subnameDiv = document.createElement("div");
+      subnameDiv.innerText = this.subname;
+      subnameDiv.classList.add("subname");
+      textWrapperDiv.append(subnameDiv);
     }
 
     label.append(textWrapperDiv);
@@ -141,10 +143,10 @@ class Setting extends Option {
 
 class All extends Option {
   constructor(section) {
-    const title = `All ${section.type.titlePlural}`;
+    const name = `All ${section.type.namePlural}`;
     const type = section.type;
     const children = section.cardsOrSets;
-    super(title, { type, children });
+    super(name, { type, children });
   }
 
   appendTo(element) {
@@ -153,11 +155,11 @@ class All extends Option {
 }
 
 class CardSet extends Option {
-  constructor(title, cards, isCampaign) {
+  constructor(name, cards, isCampaign) {
+    const variant = "set";
     const type = cards[0].constructor;
-    const slugModifier = "set";
     const children = cards;
-    super(title, { type, slugModifier, children });
+    super(name, { variant, type, children });
     this.isCampaign = isCampaign;
   }
 
@@ -169,9 +171,9 @@ class CardSet extends Option {
 
 class Card extends Option {
   constructor(
-    title,
+    name,
     {
-      subtitle = null,
+      subname = null,
       color = null,
       isLandscape = false,
       baseChildCardCount = 0,
@@ -184,10 +186,7 @@ class Card extends Option {
       hasWideForm = false,
     } = {},
   ) {
-    const slugModifier = subtitle;
-    super(title, { slugModifier });
-
-    this.subtitle = subtitle;
+    super(name, { subname });
     this.color = color;
     this.isLandscape = isLandscape;
     this.baseChildCardCount = baseChildCardCount;
@@ -216,15 +215,11 @@ class Card extends Option {
   }
 
   static get slug() {
-    return (this._slug ||= getSlug(this.title));
+    return (this._slug ||= getSlug(this.name));
   }
 
-  static get title() {
-    return this.name;
-  }
-
-  static get titlePlural() {
-    return (this._titlePlural ||= `${this.title}s`);
+  static get namePlural() {
+    return (this._namePlural ||= `${this.name}s`);
   }
 
   childCardCount(numberOfHeroes) {
@@ -238,7 +233,7 @@ class Card extends Option {
 
 class Scenario extends Card {
   constructor(
-    title,
+    name,
     modulesOrNumber,
     color,
     {
@@ -257,7 +252,7 @@ class Scenario extends Card {
     const excludedChildCards = exclude;
     const requiredChildCards = required;
     const additionalChildCardsPerHero = additionalModulesPerHero;
-    super(title, {
+    super(name, {
       color,
       hasBack,
       hasGiantForm,
@@ -280,8 +275,8 @@ class Scenario extends Card {
 }
 
 class Module extends Card {
-  constructor(title, { isLandscape = false, hasBack = false } = {}) {
-    super(title, { isLandscape, hasBack });
+  constructor(name, { isLandscape = false, hasBack = false } = {}) {
+    super(name, { isLandscape, hasBack });
   }
 
   static get placeholder() {
@@ -296,17 +291,17 @@ class Module extends Card {
 
 class Hero extends Card {
   constructor(
-    title,
+    name,
     aspects,
     color,
     { alterEgo = null, hasGiantForm = false, hasWideForm = false } = {},
   ) {
-    const subtitle = alterEgo;
+    const subname = alterEgo;
     const hasBack = true;
     const baseChildCardCount = aspects.length;
     const defaultChildCards = aspects;
-    super(title, {
-      subtitle,
+    super(name, {
+      subname,
       color,
       hasBack,
       hasGiantForm,
@@ -316,19 +311,19 @@ class Hero extends Card {
     });
   }
 
-  static get titlePlural() {
+  static get namePlural() {
     return "Heroes";
   }
 }
 
 class Aspect extends Card {
-  constructor(title) {
-    super(title);
+  constructor(name) {
+    super(name);
   }
 }
 
-function getSlug(...parts) {
-  return parts
+function getSlug(...names) {
+  return names
     .join()
     .toLowerCase()
     .replaceAll(/’/g, "") // Remove apostrophes.

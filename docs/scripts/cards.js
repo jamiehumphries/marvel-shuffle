@@ -324,6 +324,7 @@ const scenarios = [
     scenario("Batroc", 0, "#9f5b33"),
     scenario("M.O.D.O.K.", 0, "#ffc000"),
     scenario("Thunderbolts", 0, "#0070c0"),
+    scenario("Baron Zemo", 0, "#a23276"),
   ),
 ];
 

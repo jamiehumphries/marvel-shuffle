@@ -8,6 +8,7 @@
     "build:major": "node build.js major",
     "build:minor": "node build.js minor",
     "build:patch": "node build.js patch",
+    "round": "node round.js",
     "start": "serve docs"
   },
   "prettier": {

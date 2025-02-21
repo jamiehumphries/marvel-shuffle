@@ -1,3 +1,4 @@
+import { hashes } from "./hashes.js?v=00000000";
 import { getItem, setItem } from "./storage.js?v=00ea94bd";
 
 class Option {
@@ -200,15 +201,16 @@ class Card extends Option {
     this.hasGiantForm = hasGiantForm;
     this.hasWideForm = hasWideForm;
 
-    const image = (...path) => ["/images", this.type.slug, ...path].join("/");
-    this.frontSrc = image(this.slug, "front.png");
-    this.backSrc = hasBack ? image(this.slug, "back.png") : image("back.png");
+    this.frontSrc = this.image(this.slug, "front.png");
+    this.backSrc = hasBack
+      ? this.image(this.slug, "back.png")
+      : this.image("back.png");
 
     const hasInnerForm = hasGiantForm || hasWideForm;
     [this.frontInnerSrc, this.backInnerSrc] = hasInnerForm
       ? [
-          image(this.slug, "front-inner.png"),
-          image(this.slug, "back-inner.png"),
+          this.image(this.slug, "front-inner.png"),
+          this.image(this.slug, "back-inner.png"),
         ]
       : [null, null];
   }
@@ -231,6 +233,10 @@ class Card extends Option {
       this.baseChildCardCount +
       this.additionalChildCardsPerHero * numberOfHeroes
     );
+  }
+
+  image(...pathParts) {
+    return image(this.type, ...pathParts);
   }
 }
 
@@ -273,7 +279,7 @@ class Scenario extends Card {
       return "";
     }
     const campaignSlug = cardSet.slug.slice(0, -"-set".length);
-    return `/images/campaign/${campaignSlug}.png`;
+    return image(null, "campaign", `${campaignSlug}.png`);
   }
 }
 
@@ -288,7 +294,7 @@ class Modular extends Card {
   static get placeholder() {
     if (!this._placeholder) {
       const card = new this("No modulars needed");
-      card.frontSrc = card.backSrc = "/images/modular/back.png";
+      card.frontSrc = card.backSrc = image(this, "back.png");
       this._placeholder = card;
     }
     return this._placeholder;
@@ -335,6 +341,14 @@ function getSlug(...names) {
     .replaceAll(/[’\.]/g, "") // Remove apostrophes and full stops.
     .replaceAll(/[^a-zA-Z0-9]+/g, "-") // Replace all non-word characters with "-".
     .replaceAll(/(^\-+|\-+$)/g, ""); // Strip any leading and trailing "-".
+}
+
+function image(type, ...pathParts) {
+  const path = ["/images", type?.slug, ...pathParts]
+    .filter((part) => !!part)
+    .join("/");
+  const hash = hashes[path];
+  return hash ? `${path}?v=${hash}` : path;
 }
 
 export { Setting, All, CardSet, Scenario, Modular, Hero, Aspect };

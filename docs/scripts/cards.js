@@ -173,7 +173,6 @@ const modules = [
     module("Military Grade"),
     module("Mutant Slayers", { isLandscape }),
     module("Nasty Boys", { isLandscape }),
-    module("Hope Summers", { hasBack }),
     module("Black Tom Cassidy"),
     module("Flight"),
     module("Super Strength"),
@@ -231,11 +230,17 @@ const scenarioSpecificModules = [
   module("Executive Board Evidence", { hasBack }),
 ];
 
+const uncountedModules = [
+  module("Longshot"),
+  module("Hope Summers", { hasBack }),
+];
+
 // SCENARIOS
 
 const allModules = modules
   .flatMap((cardOrSet) => cardOrSet.children || [cardOrSet])
-  .concat(scenarioSpecificModules);
+  .concat(scenarioSpecificModules)
+  .concat(uncountedModules);
 
 function findModules(names) {
   return ensureArray(names).map((name) => findModule(name));

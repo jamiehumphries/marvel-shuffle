@@ -1,7 +1,7 @@
 import { Setting, All } from "./options.js?v=4e45bee9";
 import {
   scenarios,
-  modules,
+  modulars,
   heroes,
   aspects,
   flatten,
@@ -485,7 +485,7 @@ class ScenarioSection extends Section {
   }
 }
 
-class ModuleSection extends Section {
+class ModularSection extends Section {
   setCards(value) {
     super.setCards(value);
     this.updateRequiredLabels();
@@ -690,7 +690,7 @@ let lastClickedButton = null;
 const settings = new Settings();
 
 const scenarioSection = new ScenarioSection(scenarios, 1);
-const moduleSection = new ModuleSection(modules, 1, {
+const modularSection = new ModularSection(modulars, 1, {
   parentSection: scenarioSection,
 });
 const heroSection1 = new HeroSection(heroes, 1);
@@ -718,7 +718,7 @@ const aspectSection4 = new AspectSection(aspects, 4, {
 
 const sections = [
   scenarioSection,
-  moduleSection,
+  modularSection,
   heroSection1,
   aspectSection1,
   heroSection2,

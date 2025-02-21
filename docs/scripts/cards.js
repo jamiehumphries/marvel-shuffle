@@ -1,7 +1,7 @@
 import {
   CardSet,
   Scenario,
-  Module,
+  Modular,
   Hero,
   Aspect,
 } from "./options.js?v=4e45bee9";
@@ -53,219 +53,219 @@ const agentsOfShield = cardSet("Agents of S.H.I.E.L.D.", true);
 const blackPanther = cardSet("Black Panther");
 const silk = cardSet("Silk");
 
-// MODULES
+// MODULARS
 
-function module(name, options) {
-  return new Module(name, options);
+function modular(name, options) {
+  return new Modular(name, options);
 }
 
 // prettier-ignore
-const modules = [
+const modulars = [
   coreSet(
-    module("Bomb Scare", { isLandscape }),
-    module("Masters of Evil", { isLandscape }),
-    module("Under Attack", { isLandscape }),
-    module("Legions of Hydra", { isLandscape }),
-    module("The Doomsday Chair", { isLandscape }),
+    modular("Bomb Scare", { isLandscape }),
+    modular("Masters of Evil", { isLandscape }),
+    modular("Under Attack", { isLandscape }),
+    modular("Legions of Hydra", { isLandscape }),
+    modular("The Doomsday Chair", { isLandscape }),
   ),
   theGreenGoblin(
-    module("Goblin Gimmicks"),
-    module("A Mess of Things", { isLandscape }),
-    module("Power Drain", { isLandscape }),
-    module("Running Interference", { isLandscape }),
+    modular("Goblin Gimmicks"),
+    modular("A Mess of Things", { isLandscape }),
+    modular("Power Drain", { isLandscape }),
+    modular("Running Interference", { isLandscape }),
   ),
   printAndPlay(
-    module("Kree Fanatic"),
+    modular("Kree Fanatic"),
   ),
   theRiseOfRedSkull(
-    module("Experimental Weapons"),
-    module("Hydra Assault"),
-    module("Weapon Master"),
-    module("Hydra Patrol", { isLandscape }),
+    modular("Experimental Weapons"),
+    modular("Hydra Assault"),
+    modular("Weapon Master"),
+    modular("Hydra Patrol", { isLandscape }),
   ),
   theOnceAndFutureKang(
-    module("Temporal", { isLandscape }),
-    module("Anachronauts", { isLandscape }),
-    module("Master of Time"),
+    modular("Temporal", { isLandscape }),
+    modular("Anachronauts", { isLandscape }),
+    modular("Master of Time"),
   ),
   theGalaxysMostWanted(
-    module("Band of Badoon"),
-    module("Galactic Artifacts"),
-    module("Kree Militants"),
-    module("Menagerie Medley"),
-    module("Space Pirates"),
-    module("Ship Command", { hasBack }),
-    module("Power Stone"),
-    module("Badoon Headhunter"),
+    modular("Band of Badoon"),
+    modular("Galactic Artifacts"),
+    modular("Kree Militants"),
+    modular("Menagerie Medley"),
+    modular("Space Pirates"),
+    modular("Ship Command", { hasBack }),
+    modular("Power Stone"),
+    modular("Badoon Headhunter"),
   ),
   theMadTitansShadow(
-    module("Black Order", { isLandscape }),
-    module("Armies of Titan"),
-    module("Children of Thanos"),
-    module("Infinity Gauntlet"),
-    module("Legions of Hel", { isLandscape }),
-    module("Frost Giants"),
-    module("Enchantress"),
+    modular("Black Order", { isLandscape }),
+    modular("Armies of Titan"),
+    modular("Children of Thanos"),
+    modular("Infinity Gauntlet"),
+    modular("Legions of Hel", { isLandscape }),
+    modular("Frost Giants"),
+    modular("Enchantress"),
   ),
   theHood(
-    module("Beasty Boys", { isLandscape }),
-    module("Brothers Grimm"),
-    module("Crossfire’s Crew"),
-    module("Mister Hyde"),
-    module("Ransacked Armory"),
-    module("Sinister Syndicate"),
-    module("State of Emergency"),
-    module("Streets of Mayhem"),
-    module("Wrecking Crew"),
+    modular("Beasty Boys", { isLandscape }),
+    modular("Brothers Grimm"),
+    modular("Crossfire’s Crew"),
+    modular("Mister Hyde"),
+    modular("Ransacked Armory"),
+    modular("Sinister Syndicate"),
+    modular("State of Emergency"),
+    modular("Streets of Mayhem"),
+    modular("Wrecking Crew"),
   ),
   sinisterMotives(
-    module("City in Chaos", { isLandscape }),
-    module("Down to Earth"),
-    module("Goblin Gear"),
-    module("Guerilla Tactics"),
-    module("Osborn Tech"),
-    module("Personal Nightmare"),
-    module("Sinister Assault"),
-    module("Symbiotic Strength"),
-    module("Whispers of Paranoia"),
+    modular("City in Chaos", { isLandscape }),
+    modular("Down to Earth"),
+    modular("Goblin Gear"),
+    modular("Guerilla Tactics"),
+    modular("Osborn Tech"),
+    modular("Personal Nightmare"),
+    modular("Sinister Assault"),
+    modular("Symbiotic Strength"),
+    modular("Whispers of Paranoia"),
   ),
   nova(
-    module("Armadillo"),
+    modular("Armadillo"),
   ),
   ironheart(
-    module("Zzzax"),
+    modular("Zzzax"),
   ),
   spiderHam(
-    module("The Inheritors"),
+    modular("The Inheritors"),
   ),
   spdr(
-    module("Iron Spider’s Sinister Six"),
+    modular("Iron Spider’s Sinister Six"),
   ),
   mutantGenesis(
-    module("Brotherhood", { isLandscape }),
-    module("Mystique"),
-    module("Zero Tolerance", { isLandscape }),
-    module("Sentinels"),
-    module("Acolytes", { isLandscape }),
-    module("Future Past", { isLandscape }),
+    modular("Brotherhood", { isLandscape }),
+    modular("Mystique"),
+    modular("Zero Tolerance", { isLandscape }),
+    modular("Sentinels"),
+    modular("Acolytes", { isLandscape }),
+    modular("Future Past", { isLandscape }),
   ),
   mojoMania(
-    module("Crime", { traits: "Show" }),
-    module("Fantasy", { traits: "Show" }),
-    module("Horror", { traits: "Show" }),
-    module("Sci-Fi", { traits: "Show" }),
-    module("Sitcom", { traits: "Show" }),
-    module("Western", { traits: "Show" }),
+    modular("Crime", { traits: "Show" }),
+    modular("Fantasy", { traits: "Show" }),
+    modular("Horror", { traits: "Show" }),
+    modular("Sci-Fi", { traits: "Show" }),
+    modular("Sitcom", { traits: "Show" }),
+    modular("Western", { traits: "Show" }),
   ),
   wolverine(
-    module("Deathstrike"),
+    modular("Deathstrike"),
   ),
   storm(
-    module("Shadow King"),
+    modular("Shadow King"),
   ),
   gambit(
-    module("Exodus"),
+    modular("Exodus"),
   ),
   rogue(
-    module("Reavers", { isLandscape }),
+    modular("Reavers", { isLandscape }),
   ),
   neXtEvolution(
-    module("Military Grade"),
-    module("Mutant Slayers", { isLandscape }),
-    module("Nasty Boys", { isLandscape }),
-    module("Black Tom Cassidy"),
-    module("Flight"),
-    module("Super Strength"),
-    module("Telepathy"),
-    module("Extreme Measures", { isLandscape }),
-    module("Mutant Insurrection", { isLandscape }),
+    modular("Military Grade"),
+    modular("Mutant Slayers", { isLandscape }),
+    modular("Nasty Boys", { isLandscape }),
+    modular("Black Tom Cassidy"),
+    modular("Flight"),
+    modular("Super Strength"),
+    modular("Telepathy"),
+    modular("Extreme Measures", { isLandscape }),
+    modular("Mutant Insurrection", { isLandscape }),
   ),
   ageOfApocalypse(
-    module("Infinites"),
-    module("Dystopian Nightmare", { isLandscape }),
-    module("Hounds", { isLandscape }),
-    module("Dark Riders", { isLandscape }),
-    module("Savage Land"),
-    module("Genosha"),
-    module("Blue Moon"),
-    module("Celestial Tech"),
-    module("Clan Akkaba"),
+    modular("Infinites"),
+    modular("Dystopian Nightmare", { isLandscape }),
+    modular("Hounds", { isLandscape }),
+    modular("Dark Riders", { isLandscape }),
+    modular("Savage Land"),
+    modular("Genosha"),
+    modular("Blue Moon"),
+    modular("Celestial Tech"),
+    modular("Clan Akkaba"),
   ),
   iceman(
-    module("Sauron"),
+    modular("Sauron"),
   ),
   jubilee(
-    module("Arcade"),
+    modular("Arcade"),
   ),
   nightcrawler(
-    module("Crazy Gang", { isLandscape }),
+    modular("Crazy Gang", { isLandscape }),
   ),
   magneto(
-    module("Hellfire", { isLandscape }),
+    modular("Hellfire", { isLandscape }),
   ),
   agentsOfShield(
-    module("A.I.M. Abduction"),
-    module("A.I.M. Science"),
-    module("Batroc’s Brigade", { isLandscape }),
-    module("Scientist Supreme"),
-    module("Gravitational Pull", { traits: "Thunderbolt" }),
-    module("Hard Sound", { traits: "Thunderbolt" }),
-    module("Pale Little Spider", { traits: "Thunderbolt" }),
-    module("Power of the Atom", { traits: "Thunderbolt" }),
-    module("Supersonic", { traits: "Thunderbolt" }),
-    module("The Leaper", { traits: "Thunderbolt" }),
-    module("S.H.I.E.L.D."),
+    modular("A.I.M. Abduction"),
+    modular("A.I.M. Science"),
+    modular("Batroc’s Brigade", { isLandscape }),
+    modular("Scientist Supreme"),
+    modular("Gravitational Pull", { traits: "Thunderbolt" }),
+    modular("Hard Sound", { traits: "Thunderbolt" }),
+    modular("Pale Little Spider", { traits: "Thunderbolt" }),
+    modular("Power of the Atom", { traits: "Thunderbolt" }),
+    modular("Supersonic", { traits: "Thunderbolt" }),
+    modular("The Leaper", { traits: "Thunderbolt" }),
+    modular("S.H.I.E.L.D."),
   ),
   blackPanther(
-    module("Extreme Risk", { traits: "Thunderbolt" }),
+    modular("Extreme Risk", { traits: "Thunderbolt" }),
   ),
   silk(
-    module("Growing Strong", { traits: "Thunderbolt" }),
+    modular("Growing Strong", { traits: "Thunderbolt" }),
   ),
 ];
 
-const scenarioSpecificModules = [
-  module("Prelates", { hasBack }),
-  module("S.H.I.E.L.D. Executive Board", { hasBack }),
-  module("Executive Board Evidence", { hasBack }),
+const scenarioSpecificModulars = [
+  modular("Prelates", { hasBack }),
+  modular("S.H.I.E.L.D. Executive Board", { hasBack }),
+  modular("Executive Board Evidence", { hasBack }),
 ];
 
-const uncountedModules = [
-  module("Longshot"),
-  module("Hope Summers", { hasBack }),
+const uncountedModulars = [
+  modular("Longshot"),
+  modular("Hope Summers", { hasBack }),
 ];
 
 // SCENARIOS
 
-const allModules = modules
+const allModulars = modulars
   .flatMap((cardOrSet) => cardOrSet.children || [cardOrSet])
-  .concat(scenarioSpecificModules)
-  .concat(uncountedModules);
+  .concat(scenarioSpecificModulars)
+  .concat(uncountedModulars);
 
-function findModules(names) {
-  return ensureArray(names).map((name) => findModule(name));
+function findModulars(names) {
+  return ensureArray(names).map((name) => findModular(name));
 }
 
-function findModule(name) {
-  const module = allModules.find((module) => module.name === name);
-  if (!module) {
-    throw new Error(`Could not find module named "${name}".`);
+function findModular(name) {
+  const modular = allModulars.find((modular) => modular.name === name);
+  if (!modular) {
+    throw new Error(`Could not find modular named "${name}".`);
   }
-  return module;
+  return modular;
 }
 
-function scenario(name, moduleNamesOrNumber, color, options = {}) {
+function scenario(name, modularNamesOrNumber, color, options = {}) {
   if (options.requiredTrait) {
-    options.exclude = allModules.filter(
-      (module) => !ensureArray(module.traits).includes(options.requiredTrait),
+    options.exclude = allModulars.filter(
+      (modular) => !ensureArray(modular.traits).includes(options.requiredTrait),
     );
   }
-  options.required &&= findModules(options.required);
-  const modulesOrNumber =
-    typeof moduleNamesOrNumber === "number"
-      ? moduleNamesOrNumber
-      : findModules(moduleNamesOrNumber);
-  return new Scenario(name, modulesOrNumber, color, options);
+  options.required &&= findModulars(options.required);
+  const modularsOrNumber =
+    typeof modularNamesOrNumber === "number"
+      ? modularNamesOrNumber
+      : findModulars(modularNamesOrNumber);
+  return new Scenario(name, modularsOrNumber, color, options);
 }
 
 // prettier-ignore
@@ -326,7 +326,7 @@ const scenarios = [
   mojoMania(
     scenario("Magog", 1, "#e66914", { hasBack }),
     scenario("Spiral", 3, "#acccea", { requiredTrait: "Show", hasBack }),
-    scenario("Mojo", 1, "#ffcc00", { requiredTrait: "Show", additionalModulesPerHero: 1 }),
+    scenario("Mojo", 1, "#ffcc00", { requiredTrait: "Show", additionalModularsPerHero: 1 }),
   ),
   neXtEvolution(
     scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], "#00b050", { hasBack }),
@@ -346,7 +346,7 @@ const scenarios = [
     scenario("Black Widow", ["A.I.M. Abduction", "A.I.M. Science"], "#404040"),
     scenario("Batroc", ["A.I.M. Abduction", "Batroc’s Brigade"], "#9f5b33", { hasBack }),
     scenario("M.O.D.O.K.", "Scientist Supreme", "#ffc000", { hasBack }),
-    scenario("Thunderbolts", 0, "#0070c0", { requiredTrait: "Thunderbolt", additionalModulesPerHero: 1, hasBack }),
+    scenario("Thunderbolts", 0, "#0070c0", { requiredTrait: "Thunderbolt", additionalModularsPerHero: 1, hasBack }),
     scenario("Baron Zemo", ["Scientist Supreme", "S.H.I.E.L.D."], "#a23276", { required: ["S.H.I.E.L.D. Executive Board", "Executive Board Evidence"], hasBack }),
   ),
 ];
@@ -468,4 +468,4 @@ function flatten(cardsOrSets) {
   return cardsOrSets.flatMap((cardOrSet) => cardOrSet.children || [cardOrSet]);
 }
 
-export { scenarios, modules, heroes, aspects, flatten };
+export { scenarios, modulars, heroes, aspects, flatten };

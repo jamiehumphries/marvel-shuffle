@@ -237,24 +237,24 @@ class Card extends Option {
 class Scenario extends Card {
   constructor(
     name,
-    modulesOrNumber,
+    modularsOrNumber,
     color,
     {
       exclude = [],
       required = [],
       hasBack = false,
       hasGiantForm = false,
-      additionalModulesPerHero = 0,
+      additionalModularsPerHero = 0,
     } = {},
   ) {
     const [baseChildCardCount, defaultChildCards] = Array.isArray(
-      modulesOrNumber,
+      modularsOrNumber,
     )
-      ? [modulesOrNumber.length, modulesOrNumber]
-      : [modulesOrNumber, null];
+      ? [modularsOrNumber.length, modularsOrNumber]
+      : [modularsOrNumber, null];
     const excludedChildCards = exclude;
     const requiredChildCards = required;
-    const additionalChildCardsPerHero = additionalModulesPerHero;
+    const additionalChildCardsPerHero = additionalModularsPerHero;
     super(name, {
       color,
       hasBack,
@@ -277,7 +277,7 @@ class Scenario extends Card {
   }
 }
 
-class Module extends Card {
+class Modular extends Card {
   constructor(
     name,
     { isLandscape = false, hasBack = false, traits = [] } = {},
@@ -287,8 +287,8 @@ class Module extends Card {
 
   static get placeholder() {
     if (!this._placeholder) {
-      const card = new this("No modules needed");
-      card.frontSrc = card.backSrc = "/images/module/back.png";
+      const card = new this("No modulars needed");
+      card.frontSrc = card.backSrc = "/images/modular/back.png";
       this._placeholder = card;
     }
     return this._placeholder;
@@ -337,4 +337,4 @@ function getSlug(...names) {
     .replaceAll(/(^\-+|\-+$)/g, ""); // Strip any leading and trailing "-".
 }
 
-export { Setting, All, CardSet, Scenario, Module, Hero, Aspect };
+export { Setting, All, CardSet, Scenario, Modular, Hero, Aspect };

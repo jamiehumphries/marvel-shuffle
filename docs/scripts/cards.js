@@ -191,7 +191,6 @@ const modules = [
     module("Blue Moon"),
     module("Celestial Tech"),
     module("Clan Akkaba"),
-    module("Prelates", { hasBack }),
   ),
   iceman(
     module("Sauron"),
@@ -217,8 +216,6 @@ const modules = [
     module("Supersonic", { traits: "Thunderbolt" }),
     module("The Leaper", { traits: "Thunderbolt" }),
     module("S.H.I.E.L.D."),
-    module("S.H.I.E.L.D. Executive Board", { hasBack }),
-    module("Executive Board Evidence", { hasBack }),
   ),
   blackPanther(
     module("Extreme Risk", { traits: "Thunderbolt" }),
@@ -228,11 +225,17 @@ const modules = [
   ),
 ];
 
+const scenarioSpecificModules = [
+  module("Prelates", { hasBack }),
+  module("S.H.I.E.L.D. Executive Board", { hasBack }),
+  module("Executive Board Evidence", { hasBack }),
+];
+
 // SCENARIOS
 
-const allModules = modules.flatMap(
-  (cardOrSet) => cardOrSet.children || [cardOrSet],
-);
+const allModules = modules
+  .flatMap((cardOrSet) => cardOrSet.children || [cardOrSet])
+  .concat(scenarioSpecificModules);
 
 function findModules(names) {
   return ensureArray(names).map((name) => findModule(name));

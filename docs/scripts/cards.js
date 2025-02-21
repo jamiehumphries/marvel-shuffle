@@ -150,12 +150,12 @@ const modules = [
     module("Future Past", { isLandscape }),
   ),
   mojoMania(
-    module("Crime"),
-    module("Fantasy"),
-    module("Horror"),
-    module("Sci-Fi"),
-    module("Sitcom"),
-    module("Western"),
+    module("Crime", { traits: "Show" }),
+    module("Fantasy", { traits: "Show" }),
+    module("Horror", { traits: "Show" }),
+    module("Sci-Fi", { traits: "Show" }),
+    module("Sitcom", { traits: "Show" }),
+    module("Western", { traits: "Show" }),
   ),
   wolverine(
     module("Deathstrike"),
@@ -205,11 +205,26 @@ const modules = [
   magneto(
     module("Hellfire", { isLandscape }),
   ),
+  agentsOfShield(
+    module("A.I.M. Abduction"),
+    module("A.I.M. Science"),
+    module("Batroc’s Brigade", { isLandscape }),
+    module("Scientist Supreme"),
+    module("Gravitational Pull", { traits: "Thunderbolt" }),
+    module("Hard Sound", { traits: "Thunderbolt" }),
+    module("Pale Little Spider", { traits: "Thunderbolt" }),
+    module("Power of the Atom", { traits: "Thunderbolt" }),
+    module("Supersonic", { traits: "Thunderbolt" }),
+    module("The Leaper", { traits: "Thunderbolt" }),
+    module("S.H.I.E.L.D."),
+    module("S.H.I.E.L.D. Executive Board", { hasBack }),
+    module("Executive Board Evidence", { hasBack }),
+  ),
   blackPanther(
-    module("Extreme Risk"),
+    module("Extreme Risk", { traits: "Thunderbolt" }),
   ),
   silk(
-    module("Growing Strong"),
+    module("Growing Strong", { traits: "Thunderbolt" }),
   ),
 ];
 
@@ -232,9 +247,9 @@ function findModule(name) {
 }
 
 function scenario(name, moduleNamesOrNumber, color, options = {}) {
-  if (options.restrictedSet) {
+  if (options.requiredTrait) {
     options.exclude = allModules.filter(
-      (module) => module.parent?.name !== options.restrictedSet,
+      (module) => !ensureArray(module.traits).includes(options.requiredTrait),
     );
   }
   options.required &&= findModules(options.required);
@@ -302,8 +317,8 @@ const scenarios = [
   ),
   mojoMania(
     scenario("Magog", 1, "#e66914", { hasBack }),
-    scenario("Spiral", 3, "#acccea", { restrictedSet: "MojoMania", hasBack }),
-    scenario("Mojo", 1, "#ffcc00", { restrictedSet: "MojoMania", additionalModulesPerHero: 1 }),
+    scenario("Spiral", 3, "#acccea", { requiredTrait: "Show", hasBack }),
+    scenario("Mojo", 1, "#ffcc00", { requiredTrait: "Show", additionalModulesPerHero: 1 }),
   ),
   neXtEvolution(
     scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], "#00b050", { hasBack }),
@@ -320,11 +335,11 @@ const scenarios = [
     scenario("En Sabah Nur", ["Celestial Tech", "Clan Akkaba"], "#1e365e", { hasBack, hasGiantForm }),
   ),
   agentsOfShield(
-    scenario("Black Widow", 0, "#404040"),
-    scenario("Batroc", 0, "#9f5b33"),
-    scenario("M.O.D.O.K.", 0, "#ffc000"),
-    scenario("Thunderbolts", 0, "#0070c0"),
-    scenario("Baron Zemo", 0, "#a23276"),
+    scenario("Black Widow", ["A.I.M. Abduction", "A.I.M. Science"], "#404040"),
+    scenario("Batroc", ["A.I.M. Abduction", "Batroc’s Brigade"], "#9f5b33", { hasBack }),
+    scenario("M.O.D.O.K.", "Scientist Supreme", "#ffc000", { hasBack }),
+    scenario("Thunderbolts", 0, "#0070c0", { requiredTrait: "Thunderbolt", additionalModulesPerHero: 1, hasBack }),
+    scenario("Baron Zemo", ["Scientist Supreme", "S.H.I.E.L.D."], "#a23276", { required: ["S.H.I.E.L.D. Executive Board", "Executive Board Evidence"], hasBack }),
   ),
 ];
 

@@ -182,6 +182,7 @@ class Card extends Option {
       hasBack = false,
       hasGiantForm = false,
       hasWideForm = false,
+      traits = [],
     } = {},
   ) {
     const slugModifier = subname;
@@ -195,6 +196,7 @@ class Card extends Option {
     this.requiredChildCards = requiredChildCards;
     this.defaultChildCards = defaultChildCards;
     this.additionalChildCardsPerHero = additionalChildCardsPerHero;
+    this.traits = traits;
     this.hasGiantForm = hasGiantForm;
     this.hasWideForm = hasWideForm;
 
@@ -276,8 +278,11 @@ class Scenario extends Card {
 }
 
 class Module extends Card {
-  constructor(name, { isLandscape = false, hasBack = false } = {}) {
-    super(name, { isLandscape, hasBack });
+  constructor(
+    name,
+    { isLandscape = false, hasBack = false, traits = [] } = {},
+  ) {
+    super(name, { isLandscape, hasBack, traits });
   }
 
   static get placeholder() {

@@ -136,31 +136,44 @@ function updateDb(key, value) {
 }
 
 function runMigrations() {
-  migrate("black-panther", "black-panther-tchalla");
+  let id = 1;
+  rename("black-panther", "black-panther-tchalla", id++);
+  rename("forced", "setting--forced", id++);
+  rename("module", "modular", id++);
+  remove("modular--prelates", id++);
+  remove("modular--hope-summers", id++);
 }
 
-function migrate(oldId, newId) {
-  const migrationKey = `migration--${oldId}--${newId}`;
+function rename(oldName, newName, migrationId) {
+  migrate(migrationId, () => {
+    const oldNameRegex = new RegExp(`${oldName}(?=(?:$|--|"))`, "g");
+    for (let [key, value] of Object.entries(localStorage)) {
+      key = key.slice(LOCAL_KEY_PREFIX.length);
+      if (oldNameRegex.test(key)) {
+        const newKey = key.replaceAll(oldNameRegex, newName);
+        setItem(newKey, value, false);
+        removeItem(key);
+        key = newKey;
+      }
+      if (oldNameRegex.test(value)) {
+        const newValue = value.replaceAll(oldNameRegex, newName);
+        setItem(key, newValue, false);
+      }
+    }
+  });
+}
+
+function remove(key, migrationId) {
+  migrate(migrationId, () => removeItem(key));
+}
+
+function migrate(migrationId, callback) {
+  const migrationKey = `migration--${migrationId.toString().padStart(4, "0")}`;
   const hasMigrated = getItem(migrationKey);
   if (hasMigrated) {
     return;
   }
-
-  const oldIdRegex = new RegExp(`${oldId}(?=(?:$|--|"))`, "g");
-  for (let [key, value] of Object.entries(localStorage)) {
-    key = key.slice(LOCAL_KEY_PREFIX.length);
-    if (oldIdRegex.test(key)) {
-      const newKey = key.replaceAll(oldIdRegex, newId);
-      setItem(newKey, value, false);
-      removeItem(key);
-      key = newKey;
-    }
-    if (oldIdRegex.test(value)) {
-      const newValue = value.replaceAll(oldIdRegex, newId);
-      setItem(key, newValue, false);
-    }
-  }
-
+  callback();
   setItem(migrationKey, true);
 }
 

@@ -92,7 +92,7 @@ class Section extends Toggleable {
       this.id += `-${this.nthOfType}`;
     }
 
-    this.forcedSettingId = this.id + "--forced";
+    this.forcedSettingId = this.id + "--setting--forced";
 
     this.root = document.getElementById(this.id);
   }

@@ -452,7 +452,7 @@ class ScenarioSection extends Section {
   setCards(value) {
     super.setCards(value);
     const nextScenario = this.nextScenario;
-    this.campaignImage.src = nextScenario?.campaignImageSrc || "";
+    this.campaignImage.src = nextScenario?.campaign?.imageSrc || "";
     document.body.classList.toggle("has-next-scenario", !!nextScenario);
   }
 

@@ -375,7 +375,13 @@ class Section extends Toggleable {
     return chooseRandom(available);
   }
 
-  getPriority() {
+  getPriority(card, isShuffleAll) {
+    return settings.avoidCompleted
+      ? this.getPriorityFromTracking(card, isShuffleAll)
+      : 1;
+  }
+
+  getPriorityFromTracking() {
     return 1;
   }
 
@@ -472,16 +478,17 @@ class ScenarioSection extends Section {
     this.shuffle({ forcedCards: this.nextScenario ? [this.nextScenario] : [] });
   }
 
-  getPriority(scenario, isShuffleAll) {
-    if (!settings.avoidCompleted) {
-      return 1;
-    }
+  getPriorityFromTracking(scenario, isShuffleAll) {
     const heroes = isShuffleAll
       ? heroSection1.allCheckedCards
       : heroSections
           .filter((section) => section.visible)
-          .map((section) => section.trueCard);
-    return getNumberOfIncompleteGames([scenario], heroes);
+          .map((section) => section.trueCard)
+          .filter((card) => !!card);
+
+    return heroes.length > 0
+      ? getNumberOfIncompleteGames([scenario], heroes)
+      : 1;
   }
 }
 
@@ -511,12 +518,11 @@ class ModularSection extends Section {
 }
 
 class HeroSection extends Section {
-  getPriority(hero) {
-    if (!settings.avoidCompleted) {
-      return 1;
-    }
+  getPriorityFromTracking(hero) {
     const scenario = scenarioSection.trueCard;
-    return getNumberOfIncompleteGames([scenario], [hero]);
+    return settings.avoidCompleted && scenario !== null
+      ? getNumberOfIncompleteGames([scenario], [hero])
+      : 1;
   }
 }
 

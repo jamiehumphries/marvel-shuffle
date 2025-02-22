@@ -1,4 +1,3 @@
-// prettier-ignore
 export const hashes = {
   "/images/logo.png": "84e9023b",
   "/images/scenario/back.png": "e468aed6",
@@ -304,5 +303,5 @@ export const hashes = {
   "/images/aspect/pool/front.png": "f3ce8e62",
   "/images/aspect/leadership/front.png": "5b6b43c9",
   "/images/aspect/justice/front.png": "b3be3ff2",
-  "/images/aspect/aggression/front.png": "40d98bd7"
+  "/images/aspect/aggression/front.png": "40d98bd7",
 };

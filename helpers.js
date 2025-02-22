@@ -35,7 +35,7 @@ function updateImages(noLevel) {
 }
 
 function updateImageHashes() {
-  const images = globSync("docs/images/**/*.png", { withFileTypes: true });
+  const images = globSync("docs/images/*/**/*.png", { withFileTypes: true });
 
   const hashes = Object.fromEntries(
     images.map((image) => {

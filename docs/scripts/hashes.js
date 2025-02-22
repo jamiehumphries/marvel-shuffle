@@ -1,5 +1,4 @@
 export const hashes = {
-  "/images/logo.png": "84e9023b",
   "/images/scenario/back.png": "e468aed6",
   "/images/scenario/zola/front.png": "e90090d2",
   "/images/scenario/wrecking-crew/front.png": "ed4c6545",

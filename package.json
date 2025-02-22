@@ -4,11 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "assets": "node assets.js",
     "build": "npm run build:patch",
-    "build:major": "node build.js major",
-    "build:minor": "node build.js minor",
-    "build:patch": "node build.js patch",
-    "round": "node round.js",
+    "build:major": "node build.js --major",
+    "build:minor": "node build.js --minor",
+    "build:patch": "node build.js --patch",
+    "images": "node images.js",
+    "round": "node images.js --no-level",
     "start": "serve docs"
   },
   "prettier": {

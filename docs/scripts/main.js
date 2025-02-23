@@ -94,7 +94,7 @@ class Section extends Toggleable {
     this.root = document.getElementById(this.id);
   }
 
-  get allCheckedCards() {
+  get checkedCards() {
     return this.selectableCards.filter((card) => card.checked);
   }
 
@@ -163,7 +163,7 @@ class Section extends Toggleable {
 
     const included = (cards) => cards.filter((card) => !exclude.includes(card));
 
-    const includedChecked = included(this.allCheckedCards);
+    const includedChecked = included(this.checkedCards);
     const includedDefault = included(this.getDefaultOptions());
 
     return this.cards.every(function (card, i) {
@@ -347,7 +347,7 @@ class Section extends Toggleable {
     const tryUseDefault =
       forcedCards === null &&
       this.parentSection !== null &&
-      this.allCheckedCards.length === 0;
+      this.checkedCards.length === 0;
 
     if (tryUseDefault) {
       const requiredAndDefaultCards = [
@@ -384,7 +384,7 @@ class Section extends Toggleable {
   }
 
   randomCard({ isShuffleAll = false, exclude = [], available = null } = {}) {
-    available ||= this.allCheckedCards;
+    available ||= this.checkedCards;
     available = available.filter((card) => !exclude.includes(card));
 
     if (available.length === 0) {
@@ -507,7 +507,7 @@ class ScenarioSection extends Section {
 
   getPriorityFromTracking(scenario, isShuffleAll) {
     const heroes = isShuffleAll
-      ? heroSection1.allCheckedCards
+      ? heroSection1.checkedCards
       : heroSections
           .filter((section) => section.visible)
           .map((section) => section.trueCard)

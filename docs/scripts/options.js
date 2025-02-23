@@ -42,7 +42,7 @@ class Option extends SluggedObject {
   }
 
   set checked(value) {
-    this.setChecked(value, true, true);
+    this.setChecked(value, { cascadeUp: true, cascadeDown: true });
   }
 
   get children() {
@@ -120,7 +120,7 @@ class Option extends SluggedObject {
     }
   }
 
-  setChecked(value, cascadeUp, cascadeDown) {
+  setChecked(value, { cascadeUp = false, cascadeDown = false } = {}) {
     this._checked = value;
     this.onChange(value);
     if (!this.children) {
@@ -131,13 +131,13 @@ class Option extends SluggedObject {
     }
     if (this.children && cascadeDown) {
       for (const child of this.children) {
-        child.setChecked(value, false, true);
+        child.setChecked(value, { cascadeDown: true });
       }
     }
     if (this.parent && cascadeUp) {
       const siblings = this.parent.children;
       const allSiblingsChecked = siblings.every((child) => child.checked);
-      this.parent.setChecked(allSiblingsChecked, true, false);
+      this.parent.setChecked(allSiblingsChecked, { cascadeUp: true });
     }
     this.updateIndeterminateState();
   }

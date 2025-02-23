@@ -2,6 +2,7 @@ import { Setting, All } from "./options.js?v=4e45bee9";
 import {
   scenarios,
   modulars,
+  extraModulars,
   heroes,
   aspects,
   flatten,
@@ -49,11 +50,16 @@ class Section extends Toggleable {
   constructor(
     cardsOrSets,
     nthOfType,
-    { previousSiblingSection = null, parentSection = null } = {},
+    {
+      extraCards = [],
+      previousSiblingSection = null,
+      parentSection = null,
+    } = {},
   ) {
     super();
     this.cardsOrSets = cardsOrSets;
     this.nthOfType = nthOfType;
+    this.extraCards = extraCards;
     this.parentSection = parentSection;
 
     if (this.parentSection) {
@@ -68,9 +74,9 @@ class Section extends Toggleable {
       siblingSection.allSiblingSections.push(this);
     }
 
-    this.allCards = flatten(this.cardsOrSets);
+    this.selectableCards = flatten(this.cardsOrSets);
 
-    this.type = this.allCards.reduce((type, card) => {
+    this.type = this.selectableCards.reduce((type, card) => {
       const cardType = card.type;
       if (type === null || type === cardType) {
         return cardType;
@@ -89,12 +95,12 @@ class Section extends Toggleable {
   }
 
   get allCheckedCards() {
-    return this.allCards.filter((card) => card.checked);
+    return this.selectableCards.filter((card) => card.checked);
   }
 
   get maxChildCardCount() {
     return Math.max(
-      ...this.allCards.map((card) =>
+      ...this.selectableCards.map((card) =>
         card.childCardCount(settings.maxNumberOfHeroes),
       ),
     );
@@ -444,9 +450,10 @@ class Section extends Toggleable {
   loadCards() {
     try {
       const savedCardIds = getItem(this.id);
+      const allCards = this.selectableCards.concat(this.extraCards);
       return savedCardIds
         ? savedCardIds
-            .map((id) => this.allCards.find((card) => card.id === id))
+            .map((id) => allCards.find((card) => card.id === id))
             .filter((card) => card !== undefined)
         : [];
     } catch {
@@ -715,6 +722,7 @@ const settings = new Settings();
 
 const scenarioSection = new ScenarioSection(scenarios, 1);
 const modularSection = new ModularSection(modulars, 1, {
+  extraCards: extraModulars,
   parentSection: scenarioSection,
 });
 const heroSection1 = new HeroSection(heroes, 1);

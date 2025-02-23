@@ -224,13 +224,10 @@ const modulars = [
   ),
 ];
 
-const scenarioSpecificModulars = [
+const extraModulars = [
   modular("Prelates", { hasBack }),
   modular("S.H.I.E.L.D. Executive Board", { hasBack }),
   modular("Executive Board Evidence", { hasBack }),
-];
-
-const uncountedModulars = [
   modular("Longshot"),
   modular("Hope Summers", { hasBack }),
 ];
@@ -239,8 +236,7 @@ const uncountedModulars = [
 
 const allModulars = modulars
   .flatMap((cardOrSet) => cardOrSet.children || [cardOrSet])
-  .concat(scenarioSpecificModulars)
-  .concat(uncountedModulars);
+  .concat(extraModulars);
 
 function findModulars(names) {
   return ensureArray(names).map((name) => findModular(name));
@@ -468,4 +464,4 @@ function flatten(cardsOrSets) {
   return cardsOrSets.flatMap((cardOrSet) => cardOrSet.children || [cardOrSet]);
 }
 
-export { scenarios, modulars, heroes, aspects, flatten };
+export { scenarios, modulars, extraModulars, heroes, aspects, flatten };

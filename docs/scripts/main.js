@@ -306,37 +306,19 @@ class Section extends Toggleable {
     return false;
   }
 
-  shuffle({ animate = true, isShuffleAll = false, forcedCards = null } = {}) {
-    const parentSection = this.parentSection;
-
-    const exclusiveSiblingSections = isShuffleAll
-      ? this.previousSiblingSections
-      : this.visibleSiblingSections;
-
+  shuffle({ forcedCards = null, animate = true, isShuffleAll = false } = {}) {
     this.forced = forcedCards !== null;
-    const required = forcedCards || parentSection?.requiredChildCards || [];
+    const newCards = this.chooseCards(forcedCards, isShuffleAll);
 
-    const exclude = parentSection
-      ? parentSection.excludedChildCards.slice()
-      : exclusiveSiblingSections.flatMap((section) => section.trueCard);
+    if (!animate || !this.visible) {
+      this.cards = newCards;
+      return;
+    }
 
-    const cardCount = parentSection ? parentSection.childCardCount : 1;
-    const newCards = [];
-
-    for (let i = 0; i < cardCount; i++) {
+    // Preload new images.
+    for (let i = 0; i < newCards.length; i++) {
       const oldCard = this.cards[i];
-      const newCard =
-        i < required.length
-          ? required[i]
-          : this.randomCard({ isShuffleAll, exclude });
-      newCards.push(newCard);
-      exclude.push(newCard);
-
-      if (!animate || !this.visible) {
-        continue;
-      }
-
-      // Preload new images.
+      const newCard = newCards[i];
       for (const src of ["frontSrc", "backSrc"]) {
         if (newCard[src] !== oldCard?.[src]) {
           new Image().src = newCard[src];
@@ -344,16 +326,54 @@ class Section extends Toggleable {
       }
     }
 
-    if (animate && this.visible) {
-      this.disabled = true;
-      document.body.classList.add("shuffling");
-      this.root.classList.add("flipping");
-      this.root.classList.remove("giant", "wide");
-      this.incomingCards = newCards;
-      setTimeout(() => (this.cards = newCards), cardChangeDelayMs);
-    } else {
-      this.cards = newCards;
+    this.disabled = true;
+    document.body.classList.add("shuffling");
+    this.root.classList.add("flipping");
+    this.root.classList.remove("giant", "wide");
+    this.incomingCards = newCards;
+    setTimeout(() => (this.cards = newCards), cardChangeDelayMs);
+  }
+
+  chooseCards(forcedCards, isShuffleAll) {
+    const exclusiveSiblingSections = isShuffleAll
+      ? this.previousSiblingSections
+      : this.visibleSiblingSections;
+
+    const required =
+      forcedCards || this.parentSection?.requiredChildCards || [];
+
+    const exclude = this.parentSection
+      ? this.parentSection.excludedChildCards.slice()
+      : exclusiveSiblingSections.map((section) => section.trueCard);
+
+    const cardCount = this.parentSection
+      ? this.parentSection.childCardCount
+      : 1;
+
+    const tryUseDefault =
+      forcedCards === null &&
+      this.parentSection !== null &&
+      this.allCheckedCards.length === 0;
+
+    if (tryUseDefault) {
+      const defaultCards = this.parentSection.defaultChildCards || [];
+      const requiredAndDefaultCards = required.concat(defaultCards);
+      if (requiredAndDefaultCards.length === cardCount) {
+        return requiredAndDefaultCards;
+      }
     }
+
+    const newCards = [];
+    for (let i = 0; i < cardCount; i++) {
+      const newCard =
+        i < required.length
+          ? required[i]
+          : this.randomCard({ isShuffleAll, exclude });
+      newCards.push(newCard);
+      exclude.push(newCard);
+    }
+
+    return newCards;
   }
 
   randomCard({ isShuffleAll = false, exclude = [], available = null } = {}) {
@@ -766,7 +786,7 @@ function toggleSettings() {
       ),
     ];
     newHeroAndAspectSections.forEach((section) =>
-      section.shuffle({ isShuffleAll: true, animate: false }),
+      section.shuffle({ animate: false, isShuffleAll: true }),
     );
     requestPostAnimationFrame(() => {
       sections.forEach((section) => section.shuffleIfInvalid());

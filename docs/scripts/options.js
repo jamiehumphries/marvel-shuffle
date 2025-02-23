@@ -181,7 +181,7 @@ class Card extends Option {
       baseChildCardCount = 0,
       excludedChildCards = [],
       requiredChildCards = [],
-      defaultChildCards = null,
+      defaultChildCards = [],
       additionalChildCardsPerHero = 0,
       hasBack = false,
       hasGiantForm = false,
@@ -268,7 +268,7 @@ class Scenario extends Card {
       modularsOrNumber,
     )
       ? [modularsOrNumber.length, modularsOrNumber]
-      : [modularsOrNumber, null];
+      : [modularsOrNumber, []];
     const excludedChildCards = exclude;
     const requiredChildCards = required;
     const additionalChildCardsPerHero = additionalModularsPerHero;

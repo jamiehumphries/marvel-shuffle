@@ -117,7 +117,7 @@ class Section extends Toggleable {
   }
 
   get defaultChildCards() {
-    return this.trueCard?.defaultChildCards;
+    return this.trueCard?.defaultChildCards || [];
   }
 
   get previousSiblingSections() {
@@ -130,15 +130,17 @@ class Section extends Toggleable {
     return this.allSiblingSections.filter((section) => section.visible);
   }
 
+  get expectedCardCount() {
+    return this.parentSection ? this.parentSection.childCardCount : 1;
+  }
+
   get valid() {
-    const actualCount = this.cards.length;
+    if (this.cards.length !== this.expectedCardCount) {
+      return false;
+    }
 
-    const expectedCount = this.parentSection
-      ? this.parentSection.childCardCount
-      : 1;
-
-    const uniqueCount = new Set(this.cards).size;
-    if (actualCount !== expectedCount || actualCount !== uniqueCount) {
+    const hasDuplicates = this.cards.length !== new Set(this.cards).size;
+    if (hasDuplicates) {
       return false;
     }
 
@@ -146,11 +148,13 @@ class Section extends Toggleable {
       return true;
     }
 
-    const required = parentSection ? parentSection?.requiredChildCards : [];
-    const exclude = parentSection
-      ? parentSection.excludedChildCards
+    const exclude = this.parentSection
+      ? this.parentSection.excludedChildCards
       : this.visibleSiblingSections.map((section) => section.trueCard);
+
+    const required = this.parentSection?.requiredChildCards || [];
     exclude.push(...required);
+
     const included = (cards) => cards.filter((card) => !exclude.includes(card));
 
     const includedChecked = included(this.allCheckedCards);
@@ -334,36 +338,34 @@ class Section extends Toggleable {
   }
 
   chooseCards(forcedCards, isShuffleAll) {
-    const exclusiveSiblingSections = isShuffleAll
-      ? this.previousSiblingSections
-      : this.visibleSiblingSections;
-
-    const required =
-      forcedCards || this.parentSection?.requiredChildCards || [];
-
-    const exclude = this.parentSection
-      ? this.parentSection.excludedChildCards.slice()
-      : exclusiveSiblingSections.map((section) => section.trueCard);
-
-    const cardCount = this.parentSection
-      ? this.parentSection.childCardCount
-      : 1;
-
     const tryUseDefault =
       forcedCards === null &&
       this.parentSection !== null &&
       this.allCheckedCards.length === 0;
 
     if (tryUseDefault) {
-      const defaultCards = this.parentSection.defaultChildCards || [];
-      const requiredAndDefaultCards = required.concat(defaultCards);
-      if (requiredAndDefaultCards.length === cardCount) {
+      const requiredAndDefaultCards = [
+        ...this.parentSection.requiredChildCards,
+        ...this.parentSection.defaultChildCards,
+      ];
+      if (requiredAndDefaultCards.length === this.expectedCardCount) {
         return requiredAndDefaultCards;
       }
     }
 
+    const required =
+      forcedCards || this.parentSection?.requiredChildCards || [];
+
+    const exclusiveSiblingSections = isShuffleAll
+      ? this.previousSiblingSections
+      : this.visibleSiblingSections;
+
+    const exclude = this.parentSection
+      ? this.parentSection.excludedChildCards.slice()
+      : exclusiveSiblingSections.map((section) => section.trueCard);
+
     const newCards = [];
-    for (let i = 0; i < cardCount; i++) {
+    for (let i = 0; i < this.expectedCardCount; i++) {
       const newCard =
         i < required.length
           ? required[i]
@@ -406,7 +408,7 @@ class Section extends Toggleable {
 
   getDefaultOptions() {
     const parentCard = this.parentSection?.trueCard;
-    if (parentCard?.defaultChildCards) {
+    if (parentCard?.defaultChildCards.length > 0) {
       return parentCard.defaultChildCards;
     }
 
@@ -476,9 +478,8 @@ class ScenarioSection extends Section {
 
   setCards(value) {
     super.setCards(value);
-    const nextScenario = this.nextScenario;
-    this.campaignImage.src = nextScenario?.campaign?.imageSrc || "";
-    document.body.classList.toggle("has-next-scenario", !!nextScenario);
+    this.campaignImage.src = this.nextScenario?.campaign?.imageSrc || "";
+    document.body.classList.toggle("has-next-scenario", !!this.nextScenario);
   }
 
   initializeLayout() {
@@ -565,7 +566,6 @@ class Slot extends Toggleable {
   }
 
   set card(value) {
-    const oldCard = this._card;
     const newCard = value;
     this._card = newCard;
 
@@ -575,18 +575,17 @@ class Slot extends Toggleable {
     }
 
     this.show();
+
     this.root.classList.toggle("landscape", newCard.isLandscape);
     this.root.classList.toggle("has-giant-form", newCard.hasGiantForm);
     this.root.classList.toggle("has-wide-form", newCard.hasWideForm);
 
     this.cardFront.src = newCard.frontSrc;
-    if (newCard.backSrc !== oldCard?.backSrc) {
-      this.cardBack.src = newCard.backSrc;
-    }
+    this.cardBack.src = newCard.backSrc;
     this.cardFrontInner.src = newCard.frontInnerSrc || "";
     this.cardBackInner.src = newCard.backInnerSrc || "";
 
-    // Replacing the name element entirely fixes some animation bugs
+    // Replacing the name elements entirely fixes some animation bugs
     // which were happening when just replacing the text.
 
     this.name.remove();

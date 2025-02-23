@@ -54,27 +54,18 @@ class Section extends Toggleable {
     super();
     this.cardsOrSets = cardsOrSets;
     this.nthOfType = nthOfType;
-    this.previousSiblingSection = previousSiblingSection;
     this.parentSection = parentSection;
 
     if (this.parentSection) {
       this.parentSection.childSection = this;
     }
 
-    this.previousSiblingSections = [];
-    this.allSiblingSections = [];
-    if (this.previousSiblingSection) {
-      this.previousSiblingSections.push(
-        this.previousSiblingSection,
-        ...this.previousSiblingSection.previousSiblingSections,
-      );
-      this.allSiblingSections.push(
-        this.previousSiblingSection,
-        ...this.previousSiblingSection.allSiblingSections,
-      );
-      this.allSiblingSections.forEach((siblingSection) =>
-        siblingSection.allSiblingSections.push(this),
-      );
+    this.allSiblingSections = previousSiblingSection
+      ? [previousSiblingSection, ...previousSiblingSection.allSiblingSections]
+      : [];
+
+    for (const siblingSection of this.allSiblingSections) {
+      siblingSection.allSiblingSections.push(this);
     }
 
     this.allCards = flatten(this.cardsOrSets);
@@ -129,15 +120,23 @@ class Section extends Toggleable {
     return this.trueCard?.defaultChildCards;
   }
 
+  get previousSiblingSections() {
+    return this.allSiblingSections.filter(
+      (section) => section.nthOfType < this.nthOfType,
+    );
+  }
+
   get visibleSiblingSections() {
     return this.allSiblingSections.filter((section) => section.visible);
   }
 
   get valid() {
-    const parentSection = this.parentSection;
-
     const actualCount = this.cards.length;
-    const expectedCount = parentSection ? parentSection.childCardCount : 1;
+
+    const expectedCount = this.parentSection
+      ? this.parentSection.childCardCount
+      : 1;
+
     const uniqueCount = new Set(this.cards).size;
     if (actualCount !== expectedCount || actualCount !== uniqueCount) {
       return false;

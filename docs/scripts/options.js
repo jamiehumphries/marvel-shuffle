@@ -51,7 +51,12 @@ class Option extends SluggedObject {
 
   set children(value) {
     this._children = value;
-    value?.forEach((child) => (child.parent = this));
+    if (!value) {
+      return;
+    }
+    for (const child of value) {
+      child.parent = this;
+    }
   }
 
   get anyDescendantChecked() {
@@ -67,7 +72,10 @@ class Option extends SluggedObject {
     const label = document.createElement("label");
     label.htmlFor = this.id;
     label.classList.add("option");
-    classes.forEach((className) => label.classList.add(className));
+
+    for (const className of classes) {
+      label.classList.add(className);
+    }
 
     const input = document.createElement("input");
     input.id = this.id;
@@ -122,7 +130,9 @@ class Option extends SluggedObject {
       this.checkbox.checked = value;
     }
     if (this.children && cascadeDown) {
-      this.children.forEach((child) => child.setChecked(value, false, true));
+      for (const child of this.children) {
+        child.setChecked(value, false, true);
+      }
     }
     if (this.parent && cascadeUp) {
       const siblings = this.parent.children;
@@ -167,7 +177,9 @@ class CardSet extends Option {
 
   appendTo(element) {
     super.appendTo(element, "set");
-    this.children.forEach((card) => card.appendTo(element, "set-member"));
+    for (const card of this.children) {
+      card.appendTo(element, "set-member");
+    }
   }
 }
 

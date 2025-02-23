@@ -283,7 +283,11 @@ class Section extends Toggleable {
 
     const all = new All(this);
     all.appendTo(options);
-    this.cardsOrSets.forEach((cardOrSet) => cardOrSet.appendTo(options));
+
+    for (const cardOrSet of this.cardsOrSets) {
+      cardOrSet.appendTo(options);
+    }
+
     options.addEventListener("submit", (event) => {
       event.preventDefault();
       toggleSettings();
@@ -704,7 +708,9 @@ class Settings {
       this._avoidCompletedSetting,
     ];
 
-    settings.forEach((setting) => setting.appendTo(preferencesElement));
+    for (const setting of settings) {
+      setting.appendTo(preferencesElement);
+    }
   }
 }
 
@@ -776,8 +782,12 @@ function shuffleAll() {
 
 function toggleSettings() {
   const settingsVisible = document.body.classList.toggle("show-settings");
+
   shuffleAllButton.disabled = settingsVisible;
-  sections.forEach((section) => (section.button.disabled = settingsVisible));
+  for (const section of sections) {
+    section.button.disabled = settingsVisible;
+  }
+
   if (settingsVisible) {
     settings.previousNumberOfHeroes = settings.numberOfHeroes;
   } else {
@@ -791,12 +801,17 @@ function toggleSettings() {
         settings.numberOfHeroes,
       ),
     ];
-    newHeroAndAspectSections.forEach((section) =>
-      section.shuffle({ animate: false, isShuffleAll: true }),
-    );
+
+    for (const section of newHeroAndAspectSections) {
+      section.shuffle({ animate: false, isShuffleAll: true });
+    }
+
     requestPostAnimationFrame(() => {
-      sections.forEach((section) => section.shuffleIfInvalid());
+      for (const section of sections) {
+        section.shuffleIfInvalid();
+      }
     });
+
     updateTrackingTable();
   }
 }

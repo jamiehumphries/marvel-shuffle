@@ -1,7 +1,13 @@
 import { hashes } from "./hashes.js?v=00000000";
 import { getItem, setItem } from "./storage.js?v=00ea94bd";
 
-class Option {
+class SluggedObject {
+  static get slug() {
+    return (this._slug ||= getSlug(this.name));
+  }
+}
+
+class Option extends SluggedObject {
   constructor(
     name,
     {
@@ -13,6 +19,7 @@ class Option {
       defaultValue = null,
     } = {},
   ) {
+    super();
     this.name = name;
     this.type = type || this.constructor;
     this.slug = slug || getSlug(this.name, slugModifier);
@@ -134,10 +141,6 @@ class Setting extends Option {
   constructor(slug, label, { onChange = null, defaultValue = null } = {}) {
     super(label, { slug, onChange, defaultValue });
   }
-
-  static get slug() {
-    return "setting";
-  }
 }
 
 class All extends Option {
@@ -219,12 +222,12 @@ class Card extends Option {
     return this.slug;
   }
 
-  static get slug() {
-    return (this._slug ||= getSlug(this.name));
-  }
-
   static get namePlural() {
     return (this._namePlural ||= `${this.name}s`);
+  }
+
+  static get placeholderImageSrc() {
+    return (this._placeholderImageSrc ||= image(this, "back.png"));
   }
 
   childCardCount(numberOfHeroes) {
@@ -237,6 +240,14 @@ class Card extends Option {
 
   image(...pathParts) {
     return image(this.type, ...pathParts);
+  }
+}
+
+class Campaign extends SluggedObject {
+  constructor(cardSet) {
+    super();
+    this.slug = cardSet.slug.slice(0, -"-set".length);
+    this.imageSrc = image(this.constructor, `${this.slug}.png`);
   }
 }
 
@@ -273,13 +284,10 @@ class Scenario extends Card {
     });
   }
 
-  get campaignImageSrc() {
-    const cardSet = this.parent;
-    if (!cardSet.isCampaign) {
-      return "";
-    }
-    const campaignSlug = cardSet.slug.slice(0, -"-set".length);
-    return image(null, "campaign", `${campaignSlug}.png`);
+  get campaign() {
+    return (this._campaign ||= this.parent.isCampaign
+      ? new Campaign(this.parent)
+      : null);
   }
 }
 
@@ -292,12 +300,7 @@ class Modular extends Card {
   }
 
   static get placeholder() {
-    if (!this._placeholder) {
-      const card = new this("No modulars needed");
-      card.frontSrc = card.backSrc = image(this, "back.png");
-      this._placeholder = card;
-    }
-    return this._placeholder;
+    return (this._placeholder ||= new this("No modulars needed"));
   }
 }
 
@@ -344,11 +347,9 @@ function getSlug(...names) {
 }
 
 function image(type, ...pathParts) {
-  const path = ["/images", type?.slug, ...pathParts]
-    .filter((part) => !!part)
-    .join("/");
+  const path = ["/images", type.slug, ...pathParts].join("/");
   const hash = hashes[path];
-  return hash ? `${path}?v=${hash}` : path;
+  return hash ? `${path}?v=${hash}` : type.placeholderImageSrc;
 }
 
 export { Setting, All, CardSet, Scenario, Modular, Hero, Aspect };

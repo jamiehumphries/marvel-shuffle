@@ -106,24 +106,22 @@ class Section extends Toggleable {
     );
   }
 
+  get parentCard() {
+    return this.parentSection?.trueCard;
+  }
+
   get trueCard() {
-    return this.maxSlots === 1 ? (this.incomingCards || this.cards)[0] : null;
+    return this.maxSlots === 1 ? this.trueCards[0] : null;
+  }
+
+  get trueCards() {
+    return this.incomingCards || this.cards;
   }
 
   get childCardCount() {
-    return this.trueCard?.childCardCount(settings.numberOfHeroes) || 0;
-  }
-
-  get excludedChildCards() {
-    return this.trueCard?.excludedChildCards || [];
-  }
-
-  get requiredChildCards() {
-    return this.trueCard?.requiredChildCards || [];
-  }
-
-  get defaultChildCards() {
-    return this.trueCard?.defaultChildCards || [];
+    return this.childSection && this.trueCard
+      ? this.trueCard.childCardCount(settings.numberOfHeroes)
+      : 0;
   }
 
   get previousSiblingSections() {
@@ -154,11 +152,11 @@ class Section extends Toggleable {
       return true;
     }
 
-    const exclude = this.parentSection
-      ? this.parentSection.excludedChildCards
-      : this.visibleSiblingSections.map((section) => section.trueCard);
+    const exclude = this.parentCard
+      ? this.parentCard.excludedChildCards
+      : this.visibleSiblingSections.flatMap((section) => section.trueCards);
 
-    const required = this.parentSection?.requiredChildCards || [];
+    const required = this.parentCard?.requiredChildCards || [];
     exclude.push(...required);
 
     const included = (cards) => cards.filter((card) => !exclude.includes(card));
@@ -350,29 +348,28 @@ class Section extends Toggleable {
   chooseCards(forcedCards, isShuffleAll) {
     const tryUseDefault =
       forcedCards === null &&
-      this.parentSection !== null &&
+      this.parentCard !== null &&
       this.checkedCards.length === 0;
 
     if (tryUseDefault) {
       const requiredAndDefaultCards = [
-        ...this.parentSection.requiredChildCards,
-        ...this.parentSection.defaultChildCards,
+        ...this.parentCard.requiredChildCards,
+        ...this.parentCard.defaultChildCards,
       ];
       if (requiredAndDefaultCards.length === this.expectedCardCount) {
         return requiredAndDefaultCards;
       }
     }
 
-    const required =
-      forcedCards || this.parentSection?.requiredChildCards || [];
+    const required = forcedCards || this.parentCard?.requiredChildCards || [];
 
     const exclusiveSiblingSections = isShuffleAll
       ? this.previousSiblingSections
       : this.visibleSiblingSections;
 
-    const exclude = this.parentSection
-      ? this.parentSection.excludedChildCards.slice()
-      : exclusiveSiblingSections.map((section) => section.trueCard);
+    const exclude = this.parentCard
+      ? this.parentCard.excludedChildCards.slice()
+      : exclusiveSiblingSections.flatMap((section) => section.trueCards);
 
     const newCards = [];
     for (let i = 0; i < this.expectedCardCount; i++) {
@@ -417,13 +414,12 @@ class Section extends Toggleable {
   }
 
   getDefaultOptions() {
-    const parentCard = this.parentSection?.trueCard;
-    if (parentCard?.defaultChildCards.length > 0) {
-      return parentCard.defaultChildCards;
+    if (this.parentCard?.defaultChildCards.length > 0) {
+      return this.parentCard.defaultChildCards;
     }
 
     const parentSet = this.cardsOrSets.find(
-      (set) => set.name === parentCard?.parent?.name,
+      (set) => set.name === this.parentCard?.parent?.name,
     );
     if (parentSet) {
       return parentSet.children;
@@ -514,7 +510,7 @@ class ScenarioSection extends Section {
       ? heroSection1.checkedCards
       : heroSections
           .filter((section) => section.visible)
-          .map((section) => section.trueCard)
+          .flatMap((section) => section.trueCards)
           .filter((card) => !!card);
 
     return heroes.length > 0
@@ -538,7 +534,7 @@ class ModularSection extends Section {
   }
 
   updateRequiredLabels() {
-    const required = this.parentSection.trueCard.requiredChildCards;
+    const required = this.parentCard.requiredChildCards;
     const slots = this.slots || [];
     for (const slot of slots) {
       const { root, card } = slot;

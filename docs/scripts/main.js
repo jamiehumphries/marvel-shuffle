@@ -164,7 +164,7 @@ class Section extends Toggleable {
     const includedChecked = included(this.checkedCards);
     const includedDefault = included(this.getDefaultOptions());
 
-    return this.cards.every(function (card, i) {
+    return this.cards.every((card, i) => {
       if (i < required.length) {
         return card === required[i];
       }
@@ -502,7 +502,7 @@ class ScenarioSection extends Section {
   }
 
   goToNextScenario() {
-    this.shuffle({ forcedCards: this.nextScenario ? [this.nextScenario] : [] });
+    this.shuffle({ forcedCards: [this.nextScenario] });
   }
 
   getPriorityFromTracking(scenario, isShuffleAll) {
@@ -525,7 +525,7 @@ class ModularSection extends Section {
     this.updateRequiredLabels();
   }
 
-  shuffleIfInvalid(options) {
+  shuffleIfInvalid(options = {}) {
     const shuffled = super.shuffleIfInvalid(options);
     if (!shuffled) {
       this.updateRequiredLabels();

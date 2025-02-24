@@ -94,6 +94,14 @@ class Section extends Toggleable {
     this.root = document.getElementById(this.id);
   }
 
+  get sectionName() {
+    return this.type.name;
+  }
+
+  get sectionNamePlural() {
+    return this.type.namePlural;
+  }
+
   get checkedCards() {
     return this.selectableCards.filter((card) => card.checked);
   }
@@ -209,7 +217,7 @@ class Section extends Toggleable {
     this.saveCards(value);
 
     this.name.innerText =
-      value.length === 1 ? this.type.name : this.type.namePlural;
+      value.length === 1 ? this.sectionName : this.sectionNamePlural;
 
     const slotCards =
       value.length === 0 && this.type.placeholder
@@ -244,8 +252,8 @@ class Section extends Toggleable {
     this.root.appendChild(element);
 
     this.name = this.root.querySelector(".type-name");
-    this.name.innerText = this.type.name;
-    const selectText = `Select ${this.type.namePlural}`;
+    this.name.innerText = this.sectionName;
+    const selectText = `Select ${this.sectionNamePlural}`;
     this.root.querySelector(".select").innerText = selectText;
 
     const slotsContainer = this.root.querySelector(".slots");
@@ -273,10 +281,10 @@ class Section extends Toggleable {
         ? "no"
         : "too few";
     optionsHint.classList.add("options-hint");
-    optionsHint.innerText = `If ${noOrTooFew} ${this.type.namePlural} are selected, `;
+    optionsHint.innerText = `If ${noOrTooFew} ${this.sectionNamePlural} are selected, `;
     optionsHint.innerText += this.parentSection
       ? `${this.parentSection.type.name} default(s) will be used`
-      : `Core Set ${this.type.namePlural} will be used`;
+      : `Core Set ${this.sectionNamePlural} will be used`;
     options.appendChild(optionsHint);
 
     const all = new All(this);

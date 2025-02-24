@@ -123,6 +123,10 @@ h2 {
   font-size: calc(1rem * var(--button-scale-factor));
 }
 
+.button span {
+  width: min-content;
+}
+
 .button img {
   margin-bottom: 0.1em;
   margin-left: 0.5em;

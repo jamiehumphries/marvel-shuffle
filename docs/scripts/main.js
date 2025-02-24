@@ -58,6 +58,10 @@ class Section extends Toggleable {
   ) {
     super();
     this.cardsOrSets = cardsOrSets;
+    this.sets = cardsOrSets.filter((set) => !!set.children);
+    this.coreSet = this.sets.find((set) => set.name === "Core Set");
+    this.selectableCards = flatten(this.cardsOrSets);
+
     this.nthOfType = nthOfType;
     this.extraCards = extraCards;
     this.parentSection = parentSection;
@@ -73,8 +77,6 @@ class Section extends Toggleable {
     for (const siblingSection of this.allSiblingSections) {
       siblingSection.allSiblingSections.push(this);
     }
-
-    this.selectableCards = flatten(this.cardsOrSets);
 
     this.type = this.selectableCards.reduce((type, card) => {
       const cardType = card.type;
@@ -94,8 +96,20 @@ class Section extends Toggleable {
     this.root = document.getElementById(this.id);
   }
 
+  get sectionName() {
+    return this.type.name;
+  }
+
+  get sectionNamePlural() {
+    return this.type.namePlural;
+  }
+
   get checkedCards() {
     return this.selectableCards.filter((card) => card.checked);
+  }
+
+  get maxSlots() {
+    return (this._maxSlots ||= this.parentSection?.maxChildCardCount || 1);
   }
 
   get maxChildCardCount() {
@@ -108,6 +122,11 @@ class Section extends Toggleable {
 
   get parentCard() {
     return this.parentSection?.trueCard;
+  }
+
+  get parentSet() {
+    const parentSetName = this.parentCard?.parent?.name;
+    return this.sets.find((set) => set.name === parentSetName);
   }
 
   get trueCard() {
@@ -139,6 +158,9 @@ class Section extends Toggleable {
   }
 
   get valid() {
+    // TODO: Fix
+    return true;
+
     if (this.cards.length !== this.expectedCardCount) {
       return false;
     }
@@ -159,19 +181,19 @@ class Section extends Toggleable {
     const required = this.parentCard?.requiredChildCards || [];
     exclude.push(...required);
 
-    const included = (cards) => cards.filter((card) => !exclude.includes(card));
-
-    const includedChecked = included(this.checkedCards);
-    const includedDefault = included(this.getDefaultOptions());
+    const filteredChecked = filter(this.checkedCards, exclude);
+    const filteredDefaultTiers = this.getCardOptionTiers((tier) =>
+      filter(tier, exclude),
+    );
 
     return this.cards.every((card, i) => {
       if (i < required.length) {
         return card === required[i];
       }
-      if (i < required.length + includedChecked.length) {
-        return includedChecked.includes(card);
+      if (i < required.length + filteredChecked.length) {
+        return filteredChecked.includes(card);
       }
-      return includedDefault.includes(card);
+      return filteredDefaultTiers.includes(card);
     });
   }
 
@@ -209,7 +231,7 @@ class Section extends Toggleable {
     this.saveCards(value);
 
     this.name.innerText =
-      value.length === 1 ? this.type.name : this.type.namePlural;
+      value.length === 1 ? this.sectionName : this.sectionNamePlural;
 
     const slotCards =
       value.length === 0 && this.type.placeholder
@@ -237,15 +259,13 @@ class Section extends Toggleable {
   }
 
   initializeLayout() {
-    this.maxSlots = this.parentSection?.maxChildCardCount || 1;
-
     const sectionTemplate = document.getElementById("section");
     const element = sectionTemplate.content.cloneNode(true);
     this.root.appendChild(element);
 
     this.name = this.root.querySelector(".type-name");
-    this.name.innerText = this.type.name;
-    const selectText = `Select ${this.type.namePlural}`;
+    this.name.innerText = this.sectionName;
+    const selectText = `Select ${this.sectionNamePlural}`;
     this.root.querySelector(".select").innerText = selectText;
 
     const slotsContainer = this.root.querySelector(".slots");
@@ -273,10 +293,10 @@ class Section extends Toggleable {
         ? "no"
         : "too few";
     optionsHint.classList.add("options-hint");
-    optionsHint.innerText = `If ${noOrTooFew} ${this.type.namePlural} are selected, `;
+    optionsHint.innerText = `If ${noOrTooFew} ${this.sectionNamePlural} are selected, `;
     optionsHint.innerText += this.parentSection
       ? `${this.parentSection.type.name} default(s) will be used`
-      : `Core Set ${this.type.namePlural} will be used`;
+      : `Core Set ${this.sectionNamePlural} will be used`;
     options.appendChild(optionsHint);
 
     const all = new All(this);
@@ -292,7 +312,7 @@ class Section extends Toggleable {
     });
 
     if (getItem(this.id) === null) {
-      this.cardsOrSets[0].checked = true;
+      this.coreSet.checked = true;
     }
   }
 
@@ -306,12 +326,12 @@ class Section extends Toggleable {
 
   initializeCards() {
     this.cards = this.loadCards();
-    this.shuffleIfInvalid({ animate: false });
+    this.shuffleIfInvalid({ animate: false, isInitialize: true });
   }
 
-  shuffleIfInvalid({ animate = true } = {}) {
+  shuffleIfInvalid({ animate = true, isInitialize = false } = {}) {
     if (!this.valid && !this.disabled) {
-      this.shuffle({ animate });
+      this.shuffle({ animate, isInitialize });
       return true;
     }
     return false;
@@ -319,7 +339,7 @@ class Section extends Toggleable {
 
   shuffle({ forcedCards = null, animate = true, isShuffleAll = false } = {}) {
     this.forced = forcedCards !== null;
-    const newCards = this.chooseCards(forcedCards, isShuffleAll);
+    const newCards = forcedCards || this.chooseCards(isShuffleAll);
 
     if (!animate || !this.visible) {
       this.cards = newCards;
@@ -345,24 +365,7 @@ class Section extends Toggleable {
     setTimeout(() => (this.cards = newCards), cardChangeDelayMs);
   }
 
-  chooseCards(forcedCards, isShuffleAll) {
-    const tryUseDefault =
-      forcedCards === null &&
-      this.parentCard !== null &&
-      this.checkedCards.length === 0;
-
-    if (tryUseDefault) {
-      const requiredAndDefaultCards = [
-        ...this.parentCard.requiredChildCards,
-        ...this.parentCard.defaultChildCards,
-      ];
-      if (requiredAndDefaultCards.length === this.expectedCardCount) {
-        return requiredAndDefaultCards;
-      }
-    }
-
-    const required = forcedCards || this.parentCard?.requiredChildCards || [];
-
+  chooseCards(isShuffleAll) {
     const exclusiveSiblingSections = isShuffleAll
       ? this.previousSiblingSections
       : this.visibleSiblingSections;
@@ -371,36 +374,46 @@ class Section extends Toggleable {
       ? this.parentCard.excludedChildCards.slice()
       : exclusiveSiblingSections.flatMap((section) => section.trueCards);
 
+    const tiers = this.getCardOptionTiers().map((tier) =>
+      filter(tier, exclude),
+    );
+
     const newCards = [];
-    for (let i = 0; i < this.expectedCardCount; i++) {
-      const newCard =
-        i < required.length
-          ? required[i]
-          : this.randomCard({ isShuffleAll, exclude });
-      newCards.push(newCard);
-      exclude.push(newCard);
+    for (let tier of tiers) {
+      tier = filter(tier, newCards);
+      if (newCards.length === this.expectedCardCount) {
+        break;
+      }
+      if (newCards.length + tier.length > this.expectedCardCount) {
+        const numberNeeded = this.expectedCardCount - newCards.length;
+        newCards.push(...this.randomCards(numberNeeded, tier, isShuffleAll));
+        break;
+      }
+      newCards.push(...tier);
     }
 
     return newCards;
   }
 
-  randomCard({ isShuffleAll = false, exclude = [], available = null } = {}) {
-    available ||= this.checkedCards;
-    available = available.filter((card) => !exclude.includes(card));
-
-    if (available.length === 0) {
-      available = this.getDefaultOptions();
-      return this.randomCard({ exclude, available });
+  randomCards(number, options, isShuffleAll) {
+    const cards = [];
+    for (let id = 0; id < number; id++) {
+      const card = this.randomCard(options, isShuffleAll);
+      options = filter(options, [card]);
+      cards.push(card);
     }
+    return cards;
+  }
 
-    const prioritisedAvailable = available.flatMap((card) =>
-      Array(this.getPriority(card, isShuffleAll)).fill(card),
+  randomCard(options, isShuffleAll) {
+    const prioritisedOptions = options.flatMap((card) => {
+      const priority = this.getPriority(card, isShuffleAll);
+      return Array(priority).fill(card);
+    });
+
+    return chooseRandom(
+      prioritisedOptions.length > 0 ? prioritisedOptions : options,
     );
-    if (prioritisedAvailable.length > 0) {
-      available = prioritisedAvailable;
-    }
-
-    return chooseRandom(available);
   }
 
   getPriority(card, isShuffleAll) {
@@ -413,20 +426,14 @@ class Section extends Toggleable {
     return 1;
   }
 
-  getDefaultOptions() {
-    if (this.parentCard?.defaultChildCards.length > 0) {
-      return this.parentCard.defaultChildCards;
-    }
-
-    const parentSet = this.cardsOrSets.find(
-      (set) => set.name === this.parentCard?.parent?.name,
-    );
-    if (parentSet) {
-      return parentSet.children;
-    }
-
-    const coreSet = this.cardsOrSets[0];
-    return coreSet.children;
+  getCardOptionTiers() {
+    return [
+      this.parentCard?.requiredChildCards,
+      this.checkedCards,
+      this.parentCard?.defaultChildCards,
+      this.parentSet?.children,
+      this.coreSet.children,
+    ].filter((tier) => tier?.length > 0);
   }
 
   onTransitionEnd(event) {
@@ -520,6 +527,10 @@ class ScenarioSection extends Section {
 }
 
 class ModularSection extends Section {
+  get extraModularSection() {
+    return this.allSiblingSections.find((section) => section.nthOfType === 2);
+  }
+
   setCards(value) {
     super.setCards(value);
     this.updateRequiredLabels();
@@ -533,6 +544,13 @@ class ModularSection extends Section {
     return shuffled;
   }
 
+  shuffle(options = {}) {
+    super.shuffle(options);
+    if (!options.isInitialize) {
+      this.extraModularSection?.shuffle(options);
+    }
+  }
+
   updateRequiredLabels() {
     const required = this.parentCard.requiredChildCards;
     const slots = this.slots || [];
@@ -541,6 +559,43 @@ class ModularSection extends Section {
       const isRequired = required.includes(card);
       root.classList.toggle("is-required", isRequired);
     }
+  }
+}
+
+class ExtraModularSection extends Section {
+  get modularSection() {
+    return this.allSiblingSections.find((section) => section.nthOfType === 1);
+  }
+
+  get sectionName() {
+    return this.modifyBaseName(super.sectionName);
+  }
+
+  get sectionNamePlural() {
+    return this.modifyBaseName(super.sectionNamePlural);
+  }
+
+  get maxSlots() {
+    return 10;
+  }
+
+  get expectedCardCount() {
+    return 4;
+  }
+
+  getCardOptionTiers() {
+    return this.modularSection.getCardOptionTiers();
+  }
+
+  shuffle(options) {
+    if (this.expectedCardCount === 0) {
+      return;
+    }
+    super.shuffle(options);
+  }
+
+  modifyBaseName(baseName) {
+    return `Extra ${baseName}`;
   }
 }
 
@@ -727,6 +782,9 @@ const modularSection = new ModularSection(modulars, 1, {
   extraCards: extraModulars,
   parentSection: scenarioSection,
 });
+const extraModularSection = new ExtraModularSection(modulars, 2, {
+  previousSiblingSection: modularSection,
+});
 const heroSection1 = new HeroSection(heroes, 1);
 const aspectSection1 = new AspectSection(aspects, 1, {
   parentSection: heroSection1,
@@ -753,6 +811,7 @@ const aspectSection4 = new AspectSection(aspects, 4, {
 const sections = [
   scenarioSection,
   modularSection,
+  extraModularSection,
   heroSection1,
   aspectSection1,
   heroSection2,
@@ -785,20 +844,15 @@ function toggleSettings() {
   }
 
   if (settingsVisible) {
-    settings.previousNumberOfHeroes = settings.numberOfHeroes;
+    settings.previouslyVisibleSections = visibleSections();
   } else {
-    const newHeroAndAspectSections = [
-      ...heroSections.slice(
-        settings.previousNumberOfHeroes,
-        settings.numberOfHeroes,
-      ),
-      ...aspectSections.slice(
-        settings.previousNumberOfHeroes,
-        settings.numberOfHeroes,
-      ),
-    ];
+    const newlyVisibleSections = filter(
+      visibleSections(),
+      settings.previouslyVisibleSections,
+    );
 
-    for (const section of newHeroAndAspectSections) {
+    for (const section of newlyVisibleSections) {
+      // TODO: Can this be { isShuffleAll: false }?
       section.shuffle({ animate: false, isShuffleAll: true });
     }
 
@@ -810,6 +864,10 @@ function toggleSettings() {
 
     updateTrackingTable();
   }
+}
+
+function visibleSections() {
+  return sections.filter((section) => section.visible);
 }
 
 function setGlobalButtonsAvailability() {
@@ -874,6 +932,10 @@ function requestPostAnimationFrame(callback) {
 
 function chooseRandom(array) {
   return array[Math.floor(Math.random() * array.length)];
+}
+
+function filter(array, toRemove) {
+  return array.filter((el) => !toRemove.includes(el));
 }
 
 function tryUseBookmarkUrl(url) {

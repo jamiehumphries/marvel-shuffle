@@ -58,6 +58,10 @@ class Section extends Toggleable {
   ) {
     super();
     this.cardsOrSets = cardsOrSets;
+    this.sets = cardsOrSets.filter((set) => !!set.children);
+    this.coreSet = this.sets.find((set) => set.name === "Core Set");
+    this.selectableCards = flatten(this.cardsOrSets);
+
     this.nthOfType = nthOfType;
     this.extraCards = extraCards;
     this.parentSection = parentSection;
@@ -73,8 +77,6 @@ class Section extends Toggleable {
     for (const siblingSection of this.allSiblingSections) {
       siblingSection.allSiblingSections.push(this);
     }
-
-    this.selectableCards = flatten(this.cardsOrSets);
 
     this.type = this.selectableCards.reduce((type, card) => {
       const cardType = card.type;
@@ -122,6 +124,11 @@ class Section extends Toggleable {
     return this.parentSection?.trueCard;
   }
 
+  get parentSet() {
+    const parentSetName = this.parentCard?.parent?.name;
+    return this.sets.find((set) => set.name === parentSetName);
+  }
+
   get trueCard() {
     return this.maxSlots === 1 ? this.trueCards[0] : null;
   }
@@ -164,27 +171,8 @@ class Section extends Toggleable {
       return true;
     }
 
-    const exclude = this.parentCard
-      ? this.parentCard.excludedChildCards
-      : this.visibleSiblingSections.flatMap((section) => section.trueCards);
-
-    const required = this.parentCard?.requiredChildCards || [];
-    exclude.push(...required);
-
-    const included = (cards) => cards.filter((card) => !exclude.includes(card));
-
-    const includedChecked = included(this.checkedCards);
-    const includedDefault = included(this.getDefaultOptions());
-
-    return this.cards.every((card, i) => {
-      if (i < required.length) {
-        return card === required[i];
-      }
-      if (i < required.length + includedChecked.length) {
-        return includedChecked.includes(card);
-      }
-      return includedDefault.includes(card);
-    });
+    const optionSets = this.getCardOptionSets();
+    return this.cards.every((card, i) => optionSets[i]?.includes(card));
   }
 
   get visible() {
@@ -302,7 +290,7 @@ class Section extends Toggleable {
     });
 
     if (getItem(this.id) === null) {
-      this.cardsOrSets[0].checked = true;
+      this.coreSet.checked = true;
     }
   }
 
@@ -329,7 +317,7 @@ class Section extends Toggleable {
 
   shuffle({ forcedCards = null, animate = true, isShuffleAll = false } = {}) {
     this.forced = forcedCards !== null;
-    const newCards = this.chooseCards(forcedCards, isShuffleAll);
+    const newCards = forcedCards || this.chooseCards(isShuffleAll);
 
     if (!animate || !this.visible) {
       this.cards = newCards;
@@ -355,62 +343,60 @@ class Section extends Toggleable {
     setTimeout(() => (this.cards = newCards), cardChangeDelayMs);
   }
 
-  chooseCards(forcedCards, isShuffleAll) {
-    const tryUseDefault =
-      forcedCards === null &&
-      this.parentCard !== null &&
-      this.checkedCards.length === 0;
-
-    if (tryUseDefault) {
-      const requiredAndDefaultCards = [
-        ...this.parentCard.requiredChildCards,
-        ...this.parentCard.defaultChildCards,
-      ];
-      if (requiredAndDefaultCards.length === this.expectedCardCount) {
-        return requiredAndDefaultCards;
-      }
+  chooseCards(isShuffleAll) {
+    const optionSets = this.getCardOptionSets(isShuffleAll);
+    const cards = [];
+    for (const optionSet of optionSets) {
+      const filteredOptionSet = filter(optionSet, cards);
+      const card = this.randomCard(filteredOptionSet, isShuffleAll);
+      cards.push(card);
     }
+    return cards;
+  }
 
-    const required = forcedCards || this.parentCard?.requiredChildCards || [];
+  getCardOptionSets(isShuffleAll = false) {
+    if (this.expectedCardCount === 0) {
+      return [];
+    }
 
     const exclusiveSiblingSections = isShuffleAll
       ? this.previousSiblingSections
       : this.visibleSiblingSections;
 
     const exclude = this.parentCard
-      ? this.parentCard.excludedChildCards.slice()
+      ? this.parentCard.excludedChildCards
       : exclusiveSiblingSections.flatMap((section) => section.trueCards);
 
-    const newCards = [];
-    for (let i = 0; i < this.expectedCardCount; i++) {
-      const newCard =
-        i < required.length
-          ? required[i]
-          : this.randomCard({ isShuffleAll, exclude });
-      newCards.push(newCard);
-      exclude.push(newCard);
+    const tiers = this.getCardOptionTiers();
+
+    const optionsSets = [];
+    for (const tier of tiers) {
+      const numberNeeded = this.expectedCardCount - optionsSets.length;
+      const cardOptions = filter(tier.cards, exclude);
+
+      const tierOptionSets =
+        tier.isOrdered && cardOptions.length <= numberNeeded
+          ? cardOptions.map((card) => [card])
+          : Array(Math.min(numberNeeded, cardOptions.length)).fill(cardOptions);
+
+      optionsSets.push(...tierOptionSets);
+
+      if (optionsSets.length === this.expectedCardCount) {
+        break;
+      }
     }
 
-    return newCards;
+    return optionsSets;
   }
 
-  randomCard({ isShuffleAll = false, exclude = [], available = null } = {}) {
-    available ||= this.checkedCards;
-    available = available.filter((card) => !exclude.includes(card));
-
-    if (available.length === 0) {
-      available = this.getDefaultOptions();
-      return this.randomCard({ exclude, available });
-    }
-
-    const prioritisedAvailable = available.flatMap((card) =>
-      Array(this.getPriority(card, isShuffleAll)).fill(card),
+  randomCard(options, isShuffleAll) {
+    const prioritisedOptions = options.flatMap((card) => {
+      const priority = this.getPriority(card, isShuffleAll);
+      return Array(priority).fill(card);
+    });
+    return chooseRandom(
+      prioritisedOptions.length > 0 ? prioritisedOptions : options,
     );
-    if (prioritisedAvailable.length > 0) {
-      available = prioritisedAvailable;
-    }
-
-    return chooseRandom(available);
   }
 
   getPriority(card, isShuffleAll) {
@@ -423,20 +409,14 @@ class Section extends Toggleable {
     return 1;
   }
 
-  getDefaultOptions() {
-    if (this.parentCard?.defaultChildCards.length > 0) {
-      return this.parentCard.defaultChildCards;
-    }
-
-    const parentSet = this.cardsOrSets.find(
-      (set) => set.name === this.parentCard?.parent?.name,
-    );
-    if (parentSet) {
-      return parentSet.children;
-    }
-
-    const coreSet = this.cardsOrSets[0];
-    return coreSet.children;
+  getCardOptionTiers() {
+    return [
+      new CardTier(this.parentCard?.requiredChildCards, true),
+      new CardTier(this.checkedCards),
+      new CardTier(this.parentCard?.defaultChildCards, true),
+      new CardTier(this.parentSet?.children),
+      new CardTier(this.coreSet.children),
+    ].filter((tier) => tier.cards?.length > 0);
   }
 
   onTransitionEnd(event) {
@@ -717,6 +697,13 @@ class Settings {
     for (const setting of settings) {
       setting.appendTo(preferencesElement);
     }
+  }
+}
+
+class CardTier {
+  constructor(cards, isOrdered = false) {
+    this.cards = cards;
+    this.isOrdered = isOrdered;
   }
 }
 

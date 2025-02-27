@@ -795,20 +795,14 @@ function toggleSettings() {
   }
 
   if (settingsVisible) {
-    settings.previousNumberOfHeroes = settings.numberOfHeroes;
+    settings.previouslyVisibleSections = getVisibleSections();
   } else {
-    const newHeroAndAspectSections = [
-      ...heroSections.slice(
-        settings.previousNumberOfHeroes,
-        settings.numberOfHeroes,
-      ),
-      ...aspectSections.slice(
-        settings.previousNumberOfHeroes,
-        settings.numberOfHeroes,
-      ),
-    ];
+    const newlyVisibleSections = filter(
+      getVisibleSections(),
+      settings.previouslyVisibleSections,
+    );
 
-    for (const section of newHeroAndAspectSections) {
+    for (const section of newlyVisibleSections) {
       section.shuffle({ animate: false, isShuffleAll: true });
     }
 
@@ -820,6 +814,10 @@ function toggleSettings() {
 
     updateTrackingTable();
   }
+}
+
+function getVisibleSections() {
+  return sections.filter((section) => section.visible);
 }
 
 function setGlobalButtonsAvailability() {
@@ -884,6 +882,10 @@ function requestPostAnimationFrame(callback) {
 
 function chooseRandom(array) {
   return array[Math.floor(Math.random() * array.length)];
+}
+
+function filter(array, toRemove) {
+  return array.filter((el) => !toRemove.includes(el));
 }
 
 function tryUseBookmarkUrl(url) {

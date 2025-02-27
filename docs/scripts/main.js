@@ -369,25 +369,24 @@ class Section extends Toggleable {
 
     const tiers = this.getCardOptionTiers();
 
-    const sets = [];
+    const optionsSets = [];
     for (const tier of tiers) {
-      const excludeFromTier = [...exclude, sets.flatMap((cards) => cards)];
-      const numberNeeded = this.expectedCardCount - sets.length;
-      const cardOptions = filter(tier.cards, excludeFromTier);
+      const numberNeeded = this.expectedCardCount - optionsSets.length;
+      const cardOptions = filter(tier.cards, exclude);
 
       const tierOptionSets =
         tier.isOrdered && cardOptions.length <= numberNeeded
           ? cardOptions.map((card) => [card])
           : Array(Math.min(numberNeeded, cardOptions.length)).fill(cardOptions);
 
-      sets.push(...tierOptionSets);
+      optionsSets.push(...tierOptionSets);
 
-      if (sets.length === this.expectedCardCount) {
+      if (optionsSets.length === this.expectedCardCount) {
         break;
       }
     }
 
-    return sets;
+    return optionsSets;
   }
 
   randomCard(options, isShuffleAll) {

@@ -106,6 +106,10 @@ class Section extends Toggleable {
     return this.selectableCards.filter((card) => card.checked);
   }
 
+  get maxSlots() {
+    return (this._maxSlots ||= this.parentSection?.maxChildCardCount || 1);
+  }
+
   get maxChildCardCount() {
     return Math.max(
       ...this.selectableCards.map((card) =>
@@ -245,8 +249,6 @@ class Section extends Toggleable {
   }
 
   initializeLayout() {
-    this.maxSlots = this.parentSection?.maxChildCardCount || 1;
-
     const sectionTemplate = document.getElementById("section");
     const element = sectionTemplate.content.cloneNode(true);
     this.root.appendChild(element);

@@ -1,13 +1,13 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
 import {
-  getFirestore,
-  doc,
-  collection,
   addDoc,
-  getDoc,
-  setDoc,
+  collection,
   deleteDoc,
   deleteField,
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
 } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 
 const app = initializeApp({
@@ -178,12 +178,12 @@ function migrate(migrationId, callback) {
 }
 
 export {
-  initializeStorage,
   clearStorage,
+  clearUserId,
   createBookmarkUrl,
   getBookmarkUrl,
   getItem,
+  initializeStorage,
   setItem,
   setUserId,
-  clearUserId,
 };

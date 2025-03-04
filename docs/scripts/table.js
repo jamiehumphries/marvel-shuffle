@@ -1,6 +1,6 @@
-import { initializeStorage } from "./storage.js?v=00ea94bd";
-import { scenarios, heroes } from "./cards.js?v=17ba0c0b";
-import { renderTable } from "./tracker.js?v=549ed139";
+import { heroes, scenarios } from "./cards.js?v=4416f240";
+import { initializeStorage } from "./storage.js?v=b419bdb4";
+import { renderTable } from "./tracker.js?v=bcc2ce19";
 
 await initializeStorage();
 renderTable(scenarios, heroes);

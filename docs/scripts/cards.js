@@ -1,10 +1,9 @@
-import {
-  CardSet,
-  Scenario,
-  Modular,
-  Hero,
-  Aspect,
-} from "./options.js?v=4e45bee9";
+import { flatten } from "./helpers.js?v=b2f4ffde";
+import { Aspect } from "./models/Aspect.js?v=b436b6f7";
+import { CardSet } from "./models/CardSet.js?v=8811acc4";
+import { Hero } from "./models/Hero.js?v=08c18993";
+import { Modular } from "./models/Modular.js?v=95e5903d";
+import { Scenario } from "./models/Scenario.js?v=cf1b8ee3";
 
 function ensureArray(arrayOrString) {
   return Array.isArray(arrayOrString) ? arrayOrString : [arrayOrString];
@@ -460,8 +459,4 @@ const heroes = [
   hero("Silk", PROTECTION, "#c00000"),
 ];
 
-function flatten(cardsOrSets) {
-  return cardsOrSets.flatMap((cardOrSet) => cardOrSet.children || [cardOrSet]);
-}
-
-export { scenarios, modulars, extraModulars, heroes, aspects, flatten };
+export { aspects, extraModulars, flatten, heroes, modulars, scenarios };

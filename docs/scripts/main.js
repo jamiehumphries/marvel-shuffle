@@ -1,759 +1,25 @@
-import { Setting, All } from "./options.js?v=4e45bee9";
 import {
-  scenarios,
-  modulars,
+  aspects,
   extraModulars,
   heroes,
-  aspects,
-  flatten,
-} from "./cards.js?v=17ba0c0b";
+  modulars,
+  scenarios,
+} from "./cards.js?v=4416f240";
+import { filter, requestPostAnimationFrame } from "./helpers.js?v=b2f4ffde";
 import {
-  initializeStorage,
-  clearStorage,
+  clearUserId,
   createBookmarkUrl,
   getBookmarkUrl,
-  clearUserId,
+  initializeStorage,
   setUserId,
-  getItem,
-  setItem,
-} from "./storage.js?v=00ea94bd";
-import {
-  clearTable,
-  renderTable,
-  initializeDifficultySettings,
-  getTrackedDifficulties,
-  isGameCompleted,
-} from "./tracker.js?v=549ed139";
-
-const cardChangeDelayMs = Number(
-  getComputedStyle(document.documentElement)
-    .getPropertyValue("--card-change-delay")
-    .slice(0, -1 * "ms".length),
-);
-
-class Toggleable {
-  show() {
-    this.toggleVisibility(true);
-  }
-
-  hide() {
-    this.toggleVisibility(false);
-  }
-
-  toggleVisibility(value) {
-    this.root.classList.toggle("hidden", !value);
-    this.childSection?.toggleVisibility(value);
-  }
-}
-
-class Section extends Toggleable {
-  constructor(
-    cardsOrSets,
-    nthOfType,
-    {
-      extraCards = [],
-      previousSiblingSection = null,
-      parentSection = null,
-    } = {},
-  ) {
-    super();
-    this.cardsOrSets = cardsOrSets;
-    this.sets = cardsOrSets.filter((set) => !!set.children);
-    this.coreSet = this.sets.find((set) => set.name === "Core Set");
-    this.selectableCards = flatten(this.cardsOrSets);
-
-    this.nthOfType = nthOfType;
-    this.extraCards = extraCards;
-    this.parentSection = parentSection;
-
-    if (this.parentSection) {
-      this.parentSection.childSection = this;
-    }
-
-    this.allSiblingSections = previousSiblingSection
-      ? [previousSiblingSection, ...previousSiblingSection.allSiblingSections]
-      : [];
-
-    for (const siblingSection of this.allSiblingSections) {
-      siblingSection.allSiblingSections.push(this);
-    }
-
-    this.type = this.selectableCards.reduce((type, card) => {
-      const cardType = card.type;
-      if (type === null || type === cardType) {
-        return cardType;
-      }
-      throw new Error("All cards for a section must be the same type.");
-    }, null);
-
-    this.id = this.type.id;
-    if (this.nthOfType !== 1) {
-      this.id += `-${this.nthOfType}`;
-    }
-
-    this.forcedSettingId = this.id + "--setting--forced";
-
-    this.root = document.getElementById(this.id);
-  }
-
-  get sectionName() {
-    return this.type.name;
-  }
-
-  get sectionNamePlural() {
-    return this.type.namePlural;
-  }
-
-  get checkedCards() {
-    return this.selectableCards.filter((card) => card.checked);
-  }
-
-  get maxSlots() {
-    return (this._maxSlots ||= this.parentSection?.maxChildCardCount || 1);
-  }
-
-  get maxChildCardCount() {
-    return Math.max(
-      ...this.selectableCards.map((card) =>
-        card.childCardCount(settings.maxNumberOfHeroes),
-      ),
-    );
-  }
-
-  get parentCard() {
-    return this.parentSection?.trueCard;
-  }
-
-  get parentSet() {
-    const parentSetName = this.parentCard?.parent?.name;
-    return this.sets.find((set) => set.name === parentSetName);
-  }
-
-  get trueCard() {
-    return this.maxSlots === 1 ? this.trueCards[0] : null;
-  }
-
-  get trueCards() {
-    return this.incomingCards || this.cards;
-  }
-
-  get childCardCount() {
-    return this.childSection && this.trueCard
-      ? this.trueCard.childCardCount(settings.numberOfHeroes)
-      : 0;
-  }
-
-  get previousSiblingSections() {
-    return this.allSiblingSections.filter(
-      (section) => section.nthOfType < this.nthOfType,
-    );
-  }
-
-  get visibleSiblingSections() {
-    return this.allSiblingSections.filter((section) => section.visible);
-  }
-
-  get expectedCardCount() {
-    return this.parentSection ? this.parentSection.childCardCount : 1;
-  }
-
-  get valid() {
-    if (this.cards.length !== this.expectedCardCount) {
-      return false;
-    }
-
-    const hasDuplicates = this.cards.length !== new Set(this.cards).size;
-    if (hasDuplicates) {
-      return false;
-    }
-
-    if (this.forced) {
-      return true;
-    }
-
-    const optionSets = this.getCardOptionSets();
-    return this.cards.every((card, i) => optionSets[i]?.includes(card));
-  }
-
-  get visible() {
-    return !this.root.classList.contains("hidden");
-  }
-
-  get disabled() {
-    return this.button.disabled;
-  }
-
-  set disabled(value) {
-    this.button.disabled = value;
-    setGlobalButtonsAvailability();
-  }
-
-  get forced() {
-    return getItem(this.forcedSettingId);
-  }
-
-  set forced(value) {
-    setItem(this.forcedSettingId, value);
-  }
-
-  get cards() {
-    return this._cards || [];
-  }
-
-  set cards(value) {
-    this.setCards(value);
-  }
-
-  setCards(value) {
-    this._cards = value;
-    this.saveCards(value);
-
-    this.name.innerText =
-      value.length === 1 ? this.sectionName : this.sectionNamePlural;
-
-    const slotCards =
-      value.length === 0 && this.type.placeholder
-        ? [this.type.placeholder]
-        : value;
-
-    const { style } = this.root;
-    const landscapeCount = slotCards.filter((card) => card.isLandscape).length;
-    const portraitCount = slotCards.length - landscapeCount;
-    style.setProperty("--landscape-cards-in-section", landscapeCount);
-    style.setProperty("--portrait-cards-in-section", portraitCount);
-
-    for (let i = 0; i < this.slots.length; i++) {
-      this.slots[i].card = slotCards[i];
-    }
-
-    updateTrackingTable();
-  }
-
-  initialize() {
-    this.initializeLayout();
-    this.initializeOptions();
-    this.initializeShuffling();
-    this.initializeCards();
-  }
-
-  initializeLayout() {
-    const sectionTemplate = document.getElementById("section");
-    const element = sectionTemplate.content.cloneNode(true);
-    this.root.appendChild(element);
-
-    this.name = this.root.querySelector(".type-name");
-    this.name.innerText = this.sectionName;
-    const selectText = `Select ${this.sectionNamePlural}`;
-    this.root.querySelector(".select").innerText = selectText;
-
-    const slotsContainer = this.root.querySelector(".slots");
-    const slotTemplate = document.getElementById("slot");
-    for (let i = 0; i < this.maxSlots; i++) {
-      const element = slotTemplate.content.firstElementChild.cloneNode(true);
-      slotsContainer.appendChild(element);
-    }
-
-    this.slots = Array.from(this.root.querySelectorAll(".slot")).map(
-      (element) => new Slot(element),
-    );
-  }
-
-  initializeOptions() {
-    if (this.nthOfType !== 1) {
-      return;
-    }
-
-    const options = this.root.querySelector(".options");
-
-    const optionsHint = document.createElement("p");
-    const noOrTooFew =
-      this.maxSlots === 1 && this.allSiblingSections.length === 0
-        ? "no"
-        : "too few";
-    optionsHint.classList.add("options-hint");
-    optionsHint.innerText = `If ${noOrTooFew} ${this.sectionNamePlural} are selected, `;
-    optionsHint.innerText += this.parentSection
-      ? `${this.parentSection.type.name} default(s) will be used`
-      : `Core Set ${this.sectionNamePlural} will be used`;
-    options.appendChild(optionsHint);
-
-    const all = new All(this);
-    all.appendTo(options);
-
-    for (const cardOrSet of this.cardsOrSets) {
-      cardOrSet.appendTo(options);
-    }
-
-    options.addEventListener("submit", (event) => {
-      event.preventDefault();
-      toggleSettings();
-    });
-
-    if (getItem(this.id) === null) {
-      this.coreSet.checked = true;
-    }
-  }
-
-  initializeShuffling() {
-    this.button = this.root.querySelector("button");
-    this.button.addEventListener("click", () => this.shuffle());
-    this.root.addEventListener("transitionend", (event) =>
-      this.onTransitionEnd(event),
-    );
-  }
-
-  initializeCards() {
-    this.cards = this.loadCards();
-    this.shuffleIfInvalid({ animate: false, isInitialize: true });
-  }
-
-  shuffleIfInvalid({ animate = true, isInitialize = false } = {}) {
-    if (!this.valid && !this.disabled) {
-      this.shuffle({ animate, isInitialize });
-      return true;
-    }
-    return false;
-  }
-
-  shuffle({ forcedCards = null, animate = true, isShuffleAll = false } = {}) {
-    this.forced = forcedCards !== null;
-    const newCards = forcedCards || this.chooseCards(isShuffleAll);
-
-    if (!animate || !this.visible) {
-      this.cards = newCards;
-      return;
-    }
-
-    // Preload new images.
-    for (let i = 0; i < newCards.length; i++) {
-      const oldCard = this.cards[i];
-      const newCard = newCards[i];
-      for (const src of ["frontSrc", "backSrc"]) {
-        if (newCard[src] !== oldCard?.[src]) {
-          new Image().src = newCard[src];
-        }
-      }
-    }
-
-    this.disabled = true;
-    document.body.classList.add("shuffling");
-    this.root.classList.add("flipping");
-    this.root.classList.remove("giant", "wide");
-    this.incomingCards = newCards;
-    setTimeout(() => (this.cards = newCards), cardChangeDelayMs);
-  }
-
-  chooseCards(isShuffleAll) {
-    const optionSets = this.getCardOptionSets(isShuffleAll);
-    const cards = [];
-    for (const optionSet of optionSets) {
-      const filteredOptionSet = filter(optionSet, cards);
-      const card = this.randomCard(filteredOptionSet, isShuffleAll);
-      cards.push(card);
-    }
-    return cards;
-  }
-
-  getCardOptionSets(isShuffleAll = false) {
-    if (this.expectedCardCount === 0) {
-      return [];
-    }
-
-    const exclusiveSiblingSections = isShuffleAll
-      ? this.previousSiblingSections
-      : this.visibleSiblingSections;
-
-    const exclude = this.parentCard
-      ? this.parentCard.excludedChildCards
-      : exclusiveSiblingSections.flatMap((section) => section.trueCards);
-
-    const tiers = this.getCardOptionTiers();
-
-    const optionsSets = [];
-    for (const tier of tiers) {
-      const numberNeeded = this.expectedCardCount - optionsSets.length;
-      const cardOptions = filter(tier.cards, exclude);
-
-      const tierOptionSets =
-        tier.isOrdered && cardOptions.length <= numberNeeded
-          ? cardOptions.map((card) => [card])
-          : Array(Math.min(numberNeeded, cardOptions.length)).fill(cardOptions);
-
-      optionsSets.push(...tierOptionSets);
-
-      if (optionsSets.length === this.expectedCardCount) {
-        break;
-      }
-    }
-
-    return optionsSets;
-  }
-
-  randomCard(options, isShuffleAll) {
-    const prioritisedOptions = options.flatMap((card) => {
-      const priority = this.getPriority(card, isShuffleAll);
-      return Array(priority).fill(card);
-    });
-    return chooseRandom(
-      prioritisedOptions.length > 0 ? prioritisedOptions : options,
-    );
-  }
-
-  getPriority(card, isShuffleAll) {
-    return settings.avoidCompleted
-      ? this.getPriorityFromTracking(card, isShuffleAll)
-      : 1;
-  }
-
-  getPriorityFromTracking() {
-    return 1;
-  }
-
-  getCardOptionTiers() {
-    return [
-      new CardTier(this.parentCard?.requiredChildCards, true),
-      new CardTier(this.checkedCards),
-      new CardTier(this.parentCard?.defaultChildCards, true),
-      new CardTier(this.parentSet?.children),
-      new CardTier(this.coreSet.children),
-    ].filter((tier) => tier.cards?.length > 0);
-  }
-
-  onTransitionEnd(event) {
-    const { propertyName, target } = event;
-    if (propertyName !== "transform" || target !== this.slots[0].root) {
-      return;
-    }
-
-    document.body.classList.remove("shuffling");
-    this.root.classList.remove("flipping");
-    this.root.classList.add("flipped");
-    this.disabled = false;
-    this.incomingCards = null;
-
-    this.childSection?.shuffleIfInvalid();
-    maybeReturnFocusAfterShuffle();
-
-    requestPostAnimationFrame(() => this.root.classList.remove("flipped"));
-  }
-
-  loadCards() {
-    try {
-      const savedCardIds = getItem(this.id);
-      const allCards = this.selectableCards.concat(this.extraCards);
-      return savedCardIds
-        ? savedCardIds
-            .map((id) => allCards.find((card) => card.id === id))
-            .filter((card) => card !== undefined)
-        : [];
-    } catch {
-      clearStorage();
-      return [];
-    }
-  }
-
-  saveCards(cards) {
-    const cardIds = cards.map((card) => card.id);
-    setItem(this.id, cardIds);
-  }
-}
-
-class ScenarioSection extends Section {
-  get nextScenario() {
-    const cardSet = this.trueCard?.parent;
-    if (!cardSet?.isCampaign) {
-      return null;
-    }
-
-    const scenarioIndex = cardSet.children.indexOf(this.trueCard);
-    if (scenarioIndex === cardSet.children.length - 1) {
-      return null;
-    }
-
-    return cardSet.children[scenarioIndex + 1];
-  }
-
-  setCards(value) {
-    super.setCards(value);
-    this.campaignImage.src = this.nextScenario?.campaign?.imageSrc || "";
-    document.body.classList.toggle("has-next-scenario", !!this.nextScenario);
-  }
-
-  initializeLayout() {
-    super.initializeLayout();
-    const buttonTemplate = document.getElementById("next-scenario-button");
-    const element = buttonTemplate.content.cloneNode(true);
-    this.root.appendChild(element);
-
-    const button = this.root.querySelector(".next-scenario-button");
-    button.addEventListener("click", () => this.goToNextScenario());
-
-    this.campaignImage = this.root.querySelector(".campaign-image");
-  }
-
-  goToNextScenario() {
-    this.shuffle({ forcedCards: [this.nextScenario] });
-  }
-
-  getPriorityFromTracking(scenario, isShuffleAll) {
-    const heroes = isShuffleAll
-      ? heroSection1.checkedCards
-      : heroSections
-          .filter((section) => section.visible)
-          .flatMap((section) => section.trueCards)
-          .filter((card) => !!card);
-
-    return heroes.length > 0
-      ? getNumberOfIncompleteGames([scenario], heroes)
-      : 1;
-  }
-}
-
-class ModularSection extends Section {
-  get extraModularSection() {
-    return this.allSiblingSections.find((section) => section.nthOfType === 2);
-  }
-
-  setCards(value) {
-    super.setCards(value);
-    this.updateRequiredLabels();
-  }
-
-  shuffleIfInvalid(options = {}) {
-    const shuffled = super.shuffleIfInvalid(options);
-    if (!shuffled) {
-      this.updateRequiredLabels();
-    }
-    return shuffled;
-  }
-
-  shuffle(options = {}) {
-    super.shuffle(options);
-    if (!options.isInitialize) {
-      this.extraModularSection?.shuffle(options);
-    }
-  }
-
-  updateRequiredLabels() {
-    const required = this.parentCard.requiredChildCards;
-    const slots = this.slots || [];
-    for (const slot of slots) {
-      const { root, card } = slot;
-      const isRequired = required.includes(card);
-      root.classList.toggle("is-required", isRequired);
-    }
-  }
-}
-
-class ExtraModularSection extends Section {
-  get modularSection() {
-    return this.allSiblingSections.find((section) => section.nthOfType === 1);
-  }
-
-  get sectionName() {
-    return this.modifyBaseName(super.sectionName);
-  }
-
-  get sectionNamePlural() {
-    return this.modifyBaseName(super.sectionNamePlural);
-  }
-
-  get maxSlots() {
-    return 3;
-  }
-
-  get expectedCardCount() {
-    return 3;
-  }
-
-  getCardOptionTiers() {
-    return this.modularSection.getCardOptionTiers();
-  }
-
-  shuffle(options) {
-    if (this.expectedCardCount === 0) {
-      return;
-    }
-    super.shuffle(options);
-  }
-
-  modifyBaseName(baseName) {
-    return `Extra ${baseName}`;
-  }
-}
-
-class HeroSection extends Section {
-  getPriorityFromTracking(hero) {
-    const scenario = scenarioSection.trueCard;
-    return settings.avoidCompleted && scenario !== null
-      ? getNumberOfIncompleteGames([scenario], [hero])
-      : 1;
-  }
-}
-
-class AspectSection extends Section {}
-
-class Slot extends Toggleable {
-  constructor(root) {
-    super();
-    this.root = root;
-    this.header = root.querySelector(".header");
-    this.name = root.querySelector(".name");
-    this.subname = root.querySelector(".subname");
-    this.cardFront = root.querySelector(".front img.front");
-    this.cardFrontInner = root.querySelector(".front img.back");
-    this.cardBack = root.querySelector(".back img.front");
-    this.cardBackInner = root.querySelector(".back img.back");
-  }
-
-  get card() {
-    return this._card;
-  }
-
-  set card(value) {
-    const newCard = value;
-    this._card = newCard;
-
-    if (!newCard) {
-      this.hide();
-      return;
-    }
-
-    this.show();
-
-    this.root.classList.toggle("landscape", newCard.isLandscape);
-    this.root.classList.toggle("has-giant-form", newCard.hasGiantForm);
-    this.root.classList.toggle("has-wide-form", newCard.hasWideForm);
-
-    this.cardFront.src = newCard.frontSrc;
-    this.cardBack.src = newCard.backSrc;
-    this.cardFrontInner.src = newCard.frontInnerSrc || "";
-    this.cardBackInner.src = newCard.backInnerSrc || "";
-
-    // Replacing the name elements entirely fixes some animation bugs
-    // which were happening when just replacing the text.
-
-    this.name.remove();
-    this.name = this.name.cloneNode(true);
-    this.name.innerText = newCard.name;
-
-    this.subname.remove();
-    this.subname = this.subname.cloneNode(true);
-    this.subname.innerText = newCard.subname;
-
-    requestPostAnimationFrame(() =>
-      this.header.prepend(this.name, this.subname),
-    );
-  }
-}
-
-class Settings {
-  get avoidCompleted() {
-    return this.showTracker && this._avoidCompletedSetting.checked;
-  }
-
-  get showTracker() {
-    return this._showTrackerSetting.checked;
-  }
-
-  get anyDifficultiesTracked() {
-    return this._difficultSettings.some((setting) => setting.checked);
-  }
-
-  initialize() {
-    this.initializeNumberOfHeroes();
-    this.initializeTrackerSettings();
-  }
-
-  initializeNumberOfHeroes() {
-    const id = "setting--number-of-heroes";
-
-    this.maxNumberOfHeroes = 4;
-    const allowedValues = Array.from(
-      { length: this.maxNumberOfHeroes },
-      (_, i) => i + 1,
-    );
-
-    this.numberOfHeroes = getItem(id);
-    if (!allowedValues.includes(this.numberOfHeroes)) {
-      this.numberOfHeroes = allowedValues[0];
-    }
-
-    const fieldset = document.getElementById(id);
-
-    const toggleHeroSectionVisibility = () => {
-      for (let i = 0; i < heroSections.length; i++) {
-        const heroSection = heroSections[i];
-        heroSection.toggleVisibility(i < this.numberOfHeroes);
-      }
-    };
-
-    const onChange = (event) => {
-      const value = Number(event.target.value);
-      this.numberOfHeroes = value;
-      setItem(id, value);
-      toggleHeroSectionVisibility();
-    };
-
-    for (let i = 1; i <= this.maxNumberOfHeroes; i++) {
-      const inputId = `number-of-heroes-${i}`;
-
-      const radio = document.createElement("input");
-      radio.type = "radio";
-      radio.id = inputId;
-      radio.name = "number-of-heroes";
-      radio.value = i;
-      radio.checked = i === this.numberOfHeroes;
-      fieldset.appendChild(radio);
-
-      const label = document.createElement("label");
-      label.htmlFor = inputId;
-      label.innerText = i;
-      fieldset.appendChild(label);
-
-      radio.addEventListener("change", onChange);
-    }
-
-    toggleHeroSectionVisibility();
-  }
-
-  initializeTrackerSettings() {
-    const preferencesElement = document.getElementById("preferences");
-
-    this._showTrackerSetting = new Setting(
-      "show-tracker",
-      "Show game tracker under shuffle",
-      {
-        onChange: (checked) =>
-          document.body.classList.toggle("show-tracker", checked),
-      },
-    );
-
-    this._difficultSettings = initializeDifficultySettings();
-
-    this._avoidCompletedSetting = new Setting(
-      "avoid-completed",
-      "Avoid completed games when shuffling",
-    );
-
-    const settings = [
-      this._showTrackerSetting,
-      ...this._difficultSettings,
-      this._avoidCompletedSetting,
-    ];
-
-    for (const setting of settings) {
-      setting.appendTo(preferencesElement);
-    }
-  }
-}
-
-class CardTier {
-  constructor(cards, isOrdered = false) {
-    this.cards = cards;
-    this.isOrdered = isOrdered;
-  }
-}
+} from "./storage.js?v=b419bdb4";
+import { clearTable, renderTable } from "./tracker.js?v=bcc2ce19";
+import { AspectSection } from "./ui/AspectSection.js?v=93cf8ddc";
+import { ExtraModularSection } from "./ui/ExtraModularSection.js?v=cf19b921";
+import { HeroSection } from "./ui/HeroSection.js?v=32568e42";
+import { ModularSection } from "./ui/ModularSection.js?v=49d39ed5";
+import { ScenarioSection } from "./ui/ScenarioSection.js?v=bdfd3080";
+import { Settings } from "./ui/Settings.js?v=03b42f08";
 
 const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");
@@ -767,34 +33,39 @@ let lastClickedButton = null;
 
 const settings = new Settings();
 
-const scenarioSection = new ScenarioSection(scenarios, 1);
-const modularSection = new ModularSection(modulars, 1, {
+const scenarioSection = new ScenarioSection(settings, scenarios, 1);
+const modularSection = new ModularSection(settings, modulars, 1, {
   extraCards: extraModulars,
   parentSection: scenarioSection,
 });
-const extraModularSection = new ExtraModularSection(modulars, 2, {
+const extraModularSection = new ExtraModularSection(settings, modulars, 2, {
   previousSiblingSection: modularSection,
 });
-const heroSection1 = new HeroSection(heroes, 1);
-const aspectSection1 = new AspectSection(aspects, 1, {
+const heroSection1 = new HeroSection(settings, heroes, 1, {
+  scenarioSection,
+});
+const aspectSection1 = new AspectSection(settings, aspects, 1, {
   parentSection: heroSection1,
 });
-const heroSection2 = new HeroSection(heroes, 2, {
+const heroSection2 = new HeroSection(settings, heroes, 2, {
   previousSiblingSection: heroSection1,
+  scenarioSection,
 });
-const aspectSection2 = new AspectSection(aspects, 2, {
+const aspectSection2 = new AspectSection(settings, aspects, 2, {
   parentSection: heroSection2,
 });
-const heroSection3 = new HeroSection(heroes, 3, {
+const heroSection3 = new HeroSection(settings, heroes, 3, {
   previousSiblingSection: heroSection2,
+  scenarioSection,
 });
-const aspectSection3 = new AspectSection(aspects, 3, {
+const aspectSection3 = new AspectSection(settings, aspects, 3, {
   parentSection: heroSection3,
 });
-const heroSection4 = new HeroSection(heroes, 4, {
+const heroSection4 = new HeroSection(settings, heroes, 4, {
   previousSiblingSection: heroSection3,
+  scenarioSection,
 });
-const aspectSection4 = new AspectSection(aspects, 4, {
+const aspectSection4 = new AspectSection(settings, aspects, 4, {
   parentSection: heroSection4,
 });
 
@@ -812,11 +83,9 @@ const sections = [
   aspectSection4,
 ];
 
-const heroSections = sectionsOfType(HeroSection);
-
-function sectionsOfType(type) {
-  return sections.filter((section) => section.constructor === type);
-}
+const heroSections = sections.filter(
+  (section) => section.constructor === HeroSection,
+);
 
 function shuffleAll() {
   for (const section of sections) {
@@ -870,21 +139,11 @@ function maybeReturnFocusAfterShuffle() {
   }
 }
 
-function getNumberOfIncompleteGames(scenarios, heroes) {
-  const difficulties = getTrackedDifficulties();
-
-  let incompleteCount = 0;
-  for (const scenario of scenarios) {
-    for (const hero of heroes) {
-      for (const difficulty of difficulties) {
-        if (!isGameCompleted(scenario, hero, difficulty)) {
-          incompleteCount++;
-        }
-      }
-    }
+function toggleHeroSectionVisibility() {
+  for (let i = 0; i < heroSections.length; i++) {
+    const heroSection = heroSections[i];
+    heroSection.toggleVisibility(i < settings.numberOfHeroes);
   }
-
-  return incompleteCount;
 }
 
 function updateTrackingTable() {
@@ -908,22 +167,6 @@ function updateTrackingTable() {
   } else {
     clearTable();
   }
-}
-
-function requestPostAnimationFrame(callback) {
-  requestAnimationFrame(() => {
-    const { port1, port2 } = new MessageChannel();
-    port1.onmessage = callback;
-    port2.postMessage(undefined);
-  });
-}
-
-function chooseRandom(array) {
-  return array[Math.floor(Math.random() * array.length)];
-}
-
-function filter(array, toRemove) {
-  return array.filter((el) => !toRemove.includes(el));
 }
 
 function tryUseBookmarkUrl(url) {
@@ -958,7 +201,27 @@ async function initialize() {
   });
 
   shuffleAllButton.addEventListener("click", () => shuffleAll());
+
   settingsButton.addEventListener("click", () => toggleSettings());
+
+  for (const section of sections) {
+    section.root.addEventListener("submit", (event) => {
+      event.preventDefault();
+      toggleSettings();
+    });
+
+    section.root.addEventListener("shuffle", () =>
+      maybeReturnFocusAfterShuffle(),
+    );
+
+    section.root.addEventListener("disabled", () =>
+      setGlobalButtonsAvailability(),
+    );
+
+    section.root.addEventListener("setcards", () => updateTrackingTable());
+  }
+
+  settings.addEventListener("settings", () => toggleHeroSectionVisibility());
 
   createBookmarkUrlButton.addEventListener("click", async () => {
     const url = await createBookmarkUrl();

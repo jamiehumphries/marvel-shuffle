@@ -73,7 +73,7 @@ function updateAssetVersion(asset) {
   const { parentPath, name } = asset;
 
   const nameForRegex = name.replace(".", "\\.");
-  const regex = new RegExp(`(?<=${nameForRegex}\\?v=)[0-9a-f]+`, "g");
+  const regex = new RegExp(`(?<=/${nameForRegex}\\?v=)[0-9a-f]+`, "g");
 
   const path = resolve(parentPath, name);
   const hash = computeHash(path);
@@ -101,4 +101,4 @@ function computeHash(path) {
   return createHash("md5").update(data).digest("hex").substring(0, 8);
 }
 
-export { updateImages, updateImageHashes, updateAssetVersions };
+export { updateAssetVersions, updateImageHashes, updateImages };

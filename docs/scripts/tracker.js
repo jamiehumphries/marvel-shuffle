@@ -1,5 +1,5 @@
-import { Setting } from "./options.js?v=4e45bee9";
-import { getItem, setItem } from "./storage.js?v=00ea94bd";
+import { Setting } from "./models/Setting.js?v=8fcb84d9";
+import { getItem, setItem } from "./storage.js?v=b419bdb4";
 
 const WIN = "✓";
 const LOSS = "✗";
@@ -363,6 +363,23 @@ function updateProgress() {
   totalFractionSpan.innerText = `${totalCleared} / ${totalCombinations}`;
 }
 
+function getNumberOfIncompleteGames(scenarios, heroes) {
+  const difficulties = getTrackedDifficulties();
+
+  let incompleteCount = 0;
+  for (const scenario of scenarios) {
+    for (const hero of heroes) {
+      for (const difficulty of difficulties) {
+        if (!isGameCompleted(scenario, hero, difficulty)) {
+          incompleteCount++;
+        }
+      }
+    }
+  }
+
+  return incompleteCount;
+}
+
 function isGameCompleted(scenario, hero, difficulty) {
   const gameId = getGameId(scenario, hero, difficulty);
   return getItem(gameId) === WIN;
@@ -374,8 +391,8 @@ function getGameId(scenario, hero, difficulty) {
 
 export {
   clearTable,
-  renderTable,
-  initializeDifficultySettings,
+  getNumberOfIncompleteGames,
   getTrackedDifficulties,
-  isGameCompleted,
+  initializeDifficultySettings,
+  renderTable,
 };

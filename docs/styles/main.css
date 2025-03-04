@@ -123,6 +123,10 @@ h2 {
   font-size: calc(1rem * var(--button-scale-factor));
 }
 
+.button span {
+  width: min-content;
+}
+
 .button img {
   margin-bottom: 0.1em;
   margin-left: 0.5em;
@@ -281,6 +285,11 @@ button.danger {
 .sections {
   grid-template-columns: auto auto auto auto;
   justify-content: center;
+}
+
+.modulars-and-extra-modulars {
+  display: flex;
+  flex-direction: column;
 }
 
 .heroes-and-aspects {
@@ -624,6 +633,8 @@ input:active + .checkmark {
 
 body:not(.has-next-scenario) .next-scenario-button {
   opacity: 0;
+  margin: 0;
+  padding: 0;
   height: 0;
 }
 

@@ -304,12 +304,12 @@ class Section extends Toggleable {
 
   initializeCards() {
     this.cards = this.loadCards();
-    this.shuffleIfInvalid({ animate: false });
+    this.shuffleIfInvalid({ animate: false, isInitialize: true });
   }
 
-  shuffleIfInvalid({ animate = true } = {}) {
+  shuffleIfInvalid({ animate = true, isInitialize = false } = {}) {
     if (!this.valid && !this.disabled) {
-      this.shuffle({ animate });
+      this.shuffle({ animate, isInitialize });
       return true;
     }
     return false;
@@ -510,6 +510,10 @@ class ScenarioSection extends Section {
 }
 
 class ModularSection extends Section {
+  get extraModularSection() {
+    return this.allSiblingSections.find((section) => section.nthOfType === 2);
+  }
+
   setCards(value) {
     super.setCards(value);
     this.updateRequiredLabels();
@@ -523,6 +527,13 @@ class ModularSection extends Section {
     return shuffled;
   }
 
+  shuffle(options = {}) {
+    super.shuffle(options);
+    if (!options.isInitialize) {
+      this.extraModularSection?.shuffle(options);
+    }
+  }
+
   updateRequiredLabels() {
     const required = this.parentCard.requiredChildCards;
     const slots = this.slots || [];
@@ -531,6 +542,43 @@ class ModularSection extends Section {
       const isRequired = required.includes(card);
       root.classList.toggle("is-required", isRequired);
     }
+  }
+}
+
+class ExtraModularSection extends Section {
+  get modularSection() {
+    return this.allSiblingSections.find((section) => section.nthOfType === 1);
+  }
+
+  get sectionName() {
+    return this.modifyBaseName(super.sectionName);
+  }
+
+  get sectionNamePlural() {
+    return this.modifyBaseName(super.sectionNamePlural);
+  }
+
+  get maxSlots() {
+    return 3;
+  }
+
+  get expectedCardCount() {
+    return 3;
+  }
+
+  getCardOptionTiers() {
+    return this.modularSection.getCardOptionTiers();
+  }
+
+  shuffle(options) {
+    if (this.expectedCardCount === 0) {
+      return;
+    }
+    super.shuffle(options);
+  }
+
+  modifyBaseName(baseName) {
+    return `Extra ${baseName}`;
   }
 }
 
@@ -724,6 +772,9 @@ const modularSection = new ModularSection(modulars, 1, {
   extraCards: extraModulars,
   parentSection: scenarioSection,
 });
+const extraModularSection = new ExtraModularSection(modulars, 2, {
+  previousSiblingSection: modularSection,
+});
 const heroSection1 = new HeroSection(heroes, 1);
 const aspectSection1 = new AspectSection(aspects, 1, {
   parentSection: heroSection1,
@@ -750,6 +801,7 @@ const aspectSection4 = new AspectSection(aspects, 4, {
 const sections = [
   scenarioSection,
   modularSection,
+  extraModularSection,
   heroSection1,
   aspectSection1,
   heroSection2,

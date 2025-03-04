@@ -1,4 +1,4 @@
-import { updateImages } from "./helpers.js";
+import { updateImages } from "./tools.js";
 
 const noLevel = process.argv[2] === "--no-level";
 

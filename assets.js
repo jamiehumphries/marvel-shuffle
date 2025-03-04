@@ -1,3 +1,3 @@
-import { updateAssetVersions } from "./helpers.js";
+import { updateAssetVersions } from "./tools.js";
 
 updateAssetVersions();

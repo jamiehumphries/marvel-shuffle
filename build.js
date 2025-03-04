@@ -1,5 +1,5 @@
 import { execSync } from "child_process";
-import { updateAssetVersions, updateImageHashes } from "./helpers.js";
+import { updateAssetVersions, updateImageHashes } from "./tools.js";
 
 const level = process.argv[2]?.slice(2) || "patch";
 

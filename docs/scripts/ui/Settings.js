@@ -2,7 +2,7 @@ import { Setting } from "../models/Setting.js?v=8fcb84d9";
 import { getItem, setItem } from "../storage.js?v=b419bdb4";
 import { initializeDifficultySettings } from "../tracker.js?v=bcc2ce19";
 
-export class Settings extends EventTarget {
+export class Settings {
   get avoidCompleted() {
     return this.showTracker && this._avoidCompletedSetting.checked;
   }
@@ -40,7 +40,6 @@ export class Settings extends EventTarget {
       const value = Number(event.target.value);
       this.numberOfHeroes = value;
       setItem(id, value);
-      this.dispatchEvent(new Event("settings"));
     };
 
     for (let i = 1; i <= this.maxNumberOfHeroes; i++) {
@@ -61,8 +60,6 @@ export class Settings extends EventTarget {
 
       radio.addEventListener("change", onChange);
     }
-
-    this.dispatchEvent(new Event("settings"));
   }
 
   initializeTrackerSettings() {

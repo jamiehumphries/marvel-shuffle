@@ -1,4 +1,4 @@
-export class Toggleable {
+export class Toggleable extends EventTarget {
   show() {
     this.toggleVisibility(true);
   }

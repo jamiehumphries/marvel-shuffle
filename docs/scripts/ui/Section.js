@@ -156,7 +156,6 @@ export class Section extends Toggleable {
 
   set disabled(value) {
     this.button.disabled = value;
-    this.root.dispatchEvent(new Event("disabled"));
   }
 
   get forced() {
@@ -197,7 +196,7 @@ export class Section extends Toggleable {
       this.slots[i].card = slotCards[i];
     }
 
-    this.root.dispatchEvent(new Event("setcards"));
+    this.dispatchEvent(new Event("cardsupdated"));
   }
 
   initialize() {
@@ -263,10 +262,9 @@ export class Section extends Toggleable {
   initializeShuffling() {
     this.button = this.root.querySelector("button");
     this.button.addEventListener("click", () => this.shuffle());
-    this.root.addEventListener("transitionend", (event) => {
-      this.onTransitionEnd(event);
-      this.root.dispatchEvent(new Event("shuffle"));
-    });
+    this.root.addEventListener("transitionend", (event) =>
+      this.onTransitionEnd(event),
+    );
   }
 
   initializeCards() {
@@ -303,6 +301,8 @@ export class Section extends Toggleable {
     }
 
     this.disabled = true;
+    this.dispatchEvent(new Event("shufflestart"));
+
     document.body.classList.add("shuffling");
     this.root.classList.add("flipping");
     this.root.classList.remove("giant", "wide");
@@ -397,6 +397,7 @@ export class Section extends Toggleable {
     this.root.classList.add("flipped");
     this.disabled = false;
     this.incomingCards = null;
+    this.dispatchEvent(new Event("shuffleend"));
 
     this.childSection?.shuffleIfInvalid();
 

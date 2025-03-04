@@ -104,6 +104,8 @@ function toggleSettings() {
   if (settingsVisible) {
     settings.previouslyVisibleSections = getVisibleSections();
   } else {
+    toggleHeroSectionVisibility();
+
     const newlyVisibleSections = filter(
       getVisibleSections(),
       settings.previouslyVisibleSections,
@@ -210,18 +212,17 @@ async function initialize() {
       toggleSettings();
     });
 
-    section.root.addEventListener("shuffle", () =>
-      maybeReturnFocusAfterShuffle(),
-    );
+    section.addEventListener("shufflestart", () => {
+      setGlobalButtonsAvailability();
+    });
 
-    section.root.addEventListener("disabled", () =>
-      setGlobalButtonsAvailability(),
-    );
+    section.addEventListener("shuffleend", () => {
+      setGlobalButtonsAvailability();
+      maybeReturnFocusAfterShuffle();
+    });
 
-    section.root.addEventListener("setcards", () => updateTrackingTable());
+    section.addEventListener("cardsupdated", () => updateTrackingTable());
   }
-
-  settings.addEventListener("settings", () => toggleHeroSectionVisibility());
 
   createBookmarkUrlButton.addEventListener("click", async () => {
     const url = await createBookmarkUrl();
@@ -256,6 +257,7 @@ async function initialize() {
   bookmarkUrlElement.innerText = bookmarkUrl;
 
   settings.initialize();
+  toggleHeroSectionVisibility();
 
   for (const section of sections) {
     section.initialize();

@@ -1,11 +1,12 @@
-import { Card } from "./Card.js?v=66e17b27";
+import { Card } from "./Card.js?v=3858d6c7";
 
 export class Hero extends Card {
   constructor(
     name,
+    alterEgo,
     aspects,
     color,
-    { alterEgo = null, hasGiantForm = false, hasWideForm = false } = {},
+    { hasGiantForm = false, hasWideForm = false } = {},
   ) {
     const subname = alterEgo;
     const hasBack = true;

@@ -5,7 +5,7 @@ import { globSync } from "glob";
 import { resolve } from "path";
 import { replaceInFileSync } from "replace-in-file";
 
-function updateImages(noLevel) {
+export function updateImages(noLevel) {
   const types = ["scenario", "modular", "hero", "aspect"];
   const directories = types.map((type) => "docs/images/" + type);
   const args = directories.join(" ");
@@ -34,7 +34,7 @@ function updateImages(noLevel) {
   updateImageHashes();
 }
 
-function updateImageHashes() {
+export function updateImageHashes() {
   const images = globSync("docs/images/*/**/*.png", { withFileTypes: true });
 
   const hashes = Object.fromEntries(
@@ -53,14 +53,14 @@ function updateImageHashes() {
   );
 
   const hashesJs = JSON.stringify(hashes, null, 2);
-  const outputFile = "docs/scripts/hashes.js";
+  const outputFile = "docs/scripts/data/hashes.js";
 
   writeFileSync(outputFile, `export const hashes = ${hashesJs}`);
   execSync(`npx prettier --write ${outputFile}`);
   execSync(`git add ${outputFile}`);
 }
 
-function updateAssetVersions() {
+export function updateAssetVersions() {
   const assets = globSync("docs/**/*.{css,js}", { withFileTypes: true });
   const results = assets.map((asset) => updateAssetVersion(asset));
   const anyHasChanged = results.some((result) => result.hasChanged);
@@ -100,5 +100,3 @@ function computeHash(path) {
   const data = readFileSync(path);
   return createHash("md5").update(data).digest("hex").substring(0, 8);
 }
-
-export { updateAssetVersions, updateImageHashes, updateImages };

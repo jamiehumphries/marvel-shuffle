@@ -1,3 +1,4 @@
-import { updateAssetVersions } from "./tools.js";
+import { updateAssetVersions, updateImageHashes } from "./tools.js";
 
 updateAssetVersions();
+updateImageHashes();

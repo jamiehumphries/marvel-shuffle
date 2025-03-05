@@ -9,6 +9,7 @@ import {
   getFirestore,
   setDoc,
 } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+import { migrations } from "./migrations/migrations.js?v=befff4fd";
 
 const app = initializeApp({
   apiKey: "AIzaSyBFYZluS920mE0zo85Qg4TeoTRYPXNJO3Y",
@@ -136,44 +137,48 @@ function updateDb(key, value) {
 }
 
 function runMigrations() {
-  let id = 1;
-  rename("black-panther", "black-panther-tchalla", id++);
-  rename("forced", "setting--forced", id++);
-  rename("module", "modular", id++);
-  remove("modular--prelates", id++);
-  remove("modular--hope-summers", id++);
+  for (let i = 0; i < migrations.length; i++) {
+    const migration = migrations[i];
+    runMigration(i + 1, migration);
+  }
 }
 
-function rename(oldName, newName, migrationId) {
-  migrate(migrationId, () => {
-    const oldNameRegex = new RegExp(`${oldName}(?=(?:$|--|"))`, "g");
-    for (let [key, value] of Object.entries(localStorage)) {
-      key = key.slice(LOCAL_KEY_PREFIX.length);
-      if (oldNameRegex.test(key)) {
-        const newKey = key.replaceAll(oldNameRegex, newName);
-        setItem(newKey, value, false);
-        removeItem(key);
-        key = newKey;
-      }
-      if (oldNameRegex.test(value)) {
-        const newValue = value.replaceAll(oldNameRegex, newName);
-        setItem(key, newValue, false);
-      }
+function addAlterEgo(hero, alterEgo) {
+  rename(hero, `${hero}-${alterEgo}`);
+}
+
+function remove(key) {
+  removeItem(key);
+}
+
+function rename(oldName, newName) {
+  const oldNameRegex = new RegExp(`${oldName}(?=(?:$|--|"))`, "g");
+  for (let [key, value] of Object.entries(localStorage)) {
+    key = key.slice(LOCAL_KEY_PREFIX.length);
+    if (oldNameRegex.test(key)) {
+      const newKey = key.replaceAll(oldNameRegex, newName);
+      setItem(newKey, value, false);
+      removeItem(key);
+      key = newKey;
     }
-  });
+    if (oldNameRegex.test(value)) {
+      const newValue = value.replaceAll(oldNameRegex, newName);
+      setItem(key, newValue, false);
+    }
+  }
 }
 
-function remove(key, migrationId) {
-  migrate(migrationId, () => removeItem(key));
-}
-
-function migrate(migrationId, callback) {
+function runMigration(migrationId, migration) {
   const migrationKey = `migration--${migrationId.toString().padStart(4, "0")}`;
   const hasMigrated = getItem(migrationKey);
   if (hasMigrated) {
     return;
   }
-  callback();
+  const operations = { addAlterEgo, rename, remove };
+  for (const [operationName, ...args] of migration) {
+    const operation = operations[operationName];
+    operation(...args);
+  }
   setItem(migrationKey, true);
 }
 

@@ -1,4 +1,4 @@
-import { Model } from "./Model.js?v=45040447";
+import { Model } from "./Model.js?v=7718d7b9";
 
 export class Campaign extends Model {
   constructor(cardSet) {

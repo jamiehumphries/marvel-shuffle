@@ -1,6 +1,6 @@
-import { Setting } from "../models/Setting.js?v=8fcb84d9";
-import { getItem, setItem } from "../storage.js?v=b419bdb4";
-import { initializeDifficultySettings } from "../tracker.js?v=bcc2ce19";
+import { getItem, setItem } from "../data/storage.js?v=62f5cba1";
+import { initializeDifficultySettings } from "../data/tracker.js?v=8c47738d";
+import { Setting } from "../models/Setting.js?v=d11fdf30";
 
 export class Settings {
   constructor(maxNumberOfHeroes) {

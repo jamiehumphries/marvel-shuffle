@@ -1,5 +1,5 @@
-import { Setting } from "./models/Setting.js?v=8fcb84d9";
-import { getItem, setItem } from "./storage.js?v=b419bdb4";
+import { Setting } from "../models/Setting.js?v=d11fdf30";
+import { getItem, setItem } from "./storage.js?v=62f5cba1";
 
 const WIN = "✓";
 const LOSS = "✗";

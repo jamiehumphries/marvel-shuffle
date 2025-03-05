@@ -1,8 +1,8 @@
-import { Aspect } from "./models/Aspect.js?v=b436b6f7";
-import { CardSet } from "./models/CardSet.js?v=8811acc4";
-import { Hero } from "./models/Hero.js?v=08c18993";
-import { Modular } from "./models/Modular.js?v=95e5903d";
-import { Scenario } from "./models/Scenario.js?v=cf1b8ee3";
+import { Aspect } from "../models/Aspect.js?v=677f52a6";
+import { CardSet } from "../models/CardSet.js?v=02bc8aae";
+import { Hero } from "../models/Hero.js?v=65fda6d0";
+import { Modular } from "../models/Modular.js?v=11c426af";
+import { Scenario } from "../models/Scenario.js?v=5a1f7c09";
 
 function ensureArray(arrayOrString) {
   return Array.isArray(arrayOrString) ? arrayOrString : [arrayOrString];
@@ -58,7 +58,7 @@ function modular(name, options) {
 }
 
 // prettier-ignore
-const modulars = [
+export const modulars = [
   coreSet(
     modular("Bomb Scare", { isLandscape }),
     modular("Masters of Evil", { isLandscape }),
@@ -222,7 +222,7 @@ const modulars = [
   ),
 ];
 
-const extraModulars = [
+export const extraModulars = [
   modular("Prelates", { hasBack }),
   modular("S.H.I.E.L.D. Executive Board", { hasBack }),
   modular("Executive Board Evidence", { hasBack }),
@@ -263,7 +263,7 @@ function scenario(name, modularNamesOrNumber, color, options = {}) {
 }
 
 // prettier-ignore
-const scenarios = [
+export const scenarios = [
   coreSet(
     scenario("Rhino", "Bomb Scare", "#d0cece"),
     scenario("Klaw", "Masters of Evil", "#7030a0"),
@@ -358,7 +358,7 @@ const PROTECTION = aspect("Protection");
 const POOL = aspect("‘Pool");
 
 // prettier-ignore
-const aspects = [
+export const aspects = [
   coreSet(
     AGGRESSION,
     JUSTICE,
@@ -372,90 +372,88 @@ const aspects = [
 
 // HEROES
 
-function hero(name, aspects, color, options) {
+function hero(name, alterEgo, aspects, color, options) {
   aspects = ensureArray(aspects);
-  return new Hero(name, aspects, color, options);
+  return new Hero(name, alterEgo, aspects, color, options);
 }
 
 // prettier-ignore
-const heroes = [
+export const heroes = [
   coreSet(
-    hero("Spider-Man", JUSTICE, "#ff0000", { alterEgo: "Peter Parker" }),
-    hero("Captain Marvel", LEADERSHIP, "#0070c0"),
-    hero("She-Hulk", AGGRESSION, "#00b050"),
-    hero("Iron Man", AGGRESSION, "#ffc000"),
-    hero("Black Panther", PROTECTION, "#404040", { alterEgo: "T’Challa" }),
+    hero("Spider-Man", "Peter Parker", JUSTICE, "#ff0000"),
+    hero("Captain Marvel", "Carol Danvers", LEADERSHIP, "#0070c0"),
+    hero("She-Hulk", "Jennifer Walters", AGGRESSION, "#00b050"),
+    hero("Iron Man", "Tony Stark", AGGRESSION, "#ffc000"),
+    hero("Black Panther", "T’Challa", PROTECTION, "#404040"),
   ),
-  hero("Captain America", LEADERSHIP, "#0070c0"),
-  hero("Ms. Marvel", PROTECTION, "#ff0000"),
-  hero("Thor", AGGRESSION, "#ffc000"),
-  hero("Black Widow", JUSTICE, "#404040"),
-  hero("Doctor Strange", PROTECTION, "#c00000"),
-  hero("Hulk", AGGRESSION, "#00b050"),
+  hero("Captain America", "Steve Rogers", LEADERSHIP, "#0070c0"),
+  hero("Ms. Marvel", "Kamala Khan", PROTECTION, "#ff0000"),
+  hero("Thor", "Odinson", AGGRESSION, "#ffc000"),
+  hero("Black Widow", "Natasha Romanoff", JUSTICE, "#404040"),
+  hero("Doctor Strange", "Stephen Strange", PROTECTION, "#c00000"),
+  hero("Hulk", "Bruce Banner", AGGRESSION, "#00b050"),
   theRiseOfRedSkull(
-    hero("Hawkeye", LEADERSHIP, "#7030a0"),
-    hero("Spider-Woman", [AGGRESSION, JUSTICE], "#ffc000"),
+    hero("Hawkeye", "Clint Barton", LEADERSHIP, "#7030a0"),
+    hero("Spider-Woman", "Jessica Drew", [AGGRESSION, JUSTICE], "#ffc000"),
   ),
-  hero("Ant-Man", LEADERSHIP, "#c00000", { hasGiantForm }),
-  hero("Wasp", AGGRESSION, "#404040", { hasGiantForm }),
-  hero("Quicksilver", PROTECTION, "#81deff"),
-  hero("Scarlet Witch", JUSTICE, "#ff0000"),
+  hero("Ant-Man", "Scott Lang", LEADERSHIP, "#c00000", { hasGiantForm }),
+  hero("Wasp", "Nadia Van Dyne", AGGRESSION, "#404040", { hasGiantForm }),
+  hero("Quicksilver", "Pietro Maximoff", PROTECTION, "#81deff"),
+  hero("Scarlet Witch", "Wanda Maximoff", JUSTICE, "#ff0000"),
   theGalaxysMostWanted(
-    hero("Groot", PROTECTION, "#996633"),
-    hero("Rocket Raccoon", AGGRESSION, "#c00000"),
+    hero("Groot", null, PROTECTION, "#996633"),
+    hero("Rocket Raccoon", null, AGGRESSION, "#c00000"),
   ),
-  hero("Star-Lord", LEADERSHIP, "#c4cdda"),
-  hero("Gamora", AGGRESSION, "#00b050"),
-  hero("Drax", PROTECTION, "#afdc7e"),
-  hero("Venom", JUSTICE, "#404040"),
+  hero("Star-Lord", "Peter Quill", LEADERSHIP, "#c4cdda"),
+  hero("Gamora", null, AGGRESSION, "#00b050"),
+  hero("Drax", null, PROTECTION, "#afdc7e"),
+  hero("Venom", "Flash Thompson", JUSTICE, "#404040"),
   theMadTitansShadow(
-    hero("Spectrum", LEADERSHIP, "#f2f2f2"),
-    hero("Adam Warlock", [AGGRESSION, JUSTICE, LEADERSHIP, PROTECTION], "#c00000"),
+    hero("Spectrum", "Monica Rambeau", LEADERSHIP, "#f2f2f2"),
+    hero("Adam Warlock", null, [AGGRESSION, JUSTICE, LEADERSHIP, PROTECTION], "#c00000"),
   ),
-  hero("Nebula", JUSTICE, "#a9cbe9"),
-  hero("War Machine", LEADERSHIP, "#808080"),
-  hero("Valkyrie", AGGRESSION, "#404040"),
-  hero("Vision", PROTECTION, "#ff3300"),
+  hero("Nebula", null, JUSTICE, "#a9cbe9"),
+  hero("War Machine", "James Rhodes", LEADERSHIP, "#808080"),
+  hero("Valkyrie", "Brunnhilde", AGGRESSION, "#404040"),
+  hero("Vision", null, PROTECTION, "#ff3300"),
   sinisterMotives(
-    hero("Ghost-Spider", PROTECTION, "#f2f2f2"),
-    hero("Spider-Man", JUSTICE, "#404040", { alterEgo: "Miles Morales" }),
+    hero("Ghost-Spider", "Gwen Stacy", PROTECTION, "#f2f2f2"),
+    hero("Spider-Man", "Miles Morales", JUSTICE, "#404040"),
   ),
-  hero("Nova", AGGRESSION, "#ffc000"),
-  hero("Ironheart", LEADERSHIP, "#b4c6e7"),
-  hero("Spider-Ham", JUSTICE, "#ff99cc"),
-  hero("SP//dr", PROTECTION, "#ff0000"),
+  hero("Nova", "Sam Alexander", AGGRESSION, "#ffc000"),
+  hero("Ironheart", "Riri Williams", LEADERSHIP, "#b4c6e7"),
+  hero("Spider-Ham", "Peter Porker", JUSTICE, "#ff99cc"),
+  hero("SP//dr", "Peni Parker", PROTECTION, "#ff0000"),
   mutantGenesis(
-    hero("Colossus", PROTECTION, "#c7d0db"),
-    hero("Shadowcat", AGGRESSION, "#ffc000"),
+    hero("Colossus", "Piotr Rasputin", PROTECTION, "#c7d0db"),
+    hero("Shadowcat", "Kitty Pryde", AGGRESSION, "#ffc000"),
   ),
-  hero("Cyclops", LEADERSHIP, "#ff0000"),
-  hero("Phoenix", JUSTICE, "#00b050"),
-  hero("Wolverine", AGGRESSION, "#fcf600"),
-  hero("Storm", LEADERSHIP, "#404040"),
-  hero("Gambit", JUSTICE, "#d60093"),
-  hero("Rogue", PROTECTION, "#f2f2f2"),
+  hero("Cyclops", "Scott Summers", LEADERSHIP, "#ff0000"),
+  hero("Phoenix", "Jean Grey", JUSTICE, "#00b050"),
+  hero("Wolverine", "Logan", AGGRESSION, "#fcf600"),
+  hero("Storm", "Ororo Munroe", LEADERSHIP, "#404040"),
+  hero("Gambit", "Remy LeBeau", JUSTICE, "#d60093"),
+  hero("Rogue", "Anna Marie", PROTECTION, "#f2f2f2"),
   neXtEvolution(
-    hero("Cable", LEADERSHIP, "#c7d0db"),
-    hero("Domino", JUSTICE, "#f2f2f2"),
+    hero("Cable", "Nathan Summers", LEADERSHIP, "#c7d0db"),
+    hero("Domino", "Neena Thurman", JUSTICE, "#f2f2f2"),
   ),
-  hero("Psylocke", JUSTICE, "#ff97ff"),
-  hero("Angel", PROTECTION, "#0070c0", { hasWideForm }),
-  hero("X-23", AGGRESSION, "#404040"),
-  hero("Deadpool", POOL, "#ff3737"),
+  hero("Psylocke", "Betsy Braddock", JUSTICE, "#ff97ff"),
+  hero("Angel", "Warren Worthington III", PROTECTION, "#0070c0", { hasWideForm }),
+  hero("X-23", "Laura Kinney", AGGRESSION, "#404040"),
+  hero("Deadpool", "Wade Wilson", POOL, "#ff3737"),
   ageOfApocalypse(
-    hero("Bishop", LEADERSHIP, "#0070c0"),
-    hero("Magik", AGGRESSION, "#ffc000"),
+    hero("Bishop", "Lucas Bishop", LEADERSHIP, "#0070c0"),
+    hero("Magik", "Illyana Rasputin", AGGRESSION, "#ffc000"),
   ),
-  hero("Iceman", AGGRESSION, "#81deff"),
-  hero("Jubilee", JUSTICE, "#fcf600"),
-  hero("Nightcrawler", PROTECTION, "#c00000"),
-  hero("Magneto", LEADERSHIP, "#c7d0db"),
+  hero("Iceman", "Bobby Drake", AGGRESSION, "#81deff"),
+  hero("Jubilee", "Jubilation Lee", JUSTICE, "#fcf600"),
+  hero("Nightcrawler", "Kurt Wagner", PROTECTION, "#c00000"),
+  hero("Magneto", "Erik Lehnsherr", LEADERSHIP, "#c7d0db"),
   agentsOfShield(
-    hero("Maria Hill", LEADERSHIP, "#f2f2f2"),
-    hero("Nick Fury", JUSTICE, "#404040"),
+    hero("Maria Hill", null, LEADERSHIP, "#f2f2f2"),
+    hero("Nick Fury", null, JUSTICE, "#404040"),
   ),
-  hero("Black Panther", JUSTICE, "#7030a0", { alterEgo: "Shuri" }),
-  hero("Silk", PROTECTION, "#c00000"),
+  hero("Black Panther", "Shuri", JUSTICE, "#7030a0"),
+  hero("Silk", "Cindy Moon", PROTECTION, "#c00000"),
 ];
-
-export { aspects, extraModulars, heroes, modulars, scenarios };

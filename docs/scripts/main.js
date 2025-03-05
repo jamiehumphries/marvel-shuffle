@@ -207,12 +207,12 @@ function toggleHeroSectionVisibility() {
 }
 
 function updateTrackingTable() {
-  if (!scenarioSection.initialized) {
+  if (!scenarioSection.isInitialized) {
     return;
   }
 
   const visibleHeroSections = heroSections.filter((section) => section.visible);
-  if (!visibleHeroSections.every((section) => section.initialized)) {
+  if (!visibleHeroSections.every((section) => section.isInitialized)) {
     return;
   }
 

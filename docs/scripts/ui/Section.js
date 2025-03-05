@@ -60,7 +60,7 @@ export class Section extends Toggleable {
     this.forcedSettingId = this.id + "--setting--forced";
 
     this.root = document.getElementById(this.id);
-    this.initialized = false;
+    this.isInitialized = false;
   }
 
   get sectionName() {
@@ -200,7 +200,7 @@ export class Section extends Toggleable {
     this.initializeOptions();
     this.initializeShuffling();
     this.initializeCards();
-    this.initialized = true;
+    this.isInitialized = true;
   }
 
   initializeLayout() {
@@ -266,12 +266,12 @@ export class Section extends Toggleable {
 
   initializeCards() {
     this.cards = this.loadCards();
-    this.shuffleIfInvalid({ animate: false, isInitialize: true });
+    this.shuffleIfInvalid({ animate: false });
   }
 
-  shuffleIfInvalid({ animate = true, isInitialize = false } = {}) {
+  shuffleIfInvalid({ animate = true } = {}) {
     if (!this.valid && !this.disabled) {
-      this.shuffle({ animate, isInitialize });
+      this.shuffle({ animate });
       return true;
     }
     return false;

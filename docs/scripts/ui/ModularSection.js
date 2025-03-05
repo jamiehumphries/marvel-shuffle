@@ -26,8 +26,8 @@ export class ModularSection extends Section {
 
   shuffle(options = {}) {
     super.shuffle(options);
-    if (!options.isInitialize) {
-      this.extraModularSection?.shuffle(options);
+    if (this.extraModularSection.isInitialized) {
+      this.extraModularSection.shuffle(options);
     }
   }
 

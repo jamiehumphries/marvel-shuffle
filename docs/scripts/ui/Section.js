@@ -1,9 +1,4 @@
-import {
-  chooseRandom,
-  filter,
-  flatten,
-  requestPostAnimationFrame,
-} from "../helpers.js?v=b2f4ffde";
+import { filter, requestPostAnimationFrame } from "../helpers.js?v=b2f4ffde";
 import { All } from "../models/All.js?v=3d6ffe3f";
 import { CardTier } from "../models/CardTier.js?v=144c1d94";
 import { getItem, setItem } from "../storage.js?v=b419bdb4";
@@ -425,4 +420,12 @@ export class Section extends Toggleable {
     const cardIds = cards.map((card) => card.id);
     setItem(this.id, cardIds);
   }
+}
+
+function chooseRandom(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+function flatten(cardsOrSets) {
+  return cardsOrSets.flatMap((cardOrSet) => cardOrSet.children || [cardOrSet]);
 }

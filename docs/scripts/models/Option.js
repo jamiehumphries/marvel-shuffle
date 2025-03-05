@@ -1,8 +1,7 @@
-import { getSlug } from "../helpers.js?v=b2f4ffde";
 import { getItem, setItem } from "../storage.js?v=b419bdb4";
-import { SluggedObject } from "./SluggedObject.js?v=45040447";
+import { Model } from "./Model.js?v=45040447";
 
-export class Option extends SluggedObject {
+export class Option extends Model {
   constructor(
     name,
     {
@@ -17,7 +16,7 @@ export class Option extends SluggedObject {
     super();
     this.name = name;
     this.type = type || this.constructor;
-    this.slug = slug || getSlug(this.name, slugModifier);
+    this.slug = slug || Model.buildSlug(this.name, slugModifier);
     this.id = `${this.type.slug}--${this.slug}`;
     this.children = children;
     this._onChange = onChange;

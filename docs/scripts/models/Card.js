@@ -1,4 +1,4 @@
-import { image } from "../helpers.js?v=b2f4ffde";
+import { Model } from "./Model.js?v=45040447";
 import { Option } from "./Option.js?v=f6da124b";
 
 export class Card extends Option {
@@ -57,7 +57,7 @@ export class Card extends Option {
   }
 
   static get placeholderImageSrc() {
-    return (this._placeholderImageSrc ||= image(this, "back.png"));
+    return (this._placeholderImageSrc ||= Model.buildImage(this, "back.png"));
   }
 
   childCardCount(numberOfHeroes) {
@@ -69,6 +69,6 @@ export class Card extends Option {
   }
 
   image(...pathParts) {
-    return image(this.type, ...pathParts);
+    return Model.buildImage(this.type, ...pathParts);
   }
 }

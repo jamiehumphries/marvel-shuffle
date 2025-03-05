@@ -1,9 +1,10 @@
+import { scenarios } from "../cards.js?v=4416f240";
 import { getNumberOfIncompleteGames } from "../tracker.js?v=bcc2ce19";
 import { Section } from "./Section.js?v=55c1680f";
 
 export class ScenarioSection extends Section {
-  constructor(settings, cardsOrSets, nthOfType, other) {
-    super(settings, cardsOrSets, nthOfType, other);
+  constructor(settings) {
+    super(settings, scenarios, 1);
     this.heroSections = [];
   }
 

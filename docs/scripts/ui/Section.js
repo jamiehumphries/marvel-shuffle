@@ -65,6 +65,7 @@ export class Section extends Toggleable {
     this.forcedSettingId = this.id + "--setting--forced";
 
     this.root = document.getElementById(this.id);
+    this.initialized = false;
   }
 
   get sectionName() {
@@ -204,6 +205,7 @@ export class Section extends Toggleable {
     this.initializeOptions();
     this.initializeShuffling();
     this.initializeCards();
+    this.initialized = true;
   }
 
   initializeLayout() {

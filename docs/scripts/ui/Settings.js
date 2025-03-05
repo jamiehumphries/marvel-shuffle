@@ -3,6 +3,10 @@ import { getItem, setItem } from "../storage.js?v=b419bdb4";
 import { initializeDifficultySettings } from "../tracker.js?v=bcc2ce19";
 
 export class Settings {
+  constructor(maxNumberOfHeroes) {
+    this.maxNumberOfHeroes = maxNumberOfHeroes;
+  }
+
   get avoidCompleted() {
     return this.showTracker && this._avoidCompletedSetting.checked;
   }
@@ -23,7 +27,6 @@ export class Settings {
   initializeNumberOfHeroes() {
     const id = "setting--number-of-heroes";
 
-    this.maxNumberOfHeroes = 4;
     const allowedValues = Array.from(
       { length: this.maxNumberOfHeroes },
       (_, i) => i + 1,

@@ -1,6 +1,11 @@
+import { modulars } from "../cards.js?v=4416f240";
 import { Section } from "./Section.js?v=55c1680f";
 
 export class ExtraModularSection extends Section {
+  constructor(settings, previousSiblingSection) {
+    super(settings, modulars, 2, { previousSiblingSection });
+  }
+
   get modularSection() {
     return this.allSiblingSections[0];
   }

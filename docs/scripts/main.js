@@ -93,6 +93,10 @@ function initializeWindow() {
   window.addEventListener("click", (event) => {
     lastClickedButton = event.target.tagName === "BUTTON" ? event.target : null;
   });
+  window.addEventListener("submit", (event) => {
+    event.preventDefault();
+    toggleSettings();
+  });
 }
 
 function initializeGlobalButtons() {
@@ -107,10 +111,6 @@ function initializeSettings() {
 
 function initializeSections() {
   for (const section of sections) {
-    section.root.addEventListener("submit", (event) => {
-      event.preventDefault();
-      toggleSettings();
-    });
     section.addEventListener("shufflestart", () => {
       setGlobalButtonsAvailability();
     });

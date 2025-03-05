@@ -234,9 +234,7 @@ label[for^="setting--track-difficulty-"] {
 
 body:not(.show-tracker) label[for="setting--avoid-completed"],
 body:not(.show-tracker) label[for^="setting--track-difficulty-"] {
-  margin: 0;
-  height: 0;
-  overflow: hidden;
+  display: none;
 }
 
 body:not(.has-user-id) .show-if-has-user-id {

@@ -30,8 +30,11 @@ export class ScenarioSection extends Section {
 
   setCards(value) {
     super.setCards(value);
-    this.campaignImage.src = this.nextScenario?.campaign?.imageSrc || "";
-    document.body.classList.toggle("has-next-scenario", !!this.nextScenario);
+    const hasNextScenario = !!this.nextScenario;
+    [this.campaignImage.src, this.nextScenarioButton.tabIndex] = hasNextScenario
+      ? [this.nextScenario.campaign.imageSrc, 0]
+      : ["", -1];
+    document.body.classList.toggle("has-next-scenario", hasNextScenario);
   }
 
   initializeLayout() {
@@ -40,8 +43,10 @@ export class ScenarioSection extends Section {
     const element = buttonTemplate.content.cloneNode(true);
     this.root.appendChild(element);
 
-    const button = this.root.querySelector(".next-scenario-button");
-    button.addEventListener("click", () => this.goToNextScenario());
+    this.nextScenarioButton = this.root.querySelector(".next-scenario-button");
+    this.nextScenarioButton.addEventListener("click", () =>
+      this.goToNextScenario(),
+    );
 
     this.campaignImage = this.root.querySelector(".campaign-image");
   }

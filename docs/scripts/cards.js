@@ -1,4 +1,3 @@
-import { flatten } from "./helpers.js?v=b2f4ffde";
 import { Aspect } from "./models/Aspect.js?v=b436b6f7";
 import { CardSet } from "./models/CardSet.js?v=8811acc4";
 import { Hero } from "./models/Hero.js?v=08c18993";
@@ -459,4 +458,4 @@ const heroes = [
   hero("Silk", PROTECTION, "#c00000"),
 ];
 
-export { aspects, extraModulars, flatten, heroes, modulars, scenarios };
+export { aspects, extraModulars, heroes, modulars, scenarios };

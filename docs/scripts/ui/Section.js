@@ -64,27 +64,31 @@ export class Section extends Toggleable {
   }
 
   get sectionName() {
-    return this.type.name;
+    return (this._sectionName ||= this.type.name);
   }
 
   get sectionNamePlural() {
-    return this.type.namePlural;
+    return (this._sectionNamePlural ||= this.type.namePlural);
+  }
+
+  get maxSlots() {
+    return (this._maxSlots ||= this.parentSection
+      ? Math.max(
+          ...this.parentSection.selectableCards.map((card) =>
+            card.childCardCount(this.settings.maxNumberOfHeroes),
+          ),
+        )
+      : 1);
+  }
+
+  get previousSiblingSections() {
+    return (this._previousSiblingSections ||= this.allSiblingSections.filter(
+      (section) => section.nthOfType < this.nthOfType,
+    ));
   }
 
   get checkedCards() {
     return this.selectableCards.filter((card) => card.checked);
-  }
-
-  get maxSlots() {
-    return (this._maxSlots ||= this.parentSection?.maxChildCardCount || 1);
-  }
-
-  get maxChildCardCount() {
-    return Math.max(
-      ...this.selectableCards.map((card) =>
-        card.childCardCount(this.settings.maxNumberOfHeroes),
-      ),
-    );
   }
 
   get parentCard() {
@@ -108,12 +112,6 @@ export class Section extends Toggleable {
     return this.childSection && this.trueCard
       ? this.trueCard.childCardCount(this.settings.numberOfHeroes)
       : 0;
-  }
-
-  get previousSiblingSections() {
-    return this.allSiblingSections.filter(
-      (section) => section.nthOfType < this.nthOfType,
-    );
   }
 
   get visibleSiblingSections() {

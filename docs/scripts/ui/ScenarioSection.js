@@ -55,7 +55,7 @@ export class ScenarioSection extends Section {
       ? this.heroSections[0].checkedCards
       : this.heroSections
           .filter((section) => section.visible)
-          .flatMap((section) => section.trueCards)
+          .map((section) => section.trueCard)
           .filter((card) => !!card);
 
     return heroes.length > 0

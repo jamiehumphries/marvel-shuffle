@@ -7,15 +7,15 @@ export class ExtraModularSection extends Section {
   }
 
   get modularSection() {
-    return this.allSiblingSections[0];
+    return (this._modularSection ||= this.allSiblingSections[0]);
   }
 
   get sectionName() {
-    return this.modifyBaseName(super.sectionName);
+    return (this._sectionName ||= modifyName(super.sectionName));
   }
 
   get sectionNamePlural() {
-    return this.modifyBaseName(super.sectionNamePlural);
+    return (this._sectionNamePlural ||= modifyName(super.sectionNamePlural));
   }
 
   get maxSlots() {
@@ -36,8 +36,8 @@ export class ExtraModularSection extends Section {
     }
     super.shuffle(options);
   }
+}
 
-  modifyBaseName(baseName) {
-    return `Extra ${baseName}`;
-  }
+function modifyName(name) {
+  return `Extra ${name}`;
 }

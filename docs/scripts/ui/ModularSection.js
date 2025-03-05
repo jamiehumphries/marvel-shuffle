@@ -8,7 +8,7 @@ export class ModularSection extends Section {
   }
 
   get extraModularSection() {
-    return this.allSiblingSections[0];
+    return (this._extraModularSection ||= this.allSiblingSections[0]);
   }
 
   setCards(value) {

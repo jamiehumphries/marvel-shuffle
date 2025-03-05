@@ -3,8 +3,9 @@ import { initializeDifficultySettings } from "../data/tracker.js?v=8c47738d";
 import { Setting } from "../models/Setting.js?v=d11fdf30";
 
 export class Settings {
-  constructor(maxNumberOfHeroes) {
+  constructor(maxNumberOfHeroes, maxNumberOfExtraModulars) {
     this.maxNumberOfHeroes = maxNumberOfHeroes;
+    this.maxNumberOfExtraModulars = maxNumberOfExtraModulars;
   }
 
   get avoidCompleted() {
@@ -21,39 +22,58 @@ export class Settings {
 
   initialize() {
     this.initializeNumberOfHeroes();
+    this.initializeNumberOfExtraModulars();
     this.initializeTrackerSettings();
   }
 
   initializeNumberOfHeroes() {
-    const id = "setting--number-of-heroes";
+    const setting = "number-of-heroes";
+    const min = 1;
+    const max = this.maxNumberOfHeroes;
+    const setValue = (value) => (this.numberOfHeroes = value);
+    this.initializeNumericSetting(setting, min, max, setValue);
+  }
+
+  initializeNumberOfExtraModulars() {
+    const setting = "number-of-extra-modulars";
+    const min = 0;
+    const max = this.maxNumberOfExtraModulars;
+    const setValue = (value) => (this.numberOfExtraModulars = value);
+    this.initializeNumericSetting(setting, min, max, setValue);
+  }
+
+  initializeNumericSetting(setting, min, max, setValue) {
+    const id = `setting--${setting}`;
 
     const allowedValues = Array.from(
-      { length: this.maxNumberOfHeroes },
-      (_, i) => i + 1,
+      { length: max - min + 1 },
+      (_, i) => min + i,
     );
 
-    this.numberOfHeroes = getItem(id);
-    if (!allowedValues.includes(this.numberOfHeroes)) {
-      this.numberOfHeroes = allowedValues[0];
-    }
+    const storedValue = getItem(id);
+    const initialValue = allowedValues.includes(storedValue)
+      ? storedValue
+      : allowedValues[0];
+    setValue(initialValue);
 
     const fieldset = document.getElementById(id);
+    fieldset.classList.add("numeric-setting");
 
     const onChange = (event) => {
       const value = Number(event.target.value);
-      this.numberOfHeroes = value;
+      setValue(value);
       setItem(id, value);
     };
 
-    for (let i = 1; i <= this.maxNumberOfHeroes; i++) {
-      const inputId = `number-of-heroes-${i}`;
+    for (let i = min; i <= max; i++) {
+      const inputId = `${setting}-${i}`;
 
       const radio = document.createElement("input");
       radio.type = "radio";
       radio.id = inputId;
-      radio.name = "number-of-heroes";
+      radio.name = setting;
       radio.value = i;
-      radio.checked = i === this.numberOfHeroes;
+      radio.checked = i === initialValue;
       fieldset.appendChild(radio);
 
       const label = document.createElement("label");

@@ -8,19 +8,25 @@ import {
 import { clearTable, renderTable } from "./data/tracker.js?v=8c47738d";
 import { filter, requestPostAnimationFrame } from "./helpers.js?v=01996c74";
 import { AspectSection } from "./ui/AspectSection.js?v=9ea8e77b";
-import { ExtraModularSection } from "./ui/ExtraModularSection.js?v=255781cb";
+import {
+  ExtraModularSection,
+  MAX_NUMBER_OF_EXTRA_MODULARS,
+} from "./ui/ExtraModularSection.js?v=255781cb";
 import { HeroSection } from "./ui/HeroSection.js?v=0702bf56";
 import { ModularSection } from "./ui/ModularSection.js?v=5fad6956";
 import { ScenarioSection } from "./ui/ScenarioSection.js?v=eb0a1306";
 import { Settings } from "./ui/Settings.js?v=35b8afb6";
 
-const NUMBER_OF_HERO_SECTIONS = 4;
+const MAX_NUMBER_OF_HEROES = 4;
 
 const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");
 let lastClickedButton = null;
 
-const settings = new Settings(NUMBER_OF_HERO_SECTIONS);
+const settings = new Settings(
+  MAX_NUMBER_OF_HEROES,
+  MAX_NUMBER_OF_EXTRA_MODULARS,
+);
 
 const sections = [];
 const scenarioSection = new ScenarioSection(settings);
@@ -29,7 +35,7 @@ const extraModularSection = new ExtraModularSection(settings, modularSection);
 sections.push(scenarioSection, modularSection, extraModularSection);
 
 const heroSections = [];
-for (let n = 1; n <= NUMBER_OF_HERO_SECTIONS; n++) {
+for (let n = 1; n <= MAX_NUMBER_OF_HEROES; n++) {
   const previous = heroSections[heroSections.length - 1];
   const heroSection = new HeroSection(settings, previous, scenarioSection, n);
   const aspectSection = new AspectSection(settings, heroSection, n);
@@ -106,7 +112,7 @@ function initializeGlobalButtons() {
 
 function initializeSettings() {
   settings.initialize();
-  toggleHeroSectionVisibility();
+  toggleSectionVisibility();
 }
 
 function initializeSections() {
@@ -174,7 +180,7 @@ function toggleSettings() {
   if (settingsVisible) {
     settings.previouslyVisibleSections = getVisibleSections();
   } else {
-    toggleHeroSectionVisibility();
+    toggleSectionVisibility();
 
     const newlyVisibleSections = filter(
       getVisibleSections(),
@@ -199,7 +205,8 @@ function getVisibleSections() {
   return sections.filter((section) => section.visible);
 }
 
-function toggleHeroSectionVisibility() {
+function toggleSectionVisibility() {
+  extraModularSection.toggleVisibility(settings.numberOfExtraModulars > 0);
   for (let i = 0; i < heroSections.length; i++) {
     const heroSection = heroSections[i];
     heroSection.toggleVisibility(i < settings.numberOfHeroes);

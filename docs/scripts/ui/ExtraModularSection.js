@@ -1,6 +1,8 @@
 import { modulars } from "../data/cards.js?v=2121f86f";
 import { Section } from "./Section.js?v=973f83f6";
 
+export const MAX_NUMBER_OF_EXTRA_MODULARS = 4;
+
 export class ExtraModularSection extends Section {
   constructor(settings, previousSiblingSection) {
     super(settings, modulars, 2, { previousSiblingSection });
@@ -19,22 +21,15 @@ export class ExtraModularSection extends Section {
   }
 
   get maxSlots() {
-    return 3;
+    return MAX_NUMBER_OF_EXTRA_MODULARS;
   }
 
   get expectedCardCount() {
-    return 3;
+    return this.settings.numberOfExtraModulars;
   }
 
   getCardOptionTiers() {
     return this.modularSection.getCardOptionTiers();
-  }
-
-  shuffle(options) {
-    if (this.expectedCardCount === 0) {
-      return;
-    }
-    super.shuffle(options);
   }
 }
 

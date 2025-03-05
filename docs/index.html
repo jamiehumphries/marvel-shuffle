@@ -31,13 +31,21 @@
           <span class="settings-show">Done</span>
         </button>
         <div class="settings-show container-block">
-          <h2>Preferences</h2>
-          <div id="preferences">
-            <div id="setting--number-of-heroes">
-              <div>Number of heroes:</div>
+          <form>
+            <h2>Preferences</h2>
+            <div id="preferences">
+              <div id="setting--number-of-heroes">
+                <div>Number of heroes:</div>
+              </div>
             </div>
-          </div>
-          <h2>Modular customisation</h2>
+            <h2>Scenario customisation</h2>
+            <div class="modular-customisation">
+              <div id="setting--number-of-extra-modulars">
+                <div>Extra modulars:</div>
+              </div>
+            </div>
+            <input type="submit" hidden />
+          </form>
         </div>
         <div class="settings-show container-block">
           <h2>Saving</h2>
@@ -64,7 +72,7 @@
             </button>
             <div id="bookmark-url"></div>
           </div>
-          <p id="bookmark-url-hint">
+          <p class="hint">
             Your individual bookmark URL allows you to save and sync your data
           </p>
         </div>

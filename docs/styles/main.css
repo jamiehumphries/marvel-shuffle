@@ -99,9 +99,11 @@ img#logo {
 }
 
 h1,
+h2,
 h3,
 h4 {
   margin: 0;
+  text-align: center;
 }
 
 h2 {
@@ -261,7 +263,7 @@ button.danger {
   text-align: center;
 }
 
-#bookmark-url-hint {
+.hint {
   font-size: 0.8rem;
   text-align: center;
 }
@@ -311,13 +313,13 @@ button.danger {
   display: none;
 }
 
-#setting--number-of-heroes {
+.numeric-setting {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-#setting--number-of-heroes input {
+.numeric-setting input {
   position: absolute;
   opacity: 0;
   z-index: -1;
@@ -325,7 +327,7 @@ button.danger {
   height: 0;
 }
 
-#setting--number-of-heroes label {
+.numeric-setting label {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -338,22 +340,22 @@ button.danger {
   height: 2rem;
 }
 
-#setting--number-of-heroes input:checked + label {
+.numeric-setting input:checked + label {
   border-width: 2px;
   background-color: var(--option-background-color-checked);
   font-weight: bold;
 }
 
-.keyboard-nav #setting--number-of-heroes input:focus + label {
+.keyboard-nav .numeric-setting input:focus + label {
   outline: var(--outline);
   outline-offset: var(--outline-offset);
 }
 
 @media (hover: hover) {
-  #setting--number-of-heroes label:hover {
+  .numeric-setting label:hover {
     background-color: var(--option-background-color-hover);
   }
-  #setting--number-of-heroes input:checked + label:hover {
+  .numeric-setting input:checked + label:hover {
     background-color: var(--option-background-color-checked-hover);
   }
 }

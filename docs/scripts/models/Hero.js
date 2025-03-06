@@ -16,10 +16,10 @@ export class Hero extends Card {
       subname,
       color,
       hasBack,
-      hasGiantForm,
-      hasWideForm,
       baseChildCardCount,
       defaultChildCards,
+      hasGiantForm,
+      hasWideForm,
     });
   }
 

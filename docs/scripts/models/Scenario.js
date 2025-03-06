@@ -25,12 +25,12 @@ export class Scenario extends Card {
     super(name, {
       color,
       hasBack,
-      hasGiantForm,
       baseChildCardCount,
-      defaultChildCards,
       excludedChildCards,
       requiredChildCards,
+      defaultChildCards,
       additionalChildCardsPerHero,
+      hasGiantForm,
     });
   }
 

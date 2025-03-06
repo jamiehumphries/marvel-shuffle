@@ -8,15 +8,15 @@ export class Card extends Option {
       subname = null,
       color = null,
       isLandscape = false,
+      hasBack = false,
       baseChildCardCount = 0,
       excludedChildCards = [],
       requiredChildCards = [],
       defaultChildCards = [],
       additionalChildCardsPerHero = 0,
-      hasBack = false,
+      traits = [],
       hasGiantForm = false,
       hasWideForm = false,
-      traits = [],
     } = {},
   ) {
     const slugModifier = subname;

@@ -17,7 +17,7 @@ export class Settings {
   }
 
   get anyDifficultiesTracked() {
-    return this._difficultSettings.some((setting) => setting.checked);
+    return this._difficultySettings.some((setting) => setting.checked);
   }
 
   initialize() {
@@ -97,7 +97,7 @@ export class Settings {
       },
     );
 
-    this._difficultSettings = initializeDifficultySettings();
+    this._difficultySettings = initializeDifficultySettings();
 
     this._avoidCompletedSetting = new Setting(
       "avoid-completed",
@@ -106,7 +106,7 @@ export class Settings {
 
     const settings = [
       this._showTrackerSetting,
-      ...this._difficultSettings,
+      ...this._difficultySettings,
       this._avoidCompletedSetting,
     ];
 

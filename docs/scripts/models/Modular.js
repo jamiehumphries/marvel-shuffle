@@ -3,9 +3,14 @@ import { Card } from "./Card.js?v=3858d6c7";
 export class Modular extends Card {
   constructor(
     name,
-    { isLandscape = false, hasBack = false, traits = [] } = {},
+    {
+      isLandscape = false,
+      hasBack = false,
+      traits = [],
+      isUncounted = false,
+    } = {},
   ) {
-    super(name, { isLandscape, hasBack, traits });
+    super(name, { isLandscape, hasBack, traits, isUncounted });
   }
 
   static get placeholder() {

@@ -11,6 +11,27 @@ export class ModularSection extends Section {
     return (this._extraModularSection ||= this.allSiblingSections[0]);
   }
 
+  get valid() {
+    if (!super.valid) {
+      return false;
+    }
+
+    return this.uncountedCards.every((card) => {
+      if (this.requiredCards.includes(card)) {
+        return true;
+      }
+
+      switch (this.settings.getProbability(card)) {
+        case 0:
+          return !this.cards.includes(card);
+        case 1:
+          return this.cards.includes(card);
+        default:
+          return true;
+      }
+    });
+  }
+
   setCards(value) {
     super.setCards(value);
     this.updateRequiredLabels();
@@ -29,6 +50,23 @@ export class ModularSection extends Section {
     if (this.extraModularSection.isInitialized) {
       this.extraModularSection.shuffle(options);
     }
+  }
+
+  chooseCards(isShuffleAll) {
+    const cards = super.chooseCards(isShuffleAll);
+
+    for (const card of this.uncountedCards) {
+      if (cards.includes(card)) {
+        continue;
+      }
+
+      const cardProbabilty = this.settings.getProbability(card);
+      if (Math.random() < cardProbabilty) {
+        cards.push(card);
+      }
+    }
+
+    return cards;
   }
 
   updateRequiredLabels() {

@@ -8,11 +8,12 @@ function ensureArray(arrayOrString) {
   return Array.isArray(arrayOrString) ? arrayOrString : [arrayOrString];
 }
 
-// Display modifiers
+// Modifiers
 const isLandscape = true;
 const hasBack = true;
 const hasGiantForm = true;
 const hasWideForm = true;
+const isUncounted = true;
 
 // SETS
 
@@ -226,8 +227,8 @@ export const extraModulars = [
   modular("Prelates", { hasBack }),
   modular("S.H.I.E.L.D. Executive Board", { hasBack }),
   modular("Executive Board Evidence", { hasBack }),
-  modular("Longshot"),
-  modular("Hope Summers", { hasBack }),
+  modular("Longshot", { isUncounted }),
+  modular("Hope Summers", { hasBack, isUncounted }),
 ];
 
 // SCENARIOS

@@ -1,11 +1,21 @@
+import { extraModulars } from "../data/cards.js?v=2121f86f";
 import { getItem, setItem } from "../data/storage.js?v=62f5cba1";
 import { initializeDifficultySettings } from "../data/tracker.js?v=8c47738d";
 import { Setting } from "../models/Setting.js?v=d11fdf30";
+
+const PROBABILITY_MAP = {
+  never: 0,
+  low: 0.05,
+  medium: 0.1,
+  high: 0.25,
+  always: 1,
+};
 
 export class Settings {
   constructor(maxNumberOfHeroes, maxNumberOfExtraModulars) {
     this.maxNumberOfHeroes = maxNumberOfHeroes;
     this.maxNumberOfExtraModulars = maxNumberOfExtraModulars;
+    this._cardProbabilities = {};
   }
 
   get avoidCompleted() {
@@ -20,74 +30,38 @@ export class Settings {
     return this._difficultySettings.some((setting) => setting.checked);
   }
 
+  getProbability(card) {
+    const probabilityKey = this._cardProbabilities[card.id];
+    return PROBABILITY_MAP[probabilityKey];
+  }
+
   initialize() {
-    this.initializeNumberOfHeroes();
-    this.initializeNumberOfExtraModulars();
-    this.initializeTrackerSettings();
+    const preferencesDiv = document.getElementById("preferences");
+    const customisationDiv = document.getElementById("customisation");
+    const extraModularsHint = document.getElementById("extra-modulars");
+    const uncountedModularsHint = document.getElementById("uncounted-modulars");
+
+    this.initializeNumberOfHeroes(preferencesDiv);
+    this.initializeTrackerSettings(preferencesDiv);
+
+    customisationDiv.appendChild(extraModularsHint);
+    this.initializeNumberOfExtraModulars(customisationDiv);
+    customisationDiv.appendChild(uncountedModularsHint);
+    this.initializeUncountedModulars(customisationDiv);
   }
 
-  initializeNumberOfHeroes() {
-    const setting = "number-of-heroes";
-    const min = 1;
-    const max = this.maxNumberOfHeroes;
-    const setValue = (value) => (this.numberOfHeroes = value);
-    this.initializeNumericSetting(setting, min, max, setValue);
-  }
-
-  initializeNumberOfExtraModulars() {
-    const setting = "number-of-extra-modulars";
-    const min = 0;
-    const max = this.maxNumberOfExtraModulars;
-    const setValue = (value) => (this.numberOfExtraModulars = value);
-    this.initializeNumericSetting(setting, min, max, setValue);
-  }
-
-  initializeNumericSetting(setting, min, max, setValue) {
-    const id = `setting--${setting}`;
-
-    const allowedValues = Array.from(
-      { length: max - min + 1 },
-      (_, i) => min + i,
+  initializeNumberOfHeroes(parent) {
+    this.initializeNumericalSetting(
+      parent,
+      "number-of-heroes",
+      "Number of heroes",
+      1,
+      this.maxNumberOfHeroes,
+      (value) => (this.numberOfHeroes = value),
     );
-
-    const storedValue = getItem(id);
-    const initialValue = allowedValues.includes(storedValue)
-      ? storedValue
-      : allowedValues[0];
-    setValue(initialValue);
-
-    const fieldset = document.getElementById(id);
-    fieldset.classList.add("numeric-setting");
-
-    const onChange = (event) => {
-      const value = Number(event.target.value);
-      setValue(value);
-      setItem(id, value);
-    };
-
-    for (let i = min; i <= max; i++) {
-      const inputId = `${setting}-${i}`;
-
-      const radio = document.createElement("input");
-      radio.type = "radio";
-      radio.id = inputId;
-      radio.name = setting;
-      radio.value = i;
-      radio.checked = i === initialValue;
-      fieldset.appendChild(radio);
-
-      const label = document.createElement("label");
-      label.htmlFor = inputId;
-      label.innerText = i;
-      fieldset.appendChild(label);
-
-      radio.addEventListener("change", onChange);
-    }
   }
 
-  initializeTrackerSettings() {
-    const preferencesElement = document.getElementById("preferences");
-
+  initializeTrackerSettings(parent) {
     this._showTrackerSetting = new Setting(
       "show-tracker",
       "Show game tracker under shuffle",
@@ -111,7 +85,104 @@ export class Settings {
     ];
 
     for (const setting of settings) {
-      setting.appendTo(preferencesElement);
+      setting.appendTo(parent);
     }
+  }
+
+  initializeNumberOfExtraModulars(parent) {
+    this.initializeNumericalSetting(
+      parent,
+      "number-of-extra-modulars",
+      "Extra modulars",
+      0,
+      this.maxNumberOfExtraModulars,
+      (value) => (this.numberOfExtraModulars = value),
+    );
+  }
+
+  initializeUncountedModulars(parent) {
+    const uncountedModulars = extraModulars.filter((card) => card.isUncounted);
+    const options = Object.entries(PROBABILITY_MAP).map(
+      ([key, probability]) => {
+        const label = key[0].toUpperCase() + key.slice(1);
+        const sublabel = `${probability * 100}%`;
+        return { value: key, html: `${label}<span>${sublabel}</span>` };
+      },
+    );
+    for (const card of uncountedModulars) {
+      this.initializeRadioSetting(
+        parent,
+        `probability--${card.id}`,
+        `Probability of adding ${card.name}`,
+        options,
+        (value) => (this._cardProbabilities[card.id] = value),
+      );
+    }
+  }
+
+  addHint(parent, html) {
+    const hint = document.createElement("p");
+    hint.classList.add("hint");
+    hint.innerText = html;
+    parent.appendChild(hint);
+  }
+
+  initializeNumericalSetting(parent, setting, legend, min, max, setValue) {
+    const options = Array.from({ length: max - min + 1 }, (_, i) => {
+      const value = min + i;
+      return { value, html: value.toString() };
+    });
+    this.initializeRadioSetting(parent, setting, legend, options, setValue);
+  }
+
+  initializeRadioSetting(parent, setting, legend, options, setValue) {
+    const id = `setting--${setting}`;
+
+    const allowedValues = options.map((option) => option.value);
+    const storedValue = getItem(id);
+    const initialValue = allowedValues.includes(storedValue)
+      ? storedValue
+      : allowedValues[0];
+    setValue(initialValue);
+
+    const isNumerical = allowedValues.every((value) => !isNaN(value));
+
+    const fieldset = document.createElement("fieldset");
+    fieldset.classList.add("radio-setting");
+    if (isNumerical) {
+      fieldset.classList.add("numerical-setting");
+    }
+
+    const fieldsetLegend = document.createElement("legend");
+    fieldsetLegend.innerText = `${legend}:`;
+    fieldset.appendChild(fieldsetLegend);
+
+    const onChange = (event) => {
+      const radioValue = event.target.value;
+      const value = isNumerical ? Number(radioValue) : radioValue;
+      setValue(value);
+      setItem(id, value);
+    };
+
+    for (const { value, html } of options) {
+      const inputId = `${id}--${value}`;
+
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.id = inputId;
+      radio.name = setting;
+      radio.value = value;
+      radio.checked = value === initialValue;
+      fieldset.appendChild(radio);
+
+      const label = document.createElement("label");
+      label.htmlFor = inputId;
+      label.innerHTML = html;
+      fieldset.appendChild(label);
+
+      radio.addEventListener("change", onChange);
+    }
+
+    parent.appendChild(fieldset);
   }
 }

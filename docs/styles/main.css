@@ -110,6 +110,10 @@ h2 {
   margin: 1rem 0;
 }
 
+h2:not(:first-of-type) {
+  margin: 1.5rem 0 1rem 0;
+}
+
 .button {
   display: flex;
   justify-content: center;
@@ -216,6 +220,7 @@ body.show-settings .button.shuffle:disabled {
 
 body.show-settings #settings {
   position: fixed;
+  z-index: 1;
   margin-right: max(
     0px,
     calc((100% - var(--container-max-width)) / 2 - var(--container-padding))
@@ -264,6 +269,10 @@ button.danger {
 }
 
 .hint {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 320px;
+  font-style: italic;
   font-size: 0.8rem;
   text-align: center;
 }
@@ -313,13 +322,23 @@ button.danger {
   display: none;
 }
 
-.numeric-setting {
+fieldset {
+  margin: 0.5rem 0;
+  border: none;
+  padding: 0;
+}
+
+fieldset legend {
+  margin-bottom: 0.5rem;
+}
+
+.radio-setting {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.numeric-setting input {
+.radio-setting input {
   position: absolute;
   opacity: 0;
   z-index: -1;
@@ -327,35 +346,50 @@ button.danger {
   height: 0;
 }
 
-.numeric-setting label {
+.radio-setting label {
   display: inline-flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   box-sizing: border-box;
   margin-bottom: 0.25rem;
   border: 1px solid var(--option-border-and-check-color);
-  border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.5rem;
 }
 
-.numeric-setting input:checked + label {
+.radio-setting label span {
+  font-size: 0.65rem;
+}
+
+.radio-setting input:checked + label {
   border-width: 2px;
   background-color: var(--option-background-color-checked);
   font-weight: bold;
 }
 
-.keyboard-nav .numeric-setting input:focus + label {
+.keyboard-nav .radio-setting input:focus + label {
   outline: var(--outline);
   outline-offset: var(--outline-offset);
 }
 
+.numerical-setting legend {
+  float: left;
+  margin: 0;
+}
+
+.numerical-setting label {
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+}
+
 @media (hover: hover) {
-  .numeric-setting label:hover {
+  .radio-setting label:hover {
     background-color: var(--option-background-color-hover);
   }
-  .numeric-setting input:checked + label:hover {
+  .radio-setting input:checked + label:hover {
     background-color: var(--option-background-color-checked-hover);
   }
 }
@@ -784,6 +818,17 @@ body:not(.show-tracker) #tracking {
     display: block;
     position: relative;
     margin: 0 auto 20px auto;
+  }
+
+  .radio-setting:not(.numerical-setting) label {
+    padding-right: 0.25rem;
+    padding-left: 0.25rem;
+    font-size: 0.9rem;
+  }
+
+  .numerical-setting legend {
+    float: none;
+    margin-bottom: inherit;
   }
 
   .sections,

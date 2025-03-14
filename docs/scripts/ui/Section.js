@@ -29,6 +29,7 @@ export class Section extends Toggleable {
 
     this.nthOfType = nthOfType;
     this.extraCards = extraCards;
+    this.uncountedCards = this.extraCards.filter((card) => card.isUncounted);
 
     this.parentSection = parentSection;
 
@@ -72,13 +73,20 @@ export class Section extends Toggleable {
   }
 
   get maxSlots() {
-    return (this._maxSlots ||= this.parentSection
+    if (this._maxSlots) {
+      return this._maxSlots;
+    }
+
+    const maxCountedCards = this.parentSection
       ? Math.max(
           ...this.parentSection.selectableCards.map((card) =>
             card.childCardCount(this.settings.maxNumberOfHeroes),
           ),
         )
-      : 1);
+      : 1;
+
+    this._maxSlots = maxCountedCards + this.uncountedCards.length;
+    return this._maxSlots;
   }
 
   get previousSiblingSections() {
@@ -108,6 +116,14 @@ export class Section extends Toggleable {
     return this.incomingCards || this.cards;
   }
 
+  get requiredCards() {
+    return this.parentCard?.requiredChildCards;
+  }
+
+  get defaultCards() {
+    return this.parentCard?.defaultChildCards;
+  }
+
   get childCardCount() {
     return this.childSection && this.trueCard
       ? this.trueCard.childCardCount(this.settings.numberOfHeroes)
@@ -123,7 +139,11 @@ export class Section extends Toggleable {
   }
 
   get valid() {
-    if (this.cards.length !== this.expectedCardCount) {
+    const countedCards = this.cards.filter(
+      (card) => !card.isUncounted || this.requiredCards.includes(card),
+    );
+
+    if (countedCards.length !== this.expectedCardCount) {
       return false;
     }
 
@@ -137,7 +157,7 @@ export class Section extends Toggleable {
     }
 
     const optionSets = this.getCardOptionSets();
-    return this.cards.every((card, i) => optionSets[i]?.includes(card));
+    return optionSets.every((set, i) => set?.includes(this.cards[i]));
   }
 
   get visible() {
@@ -373,9 +393,9 @@ export class Section extends Toggleable {
 
   getCardOptionTiers() {
     return [
-      new CardTier(this.parentCard?.requiredChildCards, true),
+      new CardTier(this.requiredCards, true),
       new CardTier(this.checkedCards),
-      new CardTier(this.parentCard?.defaultChildCards, true),
+      new CardTier(this.defaultCards, true),
       new CardTier(this.parentSet?.children),
       new CardTier(this.coreSet.children),
     ].filter((tier) => tier.cards?.length > 0);

@@ -17,6 +17,7 @@ export class Card extends Option {
       traits = [],
       hasGiantForm = false,
       hasWideForm = false,
+      isUncounted = false,
     } = {},
   ) {
     const slugModifier = subname;
@@ -33,6 +34,7 @@ export class Card extends Option {
     this.traits = traits;
     this.hasGiantForm = hasGiantForm;
     this.hasWideForm = hasWideForm;
+    this.isUncounted = isUncounted;
 
     this.frontSrc = this.image(this.slug, "front.png");
     this.backSrc = hasBack

@@ -4,12 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "assets": "node assets.js",
-    "build": "npm run build:patch",
-    "build:major": "node build.js --major",
-    "build:minor": "node build.js --minor",
-    "build:patch": "node build.js --patch",
+    "build": "node build.js",
     "images": "node images.js",
+    "release": "npm run release:patch",
+    "release:major": "node release.js --major",
+    "release:minor": "node release.js --minor",
+    "release:patch": "node release.js --patch",
     "round": "node images.js --no-level",
     "start": "serve docs"
   },

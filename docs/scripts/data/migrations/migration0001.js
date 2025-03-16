@@ -1,4 +1,9 @@
-import { ADD_ALTER_EGO, REMOVE, RENAME } from "./operations.js?v=e052d1d0";
+import {
+  ADD_ALTER_EGO,
+  MIGRATE_DIFFICULTY,
+  REMOVE,
+  RENAME,
+} from "./operations.js?v=e052d1d0";
 
 export const migration0001 = [
   [ADD_ALTER_EGO, "captain-marvel", "carol-danvers"],
@@ -51,4 +56,9 @@ export const migration0001 = [
   [RENAME, "module", "modular"],
   [REMOVE, "modular--prelates"],
   [REMOVE, "modular--hope-summers"],
+  [MIGRATE_DIFFICULTY, "standard"],
+  [MIGRATE_DIFFICULTY, "standard-ii"],
+  [MIGRATE_DIFFICULTY, "standard-iii"],
+  [MIGRATE_DIFFICULTY, "expert"],
+  [MIGRATE_DIFFICULTY, "expert-ii"],
 ];

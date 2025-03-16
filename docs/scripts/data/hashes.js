@@ -294,6 +294,7 @@ export const hashes = {
   "/images/hero/angel-warren-worthington-iii/back-inner.png": "74c2bdc7",
   "/images/hero/adam-warlock/front.png": "fbcbf49d",
   "/images/hero/adam-warlock/back.png": "178e8f4f",
+  "/images/difficulty/back.png": "7627e2d1",
   "/images/campaign/the-rise-of-red-skull.png": "109042c7",
   "/images/campaign/the-mad-titans-shadow.png": "122bcd6b",
   "/images/campaign/the-galaxys-most-wanted.png": "c0317564",

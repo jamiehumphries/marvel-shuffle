@@ -5,9 +5,10 @@ import {
   initializeStorage,
   setUserId,
 } from "./data/storage.js?v=62f5cba1";
-import { clearTable, renderTable } from "./data/tracker.js?v=8c47738d";
+import { renderTable } from "./data/tracker.js?v=8c47738d";
 import { filter, requestPostAnimationFrame } from "./helpers.js?v=01996c74";
 import { AspectSection } from "./ui/AspectSection.js?v=9ea8e77b";
+import { DifficultySection } from "./ui/DifficultySection.js?v=00000000";
 import {
   ExtraModularSection,
   MAX_NUMBER_OF_EXTRA_MODULARS,
@@ -30,9 +31,15 @@ const settings = new Settings(
 
 const sections = [];
 const scenarioSection = new ScenarioSection(settings);
+const difficultySection = new DifficultySection(settings);
 const modularSection = new ModularSection(settings, scenarioSection);
 const extraModularSection = new ExtraModularSection(settings, modularSection);
-sections.push(scenarioSection, modularSection, extraModularSection);
+sections.push(
+  scenarioSection,
+  difficultySection,
+  modularSection,
+  extraModularSection,
+);
 
 const heroSections = [];
 for (let n = 1; n <= MAX_NUMBER_OF_HEROES; n++) {
@@ -206,6 +213,7 @@ function getVisibleSections() {
 }
 
 function toggleSectionVisibility() {
+  difficultySection.toggleVisibility(settings.shuffleDifficulties);
   extraModularSection.toggleVisibility(settings.numberOfExtraModulars > 0);
   for (let i = 0; i < heroSections.length; i++) {
     const heroSection = heroSections[i];
@@ -223,13 +231,12 @@ function updateTrackingTable() {
     return;
   }
 
-  if (settings.anyDifficultiesTracked) {
-    const scenarios = scenarioSection.cards;
-    const heroes = visibleHeroSections.flatMap((section) => section.cards);
-    renderTable([{ children: scenarios }], [{ children: heroes }]);
-  } else {
-    clearTable();
-  }
+  const scenarios = scenarioSection.cards;
+  const heroes = visibleHeroSections.flatMap((section) => section.cards);
+  const difficulties = settings.shuffleDifficulties
+    ? difficultySection.cards
+    : null;
+  renderTable([{ children: scenarios }], [{ children: heroes }], difficulties);
 }
 
 function setGlobalButtonsAvailability() {

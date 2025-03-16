@@ -1,6 +1,5 @@
-import { extraModulars } from "../data/cards.js?v=2121f86f";
+import { difficulties, extraModulars } from "../data/cards.js?v=2121f86f";
 import { getItem, setItem } from "../data/storage.js?v=62f5cba1";
-import { initializeDifficultySettings } from "../data/tracker.js?v=8c47738d";
 import { Setting } from "../models/Setting.js?v=d11fdf30";
 
 const PROBABILITY_MAP = {
@@ -11,6 +10,9 @@ const PROBABILITY_MAP = {
   always: 1,
 };
 
+const preferencesDiv = document.getElementById("preferences");
+const customisationDiv = document.getElementById("customisation");
+
 export class Settings {
   constructor(maxNumberOfHeroes, maxNumberOfExtraModulars) {
     this.maxNumberOfHeroes = maxNumberOfHeroes;
@@ -18,16 +20,20 @@ export class Settings {
     this._cardProbabilities = {};
   }
 
-  get avoidCompleted() {
-    return this.showTracker && this._avoidCompletedSetting.checked;
+  get shuffleDifficulties() {
+    return this._shuffleDifficultiesSetting.checked;
+  }
+
+  get alwaysIncludeExpert() {
+    return this._alwaysIncludeExpertSetting.checked;
   }
 
   get showTracker() {
     return this._showTrackerSetting.checked;
   }
 
-  get anyDifficultiesTracked() {
-    return this._difficultySettings.some((setting) => setting.checked);
+  get avoidCompleted() {
+    return this.showTracker && this._avoidCompletedSetting.checked;
   }
 
   getProbability(card) {
@@ -36,23 +42,19 @@ export class Settings {
   }
 
   initialize() {
-    const preferencesDiv = document.getElementById("preferences");
-    const customisationDiv = document.getElementById("customisation");
-    const extraModularsHint = document.getElementById("extra-modulars");
-    const uncountedModularsHint = document.getElementById("uncounted-modulars");
-
-    this.initializeNumberOfHeroes(preferencesDiv);
-    this.initializeTrackerSettings(preferencesDiv);
-
-    customisationDiv.appendChild(extraModularsHint);
-    this.initializeNumberOfExtraModulars(customisationDiv);
-    customisationDiv.appendChild(uncountedModularsHint);
-    this.initializeUncountedModulars(customisationDiv);
+    this.initializePreferences();
+    this.initializeCustomisation();
   }
 
-  initializeNumberOfHeroes(parent) {
+  initializePreferences() {
+    this.initializeNumberOfHeroes();
+    this.initializeShuffleAndTrackingPrefernces();
+    this.initializeDifficultySelection();
+  }
+
+  initializeNumberOfHeroes() {
     this.initializeNumericalSetting(
-      parent,
+      preferencesDiv,
       "number-of-heroes",
       "Number of heroes",
       1,
@@ -61,37 +63,70 @@ export class Settings {
     );
   }
 
-  initializeTrackerSettings(parent) {
+  initializeShuffleAndTrackingPrefernces() {
+    this._shuffleDifficultiesSetting = new Setting(
+      "shuffle-difficulties",
+      "Shuffle difficulties",
+      {
+        onChange: (checked) =>
+          document.body.classList.toggle("shuffle-difficulties", checked),
+      },
+    );
+    this._alwaysIncludeExpertSetting = new Setting(
+      "always-include-expert",
+      "Always include an Expert set",
+    );
     this._showTrackerSetting = new Setting(
       "show-tracker",
-      "Show game tracker under shuffle",
+      "Show game tracker",
       {
+        subname: "(below shuffle)",
         onChange: (checked) =>
           document.body.classList.toggle("show-tracker", checked),
       },
     );
-
-    this._difficultySettings = initializeDifficultySettings();
-
     this._avoidCompletedSetting = new Setting(
       "avoid-completed",
-      "Avoid completed games when shuffling",
+      "Avoid completed matchups",
     );
-
-    const settings = [
-      this._showTrackerSetting,
-      ...this._difficultySettings,
-      this._avoidCompletedSetting,
-    ];
-
-    for (const setting of settings) {
-      setting.appendTo(parent);
-    }
+    this._shuffleDifficultiesSetting.appendTo(preferencesDiv);
+    this._alwaysIncludeExpertSetting.appendTo(preferencesDiv);
+    this._showTrackerSetting.appendTo(preferencesDiv);
+    this._avoidCompletedSetting.appendTo(preferencesDiv);
   }
 
-  initializeNumberOfExtraModulars(parent) {
+  initializeDifficultySelection() {
+    const fieldset = document.createElement("fieldset");
+    fieldset.classList.add("select-difficulties", "difficulty");
+    const legend = document.createElement("legend");
+    legend.innerText = "Select difficulties";
+    const standardDiv = document.createElement("div");
+    const expertDiv = document.createElement("div");
+    fieldset.appendChild(legend);
+    fieldset.appendChild(standardDiv);
+    fieldset.appendChild(expertDiv);
+
+    this._difficultySettings = difficulties;
+    for (const difficulty of this._difficultySettings) {
+      const isStandard = difficulty.id.includes("standard");
+      const div = isStandard ? standardDiv : expertDiv;
+      difficulty.appendTo(div);
+    }
+
+    preferencesDiv.appendChild(fieldset);
+  }
+
+  initializeCustomisation() {
+    this.initializeNumberOfExtraModulars();
+    this.initializeUncountedModulars();
+  }
+
+  initializeNumberOfExtraModulars() {
+    const extraModularsHint = document.getElementById("extra-modulars");
+    customisationDiv.appendChild(extraModularsHint);
+
     this.initializeNumericalSetting(
-      parent,
+      customisationDiv,
       "number-of-extra-modulars",
       "Extra modulars",
       0,
@@ -100,7 +135,10 @@ export class Settings {
     );
   }
 
-  initializeUncountedModulars(parent) {
+  initializeUncountedModulars() {
+    const uncountedModularsHint = document.getElementById("uncounted-modulars");
+    customisationDiv.appendChild(uncountedModularsHint);
+
     const uncountedModulars = extraModulars.filter((card) => card.isUncounted);
     const options = Object.entries(PROBABILITY_MAP).map(
       ([key, probability]) => {
@@ -109,9 +147,10 @@ export class Settings {
         return { value: key, html: `${label}<span>${sublabel}</span>` };
       },
     );
+
     for (const card of uncountedModulars) {
       this.initializeRadioSetting(
-        parent,
+        customisationDiv,
         `probability--${card.id}`,
         `Probability of adding ${card.name}`,
         options,
@@ -154,7 +193,7 @@ export class Settings {
     }
 
     const fieldsetLegend = document.createElement("legend");
-    fieldsetLegend.innerText = `${legend}:`;
+    fieldsetLegend.innerText = legend;
     fieldset.appendChild(fieldsetLegend);
 
     const onChange = (event) => {

@@ -21,6 +21,10 @@ body {
   text-transform: lowercase;
 }
 
+.difficulty {
+  text-transform: none;
+}
+
 a {
   outline: none;
   color: var(--link-color);

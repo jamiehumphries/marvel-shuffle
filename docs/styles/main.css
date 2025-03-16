@@ -235,13 +235,36 @@ body.show-settings .settings-hide {
   display: none !important;
 }
 
-label[for^="setting--track-difficulty-"] {
+label[for^="setting--"] .subname {
+  display: inline;
+}
+
+label[for^="setting--"] .subname::before {
+  content: " ";
+}
+
+label[for^="setting--always-include-expert"],
+label[for^="setting--avoid-completed"] {
   margin-left: var(--option-inset);
 }
 
-body:not(.show-tracker) label[for="setting--avoid-completed"],
-body:not(.show-tracker) label[for^="setting--track-difficulty-"] {
+body:not(.shuffle-difficulties) label[for="setting--always-include-expert"] {
   display: none;
+}
+
+body:not(.show-tracker) label[for="setting--avoid-completed"] {
+  display: none;
+}
+
+body:not(.shuffle-difficulties):not(.show-tracker)
+  fieldset.select-difficulties {
+  display: none;
+}
+
+fieldset.select-difficulties {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 body:not(.has-user-id) .show-if-has-user-id {
@@ -296,6 +319,7 @@ button.danger {
   justify-content: center;
 }
 
+.scenario-and-difficulty,
 .modulars-and-extra-modulars {
   display: flex;
   flex-direction: column;
@@ -330,6 +354,10 @@ fieldset {
 
 fieldset legend {
   margin-bottom: 0.5rem;
+}
+
+fieldset legend::after {
+  content: ":";
 }
 
 .radio-setting {

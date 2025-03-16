@@ -1,25 +1,17 @@
-import { Setting } from "../models/Setting.js?v=d11fdf30";
+import { difficulties } from "./cards.js?v=2121f86f";
 import { getItem, setItem } from "./storage.js?v=62f5cba1";
 
 const WIN = "✓";
 const LOSS = "✗";
 const UNPLAYED = "?";
 
-const allDifficulties = [
-  { id: "standard", label: "Standard", defaultValue: true },
-  { id: "standard-ii", label: "Standard II" },
-  { id: "standard-iii", label: "Standard III" },
-  { id: "expert", label: "Expert" },
-  { id: "expert-ii", label: "Expert II" },
-];
-
 const table = document.getElementById("tracker");
 
 let totalPercentageSpan;
 let totalFractionSpan;
 
-function renderTable(scenarios, heroes) {
-  const difficulties = getTrackedDifficulties();
+export function renderTable(scenarios, heroes, difficulties) {
+  difficulties ||= getTrackedDifficulties();
   document.documentElement.style.setProperty(
     "--number-of-difficulties",
     difficulties.length,
@@ -41,26 +33,14 @@ function clearTable() {
   table.innerHTML = "";
 }
 
-function initializeDifficultySettings() {
-  for (const difficulty of allDifficulties) {
-    const id = `track-difficulty-${difficulty.id}`;
-    const label = `Track ${difficulty.label}`;
-    const { defaultValue } = difficulty;
-    difficulty.setting = new Setting(id, label, { defaultValue });
-  }
-  return allDifficulties.map((difficulty) => difficulty.setting);
-}
-
 function getTrackedDifficulties() {
-  if (allDifficulties.some((difficulty) => !difficulty.setting)) {
-    initializeDifficultySettings();
+  const checked = difficulties.filter((difficulty) => difficulty.checked);
+  if (checked.length > 0) {
+    return checked;
   }
-  const trackedDifficulties = allDifficulties.filter(
-    (difficulty) => difficulty.setting.checked,
-  );
-  return trackedDifficulties.length > 0
-    ? trackedDifficulties
-    : allDifficulties.filter((difficulty) => difficulty.defaultValue);
+  const standard = difficulties.find((difficulty) => difficulty.isStandard);
+  const expert = difficulties.find((difficulty) => !difficulty.isStandard);
+  return [standard, expert];
 }
 
 function appendHeaderRows(thead, scenarios, difficulties) {
@@ -87,13 +67,14 @@ function appendHeaderRows(thead, scenarios, difficulties) {
       firstRow.appendChild(scenarioCell);
 
       for (let j = 0; j < difficulties.length; j++) {
-        const { label } = difficulties[j];
+        const { name } = difficulties[j];
         const cell = createCell({
-          text: label,
+          text: name,
           colbreak: colbreak && j == 0,
           blockEnd: j === difficulties.length - 1,
           color,
           header,
+          difficulty: true,
         });
         secondRow.appendChild(cell);
       }
@@ -107,11 +88,13 @@ function appendHeaderRows(thead, scenarios, difficulties) {
 function appendProgressCells(firstRow, secondRow, difficulties) {
   const contentDiv = document.createElement("div");
 
-  const progressDiv = (span, id) => {
+  const progressDiv = (span, id = null) => {
     const div = document.createElement("div");
-    div.id = id;
     div.class = "progress-cell";
     div.appendChild(span);
+    if (id !== null) {
+      div.id = id;
+    }
     return div;
   };
 
@@ -133,10 +116,8 @@ function appendProgressCells(firstRow, secondRow, difficulties) {
     const difficulty = difficulties[i];
 
     difficulty.span = document.createElement("span");
-    const { id, span } = difficulty;
-
     const cell = createCell({
-      contentDiv: progressDiv(span, `${id}-percentage`),
+      contentDiv: progressDiv(difficulty.span),
       header: true,
       blockIndex: i,
       blockEnd: i === difficulties.length - 1,
@@ -345,7 +326,7 @@ function updateProgress() {
   let totalCleared = 0;
 
   const combinationsPerDifficulty = totalCombinations / difficulties.length;
-  for (const { id, label, span } of difficulties) {
+  for (const { id, name, span } of difficulties) {
     const cleared = table.querySelectorAll(
       `input:checked[data-difficulty="${id}"]`,
     ).length;
@@ -354,7 +335,7 @@ function updateProgress() {
       const percentage = toPercentage(cleared / combinationsPerDifficulty);
       span.innerText = percentage;
     } else {
-      span.innerText = label;
+      span.innerText = name;
     }
   }
 
@@ -363,7 +344,7 @@ function updateProgress() {
   totalFractionSpan.innerText = `${totalCleared} / ${totalCombinations}`;
 }
 
-function getNumberOfIncompleteGames(scenarios, heroes) {
+export function getNumberOfIncompleteGames(scenarios, heroes) {
   const difficulties = getTrackedDifficulties();
 
   let incompleteCount = 0;
@@ -388,11 +369,3 @@ function isGameCompleted(scenario, hero, difficulty) {
 function getGameId(scenario, hero, difficulty) {
   return `game--${scenario.id}--${hero.id}--${difficulty.id}`;
 }
-
-export {
-  clearTable,
-  getNumberOfIncompleteGames,
-  getTrackedDifficulties,
-  initializeDifficultySettings,
-  renderTable,
-};

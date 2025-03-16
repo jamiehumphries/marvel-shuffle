@@ -21,9 +21,8 @@ export class Card extends Option {
     } = {},
   ) {
     const slugModifier = subname;
-    super(name, { slugModifier });
+    super(name, { subname, slugModifier });
 
-    this.subname = subname;
     this.color = color;
     this.isLandscape = isLandscape;
     this.baseChildCardCount = baseChildCardCount;

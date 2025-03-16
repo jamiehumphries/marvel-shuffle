@@ -89,6 +89,27 @@ export class Section extends Toggleable {
     return this._maxSlots;
   }
 
+  get defaultMessage() {
+    if (this._defaultMessage) {
+      return this.defaultMessage;
+    }
+
+    const messageParts = [
+      "If",
+      this.maxSlots === 1 && this.allSiblingSections.length === 0
+        ? "no"
+        : "too few",
+      this.sectionNamePlural,
+      "are selected",
+      this.parentSection
+        ? `${this.parentSection.type.name} default(s) will be used`
+        : `Core Set ${this.sectionNamePlural} will be used`,
+    ];
+
+    this._defaultMessage = messageParts.join(" ");
+    return this._defaultMessage;
+  }
+
   get previousSiblingSections() {
     return (this._previousSiblingSections ||= this.allSiblingSections.filter(
       (section) => section.nthOfType < this.nthOfType,
@@ -117,11 +138,11 @@ export class Section extends Toggleable {
   }
 
   get requiredCards() {
-    return this.parentCard?.requiredChildCards;
+    return this.parentCard?.requiredChildCards || [];
   }
 
   get defaultCards() {
-    return this.parentCard?.defaultChildCards;
+    return this.parentCard?.defaultChildCards || [];
   }
 
   get childCardCount() {
@@ -251,15 +272,8 @@ export class Section extends Toggleable {
     const options = this.root.querySelector(".options");
 
     const optionsHint = document.createElement("p");
-    const noOrTooFew =
-      this.maxSlots === 1 && this.allSiblingSections.length === 0
-        ? "no"
-        : "too few";
     optionsHint.classList.add("options-hint");
-    optionsHint.innerText = `If ${noOrTooFew} ${this.sectionNamePlural} are selected, `;
-    optionsHint.innerText += this.parentSection
-      ? `${this.parentSection.type.name} default(s) will be used`
-      : `Core Set ${this.sectionNamePlural} will be used`;
+    optionsHint.innerText = this.defaultMessage;
     options.appendChild(optionsHint);
 
     const all = new All(this);
@@ -269,7 +283,7 @@ export class Section extends Toggleable {
       cardOrSet.appendTo(options);
     }
 
-    if (getItem(this.id) === null) {
+    if (getItem(this.id) === null && this.coreSet !== undefined) {
       this.coreSet.checked = true;
     }
   }
@@ -297,7 +311,8 @@ export class Section extends Toggleable {
 
   shuffle({ forcedCards = null, animate = true, isShuffleAll = false } = {}) {
     this.forced = forcedCards !== null;
-    const newCards = forcedCards || this.chooseCards(isShuffleAll);
+    const newCards =
+      forcedCards || this.chooseCards(isShuffleAll).filter((card) => !!card);
 
     if (!animate || !this.visible) {
       this.cards = newCards;
@@ -397,7 +412,7 @@ export class Section extends Toggleable {
       new CardTier(this.checkedCards),
       new CardTier(this.defaultCards, true),
       new CardTier(this.parentSet?.children),
-      new CardTier(this.coreSet.children),
+      new CardTier(this.coreSet?.children),
     ].filter((tier) => tier.cards?.length > 0);
   }
 

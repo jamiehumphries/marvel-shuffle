@@ -5,22 +5,22 @@ export class Option extends Model {
   constructor(
     name,
     {
+      subname = null,
       type = null,
       slug = null,
       slugModifier = null,
       children = null,
       onChange = null,
-      defaultValue = null,
     } = {},
   ) {
     super();
     this.name = name;
+    this.subname = subname;
     this.type = type || this.constructor;
     this.slug = slug || Model.buildSlug(this.name, slugModifier);
     this.id = `${this.type.slug}--${this.slug}`;
     this.children = children;
     this._onChange = onChange;
-    this.defaultValue = defaultValue;
   }
 
   get checked() {
@@ -29,7 +29,7 @@ export class Option extends Model {
         this._checked = this.children.every((child) => child.checked);
       } else {
         const storedValue = getItem(this.id);
-        this._checked = storedValue === null ? this.defaultValue : storedValue;
+        this._checked = storedValue === null ? false : storedValue;
       }
     }
     return this._checked;
@@ -83,20 +83,17 @@ export class Option extends Model {
     label.appendChild(input);
     label.appendChild(checkmark);
 
-    const textWrapperDiv = document.createElement("div");
-
     const nameDiv = document.createElement("div");
     nameDiv.innerText = this.name;
-    textWrapperDiv.append(nameDiv);
 
     if (this.subname) {
       const subnameDiv = document.createElement("div");
       subnameDiv.innerText = this.subname;
       subnameDiv.classList.add("subname");
-      textWrapperDiv.append(subnameDiv);
+      nameDiv.appendChild(subnameDiv);
     }
 
-    label.append(textWrapperDiv);
+    label.appendChild(nameDiv);
 
     input.addEventListener("click", (event) => {
       this.checked = event.target.checked;

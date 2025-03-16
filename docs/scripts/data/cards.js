@@ -1,5 +1,6 @@
 import { Aspect } from "../models/Aspect.js?v=677f52a6";
 import { CardSet } from "../models/CardSet.js?v=02bc8aae";
+import { Difficulty } from "../models/Difficulty.js?v=00000000";
 import { Hero } from "../models/Hero.js?v=65fda6d0";
 import { Modular } from "../models/Modular.js?v=11c426af";
 import { Scenario } from "../models/Scenario.js?v=5a1f7c09";
@@ -345,6 +346,21 @@ export const scenarios = [
     scenario("Baron Zemo", ["Scientist Supreme", "S.H.I.E.L.D."], "#a23276", { required: ["S.H.I.E.L.D. Executive Board", "Executive Board Evidence"], hasBack }),
   ),
 ];
+
+// DIFFICULTIES
+
+function difficulty(name) {
+  return new Difficulty(name);
+}
+
+// prettier-ignore
+export const difficulties = [
+  difficulty("Standard"),
+  difficulty("Standard II"),
+  difficulty("Standard III"),
+  difficulty("Expert"),
+  difficulty("Expert II"),
+]
 
 // ASPECTS
 

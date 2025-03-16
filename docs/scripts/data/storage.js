@@ -143,27 +143,20 @@ function runMigrations() {
   }
 }
 
-function addAlterEgo(hero, alterEgo) {
-  rename(hero, `${hero}-${alterEgo}`);
-}
-
-function migrateDifficulty(difficulty) {
-  rename(`setting--track-difficulty-${difficulty}`, difficulty);
-  rename(difficulty, `difficulty--${difficulty}`);
-}
-
 function rename(oldName, newName) {
   const oldNamePattern = `(?<=(?:^|--|"))${oldName}(?=(?:$|--|"))`;
   const oldNameRegex = new RegExp(oldNamePattern, "g");
 
   for (let [key, value] of Object.entries(localStorage)) {
     key = key.slice(LOCAL_KEY_PREFIX.length);
+
     if (oldNameRegex.test(key)) {
       const newKey = key.replaceAll(oldNameRegex, newName);
       setItem(newKey, value, false);
       removeItem(key);
       key = newKey;
     }
+
     if (oldNameRegex.test(value)) {
       const newValue = value.replaceAll(oldNameRegex, newName);
       setItem(key, newValue, false);
@@ -181,7 +174,7 @@ function runMigration(migrationId, migration) {
   if (hasMigrated) {
     return;
   }
-  const operations = { addAlterEgo, migrateDifficulty, rename, remove };
+  const operations = { rename, remove };
   for (const [operationName, ...args] of migration) {
     const operation = operations[operationName];
     operation(...args);

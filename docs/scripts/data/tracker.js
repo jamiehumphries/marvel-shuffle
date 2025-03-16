@@ -141,7 +141,7 @@ function appendBodyRows(tbody, scenarios, heroes, difficulties) {
       }
     } else {
       const hero = cardOrSet;
-      const rowbreak = i === 1; // Special case for first wave after core set.
+      const rowbreak = i === 1; // Special case for first wave after Core Set.
       appendHeroRow(tbody, scenarios, hero, difficulties, { rowbreak });
     }
   }

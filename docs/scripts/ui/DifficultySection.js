@@ -17,26 +17,56 @@ export class DifficultySection extends Section {
     return 2;
   }
 
+  get valid() {
+    if (this.settings.alwaysIncludeExpert && this.cards.length !== 2) {
+      return false;
+    }
+
+    const validStandardCards = this.getStandardOptions();
+    const validExpertCards = this.getExpertOptions().filter((card) => !!card);
+
+    switch (this.cards.length) {
+      case 1:
+        return validStandardCards.includes(this.cards[0]);
+      case 2:
+        return (
+          validExpertCards.includes(this.cards[0]) &&
+          validStandardCards.includes(this.cards[1])
+        );
+      default:
+        return false;
+    }
+  }
+
   initializeOptions() {
     if (getItem(this.id) === null) {
       this.standardCards[0].checked = true;
     }
   }
 
-  getCardOptionSets() {
-    const standardOptions = this.standardCards.filter((card) => card.checked);
-    const expertOptions = this.expertCards.filter((card) => card.checked);
+  chooseCards() {
+    const standardOptions = this.getStandardOptions();
+    const expertOptions = this.getExpertOptions();
+    return [expertOptions, standardOptions]
+      .map((options) => Section.chooseRandom(options))
+      .filter((card) => !!card);
+  }
 
+  getStandardOptions() {
+    const standardOptions = this.standardCards.filter((card) => card.checked);
     if (standardOptions.length === 0) {
       standardOptions.push(this.standardCards[0]);
     }
+    return standardOptions;
+  }
 
+  getExpertOptions() {
+    const expertOptions = this.expertCards.filter((card) => card.checked);
     if (!this.settings.alwaysIncludeExpert) {
-      expertOptions.push(undefined);
+      expertOptions.push(null);
     } else if (expertOptions.length === 0) {
       expertOptions.push(this.expertCards[0]);
     }
-
-    return [standardOptions, expertOptions];
+    return expertOptions;
   }
 }

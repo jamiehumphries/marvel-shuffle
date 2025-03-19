@@ -233,9 +233,11 @@ function updateTrackingTable() {
 
   const scenarios = scenarioSection.cards;
   const heroes = visibleHeroSections.flatMap((section) => section.cards);
+
   const difficulties = settings.shuffleDifficulties
     ? difficultySection.cards
     : null;
+
   renderTable([{ children: scenarios }], [{ children: heroes }], difficulties);
 }
 

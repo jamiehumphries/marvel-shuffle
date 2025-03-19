@@ -2,9 +2,8 @@ import { Card } from "./Card.js?v=3858d6c7";
 
 export class Difficulty extends Card {
   constructor(name) {
-    const isStandard = name.startsWith("Standard");
-    super(name, { isUncounted: !isStandard });
-    this.isStandard = isStandard;
+    super(name);
+    this.isStandard = name.startsWith("Standard");
   }
 
   static get namePlural() {

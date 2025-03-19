@@ -25,7 +25,9 @@ export class Section extends Toggleable {
     this.cardsOrSets = cardsOrSets;
     this.sets = cardsOrSets.filter((set) => !!set.children);
     this.coreSet = this.sets.find((set) => set.name === "Core Set");
-    this.selectableCards = flatten(this.cardsOrSets);
+    this.selectableCards = this.cardsOrSets.flatMap(
+      (cardOrSet) => cardOrSet.children || [cardOrSet],
+    );
 
     this.nthOfType = nthOfType;
     this.extraCards = extraCards;
@@ -311,8 +313,7 @@ export class Section extends Toggleable {
 
   shuffle({ forcedCards = null, animate = true, isShuffleAll = false } = {}) {
     this.forced = forcedCards !== null;
-    const newCards =
-      forcedCards || this.chooseCards(isShuffleAll).filter((card) => !!card);
+    const newCards = forcedCards || this.chooseCards(isShuffleAll);
 
     if (!animate || !this.visible) {
       this.cards = newCards;
@@ -391,7 +392,7 @@ export class Section extends Toggleable {
       const priority = this.getPriority(card, isShuffleAll);
       return Array(priority).fill(card);
     });
-    return chooseRandom(
+    return Section.chooseRandom(
       prioritisedOptions.length > 0 ? prioritisedOptions : options,
     );
   }
@@ -453,12 +454,8 @@ export class Section extends Toggleable {
     const cardIds = cards.map((card) => card.id);
     setItem(this.id, cardIds);
   }
-}
 
-function chooseRandom(array) {
-  return array[Math.floor(Math.random() * array.length)];
-}
-
-function flatten(cardsOrSets) {
-  return cardsOrSets.flatMap((cardOrSet) => cardOrSet.children || [cardOrSet]);
+  static chooseRandom(array) {
+    return array[Math.floor(Math.random() * array.length)];
+  }
 }

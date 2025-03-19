@@ -234,7 +234,7 @@ function updateTrackingTable() {
   const scenarios = scenarioSection.cards;
   const heroes = visibleHeroSections.flatMap((section) => section.cards);
 
-  const difficulties = settings.shuffleDifficulties
+  const difficulties = difficultySection.visible
     ? difficultySection.cards
     : null;
 

@@ -1,4 +1,4 @@
-import { difficulties } from "./cards.js?v=2121f86f";
+import { difficulties as allDifficulties } from "./cards.js?v=2121f86f";
 import { getItem, setItem } from "./storage.js?v=62f5cba1";
 
 const WIN = "✓";
@@ -34,12 +34,12 @@ function clearTable() {
 }
 
 function getTrackedDifficulties() {
-  const checked = difficulties.filter((difficulty) => difficulty.checked);
+  const checked = allDifficulties.filter((difficulty) => difficulty.checked);
   if (checked.length > 0) {
     return checked;
   }
-  const standard = difficulties.find((difficulty) => difficulty.isStandard);
-  const expert = difficulties.find((difficulty) => !difficulty.isStandard);
+  const standard = allDifficulties.find((difficulty) => difficulty.isStandard);
+  const expert = allDifficulties.find((difficulty) => !difficulty.isStandard);
   return [standard, expert];
 }
 
@@ -319,7 +319,8 @@ function applyStateToCheckbox(checkbox, state) {
 }
 
 function updateProgress() {
-  const difficulties = getTrackedDifficulties();
+  const difficulties = allDifficulties.filter(({ span }) => !!span);
+
   const totalCombinations = table.querySelectorAll("input").length;
   const toPercentage = (decimal) => `${(decimal * 100).toFixed(2)}%`;
 

@@ -52,6 +52,7 @@ const magneto = cardSet("Magneto");
 const agentsOfShield = cardSet("Agents of S.H.I.E.L.D.", true);
 const blackPanther = cardSet("Black Panther");
 const silk = cardSet("Silk");
+const falcon = cardSet("Falcon");
 
 // MODULARS
 
@@ -221,6 +222,9 @@ export const modulars = [
   ),
   silk(
     modular("Growing Strong", { traits: "Thunderbolt" }),
+  ),
+  falcon(
+    modular("Techno", { isLandscape, traits: "Thunderbolt" }),
   ),
 ];
 
@@ -468,9 +472,10 @@ export const heroes = [
   hero("Nightcrawler", "Kurt Wagner", PROTECTION, "#c00000"),
   hero("Magneto", "Erik Lehnsherr", LEADERSHIP, "#c7d0db"),
   agentsOfShield(
-    hero("Maria Hill", null, LEADERSHIP, "#f2f2f2"),
+    hero("Maria Hill", null, LEADERSHIP, "#b4c6e7"),
     hero("Nick Fury", null, JUSTICE, "#404040"),
   ),
   hero("Black Panther", "Shuri", JUSTICE, "#7030a0"),
-  hero("Silk", "Cindy Moon", PROTECTION, "#c00000"),
+  hero("Silk", "Cindy Moon", PROTECTION, "#f2f2f2"),
+  hero("Falcon", "Sam Wilson", LEADERSHIP, "#c00000"),
 ];

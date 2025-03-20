@@ -31,19 +31,20 @@
           <span class="settings-show">Done</span>
         </button>
         <div class="settings-show container-block">
-          <form>
+          <form class="settings-container">
             <h2>Preferences</h2>
             <div id="preferences"></div>
             <h2>Scenario customisation</h2>
-            <p id="extra-modulars" class="hint">
-              Extra modulars may be added beyond the number required to play a
-              scenario
-            </p>
-            <p id="uncounted-modulars" class="hint">
-              Certain modulars do not count towards the number required to play
-              a scenario
-            </p>
-            <div id="customisation"></div>
+            <div id="customisation">
+              <p id="extra-modulars" class="hint">
+                Extra modulars may be added beyond the number required to play a
+                scenario
+              </p>
+              <p id="uncounted-modulars" class="hint">
+                Certain modulars do not count towards the number required to
+                play a scenario
+              </p>
+            </div>
             <input type="submit" hidden />
           </form>
         </div>
@@ -122,7 +123,10 @@
             </template>
             <div class="scenario-and-difficulty">
               <div id="scenario" class="section scenario"></div>
-              <div id="difficulty" class="section difficulty settings-hide"></div>
+              <div
+                id="difficulty"
+                class="section difficulty settings-hide"
+              ></div>
             </div>
             <div class="modulars-and-extra-modulars">
               <div id="modular" class="section modular"></div>

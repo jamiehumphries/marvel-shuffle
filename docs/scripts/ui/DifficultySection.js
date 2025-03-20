@@ -49,6 +49,9 @@ export class DifficultySection extends Section {
   }
 
   initializeOptions() {
+    const preferencesDiv = document.getElementById("preferences");
+    const optionsHint = this.buildOptionsHint();
+    preferencesDiv.appendChild(optionsHint);
     if (getItem(this.id) === null) {
       this.standardCardOptions[0].checked = true;
       this.expertCardOptions[0].checked = true;

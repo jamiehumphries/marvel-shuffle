@@ -91,27 +91,6 @@ export class Section extends Toggleable {
     return this._maxSlots;
   }
 
-  get defaultMessage() {
-    if (this._defaultMessage) {
-      return this.defaultMessage;
-    }
-
-    const messageParts = [
-      "If",
-      this.maxSlots === 1 && this.allSiblingSections.length === 0
-        ? "no"
-        : "too few",
-      this.sectionNamePlural,
-      "are selected",
-      this.parentSection
-        ? `${this.parentSection.type.name} default(s) will be used`
-        : `Core Set ${this.sectionNamePlural} will be used`,
-    ];
-
-    this._defaultMessage = messageParts.join(" ");
-    return this._defaultMessage;
-  }
-
   get previousSiblingSections() {
     return (this._previousSiblingSections ||= this.allSiblingSections.filter(
       (section) => section.nthOfType < this.nthOfType,
@@ -272,10 +251,7 @@ export class Section extends Toggleable {
     }
 
     const options = this.root.querySelector(".options");
-
-    const optionsHint = document.createElement("p");
-    optionsHint.classList.add("options-hint");
-    optionsHint.innerText = this.defaultMessage;
+    const optionsHint = this.buildOptionsHint();
     options.appendChild(optionsHint);
 
     const all = new All(this);
@@ -288,6 +264,28 @@ export class Section extends Toggleable {
     if (getItem(this.id) === null && this.coreSet !== undefined) {
       this.coreSet.checked = true;
     }
+  }
+
+  buildOptionsHint() {
+    const namePlural = this.sectionNamePlural.toLowerCase();
+    const parentName = this.parentSection?.type.name.toLowerCase();
+    const hintParts = [
+      "If",
+      this.maxSlots === 1 && this.allSiblingSections.length === 0
+        ? "no"
+        : "too few",
+      namePlural,
+      "are selected,",
+      this.parentSection
+        ? `${parentName} default(s) will be used`
+        : `Core Set ${namePlural} will be used`,
+    ];
+
+    const optionsHint = document.createElement("p");
+    optionsHint.classList.add("options-hint");
+    optionsHint.innerText = hintParts.join(" ");
+
+    return optionsHint;
   }
 
   initializeShuffling() {

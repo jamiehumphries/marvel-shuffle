@@ -235,6 +235,10 @@ body.show-settings .settings-hide {
   display: none !important;
 }
 
+form.settings-container {
+  max-width: 400px;
+}
+
 label[for^="setting--"] .subname {
   display: inline;
 }
@@ -248,29 +252,22 @@ label[for^="setting--avoid-completed"] {
   margin-left: var(--option-inset);
 }
 
-body:not(.shuffle-difficulties) label[for="setting--always-include-expert"] {
-  display: none;
-}
-
-body:not(.show-tracker) label[for="setting--avoid-completed"] {
-  display: none;
-}
-
-body:not(.shuffle-difficulties):not(.show-tracker)
-  fieldset.select-difficulties {
-  display: none;
-}
-
 fieldset.select-difficulties {
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
 }
 
-body:not(.has-user-id) .show-if-has-user-id {
-  display: none !important;
+body:not(.shuffle-difficulties) label[for="setting--always-include-expert"],
+body:not(.show-tracker) label[for="setting--avoid-completed"],
+body:not(.shuffle-difficulties):not(.show-tracker) fieldset.select-difficulties,
+body:not(.shuffle-difficulties):not(.show-tracker) #preferences .options-hint,
+body:not(.include-additional-modulars) #customisation p,
+body:not(.include-additional-modulars) #customisation fieldset {
+  display: none;
 }
 
+body:not(.has-user-id) .show-if-has-user-id,
 body.has-user-id .hide-if-has-user-id {
   display: none !important;
 }
@@ -436,7 +433,7 @@ fieldset legend::after {
   margin: 0.5rem 0;
 }
 
-.options .options-hint {
+.options-hint {
   font-style: italic;
   font-size: 0.8rem;
   text-align: center;

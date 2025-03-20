@@ -37,9 +37,16 @@ export class Settings {
     return this.showTracker && this._avoidCompletedSetting.checked;
   }
 
+  get numberOfExtraModulars() {
+    return this._includeAdditionalModulars.checked
+      ? this._numberOfExtraModulars
+      : 0;
+  }
+
   getProbability(card) {
-    const probabilityKey = this._cardProbabilities[card.id];
-    return PROBABILITY_MAP[probabilityKey];
+    return this._includeAdditionalModulars.checked
+      ? PROBABILITY_MAP[this._cardProbabilities[card.id]]
+      : 0;
   }
 
   initialize() {
@@ -65,35 +72,31 @@ export class Settings {
   }
 
   initializeShuffleAndTrackingPrefernces() {
-    this._shuffleDifficultiesSetting = new Setting(
+    this._shuffleDifficultiesSetting = this.initializeCheckboxSetting(
+      preferencesDiv,
       "shuffle-difficulties",
       "Shuffle difficulties",
-      {
-        onChange: (checked) =>
-          document.body.classList.toggle("shuffle-difficulties", checked),
-      },
+      { togglesBodyClass: true },
     );
-    this._alwaysIncludeExpertSetting = new Setting(
+    this._alwaysIncludeExpertSetting = this.initializeCheckboxSetting(
+      preferencesDiv,
       "always-include-expert",
       "Always include an Expert set",
     );
-    this._showTrackerSetting = new Setting(
+    this._showTrackerSetting = this.initializeCheckboxSetting(
+      preferencesDiv,
       "show-tracker",
       "Show game tracker",
       {
         subname: "(below shuffle)",
-        onChange: (checked) =>
-          document.body.classList.toggle("show-tracker", checked),
+        togglesBodyClass: true,
       },
     );
-    this._avoidCompletedSetting = new Setting(
+    this._avoidCompletedSetting = this.initializeCheckboxSetting(
+      preferencesDiv,
       "avoid-completed",
       "Avoid completed matchups",
     );
-    this._shuffleDifficultiesSetting.appendTo(preferencesDiv);
-    this._alwaysIncludeExpertSetting.appendTo(preferencesDiv);
-    this._showTrackerSetting.appendTo(preferencesDiv);
-    this._avoidCompletedSetting.appendTo(preferencesDiv);
   }
 
   initializeDifficultySelection() {
@@ -116,6 +119,14 @@ export class Settings {
   }
 
   initializeCustomisation() {
+    this._includeAdditionalModulars = this.initializeCheckboxSetting(
+      customisationDiv,
+      "include-additional-modulars",
+      "Include more modulars than required",
+      {
+        togglesBodyClass: true,
+      },
+    );
     this.initializeNumberOfExtraModulars();
     this.initializeUncountedModulars();
   }
@@ -130,7 +141,7 @@ export class Settings {
       "Extra modulars",
       0,
       this.maxNumberOfExtraModulars,
-      (value) => (this.numberOfExtraModulars = value),
+      (value) => (this._numberOfExtraModulars = value),
     );
   }
 
@@ -163,6 +174,20 @@ export class Settings {
     hint.classList.add("hint");
     hint.innerText = html;
     parent.appendChild(hint);
+  }
+
+  initializeCheckboxSetting(
+    parent,
+    slug,
+    label,
+    { subname = null, togglesBodyClass = false } = {},
+  ) {
+    const onChange = togglesBodyClass
+      ? (checked) => document.body.classList.toggle(slug, checked)
+      : null;
+    const setting = new Setting(slug, label, { subname, onChange });
+    setting.appendTo(parent);
+    return setting;
   }
 
   initializeNumericalSetting(parent, setting, legend, min, max, setValue) {

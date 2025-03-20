@@ -1,3 +1,4 @@
+import { EXPERT, STANDARD } from "../models/Difficulty.js?v=00000000";
 import { difficulties as allDifficulties } from "./cards.js?v=2121f86f";
 import { getItem, setItem } from "./storage.js?v=62f5cba1";
 
@@ -38,8 +39,12 @@ function getTrackedDifficulties() {
   if (checked.length > 0) {
     return checked;
   }
-  const standard = allDifficulties.find((difficulty) => difficulty.isStandard);
-  const expert = allDifficulties.find((difficulty) => !difficulty.isStandard);
+  const standard = allDifficulties.find(
+    (difficulty) => difficulty.level === STANDARD,
+  );
+  const expert = allDifficulties.find(
+    (difficulty) => difficulty.level === EXPERT,
+  );
   return [standard, expert];
 }
 

@@ -16,20 +16,18 @@ export class ModularSection extends Section {
       return false;
     }
 
-    return this.uncountedCards.every((card) => {
-      if (this.requiredCards.includes(card)) {
-        return true;
-      }
-
-      switch (this.settings.getProbability(card)) {
-        case 0:
-          return !this.cards.includes(card);
-        case 1:
-          return this.cards.includes(card);
-        default:
-          return true;
-      }
-    });
+    return this.uncountedCards
+      .filter((card) => !this.requiredCards.includes(card))
+      .every((card) => {
+        switch (this.settings.getProbability(card)) {
+          case 0:
+            return !this.cards.includes(card);
+          case 1:
+            return this.cards.includes(card);
+          default:
+            return true;
+        }
+      });
   }
 
   setCards(value) {
@@ -54,18 +52,15 @@ export class ModularSection extends Section {
 
   chooseCards(isShuffleAll) {
     const cards = super.chooseCards(isShuffleAll);
-
     for (const card of this.uncountedCards) {
       if (cards.includes(card)) {
         continue;
       }
-
       const cardProbabilty = this.settings.getProbability(card);
       if (Math.random() < cardProbabilty) {
         cards.push(card);
       }
     }
-
     return cards;
   }
 

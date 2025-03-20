@@ -392,7 +392,7 @@ export class Section extends Toggleable {
       const priority = this.getPriority(card, isShuffleAll);
       return Array(priority).fill(card);
     });
-    return Section.chooseRandom(
+    return chooseRandom(
       prioritisedOptions.length > 0 ? prioritisedOptions : options,
     );
   }
@@ -454,8 +454,8 @@ export class Section extends Toggleable {
     const cardIds = cards.map((card) => card.id);
     setItem(this.id, cardIds);
   }
+}
 
-  static chooseRandom(array) {
-    return array[Math.floor(Math.random() * array.length)];
-  }
+function chooseRandom(array) {
+  return array[Math.floor(Math.random() * array.length)];
 }

@@ -1,5 +1,6 @@
 import { difficulties, extraModulars } from "../data/cards.js?v=2121f86f";
 import { getItem, setItem } from "../data/storage.js?v=62f5cba1";
+import { STANDARD } from "../models/Difficulty.js?v=00000000";
 import { Setting } from "../models/Setting.js?v=d11fdf30";
 
 const PROBABILITY_MAP = {
@@ -106,10 +107,8 @@ export class Settings {
     fieldset.appendChild(standardDiv);
     fieldset.appendChild(expertDiv);
 
-    this._difficultySettings = difficulties;
-    for (const difficulty of this._difficultySettings) {
-      const isStandard = difficulty.id.includes("standard");
-      const div = isStandard ? standardDiv : expertDiv;
+    for (const difficulty of difficulties) {
+      const div = difficulty.level === STANDARD ? standardDiv : expertDiv;
       difficulty.appendTo(div);
     }
 

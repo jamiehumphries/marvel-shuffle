@@ -2,60 +2,67 @@ import { execSync } from "child_process";
 import { createHash } from "crypto";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { globSync } from "glob";
-import { resolve } from "path";
+import { imageSize } from "image-size";
+import { relative, resolve } from "path";
 import { replaceInFileSync } from "replace-in-file";
 
-export function updateImages(noLevel) {
-  const types = ["scenario", "modular", "hero", "aspect"];
-  const directories = types.map((type) => "docs/images/" + type);
-  const args = directories.join(" ");
+export function updateImages() {
+  const imagePattern = "docs/images/*/**/*.{ffg,ffg-wm,scan}.png";
 
-  const files = execSync(
-    `git ls-files --modified --others --exclude-standard ${args}`,
-  )
-    .toString()
-    .trim()
-    .split("\n")
-    .filter((file) => existsSync(file));
-
+  const files = globSync(imagePattern, { withFileTypes: true });
   for (const file of files) {
-    console.log(`Updating ${file}`);
+    const { parentPath, name: sourceName } = file;
+    const sourcePath = resolve(parentPath, sourceName);
+    const [name, _type, ext] = sourceName.split(".");
+    const outputName = `${name}.${ext}`;
+    const outputPath = resolve(parentPath, outputName);
+
+    if (existsSync(outputPath)) {
+      continue;
+    }
+
+    const relativePath = relative(import.meta.dirname, outputPath);
+    console.log(`Converting ${relativePath}`);
+
+    const sourceImage = readFileSync(sourcePath);
+    const { width, height } = imageSize(sourceImage);
+
     execSync(
-      `convert ${file} \
+      `convert ${sourcePath} \
+        ${width > height ? "-rotate 270" : ""} \
         -adaptive-resize 294x418^ \
         -gravity center -crop 294x418+0+0 +repage \
         -matte mask.png -compose DstIn -composite \
-        ${noLevel ? "" : "-level 50%"} \
-        ${file}`,
+        ${outputPath}`,
     );
-    execSync(`git add ${file}`);
-  }
 
-  updateImageHashes();
+    execSync(`git add ${sourcePath} ${outputPath}`);
+  }
 }
 
 export function updateImageHashes() {
-  const images = globSync("docs/images/*/**/*.png", { withFileTypes: true });
+  const imagePatterns = [
+    "docs/images/campaign/*.png",
+    "docs/images/*/**/{front,back,front-inner,back-inner}.png",
+  ];
 
-  const hashes = Object.fromEntries(
-    images.map((image) => {
-      const { parentPath, name } = image;
+  const entries = globSync(imagePatterns, { withFileTypes: true })
+    .map((file) => {
+      const { parentPath, name } = file;
       const path = resolve(parentPath, name);
-
       const pathParts = path.split("/");
       const imagesRootIndex = pathParts.lastIndexOf("images");
       const url = "/" + pathParts.splice(imagesRootIndex).join("/");
-
       const hash = computeHash(path);
-
       return [url, hash];
-    }),
-  );
+    })
+    .sort(([url1], [url2]) => url1.localeCompare(url2));
 
-  const hashesJs = JSON.stringify(hashes, null, 2);
+  const hashes = Object.fromEntries(entries);
+  const hashesJson = JSON.stringify(hashes, null, 2);
   const outputFile = "docs/scripts/data/hashes.js";
 
-  writeFileSync(outputFile, `export const hashes = ${hashesJs}`);
+  writeFileSync(outputFile, `export const hashes = ${hashesJson}`);
   execSync(`npx prettier --write ${outputFile}`);
   execSync(`git add ${outputFile}`);
 }
@@ -71,13 +78,10 @@ export function updateAssetVersions() {
 
 function updateAssetVersion(asset) {
   const { parentPath, name } = asset;
-
   const nameForRegex = name.replace(".", "\\.");
   const regex = new RegExp(`(?<=/${nameForRegex}\\?v=)[0-9a-f]+`, "g");
-
   const path = resolve(parentPath, name);
   const hash = computeHash(path);
-
   const results = replaceInFileSync({
     files: "docs/**/*.{html,js}",
     from: regex,

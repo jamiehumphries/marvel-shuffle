@@ -4,13 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node build.js",
-    "images": "node images.js",
+    "build": "node build.js --hashes --assets",
+    "images": "node build.js --images --hashes",
+    "images:hashes": "node build.js --hashes",
     "release": "npm run release:patch",
     "release:major": "node release.js --major",
     "release:minor": "node release.js --minor",
     "release:patch": "node release.js --patch",
-    "round": "node images.js --no-level",
     "start": "serve docs"
   },
   "prettier": {
@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "glob": "11.0.0",
+    "image-size": "2.0.1",
     "prettier": "3.3.3",
     "prettier-plugin-css-order": "2.1.2",
     "prettier-plugin-organize-imports": "4.1.0",

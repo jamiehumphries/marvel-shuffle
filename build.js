@@ -1,4 +1,19 @@
-import { updateAssetVersions, updateImageHashes } from "./tools.js";
+import {
+  updateAssetVersions,
+  updateImageHashes,
+  updateImages,
+} from "./tools.js";
 
-updateImageHashes();
-updateAssetVersions();
+const args = process.argv.slice(2).map((arg) => arg.slice(2));
+
+if (args.includes("images")) {
+  updateImages();
+}
+
+if (args.includes("hashes")) {
+  updateImageHashes();
+}
+
+if (args.includes("assets")) {
+  updateAssetVersions();
+}

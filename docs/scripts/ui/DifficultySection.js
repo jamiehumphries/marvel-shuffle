@@ -1,11 +1,14 @@
 import { difficulties } from "../data/cards.js?v=2121f86f";
-import { getItem } from "../data/storage.js?v=62f5cba1";
+import { getItem, setItem } from "../data/storage.js?v=62f5cba1";
 import { EXPERT, STANDARD } from "../models/Difficulty.js?v=00000000";
-import { Section } from "./Section.js?v=973f83f6";
+import { cardChangeDelayMs, Section } from "./Section.js?v=973f83f6";
+
+export const MAX_ALLOWED_HEROIC_LEVEL = 3;
 
 export class DifficultySection extends Section {
   constructor(settings) {
     super(settings, difficulties, 1);
+    this.heroicLevelSettingId = this.id + "--setting--heroic-level";
   }
 
   get maxSlots() {
@@ -21,6 +24,10 @@ export class DifficultySection extends Section {
   }
 
   get valid() {
+    if (this.heroicLevel > this.settings.maxHeroicLevel) {
+      return false;
+    }
+
     switch (this.cards.length) {
       case 1:
         return (
@@ -48,6 +55,42 @@ export class DifficultySection extends Section {
     return 1 - 1 / (checkedExpertCards.length + 1);
   }
 
+  get heroicLevel() {
+    return this._heroicLevel || 0;
+  }
+
+  set heroicLevel(value) {
+    this.setHeroicLevel(value);
+  }
+
+  setHeroicLevel(value) {
+    this._heroicLevel = value;
+    setItem(this.heroicLevelSettingId, value);
+    this.root.classList.toggle("hide-heroic-level", value === 0);
+    this.heroicLevelValue.innerText = value;
+    for (let i = 0; i < MAX_ALLOWED_HEROIC_LEVEL; i++) {
+      this.heroicLevelCards[i].classList.toggle("hidden", i >= value);
+    }
+  }
+
+  initializeLayout() {
+    super.initializeLayout();
+
+    const heroicLevelTemplate = document.getElementById("heroic-level");
+    const element = heroicLevelTemplate.content.cloneNode(true);
+    this.root.appendChild(element);
+    this.heroicLevelValue = this.root.querySelector(".heroic-level-value");
+
+    this.heroicLevelCards = [];
+    const cardsContainer = this.root.querySelector(".heroic-level-cards");
+    for (let i = 0; i < MAX_ALLOWED_HEROIC_LEVEL; i++) {
+      const img = document.createElement("img");
+      img.src = this.type.placeholderImageSrc;
+      cardsContainer.appendChild(img);
+      this.heroicLevelCards.push(img);
+    }
+  }
+
   initializeOptions() {
     const selectDifficulties = document.getElementById("select-difficulties");
     const h3 = this.root.querySelector("h3").cloneNode(true);
@@ -59,6 +102,23 @@ export class DifficultySection extends Section {
     if (getItem(this.id) === null) {
       this.standardCardOptions[0].checked = true;
       this.expertCardOptions[0].checked = true;
+    }
+  }
+
+  initializeCards() {
+    this.heroicLevel = this.loadHeroicLevel();
+    super.initializeCards();
+  }
+
+  shuffle({ animate = true, ...options } = {}) {
+    super.shuffle({ animate, ...options });
+
+    const maxHeroicLevel = this.settings.maxHeroicLevel;
+    const newHeroicLevel = Math.floor(Math.random() * (maxHeroicLevel + 1));
+    if (animate) {
+      setTimeout(() => (this.heroicLevel = newHeroicLevel), cardChangeDelayMs);
+    } else {
+      this.heroicLevel = newHeroicLevel;
     }
   }
 
@@ -76,5 +136,14 @@ export class DifficultySection extends Section {
     return checked.length > 0
       ? checked
       : [this.selectableCards.find((card) => card.level === level)];
+  }
+
+  loadHeroicLevel() {
+    const savedHeroicLevel = Number(getItem(this.heroicLevelSettingId));
+    return Number.isInteger(savedHeroicLevel) &&
+      savedHeroicLevel >= 0 &&
+      savedHeroicLevel <= this.settings.maxHeroicLevel
+      ? savedHeroicLevel
+      : 0;
   }
 }

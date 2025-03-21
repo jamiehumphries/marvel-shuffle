@@ -5,7 +5,7 @@ import { CardTier } from "../models/CardTier.js?v=144c1d94";
 import { Slot } from "./Slot.js?v=6142daad";
 import { Toggleable } from "./Toggleable.js?v=44b82696";
 
-const cardChangeDelayMs = getComputedStyle(document.documentElement)
+export const cardChangeDelayMs = getComputedStyle(document.documentElement)
   .getPropertyValue("--card-change-delay")
   .slice(0, -1 * "ms".length);
 

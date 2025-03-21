@@ -8,7 +8,10 @@ import {
 import { renderTable } from "./data/tracker.js?v=8c47738d";
 import { filter, requestPostAnimationFrame } from "./helpers.js?v=01996c74";
 import { AspectSection } from "./ui/AspectSection.js?v=9ea8e77b";
-import { DifficultySection } from "./ui/DifficultySection.js?v=00000000";
+import {
+  DifficultySection,
+  MAX_ALLOWED_HEROIC_LEVEL,
+} from "./ui/DifficultySection.js?v=00000000";
 import {
   ExtraModularSection,
   MAX_NUMBER_OF_EXTRA_MODULARS,
@@ -26,6 +29,7 @@ let lastClickedButton = null;
 
 const settings = new Settings(
   MAX_NUMBER_OF_HEROES,
+  MAX_ALLOWED_HEROIC_LEVEL,
   MAX_NUMBER_OF_EXTRA_MODULARS,
 );
 

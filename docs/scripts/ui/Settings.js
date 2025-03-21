@@ -15,8 +15,13 @@ const preferencesDiv = document.getElementById("preferences");
 const customisationDiv = document.getElementById("customisation");
 
 export class Settings {
-  constructor(maxNumberOfHeroes, maxNumberOfExtraModulars) {
+  constructor(
+    maxNumberOfHeroes,
+    maxAllowedHeroicLevel,
+    maxNumberOfExtraModulars,
+  ) {
     this.maxNumberOfHeroes = maxNumberOfHeroes;
+    this.maxAllowedHeroicLevel = maxAllowedHeroicLevel;
     this.maxNumberOfExtraModulars = maxNumberOfExtraModulars;
     this._cardProbabilities = {};
   }
@@ -130,8 +135,8 @@ export class Settings {
       preferencesDiv,
       "max-heroic-level",
       "Maximum heroic level",
-      1,
-      4,
+      0,
+      this.maxAllowedHeroicLevel,
       (value) => (this._maxHeroicLevel = value),
     );
   }

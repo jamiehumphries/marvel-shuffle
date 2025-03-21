@@ -37,6 +37,10 @@ export class Settings {
     return this.showTracker && this._avoidCompletedSetting.checked;
   }
 
+  get maxHeroicLevel() {
+    return this._randomiseHeroicLevelSetting.checked ? this._maxHeroicLevel : 0;
+  }
+
   get numberOfExtraModulars() {
     return this._includeAdditionalModulars.checked
       ? this._numberOfExtraModulars
@@ -82,20 +86,25 @@ export class Settings {
       preferencesDiv,
       "always-include-expert",
       "Always include an Expert set",
+      { isSubsetting: true },
+    );
+    this._randomiseHeroicLevelSetting = this.initializeCheckboxSetting(
+      preferencesDiv,
+      "randomise-heroic-level",
+      "Randomise heroic level",
+      { isSubsetting: true, togglesBodyClass: true },
     );
     this._showTrackerSetting = this.initializeCheckboxSetting(
       preferencesDiv,
       "show-tracker",
       "Show game tracker",
-      {
-        subname: "(below shuffle)",
-        togglesBodyClass: true,
-      },
+      { subname: "(below shuffle)", togglesBodyClass: true },
     );
     this._avoidCompletedSetting = this.initializeCheckboxSetting(
       preferencesDiv,
       "avoid-completed",
       "Avoid completed matchups",
+      { isSubsetting: true },
     );
   }
 
@@ -116,6 +125,15 @@ export class Settings {
     }
 
     preferencesDiv.appendChild(outerDiv);
+
+    this.initializeNumericalSetting(
+      preferencesDiv,
+      "max-heroic-level",
+      "Maximum heroic level",
+      1,
+      4,
+      (value) => (this._maxHeroicLevel = value),
+    );
   }
 
   initializeCustomisation() {
@@ -180,13 +198,14 @@ export class Settings {
     parent,
     slug,
     label,
-    { subname = null, togglesBodyClass = false } = {},
+    { subname = null, isSubsetting = false, togglesBodyClass = false } = {},
   ) {
     const onChange = togglesBodyClass
       ? (checked) => document.body.classList.toggle(slug, checked)
       : null;
     const setting = new Setting(slug, label, { subname, onChange });
-    setting.appendTo(parent);
+    const classes = isSubsetting ? ["subsetting"] : [];
+    setting.appendTo(parent, ...classes);
     return setting;
   }
 
@@ -211,6 +230,7 @@ export class Settings {
     const isNumerical = allowedValues.every((value) => !isNaN(value));
 
     const fieldset = document.createElement("fieldset");
+    fieldset.id = id;
     fieldset.classList.add("radio-setting");
     if (isNumerical) {
       fieldset.classList.add("numerical-setting");

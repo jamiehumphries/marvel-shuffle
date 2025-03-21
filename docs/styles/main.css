@@ -247,8 +247,7 @@ label[for^="setting--"] .subname::before {
   content: " ";
 }
 
-label[for^="setting--always-include-expert"],
-label[for^="setting--avoid-completed"] {
+label.subsetting {
   margin-left: var(--option-inset);
 }
 
@@ -266,8 +265,10 @@ label[for^="setting--avoid-completed"] {
 }
 
 body:not(.shuffle-difficulties) label[for="setting--always-include-expert"],
+body:not(.shuffle-difficulties) label[for="setting--randomise-heroic-level"],
 body:not(.show-tracker) label[for="setting--avoid-completed"],
 body:not(.shuffle-difficulties):not(.show-tracker) #select-difficulties,
+body:not(.randomise-heroic-level) #setting--max-heroic-level,
 body:not(.include-additional-modulars) #customisation p,
 body:not(.include-additional-modulars) #customisation fieldset {
   display: none;
@@ -861,6 +862,10 @@ body:not(.show-tracker) #tracking {
   .numerical-setting legend {
     float: none;
     margin-bottom: inherit;
+  }
+
+  label[for^="setting--"] .subname {
+    display: inherit;
   }
 
   .sections,

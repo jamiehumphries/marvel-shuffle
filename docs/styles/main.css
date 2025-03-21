@@ -252,16 +252,22 @@ label[for^="setting--avoid-completed"] {
   margin-left: var(--option-inset);
 }
 
-fieldset.select-difficulties {
+#select-difficulties {
+  margin-top: 1rem;
+}
+
+#select-difficulties .options-hint {
+  margin-bottom: 0.5rem;
+}
+
+#select-difficulties > div {
   display: flex;
   gap: 1rem;
-  margin-top: 1rem;
 }
 
 body:not(.shuffle-difficulties) label[for="setting--always-include-expert"],
 body:not(.show-tracker) label[for="setting--avoid-completed"],
-body:not(.shuffle-difficulties):not(.show-tracker) fieldset.select-difficulties,
-body:not(.shuffle-difficulties):not(.show-tracker) #preferences .options-hint,
+body:not(.shuffle-difficulties):not(.show-tracker) #select-difficulties,
 body:not(.include-additional-modulars) #customisation p,
 body:not(.include-additional-modulars) #customisation fieldset {
   display: none;
@@ -330,7 +336,7 @@ button.danger {
 
 .section {
   position: relative;
-  margin: 10px 0;
+  margin: 0.5rem 0;
 }
 
 .section.scenario,
@@ -420,7 +426,7 @@ fieldset legend::after {
 }
 
 .options {
-  margin: 20px auto 0;
+  margin: 1rem auto 0;
   padding: 0 10px;
   width: calc(var(--card-width) - 20px);
 }
@@ -434,6 +440,7 @@ fieldset legend::after {
 }
 
 .options-hint {
+  margin: 1rem 0;
   font-style: italic;
   font-size: 0.8rem;
   text-align: center;

@@ -100,22 +100,22 @@ export class Settings {
   }
 
   initializeDifficultySelection() {
-    const fieldset = document.createElement("fieldset");
-    fieldset.classList.add("select-difficulties", "difficulty");
-    const legend = document.createElement("legend");
-    legend.innerText = "Select difficulties";
+    const outerDiv = document.createElement("div");
+    outerDiv.id = "select-difficulties";
+    outerDiv.classList.add("difficulty");
+    const containerDiv = document.createElement("div");
     const standardDiv = document.createElement("div");
     const expertDiv = document.createElement("div");
-    fieldset.appendChild(legend);
-    fieldset.appendChild(standardDiv);
-    fieldset.appendChild(expertDiv);
+    outerDiv.appendChild(containerDiv);
+    containerDiv.appendChild(standardDiv);
+    containerDiv.appendChild(expertDiv);
 
     for (const difficulty of difficulties) {
       const div = difficulty.level === STANDARD ? standardDiv : expertDiv;
       difficulty.appendTo(div);
     }
 
-    preferencesDiv.appendChild(fieldset);
+    preferencesDiv.appendChild(outerDiv);
   }
 
   initializeCustomisation() {

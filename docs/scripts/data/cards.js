@@ -229,11 +229,12 @@ export const modulars = [
 ];
 
 export const extraModulars = [
+  modular("Longshot", { isUncounted }),
+  modular("Hope Summers", { hasBack, isUncounted }),
+  modular("Dreadpool"),
   modular("Prelates", { hasBack }),
   modular("S.H.I.E.L.D. Executive Board", { hasBack }),
   modular("Executive Board Evidence", { hasBack }),
-  modular("Longshot", { isUncounted }),
-  modular("Hope Summers", { hasBack, isUncounted }),
 ];
 
 // SCENARIOS
@@ -368,15 +369,16 @@ export const difficulties = [
 
 // ASPECTS
 
-function aspect(name) {
-  return new Aspect(name);
+function aspect(name, options = {}) {
+  options.required &&= findModulars(options.required);
+  return new Aspect(name, options);
 }
 
 const AGGRESSION = aspect("Aggression");
 const JUSTICE = aspect("Justice");
 const LEADERSHIP = aspect("Leadership");
 const PROTECTION = aspect("Protection");
-const POOL = aspect("‘Pool");
+const POOL = aspect("‘Pool", { required: "Dreadpool" });
 
 // prettier-ignore
 export const aspects = [

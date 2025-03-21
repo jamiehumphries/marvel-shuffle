@@ -167,6 +167,7 @@ export const hashes = {
   "/images/modular/dark-riders/front.png": "fc9a6d46",
   "/images/modular/deathstrike/front.png": "0f8f5d92",
   "/images/modular/down-to-earth/front.png": "7425e3e5",
+  "/images/modular/dreadpool/front.png": "1d07bc2a",
   "/images/modular/dystopian-nightmare/front.png": "e2972145",
   "/images/modular/enchantress/front.png": "b8793ba0",
   "/images/modular/exodus/front.png": "11371ed7",

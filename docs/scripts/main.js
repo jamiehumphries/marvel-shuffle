@@ -222,17 +222,15 @@ function toggleSectionVisibility() {
 }
 
 function updateTrackingTable() {
-  if (!scenarioSection.isInitialized) {
-    return;
-  }
-
-  const visibleHeroSections = heroSections.filter((section) => section.visible);
-  if (!visibleHeroSections.every((section) => section.isInitialized)) {
+  const trackedSections = [scenarioSection, difficultySection, ...heroSections];
+  if (!trackedSections.every((section) => section.isInitialized)) {
     return;
   }
 
   const scenarios = scenarioSection.cards;
-  const heroes = visibleHeroSections.flatMap((section) => section.cards);
+  const heroes = heroSections
+    .filter((section) => section.visible)
+    .flatMap((section) => section.cards);
 
   const difficulties = difficultySection.visible
     ? difficultySection.cards.slice().reverse()

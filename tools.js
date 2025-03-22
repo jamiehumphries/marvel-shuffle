@@ -1,21 +1,34 @@
 import { execSync } from "child_process";
 import { createHash } from "crypto";
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  renameSync,
+  writeFileSync,
+} from "fs";
 import { globSync } from "glob";
 import { imageSize } from "image-size";
 import { relative, resolve } from "path";
 import { replaceInFileSync } from "replace-in-file";
 
 export function updateImages(force = false) {
-  const imagePattern = "docs/images/*/**/*.{ffg,ffg-wm,scan}.png";
+  const sourceImages =
+    "../marvel-shuffle-images/docs/images/*/**/*.{ffg,scan}.{png,tiff}";
 
-  const files = globSync(imagePattern, { withFileTypes: true });
+  const files = globSync(sourceImages, { withFileTypes: true });
   for (const file of files) {
     const { parentPath, name: sourceName } = file;
+
     const sourcePath = resolve(parentPath, sourceName);
-    const [name, _type, ext] = sourceName.split(".");
-    const outputName = `${name}.${ext}`;
-    const outputPath = resolve(parentPath, outputName);
+    const [name, type, ext] = sourceName.split(".");
+
+    const outputName = `${name}.png`;
+    const outputParentPath = parentPath.replace(
+      "marvel-shuffle-images",
+      "marvel-shuffle",
+    );
+    const outputPath = resolve(outputParentPath, outputName);
 
     if (!force && existsSync(outputPath)) {
       continue;
@@ -27,17 +40,28 @@ export function updateImages(force = false) {
     const sourceImage = readFileSync(sourcePath);
     const { width, height } = imageSize(sourceImage);
 
+    if (type === "scan" && ext === "tiff") {
+      const tempName = `${name}.temp.tiff`;
+      const tempPath = resolve(parentPath, tempName);
+      execSync(`tiffcp ${sourcePath} ${tempPath}`);
+      renameSync(tempPath, sourcePath);
+    }
+
+    mkdirSync(outputParentPath, { recursive: true });
+
     execSync(
       `convert ${sourcePath} \
+        -strip \
         ${width > height ? "-rotate 270" : ""} \
-        -adaptive-resize 294x418^ \
+        -trim +repage \
+        -resize 294x418^ \
         -gravity center -crop 294x418+0+0 +repage \
         -matte mask.png -compose DstIn -composite \
-        -strip \
+        ${type === "scan" ? "-level 5%" : ""} \
         ${outputPath}`,
     );
 
-    execSync(`git add ${sourcePath} ${outputPath}`);
+    execSync(`git add ${outputPath}`);
   }
 }
 

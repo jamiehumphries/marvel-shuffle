@@ -37,8 +37,8 @@ export class DifficultySection extends Section {
       case 2:
         return (
           this.includeExpertProbability > 0 &&
-          this.expertCardOptions.includes(this.cards[0]) &&
-          this.standardCardOptions.includes(this.cards[1])
+          this.standardCardOptions.includes(this.cards[0]) &&
+          this.expertCardOptions.includes(this.cards[1])
         );
       default:
         return false;
@@ -126,7 +126,7 @@ export class DifficultySection extends Section {
     const cards = [this.randomCard(this.standardCardOptions, isShuffleAll)];
     const includeExpert = Math.random() < this.includeExpertProbability;
     if (includeExpert) {
-      cards.unshift(this.randomCard(this.expertCardOptions, isShuffleAll));
+      cards.push(this.randomCard(this.expertCardOptions, isShuffleAll));
     }
     return cards;
   }

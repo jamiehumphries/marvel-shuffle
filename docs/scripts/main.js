@@ -237,7 +237,7 @@ function updateTrackingTable() {
     .flatMap((section) => section.cards);
 
   const difficulties = difficultySection.visible
-    ? difficultySection.cards.slice().reverse()
+    ? difficultySection.cards
     : null;
 
   renderTable([{ children: scenarios }], [{ children: heroes }], difficulties);

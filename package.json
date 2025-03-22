@@ -4,13 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node build.js --hashes --assets",
-    "images": "node build.js --images --hashes",
-    "images:hashes": "node build.js --hashes",
+    "build": "node build.js hashes assets",
+    "images": "node build.js images hashes",
+    "images:force": "node build.js --force images hashes",
+    "images:hashes": "node build.js hashes",
     "release": "npm run release:patch",
-    "release:major": "node release.js --major",
-    "release:minor": "node release.js --minor",
-    "release:patch": "node release.js --patch",
+    "release:major": "node release.js major",
+    "release:minor": "node release.js minor",
+    "release:patch": "node release.js patch",
     "start": "serve docs"
   },
   "prettier": {

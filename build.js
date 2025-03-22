@@ -4,10 +4,10 @@ import {
   updateImages,
 } from "./tools.js";
 
-const args = process.argv.slice(2).map((arg) => arg.slice(2));
+const args = process.argv.slice(2);
 
 if (args.includes("images")) {
-  updateImages();
+  updateImages(args.includes("--force"));
 }
 
 if (args.includes("hashes")) {

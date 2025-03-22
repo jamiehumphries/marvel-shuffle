@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 
-const level = process.argv[2]?.slice(2) || "patch";
+const level = process.argv[2] || "patch";
 
 execSync("git stash --include-untracked --quiet");
 

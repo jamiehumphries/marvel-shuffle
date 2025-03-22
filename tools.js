@@ -6,7 +6,7 @@ import { imageSize } from "image-size";
 import { relative, resolve } from "path";
 import { replaceInFileSync } from "replace-in-file";
 
-export function updateImages() {
+export function updateImages(force = false) {
   const imagePattern = "docs/images/*/**/*.{ffg,ffg-wm,scan}.png";
 
   const files = globSync(imagePattern, { withFileTypes: true });
@@ -17,7 +17,7 @@ export function updateImages() {
     const outputName = `${name}.${ext}`;
     const outputPath = resolve(parentPath, outputName);
 
-    if (existsSync(outputPath)) {
+    if (!force && existsSync(outputPath)) {
       continue;
     }
 
@@ -33,6 +33,7 @@ export function updateImages() {
         -adaptive-resize 294x418^ \
         -gravity center -crop 294x418+0+0 +repage \
         -matte mask.png -compose DstIn -composite \
+        -strip \
         ${outputPath}`,
     );
 

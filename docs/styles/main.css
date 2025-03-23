@@ -239,14 +239,6 @@ form.settings-container {
   max-width: 400px;
 }
 
-label[for^="setting--"] .subname {
-  display: inline;
-}
-
-label[for^="setting--"] .subname::before {
-  content: " ";
-}
-
 label.subsetting {
   margin-left: var(--option-inset);
 }
@@ -766,6 +758,7 @@ input:active + .checkmark {
   opacity: 0;
 }
 
+body:not(.show-next-scenario-button) .next-scenario-button,
 body:not(.has-next-scenario) .next-scenario-button,
 body:not(.randomise-heroic-level) .heroic-level,
 .hide-heroic-level .heroic-level {
@@ -892,10 +885,6 @@ body:not(.show-tracker) #tracking {
   .numerical-setting legend {
     float: none;
     margin-bottom: inherit;
-  }
-
-  label[for^="setting--"] .subname {
-    display: inherit;
   }
 
   .sections,

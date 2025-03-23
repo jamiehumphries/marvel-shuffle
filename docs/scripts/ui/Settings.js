@@ -65,6 +65,7 @@ export class Settings {
 
   initializePreferences() {
     this.initializeNumberOfHeroes();
+    this.initializeNextScenarioButton();
     this.initializeShuffleAndTrackingPrefernces();
     this.initializeDifficultySelection();
   }
@@ -77,6 +78,15 @@ export class Settings {
       1,
       this.maxNumberOfHeroes,
       (value) => (this.numberOfHeroes = value),
+    );
+  }
+
+  initializeNextScenarioButton() {
+    this.initializeCheckboxSetting(
+      preferencesDiv,
+      "show-next-scenario-button",
+      "Show “Next Scenario” button",
+      { subname: "(below campaign scenarios)", togglesBodyClass: true },
     );
   }
 

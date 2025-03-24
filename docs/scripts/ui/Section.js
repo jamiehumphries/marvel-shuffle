@@ -190,31 +190,6 @@ export class Section extends Toggleable {
     this.setCards(value);
   }
 
-  setCards(value) {
-    this._cards = value;
-    this.saveCards(value);
-
-    this.name.innerText =
-      value.length === 1 ? this.sectionName : this.sectionNamePlural;
-
-    const slotCards =
-      value.length === 0 && this.type.placeholder
-        ? [this.type.placeholder]
-        : value;
-
-    const { style } = this.root;
-    const landscapeCount = slotCards.filter((card) => card.isLandscape).length;
-    const portraitCount = slotCards.length - landscapeCount;
-    style.setProperty("--landscape-cards-in-section", landscapeCount);
-    style.setProperty("--portrait-cards-in-section", portraitCount);
-
-    for (let i = 0; i < this.slots.length; i++) {
-      this.slots[i].card = slotCards[i];
-    }
-
-    this.dispatchEvent(new Event("cardsupdated"));
-  }
-
   initialize() {
     this.initializeLayout();
     this.initializeOptions();
@@ -299,6 +274,31 @@ export class Section extends Toggleable {
   initializeCards() {
     this.cards = this.loadCards();
     this.shuffleIfInvalid({ animate: false });
+  }
+
+  setCards(value) {
+    this._cards = value;
+    this.saveCards(value);
+
+    this.name.innerText =
+      value.length === 1 ? this.sectionName : this.sectionNamePlural;
+
+    const slotCards =
+      value.length === 0 && this.type.placeholder
+        ? [this.type.placeholder]
+        : value;
+
+    const { style } = this.root;
+    const landscapeCount = slotCards.filter((card) => card.isLandscape).length;
+    const portraitCount = slotCards.length - landscapeCount;
+    style.setProperty("--landscape-cards-in-section", landscapeCount);
+    style.setProperty("--portrait-cards-in-section", portraitCount);
+
+    for (let i = 0; i < this.slots.length; i++) {
+      this.slots[i].card = slotCards[i];
+    }
+
+    this.dispatchEvent(new Event("cardsupdated"));
   }
 
   shuffleIfInvalid({ animate = true } = {}) {

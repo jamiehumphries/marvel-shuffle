@@ -63,16 +63,6 @@ export class DifficultySection extends Section {
     this.setHeroicLevel(value);
   }
 
-  setHeroicLevel(value) {
-    this._heroicLevel = value;
-    setItem(this.heroicLevelSettingId, value);
-    this.root.classList.toggle("hide-heroic-level", value === 0);
-    this.heroicLevelValue.innerText = value;
-    for (let i = 0; i < MAX_ALLOWED_HEROIC_LEVEL; i++) {
-      this.heroicLevelCards[i].classList.toggle("hidden", i >= value);
-    }
-  }
-
   initializeLayout() {
     super.initializeLayout();
 
@@ -136,6 +126,16 @@ export class DifficultySection extends Section {
     return checked.length > 0
       ? checked
       : [this.selectableCards.find((card) => card.level === level)];
+  }
+
+  setHeroicLevel(value) {
+    this._heroicLevel = value;
+    setItem(this.heroicLevelSettingId, value);
+    this.root.classList.toggle("hide-heroic-level", value === 0);
+    this.heroicLevelValue.innerText = value;
+    for (let i = 0; i < MAX_ALLOWED_HEROIC_LEVEL; i++) {
+      this.heroicLevelCards[i].classList.toggle("hidden", i >= value);
+    }
   }
 
   loadHeroicLevel() {

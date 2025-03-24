@@ -5,7 +5,6 @@ import { Section } from "./Section.js?v=973f83f6";
 export class ScenarioSection extends Section {
   constructor(settings) {
     super(settings, scenarios, 1);
-    this.heroSections = [];
   }
 
   get nextScenario() {
@@ -22,10 +21,8 @@ export class ScenarioSection extends Section {
     return cardSet.children[scenarioIndex + 1];
   }
 
-  registerHeroSection(heroSection) {
-    this.heroSections ||= [];
-    this.heroSections.push(heroSection);
-    heroSection.scenarioSection = this;
+  initializeSectionRelationships() {
+    this.childSection = this.modularSection;
   }
 
   setCards(value) {

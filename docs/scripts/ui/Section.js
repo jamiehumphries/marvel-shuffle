@@ -1,7 +1,12 @@
 import { getItem, setItem } from "../data/storage.js?v=62f5cba1";
 import { filter, requestPostAnimationFrame } from "../helpers.js?v=01996c74";
 import { All } from "../models/All.js?v=83d962a9";
+import { Aspect } from "../models/Aspect.js?v=00000000";
 import { CardTier } from "../models/CardTier.js?v=144c1d94";
+import { Difficulty } from "../models/Difficulty.js?v=00000000";
+import { Hero } from "../models/Hero.js?v=00000000";
+import { Modular } from "../models/Modular.js?v=00000000";
+import { Scenario } from "../models/Scenario.js?v=00000000";
 import { Slot } from "./Slot.js?v=6142daad";
 import { Toggleable } from "./Toggleable.js?v=44b82696";
 
@@ -10,60 +15,30 @@ export const cardChangeDelayMs = getComputedStyle(document.documentElement)
   .slice(0, -1 * "ms".length);
 
 export class Section extends Toggleable {
-  constructor(
-    settings,
-    cardsOrSets,
-    nthOfType,
-    {
-      extraCards = [],
-      parentSection = null,
-      previousSiblingSection = null,
-    } = {},
-  ) {
+  constructor(settings, cardsOrSets, nthOfType, extraCards = []) {
     super();
     this.settings = settings;
     this.cardsOrSets = cardsOrSets;
-    this.sets = cardsOrSets.filter((set) => !!set.children);
-    this.coreSet = this.sets.find((set) => set.name === "Core Set");
-    this.selectableCards = this.cardsOrSets.flatMap(
-      (cardOrSet) => cardOrSet.children || [cardOrSet],
-    );
-
     this.nthOfType = nthOfType;
     this.extraCards = extraCards;
+    this.isInitialized = false;
+
+    this.sets = cardsOrSets.filter((set) => !!set.children);
+    this.coreSet = this.sets.find((set) => set.name === "Core Set");
+    this.selectableCards = flatten(this.cardsOrSets);
     this.uncountedCards = this.extraCards.filter((card) => card.isUncounted);
 
-    this.parentSection = parentSection;
-
-    if (this.parentSection) {
-      this.parentSection.childSection = this;
-    }
-
-    this.allSiblingSections = previousSiblingSection
-      ? [previousSiblingSection, ...previousSiblingSection.allSiblingSections]
-      : [];
-
-    for (const siblingSection of this.allSiblingSections) {
-      siblingSection.allSiblingSections.push(this);
-    }
-
-    this.type = this.selectableCards.reduce((type, card) => {
-      const cardType = card.type;
-      if (type === null || type === cardType) {
-        return cardType;
-      }
+    const types = this.selectableCards.map((card) => card.type);
+    if (new Set(types).size !== 1) {
       throw new Error("All cards for a section must be the same type.");
-    }, null);
-
-    this.id = this.type.id;
-    if (this.nthOfType !== 1) {
-      this.id += `-${this.nthOfType}`;
     }
 
+    this.type = types[0];
+    this.id = this.type.id + (nthOfType === 1 ? "" : `-${nthOfType}`);
+    this.root = document.getElementById(this.id);
     this.forcedSettingId = this.id + "--setting--forced";
 
-    this.root = document.getElementById(this.id);
-    this.isInitialized = false;
+    this.siblingSections = [];
   }
 
   get sectionName() {
@@ -91,8 +66,17 @@ export class Section extends Toggleable {
     return this._maxSlots;
   }
 
+  get childSection() {
+    return this._childSection;
+  }
+
+  set childSection(value) {
+    value.parentSection = this;
+    this._childSection = value;
+  }
+
   get previousSiblingSections() {
-    return (this._previousSiblingSections ||= this.allSiblingSections.filter(
+    return (this._previousSiblingSections ||= this.siblingSections.filter(
       (section) => section.nthOfType < this.nthOfType,
     ));
   }
@@ -133,7 +117,7 @@ export class Section extends Toggleable {
   }
 
   get visibleSiblingSections() {
-    return this.allSiblingSections.filter((section) => section.visible);
+    return this.siblingSections.filter((section) => section.visible);
   }
 
   get expectedCardCount() {
@@ -190,13 +174,30 @@ export class Section extends Toggleable {
     this.setCards(value);
   }
 
-  initialize() {
+  initialize(sections) {
+    this.initializeSectionMapping(sections);
+    this.initializeSectionRelationships();
     this.initializeLayout();
     this.initializeOptions();
     this.initializeShuffling();
     this.initializeCards();
     this.isInitialized = true;
   }
+
+  initializeSectionMapping(sections) {
+    const getSections = (type) =>
+      sections.filter((section) => section.type.name === type.name);
+    const getSection = (type, n = 1) =>
+      getSections(type).find((section) => section.nthOfType === n);
+    this.scenarioSection = getSection(Scenario);
+    this.difficultySecton = getSection(Difficulty);
+    this.modularSection = getSection(Modular, 1);
+    this.extraModularSection = getSection(Modular, 2);
+    this.heroSections = getSections(Hero);
+    this.aspectSections = getSections(Aspect);
+  }
+
+  initializeSectionRelationships() {}
 
   initializeLayout() {
     const sectionTemplate = document.getElementById("section");
@@ -246,7 +247,7 @@ export class Section extends Toggleable {
     const parentName = this.parentSection?.type.name.toLowerCase();
     const hintParts = [
       "If",
-      this.maxSlots === 1 && this.allSiblingSections.length === 0
+      this.maxSlots === 1 && this.siblingSections.length === 0
         ? "no"
         : "too few",
       namePlural,
@@ -452,6 +453,10 @@ export class Section extends Toggleable {
     const cardIds = cards.map((card) => card.id);
     setItem(this.id, cardIds);
   }
+}
+
+function flatten(cardsOrSets) {
+  return cardsOrSets.flatMap((cardOrSet) => cardOrSet.children || [cardOrSet]);
 }
 
 function chooseRandom(array) {

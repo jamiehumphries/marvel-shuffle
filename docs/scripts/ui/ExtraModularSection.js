@@ -4,12 +4,8 @@ import { Section } from "./Section.js?v=973f83f6";
 export const MAX_NUMBER_OF_EXTRA_MODULARS = 4;
 
 export class ExtraModularSection extends Section {
-  constructor(settings, previousSiblingSection) {
-    super(settings, modulars, 2, { previousSiblingSection });
-  }
-
-  get modularSection() {
-    return (this._modularSection ||= this.allSiblingSections[0]);
+  constructor(settings) {
+    super(settings, modulars, 2);
   }
 
   get sectionName() {
@@ -26,6 +22,10 @@ export class ExtraModularSection extends Section {
 
   get expectedCardCount() {
     return this.settings.numberOfExtraModulars;
+  }
+
+  initializeSectionRelationships() {
+    this.siblingSections.push(this.modularSection);
   }
 
   getCardOptionTiers() {

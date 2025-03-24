@@ -33,26 +33,25 @@ const settings = new Settings(
   MAX_NUMBER_OF_EXTRA_MODULARS,
 );
 
+// Sections added in shuffle order:
+// Scenario → Difficulty → Hero → Aspect → Modular → Extra Modular
+
 const sections = [];
 const scenarioSection = new ScenarioSection(settings);
 const difficultySection = new DifficultySection(settings);
-const modularSection = new ModularSection(settings, scenarioSection);
-const extraModularSection = new ExtraModularSection(settings, modularSection);
-sections.push(
-  scenarioSection,
-  difficultySection,
-  modularSection,
-  extraModularSection,
-);
+sections.push(scenarioSection, difficultySection);
 
 const heroSections = [];
 for (let n = 1; n <= MAX_NUMBER_OF_HEROES; n++) {
-  const previous = heroSections[heroSections.length - 1];
-  const heroSection = new HeroSection(settings, previous, scenarioSection, n);
-  const aspectSection = new AspectSection(settings, heroSection, n);
-  sections.push(heroSection, aspectSection);
+  const heroSection = new HeroSection(settings, n);
+  const aspectSection = new AspectSection(settings, n);
   heroSections.push(heroSection);
+  sections.push(heroSection, aspectSection);
 }
+
+const modularSection = new ModularSection(settings);
+const extraModularSection = new ExtraModularSection(settings);
+sections.push(modularSection, extraModularSection);
 
 async function initialize() {
   if (tryUseBookmarkUrl(location.href)) {
@@ -123,7 +122,6 @@ function initializeGlobalButtons() {
 
 function initializeSettings() {
   settings.initialize();
-  toggleSectionVisibility();
 }
 
 function initializeSections() {
@@ -138,8 +136,9 @@ function initializeSections() {
     section.addEventListener("cardsupdated", () => {
       updateTrackingTable();
     });
-    section.initialize();
+    section.initialize(sections);
   }
+  toggleSectionVisibility();
 }
 
 function initializeDoubleSizedCards() {

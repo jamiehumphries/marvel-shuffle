@@ -38,6 +38,7 @@ export class Section extends Toggleable {
     this.root = document.getElementById(this.id);
     this.forcedSettingId = this.id + "--setting--forced";
 
+    this.parentSections = [];
     this.siblingSections = [];
   }
 
@@ -54,16 +55,20 @@ export class Section extends Toggleable {
       return this._maxSlots;
     }
 
-    const maxCountedCards = this.parentSection
-      ? Math.max(
-          ...this.parentSection.selectableCards.map((card) =>
-            card.childCardCount(this.settings.maxNumberOfHeroes),
-          ),
-        )
-      : 1;
+    if (this.parentSections.length === 0) {
+      this._maxSlots = 1;
+      return this._maxSlots;
+    }
 
-    this._maxSlots = maxCountedCards + this.uncountedCards.length;
-    return this._maxSlots;
+    const maxHeroes = this.settings.maxNumberOfHeroes;
+    const sum = (count, section) => {
+      const childCardCounts = section.selectableCards.map((card) =>
+        card.childCardCount(maxHeroes),
+      );
+      return count + Math.max(...childCardCounts);
+    };
+
+    return this.parentSections.reduce(sum, 0);
   }
 
   get childSection() {
@@ -71,7 +76,7 @@ export class Section extends Toggleable {
   }
 
   set childSection(value) {
-    value.parentSection = this;
+    value.parentSections.push(this);
     this._childSection = value;
   }
 
@@ -85,17 +90,17 @@ export class Section extends Toggleable {
     return this.selectableCards.filter((card) => card.checked);
   }
 
-  get parentCard() {
-    return this.parentSection?.trueCard;
+  get parentCards() {
+    return distinct(
+      this.parentSections
+        .filter((section) => section.visible)
+        .flatMap((section) => section.trueCards),
+    );
   }
 
   get parentSet() {
-    const parentSetName = this.parentCard?.parent?.name;
-    return this.sets.find((set) => set.name === parentSetName);
-  }
-
-  get trueCard() {
-    return this.maxSlots === 1 ? this.trueCards[0] : null;
+    const primaryParentSetName = this.parentCards[0]?.parent?.name;
+    return this.sets.find((set) => set.name === primaryParentSetName);
   }
 
   get trueCards() {
@@ -103,17 +108,15 @@ export class Section extends Toggleable {
   }
 
   get requiredCards() {
-    return this.parentCard?.requiredChildCards || [];
+    return this.flattenParentCards((card) => card.requiredChildCards);
   }
 
   get defaultCards() {
-    return this.parentCard?.defaultChildCards || [];
+    return this.flattenParentCards((card) => card.defaultChildCards);
   }
 
-  get childCardCount() {
-    return this.childSection && this.trueCard
-      ? this.trueCard.childCardCount(this.settings.numberOfHeroes)
-      : 0;
+  get excludedCards() {
+    return this.flattenParentCards((card) => card.excludedChildCards);
   }
 
   get visibleSiblingSections() {
@@ -121,7 +124,12 @@ export class Section extends Toggleable {
   }
 
   get expectedCardCount() {
-    return this.parentSection ? this.parentSection.childCardCount : 1;
+    if (this.parentCards.length === 0) {
+      return 1;
+    }
+    const heroCount = this.settings.numberOfHeroes;
+    const sum = (count, card) => count + card.childCardCount(heroCount);
+    return this.parentCards.reduce(sum, 0);
   }
 
   get valid() {
@@ -181,6 +189,7 @@ export class Section extends Toggleable {
     this.initializeOptions();
     this.initializeShuffling();
     this.initializeCards();
+    this.updateVisibility();
     this.isInitialized = true;
   }
 
@@ -244,7 +253,7 @@ export class Section extends Toggleable {
 
   buildOptionsHint() {
     const namePlural = this.sectionNamePlural.toLowerCase();
-    const parentName = this.parentSection?.type.name.toLowerCase();
+    const primaryParentName = this.parentSections[0]?.type.name.toLowerCase();
     const hintParts = [
       "If",
       this.maxSlots === 1 && this.siblingSections.length === 0
@@ -252,8 +261,8 @@ export class Section extends Toggleable {
         : "too few",
       namePlural,
       "are selected,",
-      this.parentSection
-        ? `${parentName} default(s) will be used`
+      primaryParentName
+        ? `${primaryParentName} default(s) will be used`
         : `Core Set ${namePlural} will be used`,
     ];
 
@@ -360,16 +369,18 @@ export class Section extends Toggleable {
       ? this.previousSiblingSections
       : this.visibleSiblingSections;
 
-    const exclude = this.parentCard
-      ? this.parentCard.excludedChildCards
-      : exclusiveSiblingSections.flatMap((section) => section.trueCards);
+    const exclude = this.excludedCards.concat(
+      exclusiveSiblingSections.flatMap((section) => section.trueCards),
+    );
 
     const tiers = this.getCardOptionTiers();
 
     const optionsSets = [];
     for (const tier of tiers) {
       const numberNeeded = this.expectedCardCount - optionsSets.length;
-      const cardOptions = filter(tier.cards, exclude);
+      const cardOptions = tier.ignoreExclude
+        ? tier.cards
+        : filter(tier.cards, exclude);
 
       const tierOptionSets =
         tier.isOrdered && cardOptions.length <= numberNeeded
@@ -407,10 +418,12 @@ export class Section extends Toggleable {
   }
 
   getCardOptionTiers() {
+    const isOrdered = true;
+    const ignoreExclude = true;
     return [
-      new CardTier(this.requiredCards, true),
+      new CardTier(this.requiredCards, { isOrdered, ignoreExclude }),
       new CardTier(this.checkedCards),
-      new CardTier(this.defaultCards, true),
+      new CardTier(this.defaultCards, { isOrdered }),
       new CardTier(this.parentSet?.children),
       new CardTier(this.coreSet?.children),
     ].filter((tier) => tier.cards?.length > 0);
@@ -453,10 +466,22 @@ export class Section extends Toggleable {
     const cardIds = cards.map((card) => card.id);
     setItem(this.id, cardIds);
   }
+
+  updateVisibility() {
+    this.show();
+  }
+
+  flattenParentCards(selector) {
+    return distinct(this.parentCards.flatMap(selector));
+  }
 }
 
 function flatten(cardsOrSets) {
   return cardsOrSets.flatMap((cardOrSet) => cardOrSet.children || [cardOrSet]);
+}
+
+function distinct(array) {
+  return [...new Set(array)];
 }
 
 function chooseRandom(array) {

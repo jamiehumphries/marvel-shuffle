@@ -1,5 +1,4 @@
 import { scenarios } from "../data/cards.js?v=2121f86f";
-import { getNumberOfIncompleteGames } from "../data/tracker.js?v=8c47738d";
 import { Section } from "./Section.js?v=973f83f6";
 
 export class ScenarioSection extends Section {
@@ -8,17 +7,14 @@ export class ScenarioSection extends Section {
   }
 
   get nextScenario() {
-    const cardSet = this.trueCard?.parent;
+    const trueCard = this.trueCards[0];
+    const cardSet = trueCard?.parent;
     if (!cardSet?.isCampaign) {
       return null;
     }
 
-    const scenarioIndex = cardSet.children.indexOf(this.trueCard);
-    if (scenarioIndex === cardSet.children.length - 1) {
-      return null;
-    }
-
-    return cardSet.children[scenarioIndex + 1];
+    const scenarioIndex = cardSet.children.indexOf(trueCard);
+    return cardSet.children[scenarioIndex + 1] || null;
   }
 
   initializeSectionRelationships() {
@@ -53,15 +49,7 @@ export class ScenarioSection extends Section {
   }
 
   getPriorityFromTracking(scenario, isShuffleAll) {
-    const heroes = isShuffleAll
-      ? this.heroSections[0].checkedCards
-      : this.heroSections
-          .filter((section) => section.visible)
-          .map((section) => section.trueCard)
-          .filter((card) => !!card);
-
-    return heroes.length > 0
-      ? getNumberOfIncompleteGames([scenario], heroes)
-      : 1;
+    // TODO
+    return 1;
   }
 }

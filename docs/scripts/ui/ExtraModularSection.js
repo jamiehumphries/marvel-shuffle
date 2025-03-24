@@ -29,7 +29,12 @@ export class ExtraModularSection extends Section {
   }
 
   getCardOptionTiers() {
-    return this.modularSection.getCardOptionTiers();
+    return this.modularSection.getCardOptionTiers().slice(1);
+  }
+
+  updateVisibility() {
+    const visible = this.settings.numberOfExtraModulars > 0;
+    this.toggleVisibility(visible);
   }
 }
 

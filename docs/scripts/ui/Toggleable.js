@@ -9,6 +9,5 @@ export class Toggleable extends EventTarget {
 
   toggleVisibility(value) {
     this.root.classList.toggle("hidden", !value);
-    this.childSection?.toggleVisibility(value);
   }
 }

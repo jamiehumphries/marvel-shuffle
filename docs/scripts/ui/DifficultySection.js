@@ -146,4 +146,9 @@ export class DifficultySection extends Section {
       ? savedHeroicLevel
       : 0;
   }
+
+  updateVisibility() {
+    const visible = this.settings.shuffleDifficulties;
+    this.toggleVisibility(visible);
+  }
 }

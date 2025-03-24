@@ -138,7 +138,6 @@ function initializeSections() {
     });
     section.initialize(sections);
   }
-  toggleSectionVisibility();
 }
 
 function initializeDoubleSizedCards() {
@@ -190,7 +189,7 @@ function toggleSettings() {
   if (settingsVisible) {
     settings.previouslyVisibleSections = getVisibleSections();
   } else {
-    toggleSectionVisibility();
+    updateSectionVisibility();
 
     const newlyVisibleSections = filter(
       getVisibleSections(),
@@ -215,12 +214,9 @@ function getVisibleSections() {
   return sections.filter((section) => section.visible);
 }
 
-function toggleSectionVisibility() {
-  difficultySection.toggleVisibility(settings.shuffleDifficulties);
-  extraModularSection.toggleVisibility(settings.numberOfExtraModulars > 0);
-  for (let i = 0; i < heroSections.length; i++) {
-    const heroSection = heroSections[i];
-    heroSection.toggleVisibility(i < settings.numberOfHeroes);
+function updateSectionVisibility() {
+  for (const section of sections) {
+    section.updateVisibility();
   }
 }
 

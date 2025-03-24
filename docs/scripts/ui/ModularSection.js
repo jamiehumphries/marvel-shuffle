@@ -60,11 +60,10 @@ export class ModularSection extends Section {
   }
 
   updateRequiredLabels() {
-    const required = this.parentCard.requiredChildCards;
     const slots = this.slots || [];
     for (const slot of slots) {
       const { root, card } = slot;
-      const isRequired = required.includes(card);
+      const isRequired = this.requiredCards.includes(card);
       root.classList.toggle("is-required", isRequired);
     }
   }

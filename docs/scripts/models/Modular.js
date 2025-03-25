@@ -8,9 +8,16 @@ export class Modular extends Card {
       hasBack = false,
       traits = [],
       isUncounted = false,
+      requiredModifier = null,
     } = {},
   ) {
-    super(name, { isLandscape, hasBack, traits, isUncounted });
+    super(name, {
+      isLandscape,
+      hasBack,
+      traits,
+      isUncounted,
+      requiredModifier,
+    });
   }
 
   static get placeholder() {

@@ -231,7 +231,7 @@ export const modulars = [
 export const extraModulars = [
   modular("Longshot", { isUncounted }),
   modular("Hope Summers", { hasBack, isUncounted }),
-  modular("Dreadpool"),
+  modular("Dreadpool", { requiredModifier: "for ‘Pool aspect" }),
   modular("Prelates", { hasBack }),
   modular("S.H.I.E.L.D. Executive Board", { hasBack }),
   modular("Executive Board Evidence", { hasBack }),

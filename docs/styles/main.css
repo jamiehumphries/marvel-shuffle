@@ -260,6 +260,7 @@ body:not(.shuffle-difficulties) label[for="setting--always-include-expert"],
 body:not(.shuffle-difficulties) label[for="setting--randomise-heroic-level"],
 body:not(.show-tracker) label[for="setting--avoid-completed"],
 body:not(.shuffle-difficulties):not(.show-tracker) #select-difficulties,
+body:not(.shuffle-difficulties) #setting--max-heroic-level,
 body:not(.randomise-heroic-level) #setting--max-heroic-level,
 body:not(.include-additional-modulars) #customisation p,
 body:not(.include-additional-modulars) #customisation fieldset {

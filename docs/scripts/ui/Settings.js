@@ -31,7 +31,7 @@ export class Settings {
   }
 
   get alwaysIncludeExpert() {
-    return this._alwaysIncludeExpertSetting.checked;
+    return this.shuffleDifficulties && this._alwaysIncludeExpertSetting.checked;
   }
 
   get showTracker() {

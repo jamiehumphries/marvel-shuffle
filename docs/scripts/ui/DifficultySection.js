@@ -15,11 +15,11 @@ export class DifficultySection extends Section {
   }
 
   get standardCardOptions() {
-    return this.getCardOptionsForDifficultyLevel(STANDARD);
+    return this.getCardOptions(STANDARD);
   }
 
   get expertCardOptions() {
-    return this.getCardOptionsForDifficultyLevel(EXPERT);
+    return this.getCardOptions(EXPERT);
   }
 
   get valid() {
@@ -48,10 +48,24 @@ export class DifficultySection extends Section {
     if (this.settings.alwaysIncludeExpert) {
       return 1;
     }
-    const checkedExpertCards = this.checkedCards.filter(
-      (card) => card.level === EXPERT,
-    );
-    return 1 - 1 / (checkedExpertCards.length + 1);
+
+    const checkedStandardCards = this.getCheckedCards(STANDARD);
+    const checkedExpertCards = this.getCheckedCards(EXPERT);
+
+    if (checkedStandardCards.length > 0 && checkedExpertCards.length === 0) {
+      return 0;
+    }
+
+    const includeExpertToAvoidCompleted =
+      this.settings.avoidCompleted &&
+      this.standardCardOptions.every(
+        (card) => this.getPriorityFromTracking(card) === 0,
+      );
+    if (includeExpertToAvoidCompleted) {
+      return 1;
+    }
+
+    return 1 - 1 / (this.expertCardOptions.length + 1);
   }
 
   get heroicLevel() {
@@ -120,8 +134,12 @@ export class DifficultySection extends Section {
     return cards;
   }
 
-  getCardOptionsForDifficultyLevel(level) {
-    const checked = this.checkedCards.filter((card) => card.level === level);
+  getCheckedCards(level) {
+    return this.checkedCards.filter((card) => card.level === level);
+  }
+
+  getCardOptions(level) {
+    const checked = this.getCheckedCards(level);
     return checked.length > 0
       ? checked
       : [this.selectableCards.find((card) => card.level === level)];

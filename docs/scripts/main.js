@@ -26,12 +26,11 @@ const settings = new Settings({
 });
 
 // Sections added in shuffle order:
-// Scenario → Difficulty → Hero → Aspect → Modular → Extra Modular
+// Scenario → Hero → Aspect → Modular → Extra Modular → Difficulty
 
 const sections = [];
 const scenarioSection = new ScenarioSection(settings);
-const difficultySection = new DifficultySection(settings);
-sections.push(scenarioSection, difficultySection);
+sections.push(scenarioSection);
 
 const heroSections = [];
 for (let n = 1; n <= settings.maxNumberOfHeroes; n++) {
@@ -43,7 +42,8 @@ for (let n = 1; n <= settings.maxNumberOfHeroes; n++) {
 
 const modularSection = new ModularSection(settings);
 const extraModularSection = new ExtraModularSection(settings);
-sections.push(modularSection, extraModularSection);
+const difficultySection = new DifficultySection(settings);
+sections.push(modularSection, extraModularSection, difficultySection);
 
 async function initialize() {
   if (tryUseBookmarkUrl(location.href)) {
@@ -126,10 +126,14 @@ function initializeSections() {
       maybeReturnFocusAfterShuffle();
     });
     section.addEventListener("cardsupdated", () => {
-      updateTrackingTable();
+      if (section.visible) {
+        updateTrackingTable();
+      }
     });
     section.initialize(sections);
   }
+  settings.allSectionsInitialized = true;
+  updateTrackingTable();
 }
 
 function initializeDoubleSizedCards() {
@@ -213,19 +217,13 @@ function updateSectionVisibility() {
 }
 
 function updateTrackingTable() {
-  const trackedSections = [scenarioSection, difficultySection, ...heroSections];
-  if (!trackedSections.every((section) => section.isInitialized)) {
+  if (!settings.allSectionsInitialized) {
     return;
   }
 
-  const scenarios = scenarioSection.cards;
-  const heroes = heroSections
-    .filter((section) => section.visible)
-    .flatMap((section) => section.cards);
-
-  const difficulties = difficultySection.visible
-    ? difficultySection.cards
-    : null;
+  const scenarios = scenarioSection.trueCards;
+  const heroes = heroSections.flatMap((section) => section.trueCards);
+  const difficulties = difficultySection.trueCards;
 
   renderTable([{ children: scenarios }], [{ children: heroes }], difficulties);
 }

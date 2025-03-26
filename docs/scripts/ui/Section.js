@@ -87,14 +87,14 @@ export class Section extends Toggleable {
   }
 
   get checkedCards() {
-    return this.selectableCards.filter((card) => card.checked);
+    return this.visible
+      ? this.selectableCards.filter((card) => card.checked)
+      : [];
   }
 
   get parentCards() {
     return distinct(
-      this.parentSections
-        .filter((section) => section.visible)
-        .flatMap((section) => section.trueCards),
+      this.parentSections.flatMap((section) => section.trueCards),
     );
   }
 
@@ -104,7 +104,7 @@ export class Section extends Toggleable {
   }
 
   get trueCards() {
-    return this.incomingCards || this.cards;
+    return this.visible ? this.incomingCards || this.cards || [] : [];
   }
 
   get requiredCards() {
@@ -117,10 +117,6 @@ export class Section extends Toggleable {
 
   get excludedCards() {
     return this.flattenParentCards((card) => card.excludedChildCards);
-  }
-
-  get visibleSiblingSections() {
-    return this.siblingSections.filter((section) => section.visible);
   }
 
   get expectedCardCount() {
@@ -199,7 +195,7 @@ export class Section extends Toggleable {
     const getSection = (type, n = 1) =>
       getSections(type).find((section) => section.nthOfType === n);
     this.scenarioSection = getSection(Scenario);
-    this.difficultySecton = getSection(Difficulty);
+    this.difficultySection = getSection(Difficulty);
     this.modularSection = getSection(Modular, 1);
     this.extraModularSection = getSection(Modular, 2);
     this.heroSections = getSections(Hero);
@@ -367,7 +363,7 @@ export class Section extends Toggleable {
 
     const exclusiveSiblingSections = isShuffleAll
       ? this.previousSiblingSections
-      : this.visibleSiblingSections;
+      : this.siblingSections;
 
     const exclude = this.excludedCards.concat(
       exclusiveSiblingSections.flatMap((section) => section.trueCards),
@@ -413,7 +409,7 @@ export class Section extends Toggleable {
       : 1;
   }
 
-  getPriorityFromTracking() {
+  getPriorityFromTracking(_card, _isShuffleAll) {
     return 1;
   }
 

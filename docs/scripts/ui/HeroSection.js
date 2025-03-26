@@ -1,4 +1,5 @@
 import { heroes } from "../data/cards.js?v=2121f86f";
+import { getNumberOfIncompleteGames } from "../data/tracker.js?v=8c47738d";
 import { filter } from "../helpers.js?v=01996c74";
 import { Section } from "./Section.js?v=973f83f6";
 
@@ -14,9 +15,12 @@ export class HeroSection extends Section {
     this.siblingSections.push(...filter(this.heroSections, [this]));
   }
 
-  getPriorityFromTracking(hero) {
-    // TODO
-    return 1;
+  getPriorityFromTracking(hero, isShuffleAll) {
+    const scenarios = this.scenarioSection.trueCards;
+    const difficulties = isShuffleAll
+      ? this.difficultySection.checkedCards
+      : this.difficultySection.trueCards;
+    return getNumberOfIncompleteGames(scenarios, [hero], difficulties);
   }
 
   updateVisibility() {

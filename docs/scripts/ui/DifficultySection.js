@@ -1,5 +1,6 @@
 import { difficulties } from "../data/cards.js?v=2121f86f";
 import { getItem, setItem } from "../data/storage.js?v=62f5cba1";
+import { getNumberOfIncompleteGames } from "../data/tracker.js?v=8c47738d";
 import { EXPERT, STANDARD } from "../models/Difficulty.js?v=00000000";
 import { cardChangeDelayMs, Section } from "./Section.js?v=973f83f6";
 
@@ -124,6 +125,12 @@ export class DifficultySection extends Section {
     return checked.length > 0
       ? checked
       : [this.selectableCards.find((card) => card.level === level)];
+  }
+
+  getPriorityFromTracking(difficulty) {
+    const scenarios = this.scenarioSection.trueCards;
+    const heroes = this.heroSections.flatMap((section) => section.trueCards);
+    return getNumberOfIncompleteGames(scenarios, heroes, [difficulty]);
   }
 
   setHeroicLevel(value) {

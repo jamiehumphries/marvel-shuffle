@@ -23,6 +23,7 @@ export class Settings {
     this.maxNumberOfHeroes = maxNumberOfHeroes;
     this.maxAllowedHeroicLevel = maxAllowedHeroicLevel;
     this.maxNumberOfExtraModulars = maxNumberOfExtraModulars;
+    this.allSectionsInitialized = false;
     this._cardProbabilities = {};
   }
 
@@ -39,7 +40,11 @@ export class Settings {
   }
 
   get avoidCompleted() {
-    return this.showTracker && this._avoidCompletedSetting.checked;
+    return (
+      this.allSectionsInitialized &&
+      this.showTracker &&
+      this._avoidCompletedSetting.checked
+    );
   }
 
   get maxHeroicLevel() {

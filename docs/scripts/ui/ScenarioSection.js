@@ -1,4 +1,5 @@
 import { scenarios } from "../data/cards.js?v=2121f86f";
+import { getNumberOfIncompleteGames } from "../data/tracker.js?v=8c47738d";
 import { Section } from "./Section.js?v=973f83f6";
 
 export class ScenarioSection extends Section {
@@ -49,7 +50,12 @@ export class ScenarioSection extends Section {
   }
 
   getPriorityFromTracking(scenario, isShuffleAll) {
-    // TODO
-    return 1;
+    const heroes = isShuffleAll
+      ? this.heroSections[0].checkedCards
+      : this.heroSections.flatMap((section) => section.trueCards);
+    const difficulties = isShuffleAll
+      ? this.difficultySection.checkedCards
+      : this.difficultySection.trueCards;
+    return getNumberOfIncompleteGames([scenario], heroes, difficulties);
   }
 }

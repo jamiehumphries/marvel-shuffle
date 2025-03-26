@@ -11,8 +11,11 @@ const table = document.getElementById("tracker");
 let totalPercentageSpan;
 let totalFractionSpan;
 
-export function renderTable(scenarios, heroes, difficulties) {
-  difficulties ||= getTrackedDifficulties();
+export function renderTable(scenarios, heroes, difficulties = []) {
+  if (difficulties.length === 0) {
+    difficulties = getTrackedDifficulties();
+  }
+
   document.documentElement.style.setProperty(
     "--number-of-difficulties",
     difficulties.length,
@@ -350,8 +353,10 @@ function updateProgress() {
   totalFractionSpan.innerText = `${totalCleared} / ${totalCombinations}`;
 }
 
-export function getNumberOfIncompleteGames(scenarios, heroes) {
-  const difficulties = getTrackedDifficulties();
+export function getNumberOfIncompleteGames(scenarios, heroes, difficulties) {
+  if (difficulties.length === 0) {
+    difficulties = getTrackedDifficulties();
+  }
 
   let incompleteCount = 0;
   for (const scenario of scenarios) {

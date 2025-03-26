@@ -15,11 +15,11 @@ const preferencesDiv = document.getElementById("preferences");
 const customisationDiv = document.getElementById("customisation");
 
 export class Settings {
-  constructor(
+  constructor({
     maxNumberOfHeroes,
     maxAllowedHeroicLevel,
     maxNumberOfExtraModulars,
-  ) {
+  }) {
     this.maxNumberOfHeroes = maxNumberOfHeroes;
     this.maxAllowedHeroicLevel = maxAllowedHeroicLevel;
     this.maxNumberOfExtraModulars = maxNumberOfExtraModulars;

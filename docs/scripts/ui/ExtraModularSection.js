@@ -1,8 +1,6 @@
 import { modulars } from "../data/cards.js?v=2121f86f";
 import { Section } from "./Section.js?v=973f83f6";
 
-export const MAX_NUMBER_OF_EXTRA_MODULARS = 4;
-
 export class ExtraModularSection extends Section {
   constructor(settings) {
     super(settings, modulars, 2);
@@ -17,7 +15,7 @@ export class ExtraModularSection extends Section {
   }
 
   get maxSlots() {
-    return MAX_NUMBER_OF_EXTRA_MODULARS;
+    return this.settings.maxNumberOfExtraModulars;
   }
 
   get expectedCardCount() {

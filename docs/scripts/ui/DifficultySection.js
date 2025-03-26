@@ -3,8 +3,6 @@ import { getItem, setItem } from "../data/storage.js?v=62f5cba1";
 import { EXPERT, STANDARD } from "../models/Difficulty.js?v=00000000";
 import { cardChangeDelayMs, Section } from "./Section.js?v=973f83f6";
 
-export const MAX_ALLOWED_HEROIC_LEVEL = 3;
-
 export class DifficultySection extends Section {
   constructor(settings) {
     super(settings, difficulties, 1);
@@ -73,7 +71,7 @@ export class DifficultySection extends Section {
 
     this.heroicLevelCards = [];
     const cardsContainer = this.root.querySelector(".heroic-level-cards");
-    for (let i = 0; i < MAX_ALLOWED_HEROIC_LEVEL; i++) {
+    for (let i = 0; i < this.settings.maxAllowedHeroicLevel; i++) {
       const img = document.createElement("img");
       img.src = this.type.placeholderImageSrc;
       cardsContainer.appendChild(img);
@@ -133,7 +131,7 @@ export class DifficultySection extends Section {
     setItem(this.heroicLevelSettingId, value);
     this.root.classList.toggle("hide-heroic-level", value === 0);
     this.heroicLevelValue.innerText = value;
-    for (let i = 0; i < MAX_ALLOWED_HEROIC_LEVEL; i++) {
+    for (let i = 0; i < this.settings.maxAllowedHeroicLevel; i++) {
       this.heroicLevelCards[i].classList.toggle("hidden", i >= value);
     }
   }

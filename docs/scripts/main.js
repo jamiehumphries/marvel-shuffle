@@ -8,30 +8,22 @@ import {
 import { renderTable } from "./data/tracker.js?v=8c47738d";
 import { filter, requestPostAnimationFrame } from "./helpers.js?v=01996c74";
 import { AspectSection } from "./ui/AspectSection.js?v=9ea8e77b";
-import {
-  DifficultySection,
-  MAX_ALLOWED_HEROIC_LEVEL,
-} from "./ui/DifficultySection.js?v=00000000";
-import {
-  ExtraModularSection,
-  MAX_NUMBER_OF_EXTRA_MODULARS,
-} from "./ui/ExtraModularSection.js?v=255781cb";
+import { DifficultySection } from "./ui/DifficultySection.js?v=00000000";
+import { ExtraModularSection } from "./ui/ExtraModularSection.js?v=255781cb";
 import { HeroSection } from "./ui/HeroSection.js?v=0702bf56";
 import { ModularSection } from "./ui/ModularSection.js?v=5fad6956";
 import { ScenarioSection } from "./ui/ScenarioSection.js?v=eb0a1306";
 import { Settings } from "./ui/Settings.js?v=35b8afb6";
 
-const MAX_NUMBER_OF_HEROES = 4;
-
 const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");
 let lastClickedButton = null;
 
-const settings = new Settings(
-  MAX_NUMBER_OF_HEROES,
-  MAX_ALLOWED_HEROIC_LEVEL,
-  MAX_NUMBER_OF_EXTRA_MODULARS,
-);
+const settings = new Settings({
+  maxNumberOfHeroes: 4,
+  maxAllowedHeroicLevel: 3,
+  maxNumberOfExtraModulars: 4,
+});
 
 // Sections added in shuffle order:
 // Scenario → Difficulty → Hero → Aspect → Modular → Extra Modular
@@ -42,7 +34,7 @@ const difficultySection = new DifficultySection(settings);
 sections.push(scenarioSection, difficultySection);
 
 const heroSections = [];
-for (let n = 1; n <= MAX_NUMBER_OF_HEROES; n++) {
+for (let n = 1; n <= settings.maxNumberOfHeroes; n++) {
   const heroSection = new HeroSection(settings, n);
   const aspectSection = new AspectSection(settings, n);
   heroSections.push(heroSection);

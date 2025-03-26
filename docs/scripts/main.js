@@ -189,7 +189,7 @@ function toggleSettings() {
     );
 
     for (const section of newlyVisibleSections) {
-      section.shuffle({ isShuffleAll: true });
+      section.shuffle({ animate: false, isShuffleAll: true });
     }
 
     requestPostAnimationFrame(() => {

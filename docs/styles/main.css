@@ -161,7 +161,7 @@ h2:not(:first-of-type) {
 
 .button.shuffle#shuffle-all {
   --button-scale-factor: 1.2;
-  margin: 10px auto 20px;
+  margin: 0.5rem auto 1.2rem;
 }
 
 body.show-settings .button.shuffle:disabled {
@@ -330,7 +330,7 @@ button.danger {
 
 .section {
   position: relative;
-  margin: 0.5rem 0;
+  margin: 0.75rem 0;
 }
 
 .section.scenario,
@@ -420,9 +420,10 @@ fieldset legend::after {
 }
 
 .options {
+  --options-padding: 0.5rem;
   margin: 1rem auto 0;
-  padding: 0 10px;
-  width: calc(var(--card-width) - 20px);
+  padding: 0 var(--options-padding);
+  width: calc(var(--card-width) - 2 * var(--options-padding));
 }
 
 .option {
@@ -588,13 +589,13 @@ input:active + .checkmark {
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
-  padding-top: 3px;
+  padding-top: 0.25rem;
   height: var(--card-header-height);
 }
 
 .header h4.name {
   margin: 0;
-  padding: 0 10px;
+  padding: 0 0.5rem;
   font-weight: normal;
   font-size: 1.2rem;
   text-align: center;
@@ -770,10 +771,9 @@ body:not(.randomise-heroic-level) .heroic-level,
 }
 
 #tracking {
-  gap: 4px;
   opacity: 1;
   transition: opacity calc(var(--card-change-duration) * 0.75);
-  margin-top: 20px;
+  margin-top: 1rem;
 }
 
 body:not(.show-tracker) #tracking {
@@ -791,7 +791,7 @@ body:not(.show-tracker) #tracking {
 
 #tracker-container {
   display: flex;
-  padding: 2px;
+  padding: 0.25rem;
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
@@ -874,7 +874,7 @@ body:not(.show-tracker) #tracking {
   img#logo {
     display: block;
     position: relative;
-    margin: 0 auto 20px auto;
+    margin: 0 auto 1.2rem auto;
   }
 
   .radio-setting:not(.numerical-setting) label {
@@ -891,7 +891,6 @@ body:not(.show-tracker) #tracking {
   .sections,
   .heroes-and-aspects {
     grid-template-columns: auto;
-    row-gap: 10px;
   }
 
   .heroes-and-aspects {

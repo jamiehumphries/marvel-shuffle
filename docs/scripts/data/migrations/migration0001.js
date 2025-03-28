@@ -68,7 +68,7 @@ export const migration0001 = [
 ];
 
 function addAlterEgo([hero, alterEgo]) {
-  return rename(hero, `${hero}-${alterEgo}`);
+  return rename(`hero--${hero}`, `hero--${hero}-${alterEgo}`);
 }
 
 function migrateDifficulty(difficulty) {

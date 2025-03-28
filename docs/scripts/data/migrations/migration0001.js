@@ -59,8 +59,8 @@ const difficulties = [
 
 export const migration0001 = [
   ...alterEgos.map(addAlterEgo),
-  setDefault("setting--track-difficulty-standard", true),
   ...difficulties.flatMap(migrateDifficulty),
+  setDefault("difficulty--standard", true),
   remove("module--prelates"),
   remove("module--hope-summers"),
   rename("module", "modular"),
@@ -72,8 +72,9 @@ function addAlterEgo([hero, alterEgo]) {
 }
 
 function migrateDifficulty(difficulty) {
+  const newName = `difficulty--${difficulty}`;
   return [
-    rename(`setting--track-difficulty-${difficulty}`, difficulty),
+    rename(`setting--track-difficulty-${difficulty}`, newName),
     rename(difficulty, `difficulty--${difficulty}`),
   ];
 }

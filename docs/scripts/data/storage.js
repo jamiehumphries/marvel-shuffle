@@ -158,24 +158,32 @@ function runMigration(migrationId, migration) {
 }
 
 function rename(oldName, newName) {
-  const oldNamePattern = `(?<=(?:^|--|"))${oldName}(?=(?:$|--|"))`;
-  const oldNameRegex = new RegExp(oldNamePattern, "g");
+  const oldNameRegExp = buildRegExp(oldName);
+  const newNameRegExp = buildRegExp(newName);
+
+  const shouldChange = (str) =>
+    !!str.match(oldNameRegExp) && !str.match(newNameRegExp);
 
   for (let [key, value] of Object.entries(localStorage)) {
     key = key.slice(LOCAL_KEY_PREFIX.length);
 
-    if (oldNameRegex.test(key)) {
-      const newKey = key.replaceAll(oldNameRegex, newName);
+    if (shouldChange(key)) {
+      const newKey = key.replaceAll(oldNameRegExp, newName);
       setItem(newKey, value, false);
       removeItem(key);
       key = newKey;
     }
 
-    if (oldNameRegex.test(value)) {
-      const newValue = value.replaceAll(oldNameRegex, newName);
+    if (shouldChange(value)) {
+      const newValue = value.replaceAll(oldNameRegExp, newName);
       setItem(key, newValue, false);
     }
   }
+}
+
+function buildRegExp(name) {
+  const pattern = `(?<=(?:^|--|"))${name}(?=(?:$|--|"))`;
+  return new RegExp(pattern, "g");
 }
 
 function remove(key) {

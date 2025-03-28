@@ -75,6 +75,6 @@ function migrateDifficulty(difficulty) {
   const newName = `difficulty--${difficulty}`;
   return [
     rename(`setting--track-difficulty-${difficulty}`, newName),
-    rename(difficulty, `difficulty--${difficulty}`),
+    rename(difficulty, newName),
   ];
 }

@@ -347,7 +347,7 @@ export const scenarios = [
     scenario("Black Widow", ["A.I.M. Abduction", "A.I.M. Science"], "#404040"),
     scenario("Batroc", ["A.I.M. Abduction", "Batroc’s Brigade"], "#9f5b33", { hasBack }),
     scenario("M.O.D.O.K.", "Scientist Supreme", "#ffc000", { hasBack }),
-    scenario("Thunderbolts", 0, "#0070c0", { requiredTrait: "Thunderbolt", additionalModularsPerHero: 1, hasBack }),
+    scenario("Thunderbolts", 1, "#0070c0", { requiredTrait: "Thunderbolt", additionalModularsPerHero: 1, hasBack }),
     scenario("Baron Zemo", ["Scientist Supreme", "S.H.I.E.L.D."], "#a23276", { required: ["S.H.I.E.L.D. Executive Board", "Executive Board Evidence"], hasBack }),
   ),
 ];

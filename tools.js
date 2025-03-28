@@ -12,9 +12,19 @@ import { imageSize } from "image-size";
 import { relative, resolve } from "path";
 import { replaceInFileSync } from "replace-in-file";
 
+const root = import.meta.dirname;
+const imagesPath = "docs/images";
+const imageGlobToExt = `${imagesPath}/*/**/{front,back,front-inner,back-inner}`;
+
 export function updateImages(force = false) {
-  const sourceImages =
-    "../marvel-shuffle-images/docs/images/*/**/*.{ffg,scan}.{png,tiff}";
+  const sourceRepository = resolve("../marvel-shuffle-images");
+  if (!existsSync(sourceRepository)) {
+    console.error("Could not find image source repository.");
+    console.error(`Expected path: ${sourceRepository}`);
+    return;
+  }
+
+  const sourceImages = `${sourceRepository}/${imageGlobToExt}.{ffg,scan}.{png,tiff}`;
 
   const files = globSync(sourceImages, { withFileTypes: true });
   for (const file of files) {
@@ -24,17 +34,14 @@ export function updateImages(force = false) {
     const [name, type, ext] = sourceName.split(".");
 
     const outputName = `${name}.png`;
-    const outputParentPath = parentPath.replace(
-      "marvel-shuffle-images",
-      "marvel-shuffle",
-    );
+    const outputParentPath = parentPath.replace(sourceRepository, root);
     const outputPath = resolve(outputParentPath, outputName);
 
     if (!force && existsSync(outputPath)) {
       continue;
     }
 
-    const relativePath = relative(import.meta.dirname, outputPath);
+    const relativePath = relative(root, outputPath);
     console.log(`Converting ${relativePath}`);
 
     const sourceImage = readFileSync(sourcePath);
@@ -67,17 +74,16 @@ export function updateImages(force = false) {
 
 export function updateImageHashes() {
   const imagePatterns = [
-    "docs/images/campaign/*.png",
-    "docs/images/*/**/{front,back,front-inner,back-inner}.png",
+    `${imagesPath}/campaign/*.png`,
+    `${imageGlobToExt}.png`,
   ];
 
+  const docsPath = resolve("docs");
   const entries = globSync(imagePatterns, { withFileTypes: true })
     .map((file) => {
       const { parentPath, name } = file;
       const path = resolve(parentPath, name);
-      const pathParts = path.split("/");
-      const imagesRootIndex = pathParts.lastIndexOf("images");
-      const url = "/" + pathParts.splice(imagesRootIndex).join("/");
+      const url = "/" + relative(docsPath, path);
       const hash = computeHash(path);
       return [url, hash];
     })

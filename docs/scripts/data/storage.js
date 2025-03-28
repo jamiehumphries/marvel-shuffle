@@ -9,7 +9,7 @@ import {
   getFirestore,
   setDoc,
 } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
-import { migrations } from "./migrations/migrations.js?v=befff4fd";
+import { migrations } from "./migrations/migrations.js?v=18a897f5";
 
 const app = initializeApp({
   apiKey: "AIzaSyBFYZluS920mE0zo85Qg4TeoTRYPXNJO3Y",

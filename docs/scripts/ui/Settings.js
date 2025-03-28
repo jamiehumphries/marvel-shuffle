@@ -1,7 +1,7 @@
-import { difficulties, extraModulars } from "../data/cards.js?v=2121f86f";
-import { getItem, setItem } from "../data/storage.js?v=62f5cba1";
-import { STANDARD } from "../models/Difficulty.js?v=00000000";
-import { Setting } from "../models/Setting.js?v=d11fdf30";
+import { difficulties, extraModulars } from "../data/cards.js?v=99e2ed8e";
+import { getItem, setItem } from "../data/storage.js?v=b7e72aeb";
+import { STANDARD } from "../models/Difficulty.js?v=a00021c7";
+import { Setting } from "../models/Setting.js?v=78c8518b";
 
 const PROBABILITY_MAP = {
   never: 0,

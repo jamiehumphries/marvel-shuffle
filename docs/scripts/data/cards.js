@@ -1,9 +1,9 @@
-import { Aspect } from "../models/Aspect.js?v=677f52a6";
-import { CardSet } from "../models/CardSet.js?v=02bc8aae";
-import { Difficulty } from "../models/Difficulty.js?v=00000000";
-import { Hero } from "../models/Hero.js?v=65fda6d0";
-import { Modular } from "../models/Modular.js?v=11c426af";
-import { Scenario } from "../models/Scenario.js?v=5a1f7c09";
+import { Aspect } from "../models/Aspect.js?v=db2ed670";
+import { CardSet } from "../models/CardSet.js?v=94b58eff";
+import { Difficulty } from "../models/Difficulty.js?v=a00021c7";
+import { Hero } from "../models/Hero.js?v=7878eb4c";
+import { Modular } from "../models/Modular.js?v=67f6abb2";
+import { Scenario } from "../models/Scenario.js?v=7b9509d4";
 
 function ensureArray(arrayOrString) {
   return Array.isArray(arrayOrString) ? arrayOrString : [arrayOrString];

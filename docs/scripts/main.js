@@ -4,16 +4,16 @@ import {
   getBookmarkUrl,
   initializeStorage,
   setUserId,
-} from "./data/storage.js?v=b7e72aeb";
-import { renderTable } from "./data/tracker.js?v=568d61c2";
+} from "./data/storage.js?v=e77ff9b5";
+import { renderTable } from "./data/tracker.js?v=abb8ad52";
 import { filter, requestPostAnimationFrame } from "./helpers.js?v=01996c74";
-import { AspectSection } from "./ui/AspectSection.js?v=2cf171d5";
-import { DifficultySection } from "./ui/DifficultySection.js?v=cecb919f";
-import { ExtraModularSection } from "./ui/ExtraModularSection.js?v=25d435b7";
-import { HeroSection } from "./ui/HeroSection.js?v=38ac1123";
-import { ModularSection } from "./ui/ModularSection.js?v=a8d383d9";
-import { ScenarioSection } from "./ui/ScenarioSection.js?v=35d1fb8b";
-import { Settings } from "./ui/Settings.js?v=3ab6758d";
+import { AspectSection } from "./ui/AspectSection.js?v=8ab2aa5a";
+import { DifficultySection } from "./ui/DifficultySection.js?v=6c89367f";
+import { ExtraModularSection } from "./ui/ExtraModularSection.js?v=f035682d";
+import { HeroSection } from "./ui/HeroSection.js?v=de55b3dc";
+import { ModularSection } from "./ui/ModularSection.js?v=fc01c0a7";
+import { ScenarioSection } from "./ui/ScenarioSection.js?v=506dd0fb";
+import { Settings } from "./ui/Settings.js?v=3f5a08f9";
 
 const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");

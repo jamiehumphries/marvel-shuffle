@@ -1,4 +1,4 @@
-import { Option } from "./Option.js?v=94d8a3da";
+import { Option } from "./Option.js?v=80a2266d";
 
 export class CardSet extends Option {
   constructor(name, cards, isCampaign) {

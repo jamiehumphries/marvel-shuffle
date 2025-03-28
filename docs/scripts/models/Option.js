@@ -1,4 +1,4 @@
-import { getItem, setItem } from "../data/storage.js?v=b7e72aeb";
+import { getItem, setItem } from "../data/storage.js?v=e77ff9b5";
 import { Model } from "./Model.js?v=5c4d2c88";
 
 export class Option extends Model {

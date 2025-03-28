@@ -1,8 +1,8 @@
-import { difficulties } from "../data/cards.js?v=99e2ed8e";
-import { getItem, setItem } from "../data/storage.js?v=b7e72aeb";
-import { getNumberOfIncompleteGames } from "../data/tracker.js?v=568d61c2";
-import { EXPERT, STANDARD } from "../models/Difficulty.js?v=a00021c7";
-import { cardChangeDelayMs, Section } from "./Section.js?v=5574e168";
+import { difficulties } from "../data/cards.js?v=9a2e587a";
+import { getItem, setItem } from "../data/storage.js?v=e77ff9b5";
+import { getNumberOfIncompleteGames } from "../data/tracker.js?v=abb8ad52";
+import { EXPERT, STANDARD } from "../models/Difficulty.js?v=31e5b092";
+import { cardChangeDelayMs, Section } from "./Section.js?v=cee48f1c";
 
 export class DifficultySection extends Section {
   constructor(settings) {

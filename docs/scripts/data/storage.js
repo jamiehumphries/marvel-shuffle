@@ -143,6 +143,20 @@ function runMigrations() {
   }
 }
 
+function runMigration(migrationId, migration) {
+  const migrationKey = `migration--${migrationId.toString().padStart(4, "0")}`;
+  const hasMigrated = getItem(migrationKey);
+  if (hasMigrated) {
+    return;
+  }
+  const operations = { rename, remove, setDefault };
+  for (const [operationName, ...args] of migration) {
+    const operation = operations[operationName];
+    operation(...args);
+  }
+  setItem(migrationKey, true);
+}
+
 function rename(oldName, newName) {
   const oldNamePattern = `(?<=(?:^|--|"))${oldName}(?=(?:$|--|"))`;
   const oldNameRegex = new RegExp(oldNamePattern, "g");
@@ -168,18 +182,10 @@ function remove(key) {
   removeItem(key);
 }
 
-function runMigration(migrationId, migration) {
-  const migrationKey = `migration--${migrationId.toString().padStart(4, "0")}`;
-  const hasMigrated = getItem(migrationKey);
-  if (hasMigrated) {
-    return;
+function setDefault(key, value) {
+  if (getItem(key) === null) {
+    setItem(key, value);
   }
-  const operations = { rename, remove };
-  for (const [operationName, ...args] of migration) {
-    const operation = operations[operationName];
-    operation(...args);
-  }
-  setItem(migrationKey, true);
 }
 
 export {

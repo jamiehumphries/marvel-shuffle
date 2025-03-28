@@ -104,7 +104,6 @@ export class DifficultySection extends Section {
 
     if (getItem(this.id) === null) {
       this.standardCardOptions[0].checked = true;
-      this.expertCardOptions[0].checked = true;
     }
   }
 

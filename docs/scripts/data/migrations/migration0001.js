@@ -1,4 +1,4 @@
-import { remove, rename } from "./operations.js?v=e052d1d0";
+import { remove, rename, setDefault } from "./operations.js?v=e052d1d0";
 
 const alterEgos = [
   ["captain-marvel", "carol-danvers"],
@@ -59,6 +59,7 @@ const difficulties = [
 
 export const migration0001 = [
   ...alterEgos.map(addAlterEgo),
+  setDefault("setting--track-difficulty-standard", true),
   ...difficulties.flatMap(migrateDifficulty),
   remove("module--prelates"),
   remove("module--hope-summers"),

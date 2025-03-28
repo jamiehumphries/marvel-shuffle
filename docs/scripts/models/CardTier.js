@@ -1,7 +1,7 @@
 export class CardTier {
-  constructor(cards, { isOrdered = false, ignoreExclude = false } = {}) {
+  constructor(cards, { isOrdered = false, isRequired = false } = {}) {
     this.cards = cards;
     this.isOrdered = isOrdered;
-    this.ignoreExclude = ignoreExclude;
+    this.isRequired = isRequired;
   }
 }

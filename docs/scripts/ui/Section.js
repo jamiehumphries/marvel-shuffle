@@ -374,7 +374,7 @@ export class Section extends Toggleable {
     const optionsSets = [];
     for (const tier of tiers) {
       const numberNeeded = this.expectedCardCount - optionsSets.length;
-      const cardOptions = tier.ignoreExclude
+      const cardOptions = tier.isRequired
         ? tier.cards
         : filter(tier.cards, exclude);
 
@@ -415,9 +415,9 @@ export class Section extends Toggleable {
 
   getCardOptionTiers() {
     const isOrdered = true;
-    const ignoreExclude = true;
+    const isRequired = true;
     return [
-      new CardTier(this.requiredCards, { isOrdered, ignoreExclude }),
+      new CardTier(this.requiredCards, { isOrdered, isRequired }),
       new CardTier(this.checkedCards),
       new CardTier(this.defaultCards, { isOrdered }),
       new CardTier(this.parentSet?.children),

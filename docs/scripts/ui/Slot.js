@@ -12,7 +12,7 @@ export class Slot extends Toggleable {
     this.cardFrontInner = root.querySelector(".front img.back");
     this.cardBack = root.querySelector(".back img.front");
     this.cardBackInner = root.querySelector(".back img.back");
-    this.requiredModifier = root.querySelector(".required-modifier");
+    this.requiredReason = root.querySelector(".required-modifier");
   }
 
   get card() {

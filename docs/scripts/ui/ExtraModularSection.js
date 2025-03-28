@@ -27,7 +27,9 @@ export class ExtraModularSection extends Section {
   }
 
   getCardOptionTiers() {
-    return this.modularSection.getCardOptionTiers().slice(1);
+    return this.modularSection
+      .getCardOptionTiers()
+      .filter((tier) => !tier.isRequired);
   }
 
   updateVisibility() {

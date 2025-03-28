@@ -8,7 +8,7 @@ export class Modular extends Card {
       hasBack = false,
       traits = [],
       isUncounted = false,
-      requiredModifier = null,
+      requiredReason = null,
     } = {},
   ) {
     super(name, {
@@ -16,7 +16,7 @@ export class Modular extends Card {
       hasBack,
       traits,
       isUncounted,
-      requiredModifier,
+      requiredReason,
     });
   }
 

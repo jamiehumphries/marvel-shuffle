@@ -62,11 +62,11 @@ export class ModularSection extends Section {
   updateRequiredLabels() {
     const slots = this.slots || [];
     for (const slot of slots) {
-      const { root, requiredModifier, card } = slot;
+      const { root, requiredReason, card } = slot;
       const isRequired = this.requiredCards.includes(card);
       root.classList.toggle("is-required", isRequired);
-      requiredModifier.innerText = card?.requiredModifier
-        ? ` ${card.requiredModifier}`
+      requiredReason.innerText = card?.requiredReason
+        ? ` ${card.requiredReason}`
         : "";
     }
   }

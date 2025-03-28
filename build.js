@@ -6,14 +6,18 @@ import {
 
 const args = process.argv.slice(2);
 
+console.time("Build");
+
 if (args.includes("images")) {
-  updateImages(args.includes("--force"));
+  await updateImages(args.includes("--force"));
 }
 
 if (args.includes("hashes")) {
-  updateImageHashes();
+  await updateImageHashes();
 }
 
 if (args.includes("assets")) {
-  updateAssetVersions();
+  await updateAssetVersions();
 }
+
+console.timeEnd("Build");

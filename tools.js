@@ -1,119 +1,127 @@
-import { execSync } from "child_process";
+import { exec as _exec } from "child_process";
 import { createHash } from "crypto";
-import {
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  renameSync,
-  writeFileSync,
-} from "fs";
-import { globSync } from "glob";
+import { access, mkdir, readFile, rename, writeFile } from "fs/promises";
+import { glob } from "glob";
 import { imageSize } from "image-size";
 import { relative, resolve } from "path";
-import { replaceInFileSync } from "replace-in-file";
+import { format } from "prettier";
+import { replaceInFile } from "replace-in-file";
+import { promisify } from "util";
+
+const exec = promisify(_exec);
+const exists = (path) =>
+  access(path)
+    .then(() => true)
+    .catch(() => false);
 
 const root = import.meta.dirname;
 const imagesPath = "docs/images";
 const imageGlobToExt = `${imagesPath}/*/**/{front,back,front-inner,back-inner}`;
+const imageSourceRepo = resolve("../marvel-shuffle-images");
 
-export function updateImages(force = false) {
-  const sourceRepository = resolve("../marvel-shuffle-images");
-  if (!existsSync(sourceRepository)) {
+export async function updateImages(force = false) {
+  const imageSourceRepoExists = await exists(imageSourceRepo);
+  if (!imageSourceRepoExists) {
     console.error("Could not find image source repository.");
-    console.error(`Expected path: ${sourceRepository}`);
+    console.error(`Expected path: ${imageSourceRepo}`);
     return;
   }
 
-  const sourceImages = `${sourceRepository}/${imageGlobToExt}.{ffg,scan}.{png,tiff}`;
+  const sourceImages = `${imageSourceRepo}/${imageGlobToExt}.{ffg,scan}.{png,tiff}`;
+  const files = await glob(sourceImages, { withFileTypes: true });
+  await Promise.all(files.map((file) => updateImage(file, force)));
 
-  const files = globSync(sourceImages, { withFileTypes: true });
-  for (const file of files) {
-    const { parentPath, name: sourceName } = file;
-
-    const sourcePath = resolve(parentPath, sourceName);
-    const [name, type, ext] = sourceName.split(".");
-
-    const outputName = `${name}.png`;
-    const outputParentPath = parentPath.replace(sourceRepository, root);
-    const outputPath = resolve(outputParentPath, outputName);
-
-    if (!force && existsSync(outputPath)) {
-      continue;
-    }
-
-    const relativePath = relative(root, outputPath);
-    console.log(`Converting ${relativePath}`);
-
-    const sourceImage = readFileSync(sourcePath);
-    const { width, height } = imageSize(sourceImage);
-
-    if (type === "scan" && ext === "tiff") {
-      const tempName = `${name}.temp.tiff`;
-      const tempPath = resolve(parentPath, tempName);
-      execSync(`tiffcp ${sourcePath} ${tempPath}`);
-      renameSync(tempPath, sourcePath);
-    }
-
-    mkdirSync(outputParentPath, { recursive: true });
-
-    execSync(
-      `convert ${sourcePath} \
-        -strip \
-        ${width > height ? "-rotate 270" : ""} \
-        -trim +repage \
-        -resize 294x418^ \
-        -gravity center -crop 294x418+0+0 +repage \
-        -matte mask.png -compose DstIn -composite \
-        ${type === "scan" ? "-level 5%" : ""} \
-        ${outputPath}`,
-    );
-
-    execSync(`git add ${outputPath}`);
-  }
+  await exec(`git add ${imagesPath}`);
 }
 
-export function updateImageHashes() {
+async function updateImage(file, force) {
+  const { parentPath, name: sourceName } = file;
+
+  const sourcePath = resolve(parentPath, sourceName);
+  const [name, type, ext] = sourceName.split(".");
+
+  const outputName = `${name}.png`;
+  const outputParentPath = parentPath.replace(imageSourceRepo, root);
+  const outputPath = resolve(outputParentPath, outputName);
+
+  if (!force && (await exists(outputPath))) {
+    return;
+  }
+
+  const sourceImage = await readFile(sourcePath);
+  const { width, height } = imageSize(sourceImage);
+
+  if (type === "scan" && ext === "tiff") {
+    const tempName = `${name}.temp.tiff`;
+    const tempPath = resolve(parentPath, tempName);
+    await exec(`tiffcp ${sourcePath} ${tempPath}`);
+    await rename(tempPath, sourcePath);
+  }
+
+  await mkdir(outputParentPath, { recursive: true });
+
+  await exec(
+    `convert ${sourcePath} \
+      -strip \
+      ${width > height ? "-rotate 270" : ""} \
+      -trim +repage \
+      -resize 294x418^ \
+      -gravity center -crop 294x418+0+0 +repage \
+      -matte mask.png -compose DstIn -composite \
+      ${type === "scan" ? "-level 5%" : ""} \
+      ${outputPath}`,
+  );
+
+  const relativePath = relative(root, outputPath);
+  console.log(`Converted ${relativePath}`);
+}
+
+export async function updateImageHashes() {
   const imagePatterns = [
     `${imagesPath}/campaign/*.png`,
     `${imageGlobToExt}.png`,
   ];
 
   const docsPath = resolve("docs");
-  const entries = globSync(imagePatterns, { withFileTypes: true })
-    .map((file) => {
-      const { parentPath, name } = file;
+
+  const imageFiles = await glob(imagePatterns, { withFileTypes: true });
+  const entries = await Promise.all(
+    imageFiles.map(async ({ parentPath, name }) => {
       const path = resolve(parentPath, name);
       const url = "/" + relative(docsPath, path);
-      const hash = computeHash(path);
+      const hash = await computeHash(path);
       return [url, hash];
-    })
-    .sort(([url1], [url2]) => url1.localeCompare(url2));
+    }),
+  );
+  entries.sort(([url1], [url2]) => url1.localeCompare(url2));
 
   const hashes = Object.fromEntries(entries);
   const hashesJson = JSON.stringify(hashes, null, 2);
-  const outputFile = "docs/scripts/data/hashes.js";
+  const content = `export const hashes = ${hashesJson}`;
+  const formattedContent = await format(content, { parser: "babel" });
 
-  writeFileSync(outputFile, `export const hashes = ${hashesJson}`);
-  execSync(`npx prettier --write ${outputFile}`);
-  execSync(`git add ${outputFile}`);
+  const outputFile = "docs/scripts/data/hashes.js";
+  await writeFile(outputFile, formattedContent);
+  await exec(`git add ${outputFile}`);
 }
 
-export function updateAssetVersions() {
-  const assets = globSync("docs/**/*.{css,js}", { withFileTypes: true });
-  const results = assets.map((asset) => updateAssetVersion(asset));
+export async function updateAssetVersions() {
+  const assets = await glob("docs/**/*.{css,js}", { withFileTypes: true });
+  const results = await Promise.all(assets.map(updateAssetVersion));
   const anyHasChanged = results.some((result) => result.hasChanged);
   if (anyHasChanged) {
-    updateAssetVersions(assets);
+    await updateAssetVersions(assets);
   }
+  await exec("git add docs");
 }
 
-function updateAssetVersion(asset) {
+async function updateAssetVersion(asset) {
   const { parentPath, name } = asset;
   const nameForRegex = name.replace(".", "\\.");
   const regex = new RegExp(`(?<=/${nameForRegex}\\?v=)[0-9a-f]+`, "g");
   const path = resolve(parentPath, name);
-  const hash = computeHash(path);
-  const results = replaceInFileSync({
+  const hash = await computeHash(path);
+  const results = await replaceInFile({
     files: "docs/**/*.{html,js}",
     from: regex,
     to: hash,
@@ -124,14 +132,13 @@ function updateAssetVersion(asset) {
     if (!result.hasChanged) {
       continue;
     }
-    execSync(`git add ${result.file} ${path}`);
     hasChanged = true;
   }
 
   return { hasChanged };
 }
 
-function computeHash(path) {
-  const data = readFileSync(path);
+async function computeHash(path) {
+  const data = await readFile(path);
   return createHash("md5").update(data).digest("hex").substring(0, 8);
 }

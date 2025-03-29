@@ -262,8 +262,11 @@ body:not(.show-tracker) label[for="setting--avoid-completed"],
 body:not(.shuffle-difficulties):not(.show-tracker) #select-difficulties,
 body:not(.shuffle-difficulties) #setting--max-heroic-level,
 body:not(.randomise-heroic-level) #setting--max-heroic-level,
-body:not(.include-additional-modulars) #customisation p,
-body:not(.include-additional-modulars) #customisation fieldset {
+body:not(.include-additional-modulars) #customisation .hint,
+body:not(.include-additional-modulars) #customisation fieldset,
+body:not(.suggest-cards) label[for="setting--include-basic-in-suggested-cards"],
+body:not(.suggest-cards) #deck-building .hint,
+body:not(.suggest-cards) #deck-building fieldset {
   display: none;
 }
 

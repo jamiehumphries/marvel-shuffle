@@ -23,6 +23,7 @@ const settings = new Settings({
   maxNumberOfHeroes: 4,
   maxAllowedHeroicLevel: 3,
   maxNumberOfExtraModulars: 4,
+  maxNumberOfSuggestedCards: 5,
 });
 
 // Sections added in shuffle order:

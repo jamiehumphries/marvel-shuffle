@@ -13,16 +13,19 @@ const PROBABILITY_MAP = {
 
 const preferencesDiv = document.getElementById("preferences");
 const customisationDiv = document.getElementById("customisation");
+const deckBuildingDiv = document.getElementById("deck-building");
 
 export class Settings {
   constructor({
     maxNumberOfHeroes,
     maxAllowedHeroicLevel,
     maxNumberOfExtraModulars,
+    maxNumberOfSuggestedCards,
   }) {
     this.maxNumberOfHeroes = maxNumberOfHeroes;
     this.maxAllowedHeroicLevel = maxAllowedHeroicLevel;
     this.maxNumberOfExtraModulars = maxNumberOfExtraModulars;
+    this.maxNumberOfSuggestedCards = maxNumberOfSuggestedCards;
     this.allSectionsInitialized = false;
     this._cardProbabilities = {};
   }
@@ -57,6 +60,18 @@ export class Settings {
       : 0;
   }
 
+  get suggestCards() {
+    return this._suggestCards.checked;
+  }
+
+  get includeBasicInSuggestedCards() {
+    return this.suggestCards && this._includeBasicInSuggestedCards.checked;
+  }
+
+  get numberOfSuggestedCards() {
+    return this.suggestCards ? this._numberOfSuggestedCards : 0;
+  }
+
   getProbability(card) {
     return this._includeAdditionalModulars.checked
       ? PROBABILITY_MAP[this._cardProbabilities[card.id]]
@@ -66,6 +81,7 @@ export class Settings {
   initialize() {
     this.initializePreferences();
     this.initializeCustomisation();
+    this.initializeDeckBuilding();
   }
 
   initializePreferences() {
@@ -168,8 +184,7 @@ export class Settings {
   }
 
   initializeNumberOfExtraModulars() {
-    const extraModularsHint = document.getElementById("extra-modulars");
-    customisationDiv.appendChild(extraModularsHint);
+    this.appendHint(customisationDiv, "extra-modulars");
 
     this.initializeNumericalSetting(
       customisationDiv,
@@ -182,8 +197,7 @@ export class Settings {
   }
 
   initializeUncountedModulars() {
-    const uncountedModularsHint = document.getElementById("uncounted-modulars");
-    customisationDiv.appendChild(uncountedModularsHint);
+    this.appendHint(customisationDiv, "uncounted-modulars");
 
     const uncountedModulars = extraModulars.filter((card) => card.isUncounted);
     const options = Object.entries(PROBABILITY_MAP).map(
@@ -203,6 +217,30 @@ export class Settings {
         (value) => (this._cardProbabilities[card.id] = value),
       );
     }
+  }
+
+  initializeDeckBuilding() {
+    this._suggestCards = this.initializeCheckboxSetting(
+      deckBuildingDiv,
+      "suggest-cards",
+      "Suggest random cards for each hero",
+      { subname: "(below hero’s aspect section)", togglesBodyClass: true },
+    );
+    this._includeBasicInSuggestedCards = this.initializeCheckboxSetting(
+      deckBuildingDiv,
+      "include-basic-in-suggested-cards",
+      "Include Basic cards in suggestions",
+    );
+    this.initializeNumericalSetting(
+      deckBuildingDiv,
+      "number-of-suggested-cards",
+      "Number of cards",
+      1,
+      this.maxNumberOfSuggestedCards,
+      (value) => (this._numberOfSuggestedCards = value),
+    );
+
+    this.appendHint(deckBuildingDiv, "possible-cards");
   }
 
   initializeCheckboxSetting(
@@ -278,5 +316,10 @@ export class Settings {
     }
 
     parent.appendChild(fieldset);
+  }
+
+  appendHint(div, hintId) {
+    const hint = document.getElementById(hintId);
+    div.appendChild(hint);
   }
 }

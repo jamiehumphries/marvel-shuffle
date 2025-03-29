@@ -28,27 +28,27 @@ export class Settings {
   }
 
   get shuffleDifficulties() {
-    return this._shuffleDifficultiesSetting.checked;
+    return this._shuffleDifficulties.checked;
   }
 
   get alwaysIncludeExpert() {
-    return this.shuffleDifficulties && this._alwaysIncludeExpertSetting.checked;
+    return this.shuffleDifficulties && this._alwaysIncludeExpert.checked;
   }
 
   get showTracker() {
-    return this._showTrackerSetting.checked;
+    return this._showTracker.checked;
   }
 
   get avoidCompleted() {
     return (
       this.allSectionsInitialized &&
       this.showTracker &&
-      this._avoidCompletedSetting.checked
+      this._avoidCompleted.checked
     );
   }
 
   get maxHeroicLevel() {
-    return this._randomiseHeroicLevelSetting.checked ? this._maxHeroicLevel : 0;
+    return this._randomiseHeroicLevel.checked ? this._maxHeroicLevel : 0;
   }
 
   get numberOfExtraModulars() {
@@ -96,31 +96,31 @@ export class Settings {
   }
 
   initializeShuffleAndTrackingPrefernces() {
-    this._shuffleDifficultiesSetting = this.initializeCheckboxSetting(
+    this._shuffleDifficulties = this.initializeCheckboxSetting(
       preferencesDiv,
       "shuffle-difficulties",
       "Shuffle difficulties",
       { togglesBodyClass: true },
     );
-    this._alwaysIncludeExpertSetting = this.initializeCheckboxSetting(
+    this._alwaysIncludeExpert = this.initializeCheckboxSetting(
       preferencesDiv,
       "always-include-expert",
       "Always include an Expert set",
       { isSubsetting: true },
     );
-    this._randomiseHeroicLevelSetting = this.initializeCheckboxSetting(
+    this._randomiseHeroicLevel = this.initializeCheckboxSetting(
       preferencesDiv,
       "randomise-heroic-level",
       "Randomise heroic level",
       { isSubsetting: true, togglesBodyClass: true },
     );
-    this._showTrackerSetting = this.initializeCheckboxSetting(
+    this._showTracker = this.initializeCheckboxSetting(
       preferencesDiv,
       "show-tracker",
       "Show game tracker",
       { subname: "(below shuffle)", togglesBodyClass: true },
     );
-    this._avoidCompletedSetting = this.initializeCheckboxSetting(
+    this._avoidCompleted = this.initializeCheckboxSetting(
       preferencesDiv,
       "avoid-completed",
       "Avoid completed matchups",
@@ -161,9 +161,7 @@ export class Settings {
       customisationDiv,
       "include-additional-modulars",
       "Include more modulars than required",
-      {
-        togglesBodyClass: true,
-      },
+      { togglesBodyClass: true },
     );
     this.initializeNumberOfExtraModulars();
     this.initializeUncountedModulars();
@@ -205,13 +203,6 @@ export class Settings {
         (value) => (this._cardProbabilities[card.id] = value),
       );
     }
-  }
-
-  addHint(parent, html) {
-    const hint = document.createElement("p");
-    hint.classList.add("hint");
-    hint.innerText = html;
-    parent.appendChild(hint);
   }
 
   initializeCheckboxSetting(

@@ -93,7 +93,6 @@ export class AspectSection extends Section {
   shuffle({ animate = true, ...options } = {}) {
     super.shuffle({ animate, ...options });
     const validOptions = this.getValidSuggestedCards();
-    console.log(validOptions.map((card) => card.name).sort());
     const suggestedCards = [];
     for (let i = 0; i < this.settings.numberOfSuggestedCards; i++) {
       const options = filter(validOptions, suggestedCards);
@@ -132,7 +131,15 @@ export class AspectSection extends Section {
     if (this.settings.includeBasicInSuggestedCards) {
       allowedAspects.push(BASIC);
     }
-    return deck.filter((card) => allowedAspects.includes(card.aspect));
+
+    return deck
+      .filter((card) => allowedAspects.includes(card.aspect))
+      .filter(
+        (card) =>
+          card.teamUp === null ||
+          card.teamUp.includes(hero.name) ||
+          card.teamUp.includes(hero.subname),
+      );
   }
 
   suggestedCardSort(c1, c2) {

@@ -1,5 +1,9 @@
 import { getItem, setItem } from "../data/storage.js?v=e77ff9b5";
-import { filter, requestPostAnimationFrame } from "../helpers.js?v=01996c74";
+import {
+  chooseRandom,
+  filter,
+  requestPostAnimationFrame,
+} from "../helpers.js?v=01996c74";
 import { All } from "../models/All.js?v=ec39df1e";
 import { Aspect } from "../models/Aspect.js?v=8c13f85c";
 import { CardTier } from "../models/CardTier.js?v=2604c80d";
@@ -478,8 +482,4 @@ function flatten(cardsOrSets) {
 
 function distinct(array) {
   return [...new Set(array)];
-}
-
-function chooseRandom(array) {
-  return array[Math.floor(Math.random() * array.length)];
 }

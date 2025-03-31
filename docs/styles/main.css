@@ -751,22 +751,116 @@ input:active + .checkmark {
   display: none;
 }
 
-.next-scenario-button,
-.heroic-level {
+.suggested-cards {
+  --suggested-cards-header-height: 2rem;
+  --suggested-card-img-size: 2.2rem;
+  --suggested-card-margin: 0.5rem;
+  margin: auto;
+  width: var(--card-width);
+  height: calc(
+    var(--suggested-cards-header-height) + var(--suggested-cards) *
+      (var(--suggested-card-margin) + var(--suggested-card-img-size))
+  );
+}
+
+.suggested-cards h4 {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  height: var(--suggested-cards-header-height);
+  font-style: italic;
+  font-weight: normal;
+}
+
+.suggested-card {
+  display: flex;
+  margin-top: var(--suggested-card-margin);
+}
+
+.suggested-card.hidden {
+  display: none;
+}
+
+.suggested-card .image-container {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.5rem;
+  width: var(--suggested-card-img-size);
+  height: var(--suggested-card-img-size);
+}
+
+.suggested-card img:not(.landscape) {
+  height: var(--suggested-card-img-size);
+}
+
+.suggested-card img.landscape {
+  width: var(--suggested-card-img-size);
+}
+
+.suggested-card > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.suggested-card .name-and-subname {
+  font-size: calc(0.375 * var(--suggested-card-img-size));
+}
+
+.suggested-card .subname {
+  font-size: calc(0.325 * var(--suggested-card-img-size));
+}
+
+.suggested-card .aspect-and-type {
+  font-size: calc(0.25 * var(--suggested-card-img-size));
+}
+
+.suggested-card .aspect {
+  font-weight: bold;
+}
+
+.suggested-card .aspect.aggression {
+  color: #a00000;
+}
+
+.suggested-card .aspect.justice {
+  color: #b08000;
+}
+
+.suggested-card .aspect.leadership {
+  color: #00518b;
+}
+
+.suggested-card .aspect.protection {
+  color: #00813a;
+}
+
+.suggested-card .aspect.pool {
+  color: #a542a5;
+}
+
+.suggested-card .aspect.basic {
+  color: #727272;
+}
+
+.fadable {
   transition:
     height var(--card-change-duration),
     opacity var(--card-change-delay);
 }
 
-.scenario.flipping .next-scenario-button,
-.difficulty.flipping .heroic-level {
+.section.flipping .fadable {
   opacity: 0;
 }
 
 body:not(.show-next-scenario-button) .next-scenario-button,
 body:not(.has-next-scenario) .next-scenario-button,
 body:not(.randomise-heroic-level) .heroic-level,
-.hide-heroic-level .heroic-level {
+.hide-heroic-level .heroic-level,
+body:not(.suggest-cards) .suggested-cards,
+.hide-suggested-cards .suggested-cards {
   opacity: 0;
   margin: 0;
   padding: 0;
@@ -852,7 +946,7 @@ body:not(.show-tracker) #tracking {
     --layout-scale-factor: 0.85;
   }
 
-  .name {
+  h4.name {
     font-size: 1.1rem;
   }
 }
@@ -862,8 +956,12 @@ body:not(.show-tracker) #tracking {
     --layout-scale-factor: 0.7;
   }
 
-  .name {
+  h4.name {
     font-size: 1rem;
+  }
+
+  .suggested-card {
+    --suggested-card-img-size: 2rem;
   }
 }
 

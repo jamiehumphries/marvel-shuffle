@@ -10,7 +10,8 @@ const imagesSourcePath =
 
 const imagesRoot = "docs/images/deck";
 
-const characterTypeCodes = ["hero", "ally"];
+const identityTypeCodes = ["hero", "alter_ego"];
+const characterTypeCodes = [...identityTypeCodes, "ally"];
 const deckFactionCodes = [
   "aggression",
   "justice",
@@ -22,16 +23,26 @@ const deckFactionCodes = [
 
 const nameFixes = {
   "Galaxy's Most Wanted": "The Galaxy’s Most Wanted",
+  "SP//dr Suit": "SP//dr",
+  "Kitty Pride": "Kitty Pryde",
+  "Remy Lebeau": "Remy LeBeau",
 };
 
 const teamUpRegex = /^Team-Up \((.*) and (.*)\)\./;
 const linkedRegex = /^Linked \(.*\)\./;
 const minHpRegex =
   /^Play only if your identity has at least (\d+) printed hit points\./;
+const gainsRegex = /gains? the \[\[([^\]]+)\]\] trait/;
 
-export async function updateDeckCards(force = false) {
+export async function importAllDeckCards(force = false) {
   const { data } = await axios.get(cardsApi);
+  const cards = await importCards(data, force);
+  const heroes = await importHeroes(data, cards);
+  await writeCodeFile("docs/scripts/data/deck.js", cards);
+  await writeCodeFile("docs/scripts/data/heroes.js", heroes);
+}
 
+async function importCards(data, force) {
   const traits = distinct(
     data
       .filter((entry) => characterTypeCodes.includes(entry.type_code))
@@ -59,8 +70,43 @@ export async function updateDeckCards(force = false) {
 
   await Promise.all(cards.map((card) => fetchImage(card, force)));
 
-  const path = "docs/scripts/data/deck.js";
-  await writeCodeFile(path, cards);
+  return cards;
+}
+
+async function importHeroes(data, cards) {
+  const heroSetCards = data
+    .filter((entry) => entry.faction_code === "hero")
+    .sort((c1, c2) => c1.code.localeCompare(c2.code));
+
+  const combinedCards = {};
+  for (const entry of heroSetCards) {
+    const hero = (combinedCards[entry.card_set_code] ||= {});
+    hero.traits ||= [];
+    switch (entry.type_code) {
+      case "hero":
+        hero.name ||= mapName(entry.name);
+        hero.hp = entry.health;
+        hero.traits.push(...parseTraits(entry));
+        break;
+      case "alter_ego":
+        const alterEgo = mapName(entry.name);
+        hero.alterEgo = hero.name !== alterEgo ? alterEgo : null;
+        hero.traits.push(...parseTraits(entry));
+        break;
+      default:
+        hero.traits.push(...parseGainedTraits(entry));
+        break;
+    }
+  }
+
+  const traitLocks = new Set(cards.flatMap((card) => card.traitLocks));
+
+  return Object.values(combinedCards)
+    .filter((hero) => !!hero.name)
+    .map(({ name, alterEgo, hp, traits }) => {
+      const traitKeys = [...new Set(traits).intersection(traitLocks)];
+      return { name, alterEgo, hp, traitKeys };
+    });
 }
 
 function buildCard(entry, traitLockRegex) {
@@ -135,6 +181,11 @@ function parseTeamUp(entry) {
 function parseMinHp(entry) {
   const match = entry.text.match(minHpRegex);
   return match ? parseInt(match[1]) : null;
+}
+
+function parseGainedTraits(entry) {
+  const match = entry.text?.match(gainsRegex);
+  return match ? [match[1].toUpperCase()] : [];
 }
 
 async function fetchImage(card, force) {

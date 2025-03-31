@@ -54,13 +54,13 @@ async function clearStorage() {
 }
 
 async function createBookmarkUrl() {
-  const localPrefixPattern = new RegExp("^" + LOCAL_KEY_PREFIX);
+  const localPrefixRegex = new RegExp("^" + LOCAL_KEY_PREFIX);
   const dataEntries = Object.entries(localStorage).filter(([key, _]) =>
-    localPrefixPattern.test(key),
+    localPrefixRegex.test(key),
   );
   const data = Object.fromEntries(
     dataEntries.map(([key, value]) => [
-      key.replace(localPrefixPattern, ""),
+      key.replace(localPrefixRegex, ""),
       value,
     ]),
   );

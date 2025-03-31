@@ -1,3 +1,4 @@
+import { updateDeckCards } from "./import.js";
 import {
   updateAssetVersions,
   updateImageHashes,
@@ -7,6 +8,10 @@ import {
 const args = process.argv.slice(2);
 
 console.time("Build");
+
+if (args.includes("deck")) {
+  await updateDeckCards(args.includes("--force"));
+}
 
 if (args.includes("images")) {
   await updateImages(args.includes("--force"));

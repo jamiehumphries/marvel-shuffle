@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "node build.js hashes assets",
+    "deck": "node build.js deck",
+    "deck:force": "node build.js --force deck",
     "images": "node build.js images hashes",
     "images:force": "node build.js --force images hashes",
     "images:hashes": "node build.js hashes",
@@ -25,6 +27,7 @@
     "serve": "14.2.4"
   },
   "devDependencies": {
+    "axios": "1.8.4",
     "glob": "11.0.1",
     "image-size": "2.0.1",
     "prettier": "3.5.3",

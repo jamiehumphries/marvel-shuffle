@@ -3,21 +3,22 @@ import { createHash } from "crypto";
 import { access, mkdir, readFile, rename, writeFile } from "fs/promises";
 import { glob } from "glob";
 import { imageSize } from "image-size";
-import { relative, resolve } from "path";
+import { parse, relative, resolve } from "path";
 import { format } from "prettier";
 import { replaceInFile } from "replace-in-file";
 import { promisify } from "util";
-
-const exec = promisify(_exec);
-const exists = (path) =>
-  access(path)
-    .then(() => true)
-    .catch(() => false);
 
 const root = import.meta.dirname;
 const imagesPath = "docs/images";
 const imageGlobToExt = `${imagesPath}/*/**/{front,back,front-inner,back-inner}`;
 const imageSourceRepo = resolve("../marvel-shuffle-images");
+
+export const exec = promisify(_exec);
+
+export const exists = (path) =>
+  access(path)
+    .then(() => true)
+    .catch(() => false);
 
 export async function updateImages(force = false) {
   const imageSourceRepoExists = await exists(imageSourceRepo);
@@ -96,13 +97,17 @@ export async function updateImageHashes() {
   entries.sort(([url1], [url2]) => url1.localeCompare(url2));
 
   const hashes = Object.fromEntries(entries);
-  const hashesJson = JSON.stringify(hashes, null, 2);
-  const content = `export const hashes = ${hashesJson}`;
-  const formattedContent = await format(content, { parser: "babel" });
+  const path = "docs/scripts/data/hashes.js";
+  await writeCodeFile(path, hashes);
+  await exec(`git add ${path}`);
+}
 
-  const outputFile = "docs/scripts/data/hashes.js";
-  await writeFile(outputFile, formattedContent);
-  await exec(`git add ${outputFile}`);
+export async function writeCodeFile(path, data) {
+  const name = parse(path).name.replaceAll(/[^a-zA-Z0-9]+/g, "_");
+  const json = JSON.stringify(data);
+  const content = `export const ${name} = ${json}`;
+  const formattedContent = await format(content, { parser: "babel" });
+  await writeFile(path, formattedContent);
 }
 
 export async function updateAssetVersions() {

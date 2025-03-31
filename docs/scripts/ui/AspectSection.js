@@ -88,14 +88,7 @@ export class AspectSection extends Section {
       const options = filter(deck, suggestedCards);
       suggestedCards.push(chooseRandom(options));
     }
-    if (animate) {
-      setTimeout(
-        () => (this.suggestedCards = suggestedCards),
-        cardChangeDelayMs,
-      );
-    } else {
-      this.suggestedCards = suggestedCards;
-    }
+    this.runWithShuffle(() => (this.suggestedCards = suggestedCards), animate);
   }
 
   loadSuggestedCards() {

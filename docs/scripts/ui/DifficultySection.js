@@ -2,7 +2,7 @@ import { difficulties } from "../data/cards.js?v=9a2e587a";
 import { getItem, setItem } from "../data/storage.js?v=e77ff9b5";
 import { getNumberOfIncompleteGames } from "../data/tracker.js?v=abb8ad52";
 import { EXPERT, STANDARD } from "../models/Difficulty.js?v=31e5b092";
-import { cardChangeDelayMs, Section } from "./Section.js?v=cee48f1c";
+import { Section } from "./Section.js?v=cee48f1c";
 
 export class DifficultySection extends Section {
   constructor(settings) {
@@ -117,11 +117,7 @@ export class DifficultySection extends Section {
 
     const maxHeroicLevel = this.settings.maxHeroicLevel;
     const newHeroicLevel = Math.floor(Math.random() * (maxHeroicLevel + 1));
-    if (animate) {
-      setTimeout(() => (this.heroicLevel = newHeroicLevel), cardChangeDelayMs);
-    } else {
-      this.heroicLevel = newHeroicLevel;
-    }
+    this.runWithShuffle(() => (this.heroicLevel = newHeroicLevel), animate);
   }
 
   chooseCards(isShuffleAll) {

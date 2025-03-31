@@ -14,7 +14,7 @@ import { Scenario } from "../models/Scenario.js?v=6a779c9f";
 import { Slot } from "./Slot.js?v=5de324b8";
 import { Toggleable } from "./Toggleable.js?v=8474d19e";
 
-export const cardChangeDelayMs = getComputedStyle(document.documentElement)
+const cardChangeDelayMs = getComputedStyle(document.documentElement)
   .getPropertyValue("--card-change-delay")
   .slice(0, -1 * "ms".length);
 
@@ -469,6 +469,14 @@ export class Section extends Toggleable {
 
   updateVisibility() {
     this.show();
+  }
+
+  runWithShuffle(callback, animate) {
+    if (animate) {
+      setTimeout(callback, cardChangeDelayMs);
+    } else {
+      callback();
+    }
   }
 
   flattenParentCards(selector) {

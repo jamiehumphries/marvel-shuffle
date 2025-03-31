@@ -472,7 +472,7 @@ export class Section extends Toggleable {
   }
 
   runWithShuffle(callback, animate) {
-    if (animate) {
+    if (animate && this.visible) {
       setTimeout(callback, cardChangeDelayMs);
     } else {
       callback();

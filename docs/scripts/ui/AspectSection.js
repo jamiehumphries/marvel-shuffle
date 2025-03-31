@@ -2,7 +2,9 @@ import { aspects } from "../data/cards.js?v=9a2e587a";
 import { deck } from "../data/deck.js?v=00000000";
 import { getItem, setItem } from "../data/storage.js?v=e77ff9b5";
 import { chooseRandom, filter } from "../helpers.js?v=01996c74";
-import { cardChangeDelayMs, Section } from "./Section.js?v=cee48f1c";
+import { Section } from "./Section.js?v=cee48f1c";
+
+const BASIC = "Basic";
 
 export class AspectSection extends Section {
   constructor(settings, nthOfType) {
@@ -15,7 +17,14 @@ export class AspectSection extends Section {
       return false;
     }
 
-    return this.suggestedCards.length === this.settings.numberOfSuggestedCards;
+    if (this.suggestedCards.length !== this.settings.numberOfSuggestedCards) {
+      return false;
+    }
+
+    const validSuggestedCards = this.getValidSuggestedCards();
+    return this.suggestedCards.every((card) =>
+      validSuggestedCards.includes(card),
+    );
   }
 
   get suggestedCards() {
@@ -83,11 +92,14 @@ export class AspectSection extends Section {
 
   shuffle({ animate = true, ...options } = {}) {
     super.shuffle({ animate, ...options });
+    const validOptions = this.getValidSuggestedCards();
+    console.log(validOptions.map((card) => card.name).sort());
     const suggestedCards = [];
     for (let i = 0; i < this.settings.numberOfSuggestedCards; i++) {
-      const options = filter(deck, suggestedCards);
+      const options = filter(validOptions, suggestedCards);
       suggestedCards.push(chooseRandom(options));
     }
+    suggestedCards.sort((c1, c2) => this.suggestedCardSort(c1, c2));
     this.runWithShuffle(() => (this.suggestedCards = suggestedCards), animate);
   }
 
@@ -108,6 +120,29 @@ export class AspectSection extends Section {
   saveSuggestedCards(suggestedCards) {
     const suggestedCardIds = suggestedCards.map((card) => card.id);
     setItem(this.suggestedCardsSettingId, suggestedCardIds);
+  }
+
+  getValidSuggestedCards() {
+    const hero = this.parentSections[0].trueCards[0];
+    if (!this.visible || !hero) {
+      return deck;
+    }
+
+    const allowedAspects = this.trueCards.map((aspect) => aspect.name);
+    if (this.settings.includeBasicInSuggestedCards) {
+      allowedAspects.push(BASIC);
+    }
+    return deck.filter((card) => allowedAspects.includes(card.aspect));
+  }
+
+  suggestedCardSort(c1, c2) {
+    const aspectOrder = [...this.trueCards.map((aspect) => aspect.name), BASIC];
+    return (
+      aspectOrder.indexOf(c1.aspect) - aspectOrder.indexOf(c2.aspect) ||
+      c1.type.localeCompare(c2.type) ||
+      c1.name.localeCompare(c2.name) ||
+      (c1.subname || "").localeCompare(c2.subname || "")
+    );
   }
 
   updateVisibility() {

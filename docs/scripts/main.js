@@ -21,9 +21,9 @@ let lastClickedButton = null;
 
 const settings = new Settings({
   maxNumberOfHeroes: 4,
-  maxAllowedHeroicLevel: 3,
+  maxAllowedHeroicLevel: 4,
   maxNumberOfExtraModulars: 4,
-  maxNumberOfSuggestedCards: 5,
+  maxNumberOfSuggestedCards: 4,
 });
 
 // Sections added in shuffle order:

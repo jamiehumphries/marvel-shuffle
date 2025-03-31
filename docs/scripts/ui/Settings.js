@@ -231,16 +231,15 @@ export class Settings {
       "include-basic-in-suggested-cards",
       "Include Basic cards in suggestions",
     );
+    this.appendHint(deckBuildingDiv, "possible-cards");
     this.initializeNumericalSetting(
       deckBuildingDiv,
       "number-of-suggested-cards",
-      "Number of cards",
-      1,
+      "Number of suggested cards",
+      0,
       this.maxNumberOfSuggestedCards,
       (value) => (this._numberOfSuggestedCards = value),
     );
-
-    this.appendHint(deckBuildingDiv, "possible-cards");
   }
 
   initializeCheckboxSetting(

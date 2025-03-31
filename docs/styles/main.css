@@ -292,8 +292,7 @@ button.danger {
 }
 
 .hint {
-  margin-right: auto;
-  margin-left: auto;
+  margin: 1rem auto;
   max-width: 320px;
   font-style: italic;
   font-size: 0.8rem;
@@ -400,11 +399,6 @@ fieldset legend::after {
 .keyboard-nav .radio-setting input:focus + label {
   outline: var(--outline);
   outline-offset: var(--outline-offset);
-}
-
-.numerical-setting legend {
-  float: left;
-  margin: 0;
 }
 
 .numerical-setting label {
@@ -982,11 +976,6 @@ body:not(.show-tracker) #tracking {
     padding-right: 0.25rem;
     padding-left: 0.25rem;
     font-size: 0.9rem;
-  }
-
-  .numerical-setting legend {
-    float: none;
-    margin-bottom: inherit;
   }
 
   .sections,

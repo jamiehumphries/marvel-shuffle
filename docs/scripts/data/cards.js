@@ -1,3 +1,5 @@
+import { heroes as heroData } from "../data/heroes.js?v=00000000";
+import { passesRestriction } from "../helpers.js?v=01996c74";
 import { Aspect } from "../models/Aspect.js?v=8c13f85c";
 import { CardSet } from "../models/CardSet.js?v=095ba5bd";
 import { Difficulty } from "../models/Difficulty.js?v=31e5b092";
@@ -395,9 +397,28 @@ export const aspects = [
 
 // HEROES
 
-function hero(name, alterEgo, aspects, color, options) {
+function hero(name, alterEgo, aspects, color, options = {}) {
+  const data = heroData.find(
+    (entry) => entry.name === name && entry.alterEgo === alterEgo,
+  );
+
+  const traitKeys = data?.traitKeys || [];
+  const hp = data?.hp || 0;
+
   aspects = ensureArray(aspects);
-  return new Hero(name, alterEgo, aspects, color, options);
+
+  if (options.include) {
+    let { traits, type } = options.include;
+    traits = traits
+      ? ensureArray(traits).map((trait) => trait.toUpperCase())
+      : null;
+    type = type ? ensureArray(type) : null;
+    options.include = (card) =>
+      passesRestriction(traits, card.traits) &&
+      passesRestriction(type, [card.type]);
+  }
+
+  return new Hero(name, alterEgo, aspects, color, traitKeys, hp, options);
 }
 
 // prettier-ignore
@@ -428,7 +449,7 @@ export const heroes = [
     hero("Rocket Raccoon", null, AGGRESSION, "#c00000"),
   ),
   hero("Star-Lord", "Peter Quill", LEADERSHIP, "#c4cdda"),
-  hero("Gamora", null, AGGRESSION, "#00b050"),
+  hero("Gamora", null, AGGRESSION, "#00b050", { include: { traits: ["Attack", "Defense"], type: "Event" } }),
   hero("Drax", null, PROTECTION, "#afdc7e"),
   hero("Venom", "Flash Thompson", JUSTICE, "#404040"),
   theMadTitansShadow(
@@ -451,14 +472,14 @@ export const heroes = [
     hero("Colossus", "Piotr Rasputin", PROTECTION, "#c7d0db"),
     hero("Shadowcat", "Kitty Pryde", AGGRESSION, "#ffc000"),
   ),
-  hero("Cyclops", "Scott Summers", LEADERSHIP, "#ff0000"),
+  hero("Cyclops", "Scott Summers", LEADERSHIP, "#ff0000", { include: { traits: "X-Men", type: "Ally" } }),
   hero("Phoenix", "Jean Grey", JUSTICE, "#00b050"),
   hero("Wolverine", "Logan", AGGRESSION, "#fcf600"),
   hero("Storm", "Ororo Munroe", LEADERSHIP, "#404040"),
   hero("Gambit", "Remy LeBeau", JUSTICE, "#d60093"),
   hero("Rogue", "Anna Marie", PROTECTION, "#f2f2f2"),
   neXtEvolution(
-    hero("Cable", "Nathan Summers", LEADERSHIP, "#c7d0db"),
+    hero("Cable", "Nathan Summers", LEADERSHIP, "#c7d0db", { include: { type: "Player Side Scheme" } }),
     hero("Domino", "Neena Thurman", JUSTICE, "#f2f2f2"),
   ),
   hero("Psylocke", "Betsy Braddock", JUSTICE, "#ff97ff"),
@@ -474,7 +495,7 @@ export const heroes = [
   hero("Nightcrawler", "Kurt Wagner", PROTECTION, "#c00000"),
   hero("Magneto", "Erik Lehnsherr", LEADERSHIP, "#c7d0db"),
   agentsOfShield(
-    hero("Maria Hill", null, LEADERSHIP, "#b4c6e7"),
+    hero("Maria Hill", null, LEADERSHIP, "#b4c6e7", { include: { traits: "S.H.I.E.L.D.", type: "Support" } }),
     hero("Nick Fury", null, JUSTICE, "#404040"),
   ),
   hero("Black Panther", "Shuri", JUSTICE, "#7030a0"),

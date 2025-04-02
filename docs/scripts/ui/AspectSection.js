@@ -1,7 +1,11 @@
 import { aspects } from "../data/cards.js?v=9a2e587a";
 import { deck } from "../data/deck.js?v=00000000";
 import { getItem, setItem } from "../data/storage.js?v=e77ff9b5";
-import { chooseRandom, filter } from "../helpers.js?v=01996c74";
+import {
+  chooseRandom,
+  filter,
+  passesRestriction,
+} from "../helpers.js?v=01996c74";
 import { Section } from "./Section.js?v=cee48f1c";
 
 const BASIC = "Basic";
@@ -92,10 +96,10 @@ export class AspectSection extends Section {
 
   shuffle({ animate = true, ...options } = {}) {
     super.shuffle({ animate, ...options });
-    const validOptions = this.getValidSuggestedCards();
+    const validSuggestedCards = this.getValidSuggestedCards();
     const suggestedCards = [];
     for (let i = 0; i < this.settings.numberOfSuggestedCards; i++) {
-      const options = filter(validOptions, suggestedCards);
+      const options = filter(validSuggestedCards, suggestedCards);
       suggestedCards.push(chooseRandom(options));
     }
     suggestedCards.sort((c1, c2) => this.suggestedCardSort(c1, c2));
@@ -122,7 +126,8 @@ export class AspectSection extends Section {
   }
 
   getValidSuggestedCards() {
-    const hero = this.parentSections[0].trueCards[0];
+    const heroSection = this.parentSections[0];
+    const hero = heroSection.trueCards[0];
     if (!this.visible || !hero) {
       return deck;
     }
@@ -132,18 +137,20 @@ export class AspectSection extends Section {
       allowedAspects.push(BASIC);
     }
 
+    const allowedSets = heroSection.cardsOrSets
+      .filter((cardOrSet, i) => i === 0 || cardOrSet.checked)
+      .map((cardOrSet) => cardOrSet.name);
+
     return deck
-      .filter((card) => allowedAspects.includes(card.aspect))
-      .filter(
-        (card) =>
-          card.teamUp === null ||
-          card.teamUp.includes(hero.name) ||
-          card.teamUp.includes(hero.subname),
-      );
+      .filter((card) => passesRestriction(card.packs, allowedSets))
+      .filter((card) => canIncludeSuggestedCard(card, hero, allowedAspects));
   }
 
   suggestedCardSort(c1, c2) {
-    const aspectOrder = [...this.trueCards.map((aspect) => aspect.name), BASIC];
+    const aspectOrder = this.trueCards
+      .concat(this.selectableCards)
+      .map((card) => card.name)
+      .concat(BASIC);
     return (
       aspectOrder.indexOf(c1.aspect) - aspectOrder.indexOf(c2.aspect) ||
       c1.type.localeCompare(c2.type) ||
@@ -156,4 +163,21 @@ export class AspectSection extends Section {
     const visible = this.nthOfType <= this.settings.numberOfHeroes;
     this.toggleVisibility(visible);
   }
+}
+
+function canIncludeSuggestedCard(card, hero, allowedAspects) {
+  if (card.aspect === BASIC && !allowedAspects.includes(BASIC)) {
+    return false;
+  }
+
+  if (hero.include && hero.include(card)) {
+    return true;
+  }
+
+  return (
+    allowedAspects.includes(card.aspect) &&
+    passesRestriction(card.teamUp, [hero.name, hero.subname]) &&
+    passesRestriction(card.traitLocks, hero.traits) &&
+    (card.minHp === null || hero.hp >= card.minHp)
+  );
 }

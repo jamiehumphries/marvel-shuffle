@@ -6,7 +6,9 @@ export class Hero extends Card {
     alterEgo,
     aspects,
     color,
-    { hasGiantForm = false, hasWideForm = false } = {},
+    traits,
+    hp,
+    { hasGiantForm = false, hasWideForm = false, include = null } = {},
   ) {
     const subname = alterEgo;
     const hasBack = true;
@@ -18,9 +20,12 @@ export class Hero extends Card {
       hasBack,
       baseChildCardCount,
       defaultChildCards,
+      traits,
       hasGiantForm,
       hasWideForm,
     });
+    this.hp = hp;
+    this.include = include;
   }
 
   static get namePlural() {

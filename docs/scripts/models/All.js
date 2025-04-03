@@ -1,4 +1,4 @@
-import { Option } from "./Option.js?v=80a2266d";
+import { Option } from "./Option.js";
 
 export class All extends Option {
   constructor(section) {

@@ -1,11 +1,11 @@
-import { heroes as heroData } from "../data/heroes.js?v=00000000";
-import { passesRestriction } from "../helpers.js?v=01996c74";
-import { Aspect } from "../models/Aspect.js?v=8c13f85c";
-import { CardSet } from "../models/CardSet.js?v=095ba5bd";
-import { Difficulty } from "../models/Difficulty.js?v=31e5b092";
-import { Hero } from "../models/Hero.js?v=193ded2b";
-import { Modular } from "../models/Modular.js?v=7cca8205";
-import { Scenario } from "../models/Scenario.js?v=6a779c9f";
+import { heroes as heroData } from "../data/heroes.js";
+import { passesRestriction } from "../helpers.js";
+import { Aspect } from "../models/Aspect.js";
+import { CardSet } from "../models/CardSet.js";
+import { Difficulty } from "../models/Difficulty.js";
+import { Hero } from "../models/Hero.js";
+import { Modular } from "../models/Modular.js";
+import { Scenario } from "../models/Scenario.js";
 
 function ensureArray(arrayOrString) {
   return Array.isArray(arrayOrString) ? arrayOrString : [arrayOrString];

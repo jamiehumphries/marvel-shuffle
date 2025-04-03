@@ -1,3 +1,3 @@
-import { migration0001 } from "./migration0001.js?v=cae1f1d2";
+import { migration0001 } from "./migration0001.js";
 
 export const migrations = [migration0001];

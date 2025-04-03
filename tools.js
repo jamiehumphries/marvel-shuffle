@@ -5,13 +5,16 @@ import { glob } from "glob";
 import { imageSize } from "image-size";
 import { parse, relative, resolve } from "path";
 import { format } from "prettier";
-import { replaceInFile } from "replace-in-file";
+import { replaceInFileSync } from "replace-in-file";
 import { promisify } from "util";
 
 const root = import.meta.dirname;
 const imagesPath = "docs/images";
 const imageGlobToExt = `${imagesPath}/*/**/{front,back,front-inner,back-inner}`;
 const imageSourceRepo = resolve("../marvel-shuffle-images");
+
+const HASH_LENGTH = 8;
+const assetGlobPattern = "docs/**/*.{html,css,js}";
 
 export const exec = promisify(_exec);
 
@@ -111,26 +114,25 @@ export async function writeCodeFile(path, data) {
 }
 
 export async function updateAssetVersions() {
-  const assets = await glob("docs/**/*.{css,js}", { withFileTypes: true });
-  const results = await Promise.all(assets.map(updateAssetVersion));
-  const anyHasChanged = results.some((result) => result.hasChanged);
-  if (anyHasChanged) {
-    await updateAssetVersions(assets);
-  }
+  applyAssetHash("\\.(?:html|css|js)", "0".repeat(HASH_LENGTH));
+  await exec("npx prettier --write docs");
+
+  let results;
+  do {
+    const assets = await glob(assetGlobPattern, { withFileTypes: true });
+    results = await Promise.all(assets.map(updateAssetVersion));
+  } while (results.some((result) => result.hasChanged));
+
   await exec("git add docs");
 }
 
 async function updateAssetVersion(asset) {
   const { parentPath, name } = asset;
+
   const nameForRegex = name.replace(".", "\\.");
-  const regex = new RegExp(`(?<=/${nameForRegex}\\?v=)[0-9a-f]+`, "g");
   const path = resolve(parentPath, name);
   const hash = await computeHash(path);
-  const results = await replaceInFile({
-    files: "docs/**/*.{html,js}",
-    from: regex,
-    to: hash,
-  });
+  const results = applyAssetHash(`/${nameForRegex}`, hash);
 
   let hasChanged = false;
   for (const result of results) {
@@ -143,7 +145,19 @@ async function updateAssetVersion(asset) {
   return { hasChanged };
 }
 
+function applyAssetHash(assetPattern, hash) {
+  const regex = new RegExp(
+    `(?<="[a-zA-Z0-9./-]*${assetPattern})(\\?v=[0-9a-f]{${HASH_LENGTH}})?(?=")`,
+    "g",
+  );
+  return replaceInFileSync({
+    files: assetGlobPattern,
+    from: regex,
+    to: `?v=${hash}`,
+  });
+}
+
 async function computeHash(path) {
   const data = await readFile(path);
-  return createHash("md5").update(data).digest("hex").substring(0, 8);
+  return createHash("md5").update(data).digest("hex").substring(0, HASH_LENGTH);
 }

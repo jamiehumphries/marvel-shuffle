@@ -14,6 +14,14 @@ export class DifficultySection extends Section {
     return 2;
   }
 
+  get minCount() {
+    return this.includeExpertProbability === 1 ? 2 : 1;
+  }
+
+  get maxCount() {
+    return this.includeExpertProbability === 0 ? 1 : 2;
+  }
+
   get standardCardOptions() {
     return this.getCardOptions(STANDARD);
   }
@@ -23,25 +31,7 @@ export class DifficultySection extends Section {
   }
 
   get valid() {
-    if (this.heroicLevel > this.settings.maxHeroicLevel) {
-      return false;
-    }
-
-    switch (this.cards.length) {
-      case 1:
-        return (
-          this.includeExpertProbability < 1 &&
-          this.standardCardOptions.includes(this.cards[0])
-        );
-      case 2:
-        return (
-          this.includeExpertProbability > 0 &&
-          this.standardCardOptions.includes(this.cards[0]) &&
-          this.expertCardOptions.includes(this.cards[1])
-        );
-      default:
-        return false;
-    }
+    return super.valid && this.heroicLevel <= this.settings.maxHeroicLevel;
   }
 
   get includeExpertProbability() {
@@ -120,13 +110,12 @@ export class DifficultySection extends Section {
     this.runWithShuffle(() => (this.heroicLevel = newHeroicLevel), animate);
   }
 
-  chooseCards(isShuffleAll) {
-    const cards = [this.randomCard(this.standardCardOptions, isShuffleAll)];
-    const includeExpert = Math.random() < this.includeExpertProbability;
-    if (includeExpert) {
-      cards.push(this.randomCard(this.expertCardOptions, isShuffleAll));
-    }
-    return cards;
+  getRandomCount() {
+    return Math.random() < this.includeExpertProbability ? 2 : 1;
+  }
+
+  getCardOptionSets(count) {
+    return [this.standardCardOptions, this.expertCardOptions].slice(0, count);
   }
 
   getCheckedCards(level) {

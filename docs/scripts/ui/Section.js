@@ -119,7 +119,7 @@ export class Section extends Toggleable {
     return this.flattenParentCards((card) => card.excludedChildCards);
   }
 
-  get expectedCardCount() {
+  get baseCount() {
     if (this.parentCards.length === 0) {
       return 1;
     }
@@ -128,12 +128,22 @@ export class Section extends Toggleable {
     return this.parentCards.reduce(sum, 0);
   }
 
+  get minCount() {
+    return this.baseCount;
+  }
+
+  get maxCount() {
+    return this.baseCount;
+  }
+
   get valid() {
     const countedCards = this.cards.filter(
       (card) => !card.isUncounted || this.requiredCards.includes(card),
     );
 
-    if (countedCards.length !== this.expectedCardCount) {
+    const count = countedCards.length;
+
+    if (count < this.minCount || count > this.maxCount) {
       return false;
     }
 
@@ -146,8 +156,8 @@ export class Section extends Toggleable {
       return true;
     }
 
-    const optionSets = this.getCardOptionSets();
-    return optionSets.every((set, i) => set?.includes(this.cards[i]));
+    const optionSets = this.getCardOptionSets(count);
+    return optionSets.every((set, i) => set.includes(this.cards[i]));
   }
 
   get visible() {
@@ -346,7 +356,8 @@ export class Section extends Toggleable {
   }
 
   chooseCards(isShuffleAll) {
-    const optionSets = this.getCardOptionSets(isShuffleAll);
+    const count = this.getRandomCount();
+    const optionSets = this.getCardOptionSets(count, isShuffleAll);
     const cards = [];
     for (const optionSet of optionSets) {
       const filteredOptionSet = filter(optionSet, cards);
@@ -356,8 +367,13 @@ export class Section extends Toggleable {
     return cards;
   }
 
-  getCardOptionSets(isShuffleAll = false) {
-    if (this.expectedCardCount === 0) {
+  getRandomCount() {
+    const rangeSize = this.maxCount - this.minCount + 1;
+    return this.minCount + Math.floor(Math.random() * rangeSize);
+  }
+
+  getCardOptionSets(count, isShuffleAll = false) {
+    if (count === 0) {
       return [];
     }
 
@@ -373,7 +389,7 @@ export class Section extends Toggleable {
 
     const optionsSets = [];
     for (const tier of tiers) {
-      const numberNeeded = this.expectedCardCount - optionsSets.length;
+      const numberNeeded = count - optionsSets.length;
       const cardOptions = tier.isRequired
         ? tier.cards
         : filter(tier.cards, exclude);
@@ -385,7 +401,7 @@ export class Section extends Toggleable {
 
       optionsSets.push(...tierOptionSets);
 
-      if (optionsSets.length === this.expectedCardCount) {
+      if (optionsSets.length === count) {
         break;
       }
     }

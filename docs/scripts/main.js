@@ -20,10 +20,10 @@ const shuffleAllButton = document.getElementById("shuffle-all");
 let lastClickedButton = null;
 
 const settings = new Settings({
-  maxNumberOfHeroes: 4,
+  maxAllowedHeroes: 4,
   maxAllowedHeroicLevel: 4,
-  maxNumberOfExtraModulars: 4,
-  maxNumberOfSuggestedCards: 4,
+  maxAllowedExtraModulars: 4,
+  maxAllowedSuggestedCards: 4,
 });
 
 // Sections added in shuffle order:
@@ -34,7 +34,7 @@ const scenarioSection = new ScenarioSection(settings);
 sections.push(scenarioSection);
 
 const heroSections = [];
-for (let n = 1; n <= settings.maxNumberOfHeroes; n++) {
+for (let n = 1; n <= settings.maxAllowedHeroes; n++) {
   const heroSection = new HeroSection(settings, n);
   const aspectSection = new AspectSection(settings, n);
   heroSections.push(heroSection);

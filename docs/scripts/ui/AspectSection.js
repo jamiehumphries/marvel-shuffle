@@ -47,7 +47,7 @@ export class AspectSection extends Section {
 
     this.suggestedCardSlots = [];
     const slotTemplate = document.getElementById("suggested-card");
-    for (let i = 0; i < this.settings.maxNumberOfSuggestedCards; i++) {
+    for (let i = 0; i < this.settings.maxAllowedSuggestedCards; i++) {
       const slot = slotTemplate.content.firstElementChild.cloneNode(true);
       element.appendChild(slot);
       this.suggestedCardSlots.push(slot);

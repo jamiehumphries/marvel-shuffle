@@ -60,7 +60,7 @@ export class Section extends Toggleable {
       return this._maxSlots;
     }
 
-    const maxHeroes = this.settings.maxNumberOfHeroes;
+    const maxHeroes = this.settings.maxAllowedHeroes;
     const sum = (count, section) => {
       const childCardCounts = section.selectableCards.map((card) =>
         card.childCardCount(maxHeroes),

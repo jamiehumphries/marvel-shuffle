@@ -17,15 +17,15 @@ const deckBuildingDiv = document.getElementById("deck-building");
 
 export class Settings {
   constructor({
-    maxNumberOfHeroes,
+    maxAllowedHeroes,
     maxAllowedHeroicLevel,
-    maxNumberOfExtraModulars,
-    maxNumberOfSuggestedCards,
+    maxAllowedExtraModulars,
+    maxAllowedSuggestedCards,
   }) {
-    this.maxNumberOfHeroes = maxNumberOfHeroes;
+    this.maxAllowedHeroes = maxAllowedHeroes;
     this.maxAllowedHeroicLevel = maxAllowedHeroicLevel;
-    this.maxNumberOfExtraModulars = maxNumberOfExtraModulars;
-    this.maxNumberOfSuggestedCards = maxNumberOfSuggestedCards;
+    this.maxAllowedExtraModulars = maxAllowedExtraModulars;
+    this.maxAllowedSuggestedCards = maxAllowedSuggestedCards;
     this.allSectionsInitialized = false;
     this._cardProbabilities = {};
   }
@@ -97,7 +97,7 @@ export class Settings {
       "number-of-heroes",
       "Number of heroes",
       1,
-      this.maxNumberOfHeroes,
+      this.maxAllowedHeroes,
       (value) => (this.numberOfHeroes = value),
     );
   }
@@ -191,7 +191,7 @@ export class Settings {
       "number-of-extra-modulars",
       "Extra modulars",
       0,
-      this.maxNumberOfExtraModulars,
+      this.maxAllowedExtraModulars,
       (value) => (this._numberOfExtraModulars = value),
     );
   }
@@ -237,7 +237,7 @@ export class Settings {
       "number-of-suggested-cards",
       "Number of suggested cards",
       0,
-      this.maxNumberOfSuggestedCards,
+      this.maxAllowedSuggestedCards,
       (value) => (this._numberOfSuggestedCards = value),
     );
   }

@@ -15,7 +15,7 @@ export class ExtraModularSection extends Section {
   }
 
   get maxSlots() {
-    return this.settings.maxNumberOfExtraModulars;
+    return this.settings.maxAllowedExtraModulars;
   }
 
   get expectedCardCount() {

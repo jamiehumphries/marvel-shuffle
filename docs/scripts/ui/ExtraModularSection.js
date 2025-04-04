@@ -14,12 +14,22 @@ export class ExtraModularSection extends Section {
     return (this._sectionNamePlural ||= modifyName(super.sectionNamePlural));
   }
 
+  get placeholder() {
+    return (this._placeholder ||= new this.type(
+      `No ${this.sectionNamePlural}`,
+    ));
+  }
+
   get maxSlots() {
     return this.settings.maxAllowedExtraModulars;
   }
 
-  get expectedCardCount() {
-    return this.settings.numberOfExtraModulars;
+  get minCount() {
+    return this.settings.minExtraModulars;
+  }
+
+  get maxCount() {
+    return this.settings.maxExtraModulars;
   }
 
   initializeSectionRelationships() {
@@ -33,7 +43,7 @@ export class ExtraModularSection extends Section {
   }
 
   updateVisibility() {
-    const visible = this.settings.numberOfExtraModulars > 0;
+    const visible = this.settings.maxExtraModulars > 0;
     this.toggleVisibility(visible);
   }
 }

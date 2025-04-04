@@ -119,6 +119,10 @@ export class Section extends Toggleable {
     return this.flattenParentCards((card) => card.excludedChildCards);
   }
 
+  get placeholder() {
+    return null;
+  }
+
   get baseCount() {
     if (this.parentCards.length === 0) {
       return 1;
@@ -300,9 +304,7 @@ export class Section extends Toggleable {
       value.length === 1 ? this.sectionName : this.sectionNamePlural;
 
     const slotCards =
-      value.length === 0 && this.type.placeholder
-        ? [this.type.placeholder]
-        : value;
+      value.length === 0 && this.placeholder ? [this.placeholder] : value;
 
     const { style } = this.root;
     const landscapeCount = slotCards.filter((card) => card.isLandscape).length;

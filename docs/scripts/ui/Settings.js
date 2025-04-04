@@ -1,6 +1,6 @@
 import { difficulties, extraModulars } from "../data/cards.js";
-import { getItem, setItem } from "../data/storage.js";
 import { STANDARD } from "../models/Difficulty.js";
+import { RadioSetting } from "../models/RadioSetting.js";
 import { Setting } from "../models/Setting.js";
 
 const PROBABILITY_MAP = {
@@ -30,6 +30,10 @@ export class Settings {
     this._cardProbabilities = {};
   }
 
+  get numberOfHeroes() {
+    return this._numberOfHeroesSetting.value;
+  }
+
   get shuffleDifficulties() {
     return this._shuffleDifficulties.checked;
   }
@@ -51,17 +55,25 @@ export class Settings {
   }
 
   get maxHeroicLevel() {
-    return this._randomiseHeroicLevel.checked ? this._maxHeroicLevel : 0;
+    return this._randomiseHeroicLevel.checked
+      ? this._maxHeroicLevelSetting.value
+      : 0;
   }
 
-  get numberOfExtraModulars() {
+  get minExtraModulars() {
     return this._includeAdditionalModulars.checked
-      ? this._numberOfExtraModulars
+      ? this._minExtraModularsSetting.value
+      : 0;
+  }
+
+  get maxExtraModulars() {
+    return this._includeAdditionalModulars.checked
+      ? this._maxExtraModularsSetting.value
       : 0;
   }
 
   get suggestCards() {
-    return this._suggestCards.checked;
+    return this._suggestCardsSetting.checked;
   }
 
   get includeBasicInSuggestedCards() {
@@ -69,7 +81,7 @@ export class Settings {
   }
 
   get numberOfSuggestedCards() {
-    return this.suggestCards ? this._numberOfSuggestedCards : 0;
+    return this.suggestCards ? this._numberOfSuggestedCardsSetting.value : 0;
   }
 
   getProbability(card) {
@@ -92,13 +104,12 @@ export class Settings {
   }
 
   initializeNumberOfHeroes() {
-    this.initializeNumericalSetting(
+    this._numberOfHeroesSetting = this.initializeNumericalSetting(
       preferencesDiv,
       "number-of-heroes",
       "Number of heroes",
       1,
       this.maxAllowedHeroes,
-      (value) => (this.numberOfHeroes = value),
     );
   }
 
@@ -118,24 +129,28 @@ export class Settings {
       "Shuffle difficulties",
       { togglesBodyClass: true },
     );
+
     this._alwaysIncludeExpert = this.initializeCheckboxSetting(
       preferencesDiv,
       "always-include-expert",
       "Always include an Expert set",
       { isSubsetting: true },
     );
+
     this._randomiseHeroicLevel = this.initializeCheckboxSetting(
       preferencesDiv,
       "randomise-heroic-level",
       "Randomise heroic level",
       { isSubsetting: true, togglesBodyClass: true },
     );
+
     this._showTracker = this.initializeCheckboxSetting(
       preferencesDiv,
       "show-tracker",
       "Show game tracker",
       { subname: "(below shuffle)", togglesBodyClass: true },
     );
+
     this._avoidCompleted = this.initializeCheckboxSetting(
       preferencesDiv,
       "avoid-completed",
@@ -162,13 +177,12 @@ export class Settings {
 
     preferencesDiv.appendChild(outerDiv);
 
-    this.initializeNumericalSetting(
+    this._maxHeroicLevelSetting = this.initializeNumericalSetting(
       preferencesDiv,
       "max-heroic-level",
       "Maximum heroic level",
       0,
       this.maxAllowedHeroicLevel,
-      (value) => (this._maxHeroicLevel = value),
     );
   }
 
@@ -179,6 +193,7 @@ export class Settings {
       "Include more modulars than required",
       { togglesBodyClass: true },
     );
+
     this.initializeNumberOfExtraModulars();
     this.initializeUncountedModulars();
   }
@@ -186,13 +201,30 @@ export class Settings {
   initializeNumberOfExtraModulars() {
     this.appendHint(customisationDiv, "extra-modulars");
 
-    this.initializeNumericalSetting(
+    this._minExtraModularsSetting = this.initializeNumericalSetting(
       customisationDiv,
-      "number-of-extra-modulars",
-      "Extra modulars",
+      "min-extra-modulars",
+      "Minimum extra modulars",
       0,
       this.maxAllowedExtraModulars,
-      (value) => (this._numberOfExtraModulars = value),
+      (value) => {
+        if (this._maxExtraModularsSetting && value > this.maxExtraModulars) {
+          this._maxExtraModularsSetting.value = value;
+        }
+      },
+    );
+
+    this._maxExtraModularsSetting = this.initializeNumericalSetting(
+      customisationDiv,
+      "max-extra-modulars",
+      "Maximum extra modulars",
+      0,
+      this.maxAllowedExtraModulars,
+      (value) => {
+        if (this._minExtraModularsSetting && value < this.minExtraModulars) {
+          this._minExtraModularsSetting.value = value;
+        }
+      },
     );
   }
 
@@ -220,25 +252,27 @@ export class Settings {
   }
 
   initializeDeckBuilding() {
-    this._suggestCards = this.initializeCheckboxSetting(
+    this._suggestCardsSetting = this.initializeCheckboxSetting(
       deckBuildingDiv,
       "suggest-cards",
       "Suggest random cards for each hero",
       { subname: "(below hero’s aspect section)", togglesBodyClass: true },
     );
+
     this._includeBasicInSuggestedCards = this.initializeCheckboxSetting(
       deckBuildingDiv,
       "include-basic-in-suggested-cards",
       "Include Basic cards in suggestions",
     );
+
     this.appendHint(deckBuildingDiv, "possible-cards");
-    this.initializeNumericalSetting(
+
+    this._numberOfSuggestedCardsSetting = this.initializeNumericalSetting(
       deckBuildingDiv,
       "number-of-suggested-cards",
       "Number of suggested cards",
       0,
       this.maxAllowedSuggestedCards,
-      (value) => (this._numberOfSuggestedCards = value),
     );
   }
 
@@ -257,64 +291,18 @@ export class Settings {
     return setting;
   }
 
-  initializeNumericalSetting(parent, setting, legend, min, max, setValue) {
+  initializeNumericalSetting(parent, slug, legend, min, max, onChange = null) {
     const options = Array.from({ length: max - min + 1 }, (_, i) => {
       const value = min + i;
       return { value, html: value.toString() };
     });
-    this.initializeRadioSetting(parent, setting, legend, options, setValue);
+    return this.initializeRadioSetting(parent, slug, legend, options, onChange);
   }
 
-  initializeRadioSetting(parent, setting, legend, options, setValue) {
-    const id = `setting--${setting}`;
-
-    const allowedValues = options.map((option) => option.value);
-    const storedValue = getItem(id);
-    const initialValue = allowedValues.includes(storedValue)
-      ? storedValue
-      : allowedValues[0];
-    setValue(initialValue);
-
-    const isNumerical = allowedValues.every((value) => !isNaN(value));
-
-    const fieldset = document.createElement("fieldset");
-    fieldset.id = id;
-    fieldset.classList.add("radio-setting");
-    if (isNumerical) {
-      fieldset.classList.add("numerical-setting");
-    }
-
-    const fieldsetLegend = document.createElement("legend");
-    fieldsetLegend.innerText = legend;
-    fieldset.appendChild(fieldsetLegend);
-
-    const onChange = (event) => {
-      const radioValue = event.target.value;
-      const value = isNumerical ? Number(radioValue) : radioValue;
-      setValue(value);
-      setItem(id, value);
-    };
-
-    for (const { value, html } of options) {
-      const inputId = `${id}--${value}`;
-
-      const radio = document.createElement("input");
-      radio.type = "radio";
-      radio.id = inputId;
-      radio.name = setting;
-      radio.value = value;
-      radio.checked = value === initialValue;
-      fieldset.appendChild(radio);
-
-      const label = document.createElement("label");
-      label.htmlFor = inputId;
-      label.innerHTML = html;
-      fieldset.appendChild(label);
-
-      radio.addEventListener("change", onChange);
-    }
-
-    parent.appendChild(fieldset);
+  initializeRadioSetting(parent, slug, legend, options, onChange = null) {
+    const radioSetting = new RadioSetting(slug, legend, options, { onChange });
+    radioSetting.appendTo(parent);
+    return radioSetting;
   }
 
   appendHint(div, hintId) {

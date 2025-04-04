@@ -19,8 +19,4 @@ export class Modular extends Card {
       requiredReason,
     });
   }
-
-  static get placeholder() {
-    return (this._placeholder ||= new this("No modulars needed"));
-  }
 }

@@ -1,3 +1,7 @@
+export function copy(sourceKey, destinationKey) {
+  return ["copy", sourceKey, destinationKey];
+}
+
 export function remove(key) {
   return ["remove", key];
 }

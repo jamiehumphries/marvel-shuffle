@@ -149,12 +149,17 @@ function runMigration(migrationId, migration) {
   if (hasMigrated) {
     return;
   }
-  const operations = { rename, remove, setDefault };
+  const operations = { copy, rename, remove, setDefault };
   for (const [operationName, ...args] of migration) {
     const operation = operations[operationName];
     operation(...args);
   }
   setItem(migrationKey, true);
+}
+
+function copy(sourceKey, destinationKey) {
+  const value = getItem(sourceKey);
+  setItem(destinationKey, value);
 }
 
 function rename(oldName, newName) {

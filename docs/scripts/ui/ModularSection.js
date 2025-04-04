@@ -6,6 +6,12 @@ export class ModularSection extends Section {
     super(settings, modulars, 1, extraModulars);
   }
 
+  get placeholder() {
+    return (this._placeholder ||= new this.type(
+      `No ${this.sectionNamePlural}`,
+    ));
+  }
+
   get valid() {
     if (!super.valid) {
       return false;

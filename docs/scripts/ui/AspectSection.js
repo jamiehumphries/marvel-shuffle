@@ -166,6 +166,10 @@ function canIncludeSuggestedCard(card, hero, allowedAspects) {
     return false;
   }
 
+  if (card.name === hero.name && [null, hero.subname].includes(card.subname)) {
+    return false;
+  }
+
   if (hero.include && hero.include(card)) {
     return true;
   }

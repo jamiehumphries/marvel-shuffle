@@ -98,6 +98,7 @@ export class AspectSection extends Section {
       const card = value[i];
       slot.classList.toggle("hidden", !card);
       if (card) {
+        slot.href = card.href;
         img.src = card.imgSrc;
         img.classList.toggle("landscape", card.landscape);
         name.innerText = card.name;

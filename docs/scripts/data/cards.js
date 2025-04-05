@@ -449,7 +449,7 @@ export const heroes = [
     hero("Rocket Raccoon", null, AGGRESSION, "#c00000"),
   ),
   hero("Star-Lord", "Peter Quill", LEADERSHIP, "#c4cdda"),
-  hero("Gamora", null, AGGRESSION, "#00b050", { include: { traits: ["Attack", "Defense"], type: "Event" } }),
+  hero("Gamora", null, AGGRESSION, "#00b050", { include: { traits: ["Attack", "Thwart"], type: "Event" } }),
   hero("Drax", null, PROTECTION, "#afdc7e"),
   hero("Venom", "Flash Thompson", JUSTICE, "#404040"),
   theMadTitansShadow(

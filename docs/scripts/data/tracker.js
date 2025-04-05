@@ -22,18 +22,25 @@ export function renderTable(scenarios, heroes, difficulties = []) {
   );
 
   clearTable();
+
   const thead = document.createElement("thead");
   const tbody = document.createElement("tbody");
-  table.appendChild(thead);
-  table.appendChild(tbody);
+
   appendHeaderRows(thead, scenarios, difficulties);
   appendBodyRows(tbody, scenarios, heroes, difficulties);
+  setUpIndeterminateCheckboxes(tbody);
 
-  setUpIndeterminateCheckboxes();
+  const fragment = document.createDocumentFragment();
+  fragment.appendChild(thead);
+  fragment.appendChild(tbody);
+
+  table.appendChild(fragment);
+
   updateProgress();
 }
 
 function clearTable() {
+  table.removeEventListener("click", handleCheckboxClick);
   table.innerHTML = "";
 }
 
@@ -297,16 +304,20 @@ function hexToRgb(hex) {
     : null;
 }
 
-function setUpIndeterminateCheckboxes() {
-  const checkboxes = table.getElementsByTagName("input");
+function setUpIndeterminateCheckboxes(tbody) {
+  const checkboxes = tbody.getElementsByTagName("input");
   for (const checkbox of checkboxes) {
     const state = getItem(checkbox.id);
     applyStateToCheckbox(checkbox, state);
-    checkbox.addEventListener("click", handleCheckboxClick);
   }
+
+  table.addEventListener("click", handleCheckboxClick);
 }
 
 function handleCheckboxClick(event) {
+  if (event.target.type !== "checkbox") {
+    return;
+  }
   const checkbox = event.target;
   const newState = nextCheckboxState(checkbox.dataset.state);
   setItem(checkbox.id, newState);

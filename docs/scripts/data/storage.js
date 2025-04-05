@@ -2,7 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebas
 import {
   addDoc,
   collection,
-  deleteDoc,
   deleteField,
   doc,
   getDoc,
@@ -43,14 +42,6 @@ async function initializeStorage() {
     }
   }
   runMigrations();
-}
-
-async function clearStorage() {
-  localStorage.clear();
-  const userDoc = getUserDoc();
-  if (userDoc) {
-    await deleteDoc(userDoc);
-  }
 }
 
 async function createBookmarkUrl() {
@@ -98,8 +89,13 @@ function clearUserId() {
   document.body.classList.remove(HAS_USER_ID);
 }
 
-function getItem(key) {
-  return JSON.parse(localStorage.getItem(LOCAL_KEY_PREFIX + key));
+function getItem(key, parse = true) {
+  try {
+    const value = localStorage.getItem(LOCAL_KEY_PREFIX + key);
+    return parse ? JSON.parse(value) : value;
+  } catch (error) {
+    return resetItem(key, null, error);
+  }
 }
 
 function setItem(key, value, stringify = true) {
@@ -108,6 +104,13 @@ function setItem(key, value, stringify = true) {
   }
   localStorage.setItem(LOCAL_KEY_PREFIX + key, value);
   updateDb(key, value);
+}
+
+function resetItem(key, value, error) {
+  const oldValue = getItem(key, false);
+  console.warn(`Resetting ${key}, was: ${oldValue}\n\n`, error);
+  setItem(key, value);
+  return value;
 }
 
 function removeItem(key) {
@@ -202,12 +205,12 @@ function setDefault(key, value) {
 }
 
 export {
-  clearStorage,
   clearUserId,
   createBookmarkUrl,
   getBookmarkUrl,
   getItem,
   initializeStorage,
+  resetItem,
   setItem,
   setUserId,
 };

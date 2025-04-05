@@ -1,4 +1,4 @@
-import { getItem, setItem } from "../data/storage.js";
+import { getItem, resetItem, setItem } from "../data/storage.js";
 import { chooseRandom, filter, requestPostAnimationFrame } from "../helpers.js";
 import { All } from "../models/All.js";
 import { Aspect } from "../models/Aspect.js";
@@ -470,9 +470,8 @@ export class Section extends Toggleable {
             .map((id) => allCards.find((card) => card.id === id))
             .filter((card) => card !== undefined)
         : [];
-    } catch {
-      clearStorage();
-      return [];
+    } catch (error) {
+      return resetItem(this.id, [], error);
     }
   }
 

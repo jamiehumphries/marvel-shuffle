@@ -1,6 +1,6 @@
 import { aspects } from "../data/cards.js";
 import { deck } from "../data/deck.js";
-import { getItem, setItem } from "../data/storage.js";
+import { getItem, resetItem, setItem } from "../data/storage.js";
 import { chooseRandom, filter, passesRestriction } from "../helpers.js";
 import { Section } from "./Section.js";
 
@@ -116,9 +116,8 @@ export class AspectSection extends Section {
             .map((id) => deck.find((card) => card.id === id))
             .filter((card) => card !== undefined)
         : [];
-    } catch {
-      clearStorage();
-      return [];
+    } catch (error) {
+      return resetItem(this.suggestedCardsSettingId, [], error);
     }
   }
 

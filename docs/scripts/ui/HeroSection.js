@@ -15,7 +15,11 @@ export class HeroSection extends Section {
     this.siblingSections.push(...filter(this.heroSections, [this]));
   }
 
-  getPriorityFromTracking(hero, isShuffleAll) {
+  getPriority(hero, isShuffleAll) {
+    if (!this.settings.avoidCompleted) {
+      return 1;
+    }
+
     const scenarios = this.scenarioSection.trueCards;
     const difficulties = isShuffleAll
       ? this.difficultySection.checkedCards

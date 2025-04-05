@@ -35,14 +35,27 @@ export class AspectSection extends Section {
     this.setSuggestedCards(value);
   }
 
-  initializeSectionRelationships() {
-    this.childSection = this.modularSection;
-    this.cardSetSections = [
+  get cousinSections() {
+    return (this._cousinSections ||= filter(this.aspectSections, [this]));
+  }
+
+  get previousCousinSections() {
+    return (this._previousCousinSections ||= this.cousinSections.filter(
+      (section) => section.nthOfType < this.nthOfType,
+    ));
+  }
+
+  get cardSetSections() {
+    return (this._cardSetSections ||= [
       this.scenarioSection,
       this.modularSection,
       this.heroSections[0],
       this.aspectSections[0],
-    ];
+    ]);
+  }
+
+  initializeSectionRelationships() {
+    this.childSection = this.modularSection;
   }
 
   initializeLayout() {
@@ -106,6 +119,28 @@ export class AspectSection extends Section {
     }
     suggestedCards.sort((c1, c2) => this.suggestedCardSort(c1, c2));
     this.runWithShuffle(() => (this.suggestedCards = suggestedCards), animate);
+  }
+
+  prioritise(aspects, isShuffleAll) {
+    if (!this.settings.avoidRepeatedAspects) {
+      return aspects;
+    }
+
+    const avoidedCousinSections = isShuffleAll
+      ? this.previousCousinSections
+      : this.cousinSections;
+
+    const aspectUses = avoidedCousinSections.flatMap(
+      (section) => section.trueCards,
+    );
+
+    const aspectUseCounts = Object.groupBy(
+      aspects,
+      (aspect) => aspectUses.filter((use) => use === aspect).length,
+    );
+
+    const minUseCount = Math.min(...Object.keys(aspectUseCounts));
+    return aspectUseCounts[minUseCount];
   }
 
   loadSuggestedCards() {

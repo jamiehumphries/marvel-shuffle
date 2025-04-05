@@ -49,7 +49,11 @@ export class ScenarioSection extends Section {
     this.shuffle({ forcedCards: [this.nextScenario] });
   }
 
-  getPriorityFromTracking(scenario, isShuffleAll) {
+  getPriority(scenario, isShuffleAll) {
+    if (!this.settings.avoidCompleted) {
+      return 1;
+    }
+
     const heroes = isShuffleAll
       ? this.heroSections[0].checkedCards
       : this.heroSections.flatMap((section) => section.trueCards);

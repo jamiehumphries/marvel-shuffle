@@ -256,6 +256,7 @@ label.subsetting {
   gap: 1rem;
 }
 
+body:not(.has-multiple-heroes) label[for="setting--avoid-repeated-aspects"],
 body:not(.shuffle-difficulties) label[for="setting--always-include-expert"],
 body:not(.shuffle-difficulties) label[for="setting--randomise-heroic-level"],
 body:not(.show-tracker) label[for="setting--avoid-completed"],

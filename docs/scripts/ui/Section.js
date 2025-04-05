@@ -412,22 +412,20 @@ export class Section extends Toggleable {
   }
 
   randomCard(options, isShuffleAll) {
-    const prioritisedOptions = options.flatMap((card) => {
-      const priority = this.getPriority(card, isShuffleAll);
-      return Array(priority).fill(card);
-    });
+    const prioritisedOptions = this.prioritise(options, isShuffleAll);
     return chooseRandom(
       prioritisedOptions.length > 0 ? prioritisedOptions : options,
     );
   }
 
-  getPriority(card, isShuffleAll) {
-    return this.settings.avoidCompleted
-      ? this.getPriorityFromTracking(card, isShuffleAll)
-      : 1;
+  prioritise(options, isShuffleAll) {
+    return options.flatMap((card) => {
+      const priority = this.getPriority(card, isShuffleAll);
+      return Array(priority).fill(card);
+    });
   }
 
-  getPriorityFromTracking(_card, _isShuffleAll) {
+  getPriority(_option, _isShuffleAll) {
     return 1;
   }
 

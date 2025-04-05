@@ -34,6 +34,10 @@ export class Settings {
     return this._numberOfHeroesSetting.value;
   }
 
+  get avoidRepeatedAspects() {
+    return this.numberOfHeroes > 1 && this._avoidRepeatedAspects.checked;
+  }
+
   get shuffleDifficulties() {
     return this._shuffleDifficulties.checked;
   }
@@ -110,6 +114,15 @@ export class Settings {
       "Number of heroes",
       1,
       this.maxAllowedHeroes,
+      (value) => {
+        document.body.classList.toggle("has-multiple-heroes", value > 1);
+      },
+    );
+
+    this._avoidRepeatedAspects = this.initializeCheckboxSetting(
+      preferencesDiv,
+      "avoid-repeated-aspects",
+      "Avoid repeated aspects among heroes",
     );
   }
 

@@ -46,11 +46,9 @@ export class DifficultySection extends Section {
       return 0;
     }
 
-    const includeExpertToAvoidCompleted =
-      this.settings.avoidCompleted &&
-      this.standardCardOptions.every(
-        (card) => this.getPriorityFromTracking(card) === 0,
-      );
+    const includeExpertToAvoidCompleted = this.standardCardOptions.every(
+      (card) => this.getPriority(card) === 0,
+    );
     if (includeExpertToAvoidCompleted) {
       return 1;
     }
@@ -129,7 +127,11 @@ export class DifficultySection extends Section {
       : [this.selectableCards.find((card) => card.level === level)];
   }
 
-  getPriorityFromTracking(difficulty) {
+  getPriority(difficulty) {
+    if (!this.settings.avoidCompleted) {
+      return 1;
+    }
+
     const scenarios = this.scenarioSection.trueCards;
     const heroes = this.heroSections.flatMap((section) => section.trueCards);
     return getNumberOfIncompleteGames(scenarios, heroes, [difficulty]);

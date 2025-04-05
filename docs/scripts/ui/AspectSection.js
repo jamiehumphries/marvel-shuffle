@@ -37,6 +37,12 @@ export class AspectSection extends Section {
 
   initializeSectionRelationships() {
     this.childSection = this.modularSection;
+    this.cardSetSections = [
+      this.scenarioSection,
+      this.modularSection,
+      this.heroSections[0],
+      this.aspectSections[0],
+    ];
   }
 
   initializeLayout() {
@@ -133,9 +139,15 @@ export class AspectSection extends Section {
       allowedAspects.push(BASIC);
     }
 
-    const allowedSets = heroSection.cardsOrSets
-      .filter((cardOrSet, i) => i === 0 || cardOrSet.checked)
-      .map((cardOrSet) => cardOrSet.name);
+    const allowedSets = new Set(
+      this.cardSetSections
+        .flatMap((section) => section.cardsOrSets)
+        .filter(
+          (cardOrSet) => cardOrSet.checked || cardOrSet.anyDescendantChecked,
+        )
+        .concat(this.coreSet)
+        .map((cardOrSet) => cardOrSet.name),
+    );
 
     return deck
       .filter((card) => passesRestriction(card.packs, allowedSets))

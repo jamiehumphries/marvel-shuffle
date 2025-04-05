@@ -123,6 +123,7 @@ function buildCard(entry, traitLockRegex) {
     teamUp: parseTeamUp(entry),
     minHp: parseMinHp(entry),
     landscape: entry.type_code === "player_side_scheme",
+    href: entry.url,
   };
 }
 

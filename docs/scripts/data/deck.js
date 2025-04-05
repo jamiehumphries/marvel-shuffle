@@ -12,6 +12,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01050",
     imgSrc: "/images/deck/01050.jpg",
   },
   {
@@ -27,6 +28,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01051",
     imgSrc: "/images/deck/01051.jpg",
   },
   {
@@ -42,6 +44,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01052",
     imgSrc: "/images/deck/01052.jpg",
   },
   {
@@ -57,6 +60,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01053",
     imgSrc: "/images/deck/01053.jpg",
   },
   {
@@ -72,6 +76,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01054",
     imgSrc: "/images/deck/01054.jpg",
   },
   {
@@ -95,6 +100,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01055",
     imgSrc: "/images/deck/01055.jpg",
   },
   {
@@ -110,6 +116,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01056",
     imgSrc: "/images/deck/01056.jpg",
   },
   {
@@ -131,6 +138,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01057",
     imgSrc: "/images/deck/01057.jpg",
   },
   {
@@ -146,6 +154,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01058",
     imgSrc: "/images/deck/01058.jpg",
   },
   {
@@ -161,6 +170,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01059",
     imgSrc: "/images/deck/01059.jpg",
   },
   {
@@ -176,6 +186,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01060",
     imgSrc: "/images/deck/01060.jpg",
   },
   {
@@ -191,6 +202,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01061",
     imgSrc: "/images/deck/01061.jpg",
   },
   {
@@ -213,6 +225,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01062",
     imgSrc: "/images/deck/01062.jpg",
   },
   {
@@ -228,6 +241,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01063",
     imgSrc: "/images/deck/01063.jpg",
   },
   {
@@ -243,6 +257,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01064",
     imgSrc: "/images/deck/01064.jpg",
   },
   {
@@ -264,6 +279,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01065",
     imgSrc: "/images/deck/01065.jpg",
   },
   {
@@ -279,6 +295,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01066",
     imgSrc: "/images/deck/01066.jpg",
   },
   {
@@ -294,6 +311,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01067",
     imgSrc: "/images/deck/01067.jpg",
   },
   {
@@ -309,6 +327,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01068",
     imgSrc: "/images/deck/01068.jpg",
   },
   {
@@ -324,6 +343,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01069",
     imgSrc: "/images/deck/01069.jpg",
   },
   {
@@ -339,6 +359,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01070",
     imgSrc: "/images/deck/01070.jpg",
   },
   {
@@ -359,6 +380,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01071",
     imgSrc: "/images/deck/01071.jpg",
   },
   {
@@ -381,6 +403,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01072",
     imgSrc: "/images/deck/01072.jpg",
   },
   {
@@ -396,6 +419,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01073",
     imgSrc: "/images/deck/01073.jpg",
   },
   {
@@ -411,6 +435,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01074",
     imgSrc: "/images/deck/01074.jpg",
   },
   {
@@ -426,6 +451,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01075",
     imgSrc: "/images/deck/01075.jpg",
   },
   {
@@ -441,6 +467,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01076",
     imgSrc: "/images/deck/01076.jpg",
   },
   {
@@ -456,6 +483,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01077",
     imgSrc: "/images/deck/01077.jpg",
   },
   {
@@ -471,6 +499,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01078",
     imgSrc: "/images/deck/01078.jpg",
   },
   {
@@ -492,6 +521,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01079",
     imgSrc: "/images/deck/01079.jpg",
   },
   {
@@ -507,6 +537,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01080",
     imgSrc: "/images/deck/01080.jpg",
   },
   {
@@ -522,6 +553,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01081",
     imgSrc: "/images/deck/01081.jpg",
   },
   {
@@ -537,6 +569,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01082",
     imgSrc: "/images/deck/01082.jpg",
   },
   {
@@ -552,6 +585,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01083",
     imgSrc: "/images/deck/01083.jpg",
   },
   {
@@ -567,6 +601,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01084",
     imgSrc: "/images/deck/01084.jpg",
   },
   {
@@ -582,6 +617,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01085",
     imgSrc: "/images/deck/01085.jpg",
   },
   {
@@ -597,6 +633,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01086",
     imgSrc: "/images/deck/01086.jpg",
   },
   {
@@ -612,6 +649,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01087",
     imgSrc: "/images/deck/01087.jpg",
   },
   {
@@ -663,6 +701,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01088",
     imgSrc: "/images/deck/01088.jpg",
   },
   {
@@ -714,6 +753,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01089",
     imgSrc: "/images/deck/01089.jpg",
   },
   {
@@ -765,6 +805,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01090",
     imgSrc: "/images/deck/01090.jpg",
   },
   {
@@ -788,6 +829,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01091",
     imgSrc: "/images/deck/01091.jpg",
   },
   {
@@ -803,6 +845,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01092",
     imgSrc: "/images/deck/01092.jpg",
   },
   {
@@ -818,6 +861,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/01093",
     imgSrc: "/images/deck/01093.jpg",
   },
   {
@@ -833,6 +877,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/03011",
     imgSrc: "/images/deck/03011.jpg",
   },
   {
@@ -848,6 +893,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/03013",
     imgSrc: "/images/deck/03013.jpg",
   },
   {
@@ -863,6 +909,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/03014",
     imgSrc: "/images/deck/03014.jpg",
   },
   {
@@ -878,6 +925,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/03015",
     imgSrc: "/images/deck/03015.jpg",
   },
   {
@@ -893,6 +941,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/03017",
     imgSrc: "/images/deck/03017.jpg",
   },
   {
@@ -908,6 +957,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/03019",
     imgSrc: "/images/deck/03019.jpg",
   },
   {
@@ -927,6 +977,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/03024",
     imgSrc: "/images/deck/03024.jpg",
   },
   {
@@ -942,6 +993,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/03025",
     imgSrc: "/images/deck/03025.jpg",
   },
   {
@@ -957,6 +1009,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/03031",
     imgSrc: "/images/deck/03031.jpg",
   },
   {
@@ -972,6 +1025,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/03032",
     imgSrc: "/images/deck/03032.jpg",
   },
   {
@@ -987,6 +1041,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/03033",
     imgSrc: "/images/deck/03033.jpg",
   },
   {
@@ -1002,6 +1057,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/03034",
     imgSrc: "/images/deck/03034.jpg",
   },
   {
@@ -1017,6 +1073,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04011",
     imgSrc: "/images/deck/04011.jpg",
   },
   {
@@ -1032,6 +1089,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04012",
     imgSrc: "/images/deck/04012.jpg",
   },
   {
@@ -1047,6 +1105,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04013",
     imgSrc: "/images/deck/04013.jpg",
   },
   {
@@ -1062,6 +1121,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04014",
     imgSrc: "/images/deck/04014.jpg",
   },
   {
@@ -1077,6 +1137,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04015",
     imgSrc: "/images/deck/04015.jpg",
   },
   {
@@ -1092,6 +1153,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04016",
     imgSrc: "/images/deck/04016.jpg",
   },
   {
@@ -1107,6 +1169,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04017",
     imgSrc: "/images/deck/04017.jpg",
   },
   {
@@ -1122,6 +1185,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04020",
     imgSrc: "/images/deck/04020.jpg",
   },
   {
@@ -1137,6 +1201,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04022",
     imgSrc: "/images/deck/04022.jpg",
   },
   {
@@ -1152,6 +1217,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04035",
     imgSrc: "/images/deck/04035.jpg",
   },
   {
@@ -1167,6 +1233,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04036",
     imgSrc: "/images/deck/04036.jpg",
   },
   {
@@ -1182,6 +1249,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04037",
     imgSrc: "/images/deck/04037.jpg",
   },
   {
@@ -1197,6 +1265,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04038",
     imgSrc: "/images/deck/04038.jpg",
   },
   {
@@ -1212,6 +1281,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04040",
     imgSrc: "/images/deck/04040.jpg",
   },
   {
@@ -1227,6 +1297,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04043",
     imgSrc: "/images/deck/04043.jpg",
   },
   {
@@ -1242,6 +1313,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04044",
     imgSrc: "/images/deck/04044.jpg",
   },
   {
@@ -1257,6 +1329,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04045",
     imgSrc: "/images/deck/04045.jpg",
   },
   {
@@ -1272,6 +1345,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04047",
     imgSrc: "/images/deck/04047.jpg",
   },
   {
@@ -1287,6 +1361,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/04049",
     imgSrc: "/images/deck/04049.jpg",
   },
   {
@@ -1302,6 +1377,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/05012",
     imgSrc: "/images/deck/05012.jpg",
   },
   {
@@ -1317,6 +1393,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/05014",
     imgSrc: "/images/deck/05014.jpg",
   },
   {
@@ -1332,6 +1409,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/05015",
     imgSrc: "/images/deck/05015.jpg",
   },
   {
@@ -1347,6 +1425,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/05017",
     imgSrc: "/images/deck/05017.jpg",
   },
   {
@@ -1362,6 +1441,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/05018",
     imgSrc: "/images/deck/05018.jpg",
   },
   {
@@ -1377,6 +1457,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/05023",
     imgSrc: "/images/deck/05023.jpg",
   },
   {
@@ -1392,6 +1473,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/05024",
     imgSrc: "/images/deck/05024.jpg",
   },
   {
@@ -1407,6 +1489,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/05030",
     imgSrc: "/images/deck/05030.jpg",
   },
   {
@@ -1422,6 +1505,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/05031",
     imgSrc: "/images/deck/05031.jpg",
   },
   {
@@ -1437,6 +1521,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/05032",
     imgSrc: "/images/deck/05032.jpg",
   },
   {
@@ -1452,6 +1537,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/05033",
     imgSrc: "/images/deck/05033.jpg",
   },
   {
@@ -1467,6 +1553,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/06011",
     imgSrc: "/images/deck/06011.jpg",
   },
   {
@@ -1482,6 +1569,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/06012",
     imgSrc: "/images/deck/06012.jpg",
   },
   {
@@ -1497,6 +1585,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/06014",
     imgSrc: "/images/deck/06014.jpg",
   },
   {
@@ -1512,6 +1601,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/06015",
     imgSrc: "/images/deck/06015.jpg",
   },
   {
@@ -1527,6 +1617,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/06017",
     imgSrc: "/images/deck/06017.jpg",
   },
   {
@@ -1542,6 +1633,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/06018",
     imgSrc: "/images/deck/06018.jpg",
   },
   {
@@ -1557,6 +1649,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/06019",
     imgSrc: "/images/deck/06019.jpg",
   },
   {
@@ -1572,6 +1665,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/06020",
     imgSrc: "/images/deck/06020.jpg",
   },
   {
@@ -1587,6 +1681,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/06021",
     imgSrc: "/images/deck/06021.jpg",
   },
   {
@@ -1602,6 +1697,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/06031",
     imgSrc: "/images/deck/06031.jpg",
   },
   {
@@ -1617,6 +1713,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/06032",
     imgSrc: "/images/deck/06032.jpg",
   },
   {
@@ -1632,6 +1729,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/06033",
     imgSrc: "/images/deck/06033.jpg",
   },
   {
@@ -1647,6 +1745,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/06034",
     imgSrc: "/images/deck/06034.jpg",
   },
   {
@@ -1662,6 +1761,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/08011",
     imgSrc: "/images/deck/08011.jpg",
   },
   {
@@ -1677,6 +1777,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/08012",
     imgSrc: "/images/deck/08012.jpg",
   },
   {
@@ -1692,6 +1793,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/08013",
     imgSrc: "/images/deck/08013.jpg",
   },
   {
@@ -1707,6 +1809,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/08017",
     imgSrc: "/images/deck/08017.jpg",
   },
   {
@@ -1722,6 +1825,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/08018",
     imgSrc: "/images/deck/08018.jpg",
   },
   {
@@ -1737,6 +1841,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/08023",
     imgSrc: "/images/deck/08023.jpg",
   },
   {
@@ -1752,6 +1857,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/08024",
     imgSrc: "/images/deck/08024.jpg",
   },
   {
@@ -1767,6 +1873,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/08030",
     imgSrc: "/images/deck/08030.jpg",
   },
   {
@@ -1782,6 +1889,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/08031",
     imgSrc: "/images/deck/08031.jpg",
   },
   {
@@ -1797,6 +1905,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/08032",
     imgSrc: "/images/deck/08032.jpg",
   },
   {
@@ -1812,6 +1921,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/08033",
     imgSrc: "/images/deck/08033.jpg",
   },
   {
@@ -1827,6 +1937,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/09012",
     imgSrc: "/images/deck/09012.jpg",
   },
   {
@@ -1842,6 +1953,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/09013",
     imgSrc: "/images/deck/09013.jpg",
   },
   {
@@ -1857,6 +1969,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/09014",
     imgSrc: "/images/deck/09014.jpg",
   },
   {
@@ -1872,6 +1985,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/09015",
     imgSrc: "/images/deck/09015.jpg",
   },
   {
@@ -1887,6 +2001,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/09016",
     imgSrc: "/images/deck/09016.jpg",
   },
   {
@@ -1902,6 +2017,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/09019",
     imgSrc: "/images/deck/09019.jpg",
   },
   {
@@ -1917,6 +2033,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/09020",
     imgSrc: "/images/deck/09020.jpg",
   },
   {
@@ -1932,6 +2049,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/09021",
     imgSrc: "/images/deck/09021.jpg",
   },
   {
@@ -1947,6 +2065,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/09026",
     imgSrc: "/images/deck/09026.jpg",
   },
   {
@@ -1962,6 +2081,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/09037",
     imgSrc: "/images/deck/09037.jpg",
   },
   {
@@ -1977,6 +2097,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/09038",
     imgSrc: "/images/deck/09038.jpg",
   },
   {
@@ -1992,6 +2113,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/09039",
     imgSrc: "/images/deck/09039.jpg",
   },
   {
@@ -2007,6 +2129,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/10011",
     imgSrc: "/images/deck/10011.jpg",
   },
   {
@@ -2022,6 +2145,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/10012",
     imgSrc: "/images/deck/10012.jpg",
   },
   {
@@ -2037,6 +2161,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/10013",
     imgSrc: "/images/deck/10013.jpg",
   },
   {
@@ -2052,6 +2177,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/10014",
     imgSrc: "/images/deck/10014.jpg",
   },
   {
@@ -2067,6 +2193,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/10015",
     imgSrc: "/images/deck/10015.jpg",
   },
   {
@@ -2082,6 +2209,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/10016",
     imgSrc: "/images/deck/10016.jpg",
   },
   {
@@ -2097,6 +2225,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/10018",
     imgSrc: "/images/deck/10018.jpg",
   },
   {
@@ -2112,6 +2241,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/10019",
     imgSrc: "/images/deck/10019.jpg",
   },
   {
@@ -2127,6 +2257,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/10029",
     imgSrc: "/images/deck/10029.jpg",
   },
   {
@@ -2142,6 +2273,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/10030",
     imgSrc: "/images/deck/10030.jpg",
   },
   {
@@ -2157,6 +2289,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/10031",
     imgSrc: "/images/deck/10031.jpg",
   },
   {
@@ -2172,6 +2305,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/10032",
     imgSrc: "/images/deck/10032.jpg",
   },
   {
@@ -2187,6 +2321,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12011",
     imgSrc: "/images/deck/12011.jpg",
   },
   {
@@ -2202,6 +2337,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12012",
     imgSrc: "/images/deck/12012.jpg",
   },
   {
@@ -2217,6 +2353,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12013",
     imgSrc: "/images/deck/12013.jpg",
   },
   {
@@ -2232,6 +2369,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12014",
     imgSrc: "/images/deck/12014.jpg",
   },
   {
@@ -2247,6 +2385,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12015",
     imgSrc: "/images/deck/12015.jpg",
   },
   {
@@ -2262,6 +2401,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12016",
     imgSrc: "/images/deck/12016.jpg",
   },
   {
@@ -2277,6 +2417,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12017",
     imgSrc: "/images/deck/12017.jpg",
   },
   {
@@ -2292,6 +2433,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12018",
     imgSrc: "/images/deck/12018.jpg",
   },
   {
@@ -2307,6 +2449,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12020",
     imgSrc: "/images/deck/12020.jpg",
   },
   {
@@ -2322,6 +2465,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12024",
     imgSrc: "/images/deck/12024.jpg",
   },
   {
@@ -2337,6 +2481,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12030",
     imgSrc: "/images/deck/12030.jpg",
   },
   {
@@ -2352,6 +2497,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12031",
     imgSrc: "/images/deck/12031.jpg",
   },
   {
@@ -2367,6 +2513,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12032",
     imgSrc: "/images/deck/12032.jpg",
   },
   {
@@ -2382,6 +2529,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/12033",
     imgSrc: "/images/deck/12033.jpg",
   },
   {
@@ -2397,6 +2545,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/13011",
     imgSrc: "/images/deck/13011.jpg",
   },
   {
@@ -2412,6 +2561,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/13012",
     imgSrc: "/images/deck/13012.jpg",
   },
   {
@@ -2427,6 +2577,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/13013",
     imgSrc: "/images/deck/13013.jpg",
   },
   {
@@ -2442,6 +2593,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/13014",
     imgSrc: "/images/deck/13014.jpg",
   },
   {
@@ -2457,6 +2609,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/13016",
     imgSrc: "/images/deck/13016.jpg",
   },
   {
@@ -2472,6 +2625,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/13017",
     imgSrc: "/images/deck/13017.jpg",
   },
   {
@@ -2487,6 +2641,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/13018",
     imgSrc: "/images/deck/13018.jpg",
   },
   {
@@ -2502,6 +2657,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/13019",
     imgSrc: "/images/deck/13019.jpg",
   },
   {
@@ -2517,6 +2673,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/13024",
     imgSrc: "/images/deck/13024.jpg",
   },
   {
@@ -2532,6 +2689,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/13031",
     imgSrc: "/images/deck/13031.jpg",
   },
   {
@@ -2547,6 +2705,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/13032",
     imgSrc: "/images/deck/13032.jpg",
   },
   {
@@ -2562,6 +2721,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/13033",
     imgSrc: "/images/deck/13033.jpg",
   },
   {
@@ -2577,6 +2737,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/13034",
     imgSrc: "/images/deck/13034.jpg",
   },
   {
@@ -2592,6 +2753,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/14012",
     imgSrc: "/images/deck/14012.jpg",
   },
   {
@@ -2607,6 +2769,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/14013",
     imgSrc: "/images/deck/14013.jpg",
   },
   {
@@ -2622,6 +2785,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/14014",
     imgSrc: "/images/deck/14014.jpg",
   },
   {
@@ -2637,6 +2801,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/14015",
     imgSrc: "/images/deck/14015.jpg",
   },
   {
@@ -2652,6 +2817,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/14017",
     imgSrc: "/images/deck/14017.jpg",
   },
   {
@@ -2667,6 +2833,7 @@ export const deck = [
     teamUp: ["Quicksilver", "Scarlet Witch"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/14018",
     imgSrc: "/images/deck/14018.jpg",
   },
   {
@@ -2682,6 +2849,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/14022",
     imgSrc: "/images/deck/14022.jpg",
   },
   {
@@ -2697,6 +2865,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/14023",
     imgSrc: "/images/deck/14023.jpg",
   },
   {
@@ -2712,6 +2881,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/14029",
     imgSrc: "/images/deck/14029.jpg",
   },
   {
@@ -2727,6 +2897,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/14030",
     imgSrc: "/images/deck/14030.jpg",
   },
   {
@@ -2742,6 +2913,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/14031",
     imgSrc: "/images/deck/14031.jpg",
   },
   {
@@ -2757,6 +2929,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/14032",
     imgSrc: "/images/deck/14032.jpg",
   },
   {
@@ -2772,6 +2945,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/15010",
     imgSrc: "/images/deck/15010.jpg",
   },
   {
@@ -2787,6 +2961,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/15011",
     imgSrc: "/images/deck/15011.jpg",
   },
   {
@@ -2802,6 +2977,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/15012",
     imgSrc: "/images/deck/15012.jpg",
   },
   {
@@ -2817,6 +2993,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/15013",
     imgSrc: "/images/deck/15013.jpg",
   },
   {
@@ -2832,6 +3009,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/15014",
     imgSrc: "/images/deck/15014.jpg",
   },
   {
@@ -2847,6 +3025,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/15015",
     imgSrc: "/images/deck/15015.jpg",
   },
   {
@@ -2862,6 +3041,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/15019",
     imgSrc: "/images/deck/15019.jpg",
   },
   {
@@ -2877,6 +3057,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/15028",
     imgSrc: "/images/deck/15028.jpg",
   },
   {
@@ -2892,6 +3073,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/15029",
     imgSrc: "/images/deck/15029.jpg",
   },
   {
@@ -2907,6 +3089,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/15030",
     imgSrc: "/images/deck/15030.jpg",
   },
   {
@@ -2922,6 +3105,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/15031",
     imgSrc: "/images/deck/15031.jpg",
   },
   {
@@ -2937,6 +3121,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/16012",
     imgSrc: "/images/deck/16012.jpg",
   },
   {
@@ -2952,6 +3137,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/16014",
     imgSrc: "/images/deck/16014.jpg",
   },
   {
@@ -2967,6 +3153,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/16016",
     imgSrc: "/images/deck/16016.jpg",
   },
   {
@@ -2982,6 +3169,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/16017",
     imgSrc: "/images/deck/16017.jpg",
   },
   {
@@ -2997,6 +3185,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/16019",
     imgSrc: "/images/deck/16019.jpg",
   },
   {
@@ -3012,6 +3201,7 @@ export const deck = [
     teamUp: ["Groot", "Rocket Raccoon"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/16020",
     imgSrc: "/images/deck/16020.jpg",
   },
   {
@@ -3027,6 +3217,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/16024",
     imgSrc: "/images/deck/16024.jpg",
   },
   {
@@ -3042,6 +3233,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/16040",
     imgSrc: "/images/deck/16040.jpg",
   },
   {
@@ -3057,6 +3249,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/16043",
     imgSrc: "/images/deck/16043.jpg",
   },
   {
@@ -3072,6 +3265,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/16045",
     imgSrc: "/images/deck/16045.jpg",
   },
   {
@@ -3087,6 +3281,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/16046",
     imgSrc: "/images/deck/16046.jpg",
   },
   {
@@ -3102,6 +3297,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/16047",
     imgSrc: "/images/deck/16047.jpg",
   },
   {
@@ -3117,6 +3313,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/16052",
     imgSrc: "/images/deck/16052.jpg",
   },
   {
@@ -3132,6 +3329,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17011",
     imgSrc: "/images/deck/17011.jpg",
   },
   {
@@ -3147,6 +3345,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17012",
     imgSrc: "/images/deck/17012.jpg",
   },
   {
@@ -3162,6 +3361,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17013",
     imgSrc: "/images/deck/17013.jpg",
   },
   {
@@ -3177,6 +3377,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17014",
     imgSrc: "/images/deck/17014.jpg",
   },
   {
@@ -3192,6 +3393,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17015",
     imgSrc: "/images/deck/17015.jpg",
   },
   {
@@ -3207,6 +3409,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17017",
     imgSrc: "/images/deck/17017.jpg",
   },
   {
@@ -3222,6 +3425,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17019",
     imgSrc: "/images/deck/17019.jpg",
   },
   {
@@ -3237,6 +3441,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17020",
     imgSrc: "/images/deck/17020.jpg",
   },
   {
@@ -3252,6 +3457,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17021",
     imgSrc: "/images/deck/17021.jpg",
   },
   {
@@ -3267,6 +3473,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17022",
     imgSrc: "/images/deck/17022.jpg",
   },
   {
@@ -3282,6 +3489,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17023",
     imgSrc: "/images/deck/17023.jpg",
   },
   {
@@ -3297,6 +3505,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17028",
     imgSrc: "/images/deck/17028.jpg",
   },
   {
@@ -3312,6 +3521,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17029",
     imgSrc: "/images/deck/17029.jpg",
   },
   {
@@ -3327,6 +3537,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/17030",
     imgSrc: "/images/deck/17030.jpg",
   },
   {
@@ -3342,6 +3553,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/18011",
     imgSrc: "/images/deck/18011.jpg",
   },
   {
@@ -3357,6 +3569,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/18012",
     imgSrc: "/images/deck/18012.jpg",
   },
   {
@@ -3372,6 +3585,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/18013",
     imgSrc: "/images/deck/18013.jpg",
   },
   {
@@ -3387,6 +3601,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/18015",
     imgSrc: "/images/deck/18015.jpg",
   },
   {
@@ -3402,6 +3617,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/18016",
     imgSrc: "/images/deck/18016.jpg",
   },
   {
@@ -3417,6 +3633,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/18018",
     imgSrc: "/images/deck/18018.jpg",
   },
   {
@@ -3432,6 +3649,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/18019",
     imgSrc: "/images/deck/18019.jpg",
   },
   {
@@ -3447,6 +3665,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/18020",
     imgSrc: "/images/deck/18020.jpg",
   },
   {
@@ -3462,6 +3681,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/18029",
     imgSrc: "/images/deck/18029.jpg",
   },
   {
@@ -3477,6 +3697,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/18030",
     imgSrc: "/images/deck/18030.jpg",
   },
   {
@@ -3492,6 +3713,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/18031",
     imgSrc: "/images/deck/18031.jpg",
   },
   {
@@ -3507,6 +3729,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/19012",
     imgSrc: "/images/deck/19012.jpg",
   },
   {
@@ -3522,6 +3745,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/19013",
     imgSrc: "/images/deck/19013.jpg",
   },
   {
@@ -3537,6 +3761,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/19015",
     imgSrc: "/images/deck/19015.jpg",
   },
   {
@@ -3552,6 +3777,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/19016",
     imgSrc: "/images/deck/19016.jpg",
   },
   {
@@ -3567,6 +3793,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/19017",
     imgSrc: "/images/deck/19017.jpg",
   },
   {
@@ -3582,6 +3809,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/19018",
     imgSrc: "/images/deck/19018.jpg",
   },
   {
@@ -3597,6 +3825,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/19020",
     imgSrc: "/images/deck/19020.jpg",
   },
   {
@@ -3612,6 +3841,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/19030",
     imgSrc: "/images/deck/19030.jpg",
   },
   {
@@ -3627,6 +3857,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/19031",
     imgSrc: "/images/deck/19031.jpg",
   },
   {
@@ -3642,6 +3873,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/19032",
     imgSrc: "/images/deck/19032.jpg",
   },
   {
@@ -3657,6 +3889,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/20011",
     imgSrc: "/images/deck/20011.jpg",
   },
   {
@@ -3672,6 +3905,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/20012",
     imgSrc: "/images/deck/20012.jpg",
   },
   {
@@ -3687,6 +3921,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/20013",
     imgSrc: "/images/deck/20013.jpg",
   },
   {
@@ -3702,6 +3937,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/20015",
     imgSrc: "/images/deck/20015.jpg",
   },
   {
@@ -3717,6 +3953,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/20016",
     imgSrc: "/images/deck/20016.jpg",
   },
   {
@@ -3732,6 +3969,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/20021",
     imgSrc: "/images/deck/20021.jpg",
   },
   {
@@ -3747,6 +3985,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/20022",
     imgSrc: "/images/deck/20022.jpg",
   },
   {
@@ -3762,6 +4001,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/20026",
     imgSrc: "/images/deck/20026.jpg",
   },
   {
@@ -3777,6 +4017,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/20027",
     imgSrc: "/images/deck/20027.jpg",
   },
   {
@@ -3792,6 +4033,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/20028",
     imgSrc: "/images/deck/20028.jpg",
   },
   {
@@ -3807,6 +4049,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/20029",
     imgSrc: "/images/deck/20029.jpg",
   },
   {
@@ -3822,6 +4065,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21011",
     imgSrc: "/images/deck/21011.jpg",
   },
   {
@@ -3837,6 +4081,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21012",
     imgSrc: "/images/deck/21012.jpg",
   },
   {
@@ -3852,6 +4097,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21013",
     imgSrc: "/images/deck/21013.jpg",
   },
   {
@@ -3867,6 +4113,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21014",
     imgSrc: "/images/deck/21014.jpg",
   },
   {
@@ -3882,6 +4129,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21015",
     imgSrc: "/images/deck/21015.jpg",
   },
   {
@@ -3897,6 +4145,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21016",
     imgSrc: "/images/deck/21016.jpg",
   },
   {
@@ -3912,6 +4161,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21018",
     imgSrc: "/images/deck/21018.jpg",
   },
   {
@@ -3927,6 +4177,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21019",
     imgSrc: "/images/deck/21019.jpg",
   },
   {
@@ -3942,6 +4193,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21022",
     imgSrc: "/images/deck/21022.jpg",
   },
   {
@@ -3957,6 +4209,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21041",
     imgSrc: "/images/deck/21041.jpg",
   },
   {
@@ -3972,6 +4225,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21042",
     imgSrc: "/images/deck/21042.jpg",
   },
   {
@@ -3987,6 +4241,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21043",
     imgSrc: "/images/deck/21043.jpg",
   },
   {
@@ -4002,6 +4257,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21046",
     imgSrc: "/images/deck/21046.jpg",
   },
   {
@@ -4017,6 +4273,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21047",
     imgSrc: "/images/deck/21047.jpg",
   },
   {
@@ -4032,6 +4289,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21048",
     imgSrc: "/images/deck/21048.jpg",
   },
   {
@@ -4047,6 +4305,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21050",
     imgSrc: "/images/deck/21050.jpg",
   },
   {
@@ -4062,6 +4321,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21052",
     imgSrc: "/images/deck/21052.jpg",
   },
   {
@@ -4077,6 +4337,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21053",
     imgSrc: "/images/deck/21053.jpg",
   },
   {
@@ -4092,6 +4353,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21054",
     imgSrc: "/images/deck/21054.jpg",
   },
   {
@@ -4107,6 +4369,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21055",
     imgSrc: "/images/deck/21055.jpg",
   },
   {
@@ -4122,6 +4385,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21058",
     imgSrc: "/images/deck/21058.jpg",
   },
   {
@@ -4137,6 +4401,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21059",
     imgSrc: "/images/deck/21059.jpg",
   },
   {
@@ -4152,6 +4417,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21060",
     imgSrc: "/images/deck/21060.jpg",
   },
   {
@@ -4167,6 +4433,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21061",
     imgSrc: "/images/deck/21061.jpg",
   },
   {
@@ -4182,6 +4449,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21064",
     imgSrc: "/images/deck/21064.jpg",
   },
   {
@@ -4197,6 +4465,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/21065",
     imgSrc: "/images/deck/21065.jpg",
   },
   {
@@ -4212,6 +4481,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/22011",
     imgSrc: "/images/deck/22011.jpg",
   },
   {
@@ -4227,6 +4497,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/22012",
     imgSrc: "/images/deck/22012.jpg",
   },
   {
@@ -4242,6 +4513,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/22013",
     imgSrc: "/images/deck/22013.jpg",
   },
   {
@@ -4257,6 +4529,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/22014",
     imgSrc: "/images/deck/22014.jpg",
   },
   {
@@ -4272,6 +4545,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/22015",
     imgSrc: "/images/deck/22015.jpg",
   },
   {
@@ -4287,6 +4561,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/22018",
     imgSrc: "/images/deck/22018.jpg",
   },
   {
@@ -4302,6 +4577,7 @@ export const deck = [
     teamUp: ["Gamora", "Nebula"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/22022",
     imgSrc: "/images/deck/22022.jpg",
   },
   {
@@ -4317,6 +4593,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/22032",
     imgSrc: "/images/deck/22032.jpg",
   },
   {
@@ -4332,6 +4609,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/22033",
     imgSrc: "/images/deck/22033.jpg",
   },
   {
@@ -4347,6 +4625,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/22034",
     imgSrc: "/images/deck/22034.jpg",
   },
   {
@@ -4362,6 +4641,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/22035",
     imgSrc: "/images/deck/22035.jpg",
   },
   {
@@ -4377,6 +4657,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/23012",
     imgSrc: "/images/deck/23012.jpg",
   },
   {
@@ -4392,6 +4673,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/23013",
     imgSrc: "/images/deck/23013.jpg",
   },
   {
@@ -4407,6 +4689,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/23016",
     imgSrc: "/images/deck/23016.jpg",
   },
   {
@@ -4422,6 +4705,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/23017",
     imgSrc: "/images/deck/23017.jpg",
   },
   {
@@ -4437,6 +4721,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/23018",
     imgSrc: "/images/deck/23018.jpg",
   },
   {
@@ -4452,6 +4737,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/23019",
     imgSrc: "/images/deck/23019.jpg",
   },
   {
@@ -4467,6 +4753,7 @@ export const deck = [
     teamUp: ["Iron Man", "War Machine"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/23024",
     imgSrc: "/images/deck/23024.jpg",
   },
   {
@@ -4482,6 +4769,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/23032",
     imgSrc: "/images/deck/23032.jpg",
   },
   {
@@ -4497,6 +4785,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/23033",
     imgSrc: "/images/deck/23033.jpg",
   },
   {
@@ -4512,6 +4801,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/23034",
     imgSrc: "/images/deck/23034.jpg",
   },
   {
@@ -4527,6 +4817,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/23035",
     imgSrc: "/images/deck/23035.jpg",
   },
   {
@@ -4542,6 +4833,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/25013",
     imgSrc: "/images/deck/25013.jpg",
   },
   {
@@ -4557,6 +4849,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/25014",
     imgSrc: "/images/deck/25014.jpg",
   },
   {
@@ -4572,6 +4865,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/25018",
     imgSrc: "/images/deck/25018.jpg",
   },
   {
@@ -4587,6 +4881,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/25019",
     imgSrc: "/images/deck/25019.jpg",
   },
   {
@@ -4602,6 +4897,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/25020",
     imgSrc: "/images/deck/25020.jpg",
   },
   {
@@ -4617,6 +4913,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/25023",
     imgSrc: "/images/deck/25023.jpg",
   },
   {
@@ -4632,6 +4929,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/25024",
     imgSrc: "/images/deck/25024.jpg",
   },
   {
@@ -4647,6 +4945,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/25033",
     imgSrc: "/images/deck/25033.jpg",
   },
   {
@@ -4662,6 +4961,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/25034",
     imgSrc: "/images/deck/25034.jpg",
   },
   {
@@ -4677,6 +4977,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/25035",
     imgSrc: "/images/deck/25035.jpg",
   },
   {
@@ -4692,6 +4993,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/25036",
     imgSrc: "/images/deck/25036.jpg",
   },
   {
@@ -4707,6 +5009,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/26013",
     imgSrc: "/images/deck/26013.jpg",
   },
   {
@@ -4722,6 +5025,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/26014",
     imgSrc: "/images/deck/26014.jpg",
   },
   {
@@ -4737,6 +5041,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/26015",
     imgSrc: "/images/deck/26015.jpg",
   },
   {
@@ -4752,6 +5057,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/26016",
     imgSrc: "/images/deck/26016.jpg",
   },
   {
@@ -4767,6 +5073,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/26018",
     imgSrc: "/images/deck/26018.jpg",
   },
   {
@@ -4782,6 +5089,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/26022",
     imgSrc: "/images/deck/26022.jpg",
   },
   {
@@ -4797,6 +5105,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/26024",
     imgSrc: "/images/deck/26024.jpg",
   },
   {
@@ -4812,6 +5121,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/26033",
     imgSrc: "/images/deck/26033.jpg",
   },
   {
@@ -4827,6 +5137,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/26034",
     imgSrc: "/images/deck/26034.jpg",
   },
   {
@@ -4842,6 +5153,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/26035",
     imgSrc: "/images/deck/26035.jpg",
   },
   {
@@ -4857,6 +5169,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/26036",
     imgSrc: "/images/deck/26036.jpg",
   },
   {
@@ -4872,6 +5185,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27010",
     imgSrc: "/images/deck/27010.jpg",
   },
   {
@@ -4887,6 +5201,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27011",
     imgSrc: "/images/deck/27011.jpg",
   },
   {
@@ -4902,6 +5217,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27012",
     imgSrc: "/images/deck/27012.jpg",
   },
   {
@@ -4917,6 +5233,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27014",
     imgSrc: "/images/deck/27014.jpg",
   },
   {
@@ -4932,6 +5249,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27015",
     imgSrc: "/images/deck/27015.jpg",
   },
   {
@@ -4947,6 +5265,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27016",
     imgSrc: "/images/deck/27016.jpg",
   },
   {
@@ -4962,6 +5281,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27017",
     imgSrc: "/images/deck/27017.jpg",
   },
   {
@@ -4977,6 +5297,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27018",
     imgSrc: "/images/deck/27018.jpg",
   },
   {
@@ -4992,6 +5313,7 @@ export const deck = [
     teamUp: ["Gwen Stacy", "Miles Morales"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27019",
     imgSrc: "/images/deck/27019.jpg",
   },
   {
@@ -5007,6 +5329,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27023",
     imgSrc: "/images/deck/27023.jpg",
   },
   {
@@ -5022,6 +5345,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27024",
     imgSrc: "/images/deck/27024.jpg",
   },
   {
@@ -5037,6 +5361,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27040",
     imgSrc: "/images/deck/27040.jpg",
   },
   {
@@ -5052,6 +5377,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27041",
     imgSrc: "/images/deck/27041.jpg",
   },
   {
@@ -5067,6 +5393,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27042",
     imgSrc: "/images/deck/27042.jpg",
   },
   {
@@ -5082,6 +5409,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27043",
     imgSrc: "/images/deck/27043.jpg",
   },
   {
@@ -5097,6 +5425,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27044",
     imgSrc: "/images/deck/27044.jpg",
   },
   {
@@ -5112,6 +5441,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27046",
     imgSrc: "/images/deck/27046.jpg",
   },
   {
@@ -5127,6 +5457,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27047",
     imgSrc: "/images/deck/27047.jpg",
   },
   {
@@ -5142,6 +5473,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27048",
     imgSrc: "/images/deck/27048.jpg",
   },
   {
@@ -5157,6 +5489,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27049",
     imgSrc: "/images/deck/27049.jpg",
   },
   {
@@ -5172,6 +5505,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27054",
     imgSrc: "/images/deck/27054.jpg",
   },
   {
@@ -5187,6 +5521,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27055",
     imgSrc: "/images/deck/27055.jpg",
   },
   {
@@ -5202,6 +5537,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27190",
     imgSrc: "/images/deck/27190.jpg",
   },
   {
@@ -5217,6 +5553,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/27191",
     imgSrc: "/images/deck/27191.jpg",
   },
   {
@@ -5232,6 +5569,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/28010",
     imgSrc: "/images/deck/28010.jpg",
   },
   {
@@ -5247,6 +5585,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/28012",
     imgSrc: "/images/deck/28012.jpg",
   },
   {
@@ -5262,6 +5601,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/28013",
     imgSrc: "/images/deck/28013.jpg",
   },
   {
@@ -5277,6 +5617,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/28014",
     imgSrc: "/images/deck/28014.jpg",
   },
   {
@@ -5292,6 +5633,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/28016",
     imgSrc: "/images/deck/28016.jpg",
   },
   {
@@ -5307,6 +5649,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/28017",
     imgSrc: "/images/deck/28017.jpg",
   },
   {
@@ -5322,6 +5665,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/28018",
     imgSrc: "/images/deck/28018.jpg",
   },
   {
@@ -5337,6 +5681,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/28019",
     imgSrc: "/images/deck/28019.jpg",
   },
   {
@@ -5352,6 +5697,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/28020",
     imgSrc: "/images/deck/28020.jpg",
   },
   {
@@ -5367,6 +5713,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/28026",
     imgSrc: "/images/deck/28026.jpg",
   },
   {
@@ -5382,6 +5729,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/28027",
     imgSrc: "/images/deck/28027.jpg",
   },
   {
@@ -5397,6 +5745,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/29014",
     imgSrc: "/images/deck/29014.jpg",
   },
   {
@@ -5412,6 +5761,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/29015",
     imgSrc: "/images/deck/29015.jpg",
   },
   {
@@ -5427,6 +5777,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/29016",
     imgSrc: "/images/deck/29016.jpg",
   },
   {
@@ -5442,6 +5793,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/29017",
     imgSrc: "/images/deck/29017.jpg",
   },
   {
@@ -5457,6 +5809,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/29018",
     imgSrc: "/images/deck/29018.jpg",
   },
   {
@@ -5472,6 +5825,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/29020",
     imgSrc: "/images/deck/29020.jpg",
   },
   {
@@ -5487,6 +5841,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/29023",
     imgSrc: "/images/deck/29023.jpg",
   },
   {
@@ -5502,6 +5857,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/29024",
     imgSrc: "/images/deck/29024.jpg",
   },
   {
@@ -5517,6 +5873,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/29025",
     imgSrc: "/images/deck/29025.jpg",
   },
   {
@@ -5532,6 +5889,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/29027",
     imgSrc: "/images/deck/29027.jpg",
   },
   {
@@ -5547,6 +5905,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/29033",
     imgSrc: "/images/deck/29033.jpg",
   },
   {
@@ -5562,6 +5921,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/29034",
     imgSrc: "/images/deck/29034.jpg",
   },
   {
@@ -5577,6 +5937,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/29035",
     imgSrc: "/images/deck/29035.jpg",
   },
   {
@@ -5592,6 +5953,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/30012",
     imgSrc: "/images/deck/30012.jpg",
   },
   {
@@ -5607,6 +5969,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/30013",
     imgSrc: "/images/deck/30013.jpg",
   },
   {
@@ -5622,6 +5985,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/30014",
     imgSrc: "/images/deck/30014.jpg",
   },
   {
@@ -5637,6 +6001,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/30019",
     imgSrc: "/images/deck/30019.jpg",
   },
   {
@@ -5652,6 +6017,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/30020",
     imgSrc: "/images/deck/30020.jpg",
   },
   {
@@ -5667,6 +6033,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/30021",
     imgSrc: "/images/deck/30021.jpg",
   },
   {
@@ -5682,6 +6049,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/30029",
     imgSrc: "/images/deck/30029.jpg",
   },
   {
@@ -5697,6 +6065,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/31014",
     imgSrc: "/images/deck/31014.jpg",
   },
   {
@@ -5712,6 +6081,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/31015",
     imgSrc: "/images/deck/31015.jpg",
   },
   {
@@ -5727,6 +6097,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/31016",
     imgSrc: "/images/deck/31016.jpg",
   },
   {
@@ -5742,6 +6113,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/31017",
     imgSrc: "/images/deck/31017.jpg",
   },
   {
@@ -5757,6 +6129,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/31019",
     imgSrc: "/images/deck/31019.jpg",
   },
   {
@@ -5772,6 +6145,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/31020",
     imgSrc: "/images/deck/31020.jpg",
   },
   {
@@ -5787,6 +6161,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/31021",
     imgSrc: "/images/deck/31021.jpg",
   },
   {
@@ -5802,6 +6177,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/31022",
     imgSrc: "/images/deck/31022.jpg",
   },
   {
@@ -5817,6 +6193,7 @@ export const deck = [
     teamUp: null,
     minHp: 14,
     landscape: false,
+    href: "https://marvelcdb.com/card/31023",
     imgSrc: "/images/deck/31023.jpg",
   },
   {
@@ -5832,6 +6209,7 @@ export const deck = [
     teamUp: null,
     minHp: 14,
     landscape: false,
+    href: "https://marvelcdb.com/card/31024",
     imgSrc: "/images/deck/31024.jpg",
   },
   {
@@ -5847,6 +6225,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/31029",
     imgSrc: "/images/deck/31029.jpg",
   },
   {
@@ -5862,6 +6241,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32011",
     imgSrc: "/images/deck/32011.jpg",
   },
   {
@@ -5877,6 +6257,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32012",
     imgSrc: "/images/deck/32012.jpg",
   },
   {
@@ -5892,6 +6273,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32013",
     imgSrc: "/images/deck/32013.jpg",
   },
   {
@@ -5907,6 +6289,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32014",
     imgSrc: "/images/deck/32014.jpg",
   },
   {
@@ -5922,6 +6305,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32017",
     imgSrc: "/images/deck/32017.jpg",
   },
   {
@@ -5937,6 +6321,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32018",
     imgSrc: "/images/deck/32018.jpg",
   },
   {
@@ -5952,6 +6337,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32019",
     imgSrc: "/images/deck/32019.jpg",
   },
   {
@@ -5967,6 +6353,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32020",
     imgSrc: "/images/deck/32020.jpg",
   },
   {
@@ -5982,6 +6369,7 @@ export const deck = [
     teamUp: ["Colossus", "Shadowcat"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32021",
     imgSrc: "/images/deck/32021.jpg",
   },
   {
@@ -5997,6 +6385,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32041",
     imgSrc: "/images/deck/32041.jpg",
   },
   {
@@ -6012,6 +6401,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32042",
     imgSrc: "/images/deck/32042.jpg",
   },
   {
@@ -6027,6 +6417,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32043",
     imgSrc: "/images/deck/32043.jpg",
   },
   {
@@ -6042,6 +6433,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32044",
     imgSrc: "/images/deck/32044.jpg",
   },
   {
@@ -6057,6 +6449,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32045",
     imgSrc: "/images/deck/32045.jpg",
   },
   {
@@ -6072,6 +6465,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32047",
     imgSrc: "/images/deck/32047.jpg",
   },
   {
@@ -6087,6 +6481,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32048",
     imgSrc: "/images/deck/32048.jpg",
   },
   {
@@ -6102,6 +6497,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/32049",
     imgSrc: "/images/deck/32049.jpg",
   },
   {
@@ -6117,6 +6513,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33011",
     imgSrc: "/images/deck/33011.jpg",
   },
   {
@@ -6132,6 +6529,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33012",
     imgSrc: "/images/deck/33012.jpg",
   },
   {
@@ -6147,6 +6545,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33013",
     imgSrc: "/images/deck/33013.jpg",
   },
   {
@@ -6162,6 +6561,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33014",
     imgSrc: "/images/deck/33014.jpg",
   },
   {
@@ -6177,6 +6577,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33015",
     imgSrc: "/images/deck/33015.jpg",
   },
   {
@@ -6192,6 +6593,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33016",
     imgSrc: "/images/deck/33016.jpg",
   },
   {
@@ -6207,6 +6609,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33018",
     imgSrc: "/images/deck/33018.jpg",
   },
   {
@@ -6222,6 +6625,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33019",
     imgSrc: "/images/deck/33019.jpg",
   },
   {
@@ -6237,6 +6641,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33020",
     imgSrc: "/images/deck/33020.jpg",
   },
   {
@@ -6252,6 +6657,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33021",
     imgSrc: "/images/deck/33021.jpg",
   },
   {
@@ -6267,6 +6673,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33022",
     imgSrc: "/images/deck/33022.jpg",
   },
   {
@@ -6282,6 +6689,7 @@ export const deck = [
     teamUp: ["Cyclops", "Phoenix"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33023",
     imgSrc: "/images/deck/33023.jpg",
   },
   {
@@ -6297,6 +6705,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33032",
     imgSrc: "/images/deck/33032.jpg",
   },
   {
@@ -6312,6 +6721,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33033",
     imgSrc: "/images/deck/33033.jpg",
   },
   {
@@ -6327,6 +6737,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33034",
     imgSrc: "/images/deck/33034.jpg",
   },
   {
@@ -6342,6 +6753,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/33035",
     imgSrc: "/images/deck/33035.jpg",
   },
   {
@@ -6357,6 +6769,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/34014",
     imgSrc: "/images/deck/34014.jpg",
   },
   {
@@ -6372,6 +6785,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/34015",
     imgSrc: "/images/deck/34015.jpg",
   },
   {
@@ -6387,6 +6801,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/34016",
     imgSrc: "/images/deck/34016.jpg",
   },
   {
@@ -6402,6 +6817,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/34017",
     imgSrc: "/images/deck/34017.jpg",
   },
   {
@@ -6417,6 +6833,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/34018",
     imgSrc: "/images/deck/34018.jpg",
   },
   {
@@ -6432,6 +6849,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/34020",
     imgSrc: "/images/deck/34020.jpg",
   },
   {
@@ -6447,6 +6865,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/34021",
     imgSrc: "/images/deck/34021.jpg",
   },
   {
@@ -6462,6 +6881,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/34022",
     imgSrc: "/images/deck/34022.jpg",
   },
   {
@@ -6477,6 +6897,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/34032",
     imgSrc: "/images/deck/34032.jpg",
   },
   {
@@ -6492,6 +6913,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/34033",
     imgSrc: "/images/deck/34033.jpg",
   },
   {
@@ -6507,6 +6929,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/34034",
     imgSrc: "/images/deck/34034.jpg",
   },
   {
@@ -6522,6 +6945,7 @@ export const deck = [
     teamUp: ["Phoenix", "Storm"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/34035",
     imgSrc: "/images/deck/34035.jpg",
   },
   {
@@ -6537,6 +6961,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/35013",
     imgSrc: "/images/deck/35013.jpg",
   },
   {
@@ -6552,6 +6977,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/35014",
     imgSrc: "/images/deck/35014.jpg",
   },
   {
@@ -6567,6 +6993,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/35016",
     imgSrc: "/images/deck/35016.jpg",
   },
   {
@@ -6582,6 +7009,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/35017",
     imgSrc: "/images/deck/35017.jpg",
   },
   {
@@ -6597,6 +7025,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/35018",
     imgSrc: "/images/deck/35018.jpg",
   },
   {
@@ -6612,6 +7041,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/35022",
     imgSrc: "/images/deck/35022.jpg",
   },
   {
@@ -6627,6 +7057,7 @@ export const deck = [
     teamUp: ["Colossus", "Wolverine"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/35023",
     imgSrc: "/images/deck/35023.jpg",
   },
   {
@@ -6642,6 +7073,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/35032",
     imgSrc: "/images/deck/35032.jpg",
   },
   {
@@ -6657,6 +7089,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/35033",
     imgSrc: "/images/deck/35033.jpg",
   },
   {
@@ -6672,6 +7105,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/36014",
     imgSrc: "/images/deck/36014.jpg",
   },
   {
@@ -6687,6 +7121,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/36015",
     imgSrc: "/images/deck/36015.jpg",
   },
   {
@@ -6702,6 +7137,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/36016",
     imgSrc: "/images/deck/36016.jpg",
   },
   {
@@ -6717,6 +7153,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/36017",
     imgSrc: "/images/deck/36017.jpg",
   },
   {
@@ -6732,6 +7169,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/36018",
     imgSrc: "/images/deck/36018.jpg",
   },
   {
@@ -6747,6 +7185,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/36019",
     imgSrc: "/images/deck/36019.jpg",
   },
   {
@@ -6762,6 +7201,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/36020",
     imgSrc: "/images/deck/36020.jpg",
   },
   {
@@ -6777,6 +7217,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/36022",
     imgSrc: "/images/deck/36022.jpg",
   },
   {
@@ -6792,6 +7233,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/43027",
     imgSrc: "/images/deck/36026.jpg",
   },
   {
@@ -6807,6 +7249,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/36035",
     imgSrc: "/images/deck/36035.jpg",
   },
   {
@@ -6822,6 +7265,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/37011",
     imgSrc: "/images/deck/37011.jpg",
   },
   {
@@ -6837,6 +7281,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/37012",
     imgSrc: "/images/deck/37012.jpg",
   },
   {
@@ -6852,6 +7297,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/37013",
     imgSrc: "/images/deck/37013.jpg",
   },
   {
@@ -6867,6 +7313,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/37015",
     imgSrc: "/images/deck/37015.jpg",
   },
   {
@@ -6882,6 +7329,7 @@ export const deck = [
     teamUp: ["Gambit", "Rogue"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/37019",
     imgSrc: "/images/deck/37019.jpg",
   },
   {
@@ -6897,6 +7345,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/37021",
     imgSrc: "/images/deck/37021.jpg",
   },
   {
@@ -6912,6 +7361,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/37030",
     imgSrc: "/images/deck/37030.jpg",
   },
   {
@@ -6927,6 +7377,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/37031",
     imgSrc: "/images/deck/37031.jpg",
   },
   {
@@ -6942,6 +7393,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/38010",
     imgSrc: "/images/deck/38010.jpg",
   },
   {
@@ -6957,6 +7409,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/38011",
     imgSrc: "/images/deck/38011.jpg",
   },
   {
@@ -6972,6 +7425,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/38012",
     imgSrc: "/images/deck/38012.jpg",
   },
   {
@@ -6987,6 +7441,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/38014",
     imgSrc: "/images/deck/38014.jpg",
   },
   {
@@ -7002,6 +7457,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/38016",
     imgSrc: "/images/deck/38016.jpg",
   },
   {
@@ -7017,6 +7473,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/38018",
     imgSrc: "/images/deck/38018.jpg",
   },
   {
@@ -7032,6 +7489,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/38019",
     imgSrc: "/images/deck/38019.jpg",
   },
   {
@@ -7047,6 +7505,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/38028",
     imgSrc: "/images/deck/38028.jpg",
   },
   {
@@ -7062,6 +7521,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40014",
     imgSrc: "/images/deck/40014.jpg",
   },
   {
@@ -7077,6 +7537,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40015",
     imgSrc: "/images/deck/40015.jpg",
   },
   {
@@ -7092,6 +7553,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40016",
     imgSrc: "/images/deck/40016.jpg",
   },
   {
@@ -7107,6 +7569,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40017",
     imgSrc: "/images/deck/40017.jpg",
   },
   {
@@ -7122,6 +7585,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/40018",
     imgSrc: "/images/deck/40018.jpg",
   },
   {
@@ -7137,6 +7601,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/40019",
     imgSrc: "/images/deck/40019.jpg",
   },
   {
@@ -7152,6 +7617,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/40020",
     imgSrc: "/images/deck/40020.jpg",
   },
   {
@@ -7167,6 +7633,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40021",
     imgSrc: "/images/deck/40021.jpg",
   },
   {
@@ -7182,6 +7649,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40022",
     imgSrc: "/images/deck/40022.jpg",
   },
   {
@@ -7197,6 +7665,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40023",
     imgSrc: "/images/deck/40023.jpg",
   },
   {
@@ -7212,6 +7681,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40024",
     imgSrc: "/images/deck/40024.jpg",
   },
   {
@@ -7227,6 +7697,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40025",
     imgSrc: "/images/deck/40025.jpg",
   },
   {
@@ -7242,6 +7713,7 @@ export const deck = [
     teamUp: ["Cable", "Deadpool"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40026",
     imgSrc: "/images/deck/40026.jpg",
   },
   {
@@ -7257,6 +7729,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/40027",
     imgSrc: "/images/deck/40027.jpg",
   },
   {
@@ -7272,6 +7745,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40028",
     imgSrc: "/images/deck/40028.jpg",
   },
   {
@@ -7287,6 +7761,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40029",
     imgSrc: "/images/deck/40029.jpg",
   },
   {
@@ -7302,6 +7777,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40050",
     imgSrc: "/images/deck/40050.jpg",
   },
   {
@@ -7317,6 +7793,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40051",
     imgSrc: "/images/deck/40051.jpg",
   },
   {
@@ -7332,6 +7809,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40053",
     imgSrc: "/images/deck/40053.jpg",
   },
   {
@@ -7347,6 +7825,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/40054",
     imgSrc: "/images/deck/40054.jpg",
   },
   {
@@ -7362,6 +7841,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40056",
     imgSrc: "/images/deck/40056.jpg",
   },
   {
@@ -7377,6 +7857,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40057",
     imgSrc: "/images/deck/40057.jpg",
   },
   {
@@ -7392,6 +7873,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40058",
     imgSrc: "/images/deck/40058.jpg",
   },
   {
@@ -7407,6 +7889,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/40059",
     imgSrc: "/images/deck/40059.jpg",
   },
   {
@@ -7422,6 +7905,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40060",
     imgSrc: "/images/deck/40060.jpg",
   },
   {
@@ -7437,6 +7921,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40064",
     imgSrc: "/images/deck/40064.jpg",
   },
   {
@@ -7452,6 +7937,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/40204",
     imgSrc: "/images/deck/40204.jpg",
   },
   {
@@ -7467,6 +7953,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41012",
     imgSrc: "/images/deck/41012.jpg",
   },
   {
@@ -7482,6 +7969,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41013",
     imgSrc: "/images/deck/41013.jpg",
   },
   {
@@ -7497,6 +7985,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41015",
     imgSrc: "/images/deck/41015.jpg",
   },
   {
@@ -7512,6 +8001,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/41016",
     imgSrc: "/images/deck/41016.jpg",
   },
   {
@@ -7527,6 +8017,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41017",
     imgSrc: "/images/deck/41017.jpg",
   },
   {
@@ -7542,6 +8033,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41018",
     imgSrc: "/images/deck/41018.jpg",
   },
   {
@@ -7557,6 +8049,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41019",
     imgSrc: "/images/deck/41019.jpg",
   },
   {
@@ -7572,6 +8065,7 @@ export const deck = [
     teamUp: ["Angel", "Psylocke"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41020",
     imgSrc: "/images/deck/41020.jpg",
   },
   {
@@ -7587,6 +8081,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41022",
     imgSrc: "/images/deck/41022.jpg",
   },
   {
@@ -7602,6 +8097,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41023",
     imgSrc: "/images/deck/41023.jpg",
   },
   {
@@ -7617,6 +8113,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41024",
     imgSrc: "/images/deck/41024.jpg",
   },
   {
@@ -7632,6 +8129,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41030",
     imgSrc: "/images/deck/41030.jpg",
   },
   {
@@ -7647,6 +8145,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41031",
     imgSrc: "/images/deck/41031.jpg",
   },
   {
@@ -7662,6 +8161,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41032",
     imgSrc: "/images/deck/41032.jpg",
   },
   {
@@ -7677,6 +8177,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/41033",
     imgSrc: "/images/deck/41033.jpg",
   },
   {
@@ -7692,6 +8193,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42011",
     imgSrc: "/images/deck/42011.jpg",
   },
   {
@@ -7707,6 +8209,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42012",
     imgSrc: "/images/deck/42012.jpg",
   },
   {
@@ -7722,6 +8225,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42013",
     imgSrc: "/images/deck/42013.jpg",
   },
   {
@@ -7737,6 +8241,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42014",
     imgSrc: "/images/deck/42014.jpg",
   },
   {
@@ -7752,6 +8257,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42016",
     imgSrc: "/images/deck/42016.jpg",
   },
   {
@@ -7767,6 +8273,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/42017",
     imgSrc: "/images/deck/42017.jpg",
   },
   {
@@ -7782,6 +8289,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42018",
     imgSrc: "/images/deck/42018.jpg",
   },
   {
@@ -7797,6 +8305,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42019",
     imgSrc: "/images/deck/42019.jpg",
   },
   {
@@ -7812,6 +8321,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42020",
     imgSrc: "/images/deck/42020.jpg",
   },
   {
@@ -7827,6 +8337,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42022",
     imgSrc: "/images/deck/42022.jpg",
   },
   {
@@ -7842,6 +8353,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42023",
     imgSrc: "/images/deck/42023.jpg",
   },
   {
@@ -7857,6 +8369,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42029",
     imgSrc: "/images/deck/42029.jpg",
   },
   {
@@ -7872,6 +8385,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42030",
     imgSrc: "/images/deck/42030.jpg",
   },
   {
@@ -7887,6 +8401,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42031",
     imgSrc: "/images/deck/42031.jpg",
   },
   {
@@ -7902,6 +8417,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/42032",
     imgSrc: "/images/deck/42032.jpg",
   },
   {
@@ -7917,6 +8433,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/43013",
     imgSrc: "/images/deck/43013.jpg",
   },
   {
@@ -7932,6 +8449,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/43014",
     imgSrc: "/images/deck/43014.jpg",
   },
   {
@@ -7947,6 +8465,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/43015",
     imgSrc: "/images/deck/43015.jpg",
   },
   {
@@ -7962,6 +8481,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/43016",
     imgSrc: "/images/deck/43016.jpg",
   },
   {
@@ -7977,6 +8497,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/43018",
     imgSrc: "/images/deck/43018.jpg",
   },
   {
@@ -7992,6 +8513,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/43019",
     imgSrc: "/images/deck/43019.jpg",
   },
   {
@@ -8007,6 +8529,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/43020",
     imgSrc: "/images/deck/43020.jpg",
   },
   {
@@ -8022,6 +8545,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/43021",
     imgSrc: "/images/deck/43021.jpg",
   },
   {
@@ -8037,6 +8561,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/43038",
     imgSrc: "/images/deck/43038.jpg",
   },
   {
@@ -8052,6 +8577,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/43039",
     imgSrc: "/images/deck/43039.jpg",
   },
   {
@@ -8067,6 +8593,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/43040",
     imgSrc: "/images/deck/43040.jpg",
   },
   {
@@ -8082,6 +8609,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44013",
     imgSrc: "/images/deck/44013.jpg",
   },
   {
@@ -8097,6 +8625,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44014",
     imgSrc: "/images/deck/44014.jpg",
   },
   {
@@ -8112,6 +8641,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44015",
     imgSrc: "/images/deck/44015.jpg",
   },
   {
@@ -8127,6 +8657,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44016",
     imgSrc: "/images/deck/44016.jpg",
   },
   {
@@ -8142,6 +8673,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44017",
     imgSrc: "/images/deck/44017.jpg",
   },
   {
@@ -8157,6 +8689,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44018",
     imgSrc: "/images/deck/44018.jpg",
   },
   {
@@ -8172,6 +8705,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44019",
     imgSrc: "/images/deck/44019.jpg",
   },
   {
@@ -8187,6 +8721,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44020",
     imgSrc: "/images/deck/44020.jpg",
   },
   {
@@ -8202,6 +8737,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44021",
     imgSrc: "/images/deck/44021.jpg",
   },
   {
@@ -8217,6 +8753,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44022",
     imgSrc: "/images/deck/44022.jpg",
   },
   {
@@ -8232,6 +8769,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44023",
     imgSrc: "/images/deck/44023.jpg",
   },
   {
@@ -8247,6 +8785,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/44024",
     imgSrc: "/images/deck/44024.jpg",
   },
   {
@@ -8262,6 +8801,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44025",
     imgSrc: "/images/deck/44025.jpg",
   },
   {
@@ -8277,6 +8817,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44026",
     imgSrc: "/images/deck/44026.jpg",
   },
   {
@@ -8292,6 +8833,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44027",
     imgSrc: "/images/deck/44027.jpg",
   },
   {
@@ -8307,6 +8849,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44028",
     imgSrc: "/images/deck/44028.jpg",
   },
   {
@@ -8322,6 +8865,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44029",
     imgSrc: "/images/deck/44029.jpg",
   },
   {
@@ -8337,6 +8881,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44030",
     imgSrc: "/images/deck/44030.jpg",
   },
   {
@@ -8352,6 +8897,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44043",
     imgSrc: "/images/deck/44043.jpg",
   },
   {
@@ -8367,6 +8913,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44044",
     imgSrc: "/images/deck/44044.jpg",
   },
   {
@@ -8382,6 +8929,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44045",
     imgSrc: "/images/deck/44045.jpg",
   },
   {
@@ -8397,6 +8945,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44046",
     imgSrc: "/images/deck/44046.jpg",
   },
   {
@@ -8412,6 +8961,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44047",
     imgSrc: "/images/deck/44047.jpg",
   },
   {
@@ -8427,6 +8977,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44048",
     imgSrc: "/images/deck/44048.jpg",
   },
   {
@@ -8442,6 +8993,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44049",
     imgSrc: "/images/deck/44049.jpg",
   },
   {
@@ -8457,6 +9009,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44050",
     imgSrc: "/images/deck/44050.jpg",
   },
   {
@@ -8472,6 +9025,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44051",
     imgSrc: "/images/deck/44051.jpg",
   },
   {
@@ -8487,6 +9041,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44052",
     imgSrc: "/images/deck/44052.jpg",
   },
   {
@@ -8502,6 +9057,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44053",
     imgSrc: "/images/deck/44053.jpg",
   },
   {
@@ -8517,6 +9073,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44054",
     imgSrc: "/images/deck/44054.jpg",
   },
   {
@@ -8532,6 +9089,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44055",
     imgSrc: "/images/deck/44055.jpg",
   },
   {
@@ -8547,6 +9105,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44056",
     imgSrc: "/images/deck/44056.jpg",
   },
   {
@@ -8562,6 +9121,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44057",
     imgSrc: "/images/deck/44057.jpg",
   },
   {
@@ -8577,6 +9137,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/44058",
     imgSrc: "/images/deck/44058.jpg",
   },
   {
@@ -8592,6 +9153,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45011",
     imgSrc: "/images/deck/45011.jpg",
   },
   {
@@ -8607,6 +9169,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45012",
     imgSrc: "/images/deck/45012.jpg",
   },
   {
@@ -8622,6 +9185,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45014",
     imgSrc: "/images/deck/45014.jpg",
   },
   {
@@ -8637,6 +9201,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45015",
     imgSrc: "/images/deck/45015.jpg",
   },
   {
@@ -8652,6 +9217,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45016",
     imgSrc: "/images/deck/45016.jpg",
   },
   {
@@ -8667,6 +9233,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45017",
     imgSrc: "/images/deck/45017.jpg",
   },
   {
@@ -8682,6 +9249,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45020",
     imgSrc: "/images/deck/45020.jpg",
   },
   {
@@ -8697,6 +9265,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45021",
     imgSrc: "/images/deck/45021.jpg",
   },
   {
@@ -8712,6 +9281,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45041",
     imgSrc: "/images/deck/45041.jpg",
   },
   {
@@ -8727,6 +9297,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45042",
     imgSrc: "/images/deck/45042.jpg",
   },
   {
@@ -8742,6 +9313,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45043",
     imgSrc: "/images/deck/45043.jpg",
   },
   {
@@ -8757,6 +9329,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45044",
     imgSrc: "/images/deck/45044.jpg",
   },
   {
@@ -8772,6 +9345,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45045",
     imgSrc: "/images/deck/45045.jpg",
   },
   {
@@ -8787,6 +9361,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45048",
     imgSrc: "/images/deck/45048.jpg",
   },
   {
@@ -8802,6 +9377,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45049",
     imgSrc: "/images/deck/45049.jpg",
   },
   {
@@ -8817,6 +9393,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45050",
     imgSrc: "/images/deck/45050.jpg",
   },
   {
@@ -8832,6 +9409,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/45051",
     imgSrc: "/images/deck/45051.jpg",
   },
   {
@@ -8847,6 +9425,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/46012",
     imgSrc: "/images/deck/46012.jpg",
   },
   {
@@ -8862,6 +9441,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/46013",
     imgSrc: "/images/deck/46013.jpg",
   },
   {
@@ -8877,6 +9457,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/46014",
     imgSrc: "/images/deck/46014.jpg",
   },
   {
@@ -8892,6 +9473,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/46015",
     imgSrc: "/images/deck/46015.jpg",
   },
   {
@@ -8907,6 +9489,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/46016",
     imgSrc: "/images/deck/46016.jpg",
   },
   {
@@ -8922,6 +9505,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/46018",
     imgSrc: "/images/deck/46018.jpg",
   },
   {
@@ -8937,6 +9521,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/46019",
     imgSrc: "/images/deck/46019.jpg",
   },
   {
@@ -8952,6 +9537,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/46020",
     imgSrc: "/images/deck/46020.jpg",
   },
   {
@@ -8967,6 +9553,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/47011",
     imgSrc: "/images/deck/47011.jpg",
   },
   {
@@ -8982,6 +9569,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/47012",
     imgSrc: "/images/deck/47012.jpg",
   },
   {
@@ -8997,6 +9585,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/47013",
     imgSrc: "/images/deck/47013.jpg",
   },
   {
@@ -9012,6 +9601,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/47014",
     imgSrc: "/images/deck/47014.jpg",
   },
   {
@@ -9027,6 +9617,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/47015",
     imgSrc: "/images/deck/47015.jpg",
   },
   {
@@ -9042,6 +9633,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/47016",
     imgSrc: "/images/deck/47016.jpg",
   },
   {
@@ -9057,6 +9649,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/47018",
     imgSrc: "/images/deck/47018.jpg",
   },
   {
@@ -9072,6 +9665,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/47019",
     imgSrc: "/images/deck/47019.jpg",
   },
   {
@@ -9087,6 +9681,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/47021",
     imgSrc: "/images/deck/47021.jpg",
   },
   {
@@ -9102,6 +9697,7 @@ export const deck = [
     teamUp: ["Jubilee", "Wolverine"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/47022",
     imgSrc: "/images/deck/47022.jpg",
   },
   {
@@ -9117,6 +9713,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/47028",
     imgSrc: "/images/deck/47028.jpg",
   },
   {
@@ -9132,6 +9729,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/47029",
     imgSrc: "/images/deck/47029.jpg",
   },
   {
@@ -9147,6 +9745,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/48012",
     imgSrc: "/images/deck/48012.jpg",
   },
   {
@@ -9162,6 +9761,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/48013",
     imgSrc: "/images/deck/48013.jpg",
   },
   {
@@ -9177,6 +9777,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/48014",
     imgSrc: "/images/deck/48014.jpg",
   },
   {
@@ -9192,6 +9793,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/48015",
     imgSrc: "/images/deck/48015.jpg",
   },
   {
@@ -9207,6 +9809,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/48016",
     imgSrc: "/images/deck/48016.jpg",
   },
   {
@@ -9222,6 +9825,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/48018",
     imgSrc: "/images/deck/48018.jpg",
   },
   {
@@ -9237,6 +9841,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/48020",
     imgSrc: "/images/deck/48020.jpg",
   },
   {
@@ -9252,6 +9857,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/48021",
     imgSrc: "/images/deck/48021.jpg",
   },
   {
@@ -9267,6 +9873,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/48031",
     imgSrc: "/images/deck/48031.jpg",
   },
   {
@@ -9282,6 +9889,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/48032",
     imgSrc: "/images/deck/48032.jpg",
   },
   {
@@ -9297,6 +9905,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/49012",
     imgSrc: "/images/deck/49012.jpg",
   },
   {
@@ -9312,6 +9921,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/49013",
     imgSrc: "/images/deck/49013.jpg",
   },
   {
@@ -9327,6 +9937,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/49014",
     imgSrc: "/images/deck/49014.jpg",
   },
   {
@@ -9342,6 +9953,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/49015",
     imgSrc: "/images/deck/49015.jpg",
   },
   {
@@ -9357,6 +9969,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/49016",
     imgSrc: "/images/deck/49016.jpg",
   },
   {
@@ -9372,6 +9985,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/49017",
     imgSrc: "/images/deck/49017.jpg",
   },
   {
@@ -9387,6 +10001,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/49018",
     imgSrc: "/images/deck/49018.jpg",
   },
   {
@@ -9402,6 +10017,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/49019",
     imgSrc: "/images/deck/49019.jpg",
   },
   {
@@ -9417,6 +10033,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: true,
+    href: "https://marvelcdb.com/card/49020",
     imgSrc: "/images/deck/49020.jpg",
   },
   {
@@ -9432,6 +10049,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/49021",
     imgSrc: "/images/deck/49021.jpg",
   },
   {
@@ -9447,6 +10065,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/49022",
     imgSrc: "/images/deck/49022.jpg",
   },
   {
@@ -9462,6 +10081,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/49037",
     imgSrc: "/images/deck/49037.jpg",
   },
   {
@@ -9477,6 +10097,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50012",
     imgSrc: "/images/deck/50012.jpg",
   },
   {
@@ -9492,6 +10113,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50013",
     imgSrc: "/images/deck/50013.jpg",
   },
   {
@@ -9507,6 +10129,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50014",
     imgSrc: "/images/deck/50014.jpg",
   },
   {
@@ -9522,6 +10145,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50015",
     imgSrc: "/images/deck/50015.jpg",
   },
   {
@@ -9537,6 +10161,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50017",
     imgSrc: "/images/deck/50017.jpg",
   },
   {
@@ -9552,6 +10177,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50018",
     imgSrc: "/images/deck/50018.jpg",
   },
   {
@@ -9567,6 +10193,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50019",
     imgSrc: "/images/deck/50019.jpg",
   },
   {
@@ -9582,6 +10209,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50020",
     imgSrc: "/images/deck/50020.jpg",
   },
   {
@@ -9597,6 +10225,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50022",
     imgSrc: "/images/deck/50022.jpg",
   },
   {
@@ -9612,6 +10241,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50023",
     imgSrc: "/images/deck/50023.jpg",
   },
   {
@@ -9627,6 +10257,7 @@ export const deck = [
     teamUp: ["Maria Hill", "Nick Fury"],
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50024",
     imgSrc: "/images/deck/50024.jpg",
   },
   {
@@ -9642,6 +10273,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50028",
     imgSrc: "/images/deck/50028.jpg",
   },
   {
@@ -9657,6 +10289,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50050",
     imgSrc: "/images/deck/50050.jpg",
   },
   {
@@ -9672,6 +10305,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50051",
     imgSrc: "/images/deck/50051.jpg",
   },
   {
@@ -9687,6 +10321,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50052",
     imgSrc: "/images/deck/50052.jpg",
   },
   {
@@ -9702,6 +10337,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50054",
     imgSrc: "/images/deck/50054.jpg",
   },
   {
@@ -9717,6 +10353,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50055",
     imgSrc: "/images/deck/50055.jpg",
   },
   {
@@ -9732,6 +10369,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50056",
     imgSrc: "/images/deck/50056.jpg",
   },
   {
@@ -9747,6 +10385,7 @@ export const deck = [
     teamUp: null,
     minHp: null,
     landscape: false,
+    href: "https://marvelcdb.com/card/50058",
     imgSrc: "/images/deck/50058.jpg",
   },
 ];

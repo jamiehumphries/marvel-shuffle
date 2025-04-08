@@ -34,6 +34,9 @@ const minHpRegex =
   /^Play only if your identity has at least (\d+) printed hit points\./;
 const gainsRegex = /gains? the \[\[([^\]]+)\]\] trait/;
 
+const traitJoinPattern = "(?:,? or |,? and | character and an? |, )";
+const traitJoinRegex = new RegExp(traitJoinPattern, "i");
+
 export async function importAllDeckCards(force = false) {
   const { data } = await axios.get(cardsApi);
   const cards = await importCards(data, force);
@@ -54,7 +57,7 @@ async function importCards(data, force) {
   const traitsForRegex = traits.map((trait) => trait.replaceAll(".", "\\."));
   const traitPattern = `(?:${traitsForRegex.join("|")})`;
   const traitLockRegex = new RegExp(
-    `(?:the|a|an|another|each|\\d|X) ((?:(?:\\[\\[)?${traitPattern}(?:\\]\\])?(?:,? or |,? and |, )?)+) (?:traits?|characters?|cards?)`,
+    `(?:the|a|an|another|each|\\d|X) ((?:(?:\\[\\[)?${traitPattern}(?:\\]\\])?${traitJoinPattern}?)+) (?:traits?|characters?|cards?)`,
     "i",
   );
 
@@ -168,7 +171,7 @@ function parseTraitLocks(entry, traitLockRegex) {
   const match = entry.text.match(traitLockRegex);
   return match
     ? match[1]
-        .split(/(?:,? or |,? and |, )/)
+        .split(traitJoinRegex)
         .map((trait) => trait.replaceAll(/[\[\]]/g, ""))
         .map((trait) => trait.toUpperCase())
     : null;

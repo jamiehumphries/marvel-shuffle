@@ -1,5 +1,5 @@
-import { extraModulars, modulars } from "../data/cards.js";
-import { Section } from "./Section.js";
+import { extraModulars, modulars } from "../data/cards.js?v=95126b2d";
+import { Section } from "./Section.js?v=77075761";
 
 export class ModularSection extends Section {
   constructor(settings) {

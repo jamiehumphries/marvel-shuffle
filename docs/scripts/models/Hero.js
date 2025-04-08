@@ -8,6 +8,7 @@ export class Hero extends Card {
     color,
     traits,
     hp,
+    allies,
     { hasGiantForm = false, hasWideForm = false, include = null } = {},
   ) {
     const subname = alterEgo;
@@ -25,6 +26,7 @@ export class Hero extends Card {
       hasWideForm,
     });
     this.hp = hp;
+    this.allies = allies;
     this.include = include;
   }
 

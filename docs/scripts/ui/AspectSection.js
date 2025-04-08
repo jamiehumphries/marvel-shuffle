@@ -209,22 +209,21 @@ export class AspectSection extends Section {
 }
 
 function canIncludeSuggestedCard(card, hero, allowedAspects) {
-  if (card.aspect === BASIC && !allowedAspects.includes(BASIC)) {
-    return false;
-  }
-
-  if (card.name === hero.name && [null, hero.subname].includes(card.subname)) {
-    return false;
-  }
-
-  if (hero.include && hero.include(card)) {
-    return true;
-  }
-
   return (
-    allowedAspects.includes(card.aspect) &&
+    (card.aspect !== BASIC || allowedAspects.includes(BASIC)) &&
+    (card.minHp === null || hero.hp >= card.minHp) &&
     passesRestriction(card.teamUp, [hero.name, hero.subname]) &&
     passesRestriction(card.traitLocks, hero.traits) &&
-    (card.minHp === null || hero.hp >= card.minHp)
+    ![hero, ...hero.allies].some((card2) => violatesUnique(card, card2)) &&
+    (allowedAspects.includes(card.aspect) || hero.include(card))
+  );
+}
+
+function violatesUnique(card1, card2) {
+  return (
+    card1.name === card2.name &&
+    (card1.subname === null ||
+      card2.subname === null ||
+      card1.subname === card2.subname)
   );
 }

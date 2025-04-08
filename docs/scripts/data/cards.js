@@ -404,6 +404,7 @@ function hero(name, alterEgo, aspects, color, options = {}) {
 
   const traitKeys = data?.traitKeys || [];
   const hp = data?.hp || 0;
+  const allies = data?.allies || [];
 
   aspects = ensureArray(aspects);
 
@@ -416,9 +417,20 @@ function hero(name, alterEgo, aspects, color, options = {}) {
     options.include = (card) =>
       passesRestriction(traits, card.traits) &&
       passesRestriction(type, [card.type]);
+  } else {
+    options.include = () => false;
   }
 
-  return new Hero(name, alterEgo, aspects, color, traitKeys, hp, options);
+  return new Hero(
+    name,
+    alterEgo,
+    aspects,
+    color,
+    traitKeys,
+    hp,
+    allies,
+    options,
+  );
 }
 
 // prettier-ignore

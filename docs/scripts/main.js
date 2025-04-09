@@ -226,7 +226,7 @@ function updateTrackingTable() {
   const heroes = heroSections.flatMap((section) => section.trueCards);
   const difficulties = difficultySection.trueCards;
 
-  renderTable([{ children: scenarios }], [{ children: heroes }], difficulties);
+  renderTable([scenarios], [heroes], difficulties);
 }
 
 function setGlobalButtonsAvailability() {

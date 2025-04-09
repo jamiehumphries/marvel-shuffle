@@ -170,6 +170,17 @@ export class Settings {
       "Avoid completed matchups",
       { isSubsetting: true },
     );
+
+    this.initializeCheckboxSetting(
+      preferencesDiv,
+      "only-show-selected",
+      "Only show selected",
+      {
+        subname:
+          "(the full tracker will only show selected scenarios and heroes)",
+        isSubsetting: true,
+      },
+    );
   }
 
   initializeDifficultySelection() {

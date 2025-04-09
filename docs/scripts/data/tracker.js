@@ -64,9 +64,9 @@ function appendHeaderRows(thead, scenarios, difficulties) {
 
   appendProgressCells(firstRow, secondRow, difficulties);
 
-  for (const set of scenarios) {
-    for (let i = 0; i < set.children.length; i++) {
-      const scenario = set.children[i];
+  for (const group of scenarios) {
+    for (let i = 0; i < group.length; i++) {
+      const scenario = group[i];
 
       const { name: text, color } = scenario;
       const colbreak = i === 0;
@@ -145,18 +145,10 @@ function appendProgressCells(firstRow, secondRow, difficulties) {
 }
 
 function appendBodyRows(tbody, scenarios, heroes, difficulties) {
-  for (let i = 0; i < heroes.length; i++) {
-    const cardOrSet = heroes[i];
-    if (cardOrSet.children) {
-      const setHeroes = cardOrSet.children;
-      for (let j = 0; j < setHeroes.length; j++) {
-        const hero = setHeroes[j];
-        const rowbreak = j === 0;
-        appendHeroRow(tbody, scenarios, hero, difficulties, { rowbreak });
-      }
-    } else {
-      const hero = cardOrSet;
-      const rowbreak = i === 1; // Special case for first wave after Core Set.
+  for (const group of heroes) {
+    for (let i = 0; i < group.length; i++) {
+      const hero = group[i];
+      const rowbreak = i === 0;
       appendHeroRow(tbody, scenarios, hero, difficulties, { rowbreak });
     }
   }
@@ -181,9 +173,9 @@ function appendHeroRow(
   });
   row.appendChild(heroCell);
 
-  for (const set of scenarios) {
-    for (let i = 0; i < set.children.length; i++) {
-      const scenario = set.children[i];
+  for (const group of scenarios) {
+    for (let i = 0; i < group.length; i++) {
+      const scenario = group[i];
       const colbreak = i === 0;
       for (let j = 0; j < difficulties.length; j++) {
         const difficulty = difficulties[j];

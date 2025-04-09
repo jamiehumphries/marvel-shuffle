@@ -1,7 +1,7 @@
-import { heroes } from "../data/cards.js";
-import { getNumberOfIncompleteGames } from "../data/tracker.js";
-import { filter } from "../helpers.js";
-import { Section } from "./Section.js";
+import { heroes } from "../data/cards.js?v=95126b2d";
+import { getNumberOfIncompleteGames } from "../data/tracker.js?v=b51e2f27";
+import { filter } from "../helpers.js?v=620bb53f";
+import { Section } from "./Section.js?v=77075761";
 
 export class HeroSection extends Section {
   constructor(settings, nthOfType) {

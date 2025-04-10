@@ -417,8 +417,6 @@ function hero(name, alterEgo, aspects, color, options = {}) {
     options.include = (card) =>
       passesRestriction(traits, card.traits) &&
       passesRestriction(type, [card.type]);
-  } else {
-    options.include = () => false;
   }
 
   return new Hero(

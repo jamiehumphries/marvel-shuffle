@@ -9,7 +9,7 @@ export class Hero extends Card {
     traits,
     hp,
     allies,
-    { hasGiantForm = false, hasWideForm = false, include = null } = {},
+    { hasGiantForm = false, hasWideForm = false, include = () => false } = {},
   ) {
     const subname = alterEgo;
     const hasBack = true;

@@ -185,7 +185,7 @@ export class AspectSection extends Section {
     );
 
     return deck
-      .filter((card) => passesRestriction(card.packs, allowedSets))
+      .filter((card) => passesRestriction(allowedSets, card.packs))
       .filter((card) => canIncludeSuggestedCard(card, hero, allowedAspects));
   }
 

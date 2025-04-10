@@ -11,8 +11,7 @@ export function passesRestriction(restrictedValues, testValues) {
     return true;
   }
   const restrictedSet = new Set(restrictedValues);
-  const testSet = new Set(testValues);
-  return restrictedSet.intersection(testSet).size > 0;
+  return [...testValues].some((item) => restrictedSet.has(item));
 }
 
 export function requestPostAnimationFrame(callback) {

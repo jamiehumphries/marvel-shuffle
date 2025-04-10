@@ -34,8 +34,6 @@ export async function updateImages(force = false) {
   const sourceImages = `${imageSourceRepo}/${imageGlobToExt}.{ffg,scan}.{png,tiff}`;
   const files = await glob(sourceImages, { withFileTypes: true });
   await Promise.all(files.map((file) => updateImage(file, force)));
-
-  await exec(`git add ${imagesPath}`);
 }
 
 async function updateImage(file, force) {
@@ -102,7 +100,6 @@ export async function updateImageHashes() {
   const hashes = Object.fromEntries(entries);
   const path = "docs/scripts/data/hashes.js";
   await writeCodeFile(path, hashes);
-  await exec(`git add ${path}`);
 }
 
 export async function writeCodeFile(path, data) {
@@ -122,8 +119,6 @@ export async function updateAssetVersions() {
     const assets = await glob(assetGlobPattern, { withFileTypes: true });
     results = await Promise.all(assets.map(updateAssetVersion));
   } while (results.some((result) => result.hasChanged));
-
-  await exec("git add docs");
 }
 
 async function updateAssetVersion(asset) {

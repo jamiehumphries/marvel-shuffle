@@ -17,6 +17,7 @@ $("git add package.json package-lock.json");
 $(`git commit --message="Build ${version}"`);
 
 $("npm run build");
+$("git add --all");
 
 $("git branch --force release HEAD");
 

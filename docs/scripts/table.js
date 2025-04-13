@@ -1,10 +1,10 @@
 import {
   heroes as allHeroes,
   scenarios as allScenarios,
-} from "./data/cards.js";
-import { initializeStorage } from "./data/storage.js";
-import { renderTable } from "./data/tracker.js";
-import { Setting } from "./models/Setting.js";
+} from "./data/cards.js?v=3c482674";
+import { initializeStorage } from "./data/storage.js?v=5a17bb47";
+import { renderTable } from "./data/tracker.js?v=c65f6100";
+import { Setting } from "./models/Setting.js?v=37ed11f8";
 
 await initializeStorage();
 

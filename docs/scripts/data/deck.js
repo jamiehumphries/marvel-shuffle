@@ -4125,7 +4125,7 @@ export const deck = [
     subname: null,
     type: "Support",
     traits: ["TEAM"],
-    traitLocks: null,
+    traitLocks: ["AVENGER"],
     teamUp: null,
     minHp: null,
     landscape: false,

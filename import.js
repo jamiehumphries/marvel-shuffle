@@ -22,10 +22,7 @@ const deckFactionCodes = [
 ];
 
 const nameFixes = {
-  "Galaxy's Most Wanted": "The Galaxy’s Most Wanted",
   "SP//dr Suit": "SP//dr",
-  "Kitty Pride": "Kitty Pryde",
-  "Remy Lebeau": "Remy LeBeau",
 };
 
 const teamUpRegex = /^Team-Up \((.*) and (.*)\)\./;
@@ -57,7 +54,7 @@ async function importCards(data, force) {
   const traitsForRegex = traits.map((trait) => trait.replaceAll(".", "\\."));
   const traitPattern = `(?:${traitsForRegex.join("|")})`;
   const traitLockRegex = new RegExp(
-    `(?:the|a|an|another|each|\\d|X) ((?:(?:\\[\\[)?${traitPattern}(?:\\]\\])?${traitJoinPattern}?)+) (?:traits?|characters?|cards?)`,
+    `(?:the|a|an|another|each|\\d|X) ((?:(?:\\[\\[)${traitPattern}(?:\\]\\])${traitJoinPattern}?)+) (?:traits?|characters?|cards?)`,
     "i",
   );
 

@@ -1,4 +1,4 @@
-import { Card } from "./Card.js";
+import { Card } from "./Card.js?v=af1a41d7";
 
 export class Modular extends Card {
   constructor(

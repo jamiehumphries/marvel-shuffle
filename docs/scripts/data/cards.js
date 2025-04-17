@@ -55,6 +55,7 @@ const agentsOfShield = cardSet("Agents of S.H.I.E.L.D.", true);
 const blackPanther = cardSet("Black Panther");
 const silk = cardSet("Silk");
 const falcon = cardSet("Falcon");
+const winterSoldier = cardSet("Winter Soldier");
 
 // MODULARS
 
@@ -227,6 +228,9 @@ export const modulars = [
   ),
   falcon(
     modular("Techno", { isLandscape, traits: "Thunderbolt" }),
+  ),
+  winterSoldier(
+    modular("Whiteout", { traits: "Thunderbolt" }),
   ),
 ];
 
@@ -511,4 +515,5 @@ export const heroes = [
   hero("Black Panther", "Shuri", JUSTICE, "#7030a0"),
   hero("Silk", "Cindy Moon", PROTECTION, "#f2f2f2"),
   hero("Falcon", "Sam Wilson", LEADERSHIP, "#c00000"),
+  hero("Winter Soldier", "Bucky Barnes", AGGRESSION, "#c7d0db"),
 ];

@@ -1,6 +1,6 @@
 import { exec as _exec } from "child_process";
 import { createHash } from "crypto";
-import { access, mkdir, readFile, rename, writeFile } from "fs/promises";
+import { access, mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import { glob } from "glob";
 import { imageSize } from "image-size";
 import { parse, relative, resolve } from "path";
@@ -62,6 +62,8 @@ async function updateImage(file, force) {
 
   await mkdir(outputParentPath, { recursive: true });
 
+  const tempName = `${name}.temp.png`;
+  const tempPath = resolve(outputParentPath, tempName);
   await exec(
     `convert ${sourcePath} \
       -strip \
@@ -71,11 +73,29 @@ async function updateImage(file, force) {
       -gravity center -crop 294x418+0+0 +repage \
       -matte mask.png -compose DstIn -composite \
       ${type === "scan" ? "-level 5%" : ""} \
-      ${outputPath}`,
+      ${tempPath}`,
   );
+
+  await compareAndUpdateImage(tempPath, outputPath, 0.1);
 
   const relativePath = relative(root, outputPath);
   console.log(`Converted ${relativePath}`);
+}
+
+export async function compareAndUpdateImage(tempPath, outputPath, fuzz) {
+  const fileExists = await exists(outputPath);
+  if (fileExists) {
+    try {
+      await exec(
+        `compare -metric AE -fuzz ${fuzz * 100}% ${tempPath} ${outputPath} null:`,
+      );
+      await rm(tempPath);
+    } catch {
+      await rename(tempPath, outputPath);
+    }
+  } else {
+    await rename(tempPath, outputPath);
+  }
 }
 
 export async function updateImageHashes() {

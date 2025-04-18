@@ -2,7 +2,7 @@ import axios from "axios";
 import { createWriteStream } from "fs";
 import { imageSizeFromFile } from "image-size/fromFile";
 import { relative, resolve } from "path";
-import { exec, exists, writeCodeFile } from "./tools.js";
+import { compareAndUpdateImage, exec, exists, writeCodeFile } from "./tools.js";
 
 const cardsApi = "https://marvelcdb.com/api/public/cards/";
 const imagesSourcePath =
@@ -205,11 +205,14 @@ async function fetchImage(card, force) {
     return;
   }
 
+  const tempName = `${id}.temp.jpg`;
+  const tempPath = resolve(imagesRoot, tempName);
+
   try {
     const { data } = await axios({ url, responseType: "stream" });
     await new Promise((resolve, reject) => {
       data
-        .pipe(createWriteStream(outputPath))
+        .pipe(createWriteStream(tempPath))
         .on("finish", () => resolve())
         .on("error", (e) => reject(e));
     });
@@ -219,18 +222,20 @@ async function fetchImage(card, force) {
     return;
   }
 
-  const { width, height } = await imageSizeFromFile(outputPath);
-  const outputSize = width < height ? "45x64" : "64x45";
+  const { width, height } = await imageSizeFromFile(tempPath);
+  const size = width < height ? "45x64" : "64x45";
 
   await exec(
-    `convert ${outputPath} \
+    `convert ${tempPath} \
       -strip \
       -trim +repage \
-      -resize ${outputSize}^ \
-      -gravity center -crop ${outputSize}+0+0 +repage \
+      -resize ${size}^ \
+      -gravity center -crop ${size}+0+0 +repage \
       -level 5% \
-      ${outputPath}`,
+      ${tempPath}`,
   );
+
+  await compareAndUpdateImage(tempPath, outputPath, 0.15);
 
   console.log(`Downloaded ${fileName} (${name})`);
 }

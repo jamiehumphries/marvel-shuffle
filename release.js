@@ -10,8 +10,7 @@ $("git stash --include-untracked --quiet");
 
 const version = $(`npm version ${level} --no-git-tag-version`);
 
-console.log(`Building ${version}`);
-console.log();
+console.log(`Building ${version}\n`);
 
 $("git add package.json package-lock.json");
 $(`git commit --message="Build ${version}"`);

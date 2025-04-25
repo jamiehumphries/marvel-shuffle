@@ -6,7 +6,7 @@ import { imageSize } from "image-size";
 import { parse, relative, resolve } from "path";
 import { format } from "prettier";
 import { replaceInFileSync } from "replace-in-file";
-import { promisify } from "util";
+import { promisify, styleText } from "util";
 
 const root = import.meta.dirname;
 const imagesPath = "docs/images";
@@ -26,8 +26,12 @@ export const exists = (path) =>
 export async function updateImages(force = false) {
   const imageSourceRepoExists = await exists(imageSourceRepo);
   if (!imageSourceRepoExists) {
-    console.error("Could not find image source repository.");
-    console.error(`Expected path: ${imageSourceRepo}`);
+    console.error(
+      styleText(
+        "red",
+        `Could not find image source repository. Expected: ${imageSourceRepo}`,
+      ),
+    );
     return;
   }
 

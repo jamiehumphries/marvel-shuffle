@@ -2,6 +2,7 @@ import axios from "axios";
 import { createWriteStream } from "fs";
 import { imageSizeFromFile } from "image-size/fromFile";
 import { relative, resolve } from "path";
+import { styleText } from "util";
 import { compareAndUpdateImage, exec, exists, writeCodeFile } from "./tools.js";
 
 const cardsApi = "https://marvelcdb.com/api/public/cards/";
@@ -217,8 +218,10 @@ async function fetchImage(card, force) {
         .on("error", (e) => reject(e));
     });
   } catch (error) {
-    console.warn(`Failed to download "${name}" from: ${url}`);
-    console.warn(error);
+    error.response.data.destroy();
+    console.warn(
+      styleText("yellow", `Failed to download "${name}" from: ${url}`),
+    );
     return;
   }
 

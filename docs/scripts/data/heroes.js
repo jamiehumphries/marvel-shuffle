@@ -31,7 +31,7 @@ export const heroes = [
     name: "Black Panther",
     alterEgo: "T’Challa",
     hp: 11,
-    traitKeys: ["AVENGER"],
+    traitKeys: ["AVENGER", "WAKANDA"],
     allies: [{ name: "Shuri" }],
   },
   {
@@ -400,5 +400,19 @@ export const heroes = [
     hp: 10,
     traitKeys: ["S.H.I.E.L.D.", "SOLDIER", "SPY", "AERIAL"],
     allies: [{ name: "Maria Hill" }],
+  },
+  {
+    name: "Black Panther",
+    alterEgo: "Shuri",
+    hp: 11,
+    traitKeys: ["WAKANDA", "GENIUS"],
+    allies: [{ name: "T'Challa" }],
+  },
+  {
+    name: "Silk",
+    alterEgo: "Cindy Moon",
+    hp: 10,
+    traitKeys: ["WEB-WARRIOR", "GENIUS", "AERIAL"],
+    allies: [],
   },
 ];

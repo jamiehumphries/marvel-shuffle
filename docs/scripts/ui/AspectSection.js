@@ -1,8 +1,12 @@
-import { aspects } from "../data/cards.js";
-import { deck } from "../data/deck.js";
-import { getItem, resetItem, setItem } from "../data/storage.js";
-import { chooseRandom, filter, passesRestriction } from "../helpers.js";
-import { Section } from "./Section.js";
+import { aspects } from "../data/cards.js?v=079a6b1b";
+import { deck } from "../data/deck.js?v=4b6e1208";
+import { getItem, resetItem, setItem } from "../data/storage.js?v=5a17bb47";
+import {
+  chooseRandom,
+  filter,
+  passesRestriction,
+} from "../helpers.js?v=fce4bec0";
+import { Section } from "./Section.js?v=d5412c3e";
 
 const BASIC = "Basic";
 

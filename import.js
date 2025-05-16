@@ -99,7 +99,7 @@ async function importHeroes(data, cards) {
         hero.traits.push(...parseGainedTraits(entry));
         if (entry.type_code === "ally" && entry.is_unique) {
           const { name, subname } = entry;
-          hero.allies.push({ name, subname });
+          hero.allies.push({ name: mapName(name), subname: mapName(subname) });
         }
         break;
     }

@@ -10564,7 +10564,7 @@ export const deck = [
     type: "Event",
     traits: ["WAKANDA"],
     traitLocks: null,
-    teamUp: ["Black Panther/T'Challa", "Black Panther/Shuri"],
+    teamUp: ["T’Challa", "Shuri"],
     minHp: null,
     landscape: false,
     href: "https://marvelcdb.com/card/51025",

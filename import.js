@@ -26,7 +26,7 @@ const nameFixes = {
   "SP//dr Suit": "SP//dr",
 };
 
-const teamUpRegex = /^Team-Up \((.*) and (.*)\)\./;
+const teamUpRegex = /^Team-Up \((?:.*\/)?(.*) and (?:.*\/)?(.*)\)\./;
 const linkedRegex = /^Linked \(.*\)\./;
 const minHpRegex =
   /^Play only if your identity has at least (\d+) printed hit points\./;
@@ -182,7 +182,10 @@ function parseTraitLocks(entry, traitLockRegex) {
 
 function parseTeamUp(entry) {
   const match = entry.text.match(teamUpRegex);
-  return match ? match.slice(1, 3) : null;
+  if (!match) {
+    return null;
+  }
+  return match ? match.slice(1, 3).map(mapName) : null;
 }
 
 function parseMinHp(entry) {

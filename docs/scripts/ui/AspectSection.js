@@ -237,9 +237,11 @@ function allUnique(cards) {
 
 function violatesUnique(card1, card2) {
   return (
-    card1.name === card2.name &&
-    (card1.subname === null ||
-      card2.subname === null ||
-      card1.subname === card2.subname)
+    (card1.name === card2.name &&
+      (card1.subname === null ||
+        card2.subname === null ||
+        card1.subname === card2.subname)) ||
+    (card1.subname === null && card1.name === card2.subname) ||
+    (card2.subname === null && card2.name === card1.subname)
   );
 }

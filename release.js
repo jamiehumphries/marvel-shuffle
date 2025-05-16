@@ -1,4 +1,5 @@
 import { execSync } from "child_process";
+import { replaceInFileSync } from "replace-in-file";
 
 const level = process.argv[2] || "patch";
 
@@ -16,6 +17,13 @@ $("git add package.json package-lock.json");
 $(`git commit --message="Build ${version}"`);
 
 $("npm run build");
+
+replaceInFileSync({
+  files: "docs/**/index.html",
+  from: "<!-- meta version placeholder -->",
+  to: `<meta name="version" content="${version.substring(1)}" />`,
+});
+
 $("git add --all");
 
 $("git branch --force release HEAD");

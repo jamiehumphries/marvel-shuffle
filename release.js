@@ -13,17 +13,16 @@ const version = $(`npm version ${level} --no-git-tag-version`);
 
 console.log(`Building ${version}\n`);
 
-$("git add package.json package-lock.json");
+replaceInFileSync({
+  files: "docs/**/index.html",
+  from: /(?<=<meta name="version" content=")\d+\.\d+\.\d+(?=" \/>)/,
+  to: version.substring(1),
+});
+
+$("git add --all");
 $(`git commit --message="Build ${version}"`);
 
 $("npm run build");
-
-replaceInFileSync({
-  files: "docs/**/index.html",
-  from: "<!-- meta version placeholder -->",
-  to: `<meta name="version" content="${version.substring(1)}" />`,
-});
-
 $("git add --all");
 
 $("git branch --force release HEAD");

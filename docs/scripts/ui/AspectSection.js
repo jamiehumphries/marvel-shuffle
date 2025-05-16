@@ -22,8 +22,9 @@ export class AspectSection extends Section {
     }
 
     const validSuggestedCards = this.getValidSuggestedCards();
-    return this.suggestedCards.every((card) =>
-      validSuggestedCards.includes(card),
+    return (
+      this.suggestedCards.every((card) => validSuggestedCards.includes(card)) &&
+      allUnique(this.suggestedCards)
     );
   }
 
@@ -115,7 +116,9 @@ export class AspectSection extends Section {
     const validSuggestedCards = this.getValidSuggestedCards();
     const suggestedCards = [];
     for (let i = 0; i < this.settings.numberOfSuggestedCards; i++) {
-      const options = filter(validSuggestedCards, suggestedCards);
+      const options = filter(validSuggestedCards, suggestedCards).filter(
+        (c1) => !suggestedCards.some((c2) => violatesUnique(c1, c2)),
+      );
       suggestedCards.push(chooseRandom(options));
     }
     suggestedCards.sort((c1, c2) => this.suggestedCardSort(c1, c2));
@@ -189,16 +192,16 @@ export class AspectSection extends Section {
       .filter((card) => canIncludeSuggestedCard(card, hero, allowedAspects));
   }
 
-  suggestedCardSort(c1, c2) {
+  suggestedCardSort(card1, card2) {
     const aspectOrder = this.trueCards
       .concat(this.selectableCards)
       .map((card) => card.name)
       .concat(BASIC);
     return (
-      aspectOrder.indexOf(c1.aspect) - aspectOrder.indexOf(c2.aspect) ||
-      c1.type.localeCompare(c2.type) ||
-      c1.name.localeCompare(c2.name) ||
-      (c1.subname || "").localeCompare(c2.subname || "")
+      aspectOrder.indexOf(card1.aspect) - aspectOrder.indexOf(card2.aspect) ||
+      card1.type.localeCompare(card2.type) ||
+      card1.name.localeCompare(card2.name) ||
+      (card1.subname || "").localeCompare(card2.subname || "")
     );
   }
 
@@ -214,9 +217,22 @@ function canIncludeSuggestedCard(card, hero, allowedAspects) {
     (card.minHp === null || hero.hp >= card.minHp) &&
     passesRestriction(card.teamUp, [hero.name, hero.subname]) &&
     passesRestriction(card.traitLocks, hero.traits) &&
-    ![hero, ...hero.allies].some((card2) => violatesUnique(card, card2)) &&
+    ![hero, ...hero.allies].some((c2) => violatesUnique(card, c2)) &&
     (allowedAspects.includes(card.aspect) || hero.include(card))
   );
+}
+
+function allUnique(cards) {
+  for (let i = 0; i < cards.length - 1; i++) {
+    const card1 = cards[i];
+    for (let j = i + 1; j < cards.length; j++) {
+      const card2 = cards[j];
+      if (violatesUnique(card1, card2)) {
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 function violatesUnique(card1, card2) {

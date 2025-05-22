@@ -56,6 +56,7 @@ const blackPanther = cardSet("Black Panther");
 const silk = cardSet("Silk");
 const falcon = cardSet("Falcon");
 const winterSoldier = cardSet("Winter Soldier");
+const tricksterTakeover = cardSet("Trickster Takeover");
 
 // MODULARS
 
@@ -232,6 +233,9 @@ export const modulars = [
   winterSoldier(
     modular("Whiteout", { traits: "Thunderbolt" }),
   ),
+  tricksterTakeover(
+    modular("Trickster Magic", { isLandscape }),
+  ),
 ];
 
 export const extraModulars = [
@@ -355,6 +359,10 @@ export const scenarios = [
     scenario("M.O.D.O.K.", "Scientist Supreme", "#ffc000", { hasBack }),
     scenario("Thunderbolts", 1, "#0070c0", { requiredTrait: "Thunderbolt", additionalModularsPerHero: 1, hasBack }),
     scenario("Baron Zemo", ["Scientist Supreme", "S.H.I.E.L.D."], "#a23276", { required: ["S.H.I.E.L.D. Executive Board", "Executive Board Evidence"], hasBack }),
+  ),
+  tricksterTakeover(
+    scenario("Enchantress", "Trickster Magic", "#00b050"),
+    scenario("God of Lies", "Trickster Magic", "#ffc000", { hasBack }),
   ),
 ];
 

@@ -1,14 +1,18 @@
-import { getItem, resetItem, setItem } from "../data/storage.js";
-import { chooseRandom, filter, requestPostAnimationFrame } from "../helpers.js";
-import { All } from "../models/All.js";
-import { Aspect } from "../models/Aspect.js";
-import { CardTier } from "../models/CardTier.js";
-import { Difficulty } from "../models/Difficulty.js";
-import { Hero } from "../models/Hero.js";
-import { Modular } from "../models/Modular.js";
-import { Scenario } from "../models/Scenario.js";
-import { Slot } from "./Slot.js";
-import { Toggleable } from "./Toggleable.js";
+import { getItem, resetItem, setItem } from "../data/storage.js?v=5a17bb47";
+import {
+  chooseRandom,
+  filter,
+  requestPostAnimationFrame,
+} from "../helpers.js?v=fce4bec0";
+import { All } from "../models/All.js?v=a11516d1";
+import { Aspect } from "../models/Aspect.js?v=c2180381";
+import { CardTier } from "../models/CardTier.js?v=2604c80d";
+import { Difficulty } from "../models/Difficulty.js?v=3260d64c";
+import { Hero } from "../models/Hero.js?v=a2b165d5";
+import { Modular } from "../models/Modular.js?v=84e4ccc8";
+import { Scenario } from "../models/Scenario.js?v=3c492c30";
+import { Slot } from "./Slot.js?v=af24df45";
+import { Toggleable } from "./Toggleable.js?v=8474d19e";
 
 const cardChangeDelayMs = getComputedStyle(document.documentElement)
   .getPropertyValue("--card-change-delay")

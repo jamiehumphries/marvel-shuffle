@@ -1,4 +1,4 @@
-import { Option } from "./Option.js";
+import { Option } from "./Option.js?v=98aade9b";
 
 export class Setting extends Option {
   constructor(slug, label, { subname = null, onChange = null } = {}) {

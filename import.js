@@ -26,11 +26,11 @@ const nameFixes = {
   "SP//dr Suit": "SP//dr",
 };
 
-const teamUpRegex = /^Team-Up \((?:.*\/)?(.*) and (?:.*\/)?(.*)\)\./;
-const linkedRegex = /^Linked \(.*\)\./;
+const teamUpRegex = /^Team-Up \((?:.*\/)?(.*) and (?:.*\/)?(.*)\)\./i;
+const linkedRegex = /^Linked \(.*\)\./i;
 const minHpRegex =
-  /^Play only if your identity has at least (\d+) printed hit points\./;
-const gainsRegex = /gains? the \[\[([^\]]+)\]\] trait/;
+  /^Play only if your identity has at least (\d+) printed hit points\./i;
+const gainsRegex = /gains? the \[\[([^\]]+)\]\] trait/i;
 
 const traitJoinPattern = "(?:,? or |,? and | character and an? |, )";
 const traitJoinRegex = new RegExp(traitJoinPattern, "i");

@@ -418,4 +418,18 @@ export const heroes = [
     traitKeys: ["WEB-WARRIOR", "GENIUS", "AERIAL"],
     allies: [],
   },
+  {
+    name: "Falcon",
+    alterEgo: "Sam Wilson",
+    hp: 10,
+    traitKeys: ["AERIAL", "AVENGER", "S.H.I.E.L.D."],
+    allies: [{ name: "Redwing", subname: null }],
+  },
+  {
+    name: "Winter Soldier",
+    alterEgo: "Bucky Barnes",
+    hp: 11,
+    traitKeys: ["S.H.I.E.L.D.", "SOLDIER", "SPY"],
+    allies: [{ name: "Black Widow", subname: "Natasha Romanoff" }],
+  },
 ];

@@ -416,7 +416,7 @@ function hero(name, alterEgo, aspects, color, options = {}) {
 
   const traitKeys = data?.traitKeys || [];
   const hp = data?.hp || 0;
-  const allies = data?.allies || [];
+  const uniqueDeckCards = data?.uniqueDeckCards || [];
 
   aspects = ensureArray(aspects);
 
@@ -438,7 +438,7 @@ function hero(name, alterEgo, aspects, color, options = {}) {
     color,
     traitKeys,
     hp,
-    allies,
+    uniqueDeckCards,
     options,
   );
 }

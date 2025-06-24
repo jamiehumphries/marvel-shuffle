@@ -83,7 +83,7 @@ async function importHeroes(data, cards) {
   for (const entry of heroSetCards) {
     const hero = (combinedCards[entry.card_set_code] ||= {});
     hero.traits ||= [];
-    hero.allies ||= [];
+    hero.uniqueDeckCards ||= [];
     switch (entry.type_code) {
       case "hero":
         hero.name ||= mapName(entry.name);
@@ -97,9 +97,12 @@ async function importHeroes(data, cards) {
         break;
       default:
         hero.traits.push(...parseGainedTraits(entry));
-        if (entry.type_code === "ally" && entry.is_unique) {
+        if (entry.is_unique) {
           const { name, subname } = entry;
-          hero.allies.push({ name: mapName(name), subname: mapName(subname) });
+          hero.uniqueDeckCards.push({
+            name: mapName(name),
+            subname: mapName(subname),
+          });
         }
         break;
     }
@@ -109,9 +112,9 @@ async function importHeroes(data, cards) {
 
   return Object.values(combinedCards)
     .filter((hero) => !!hero.name)
-    .map(({ name, alterEgo, hp, traits, allies }) => {
+    .map(({ name, alterEgo, hp, traits, uniqueDeckCards }) => {
       const traitKeys = [...new Set(traits).intersection(traitLocks)];
-      return { name, alterEgo, hp, traitKeys, allies };
+      return { name, alterEgo, hp, traitKeys, uniqueDeckCards };
     });
 }
 

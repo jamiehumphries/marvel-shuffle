@@ -471,7 +471,7 @@ export const heroes = [
     hero("Rocket Raccoon", null, AGGRESSION, "#c00000"),
   ),
   hero("Star-Lord", "Peter Quill", LEADERSHIP, "#c4cdda"),
-  hero("Gamora", null, AGGRESSION, "#00b050", { include: { traits: ["Attack", "Thwart"], type: "Event" } }),
+  hero("Gamora", null, AGGRESSION, "#00b050", { include: { type: "Event", traits: ["Attack", "Thwart"] } }),
   hero("Drax", null, PROTECTION, "#afdc7e"),
   hero("Venom", "Flash Thompson", JUSTICE, "#404040"),
   theMadTitansShadow(
@@ -494,7 +494,7 @@ export const heroes = [
     hero("Colossus", "Piotr Rasputin", PROTECTION, "#c7d0db"),
     hero("Shadowcat", "Kitty Pryde", AGGRESSION, "#ffc000"),
   ),
-  hero("Cyclops", "Scott Summers", LEADERSHIP, "#ff0000", { include: { traits: "X-Men", type: "Ally" } }),
+  hero("Cyclops", "Scott Summers", LEADERSHIP, "#ff0000", { include: { type: "Ally", traits: "X-Men" } }),
   hero("Phoenix", "Jean Grey", JUSTICE, "#00b050"),
   hero("Wolverine", "Logan", AGGRESSION, "#fcf600"),
   hero("Storm", "Ororo Munroe", LEADERSHIP, "#404040"),
@@ -517,7 +517,7 @@ export const heroes = [
   hero("Nightcrawler", "Kurt Wagner", PROTECTION, "#c00000"),
   hero("Magneto", "Erik Lehnsherr", LEADERSHIP, "#c7d0db"),
   agentsOfShield(
-    hero("Maria Hill", null, LEADERSHIP, "#b4c6e7", { include: { traits: "S.H.I.E.L.D.", type: "Support" } }),
+    hero("Maria Hill", null, LEADERSHIP, "#b4c6e7", { include: { type: "Support", traits: "S.H.I.E.L.D." } }),
     hero("Nick Fury", null, JUSTICE, "#404040"),
   ),
   hero("Black Panther", "Shuri", JUSTICE, "#7030a0"),

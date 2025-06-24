@@ -518,7 +518,13 @@ input:active + .checkmark {
 }
 
 .slots {
+  display: flex;
+  flex-direction: column;
   transition: perspective var(--card-change-duration);
+}
+
+.section.difficulty .slots {
+  flex-direction: column-reverse;
 }
 
 .flipping .slots {

@@ -1,5 +1,5 @@
-import { Campaign } from "./Campaign.js";
-import { Card } from "./Card.js";
+import { Campaign } from "./Campaign.js?v=19ca2e46";
+import { Card } from "./Card.js?v=5f9e758a";
 
 export class Scenario extends Card {
   constructor(

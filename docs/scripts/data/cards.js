@@ -228,7 +228,7 @@ export const modulars = [
     modular("Growing Strong", { traits: "Thunderbolt" }),
   ),
   falcon(
-    modular("Techno", { isLandscape, traits: "Thunderbolt" }),
+    modular("Techno", { traits: "Thunderbolt" }),
   ),
   winterSoldier(
     modular("Whiteout", { traits: "Thunderbolt" }),

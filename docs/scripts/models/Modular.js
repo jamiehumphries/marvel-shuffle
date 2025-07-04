@@ -4,6 +4,7 @@ export class Modular extends Card {
   constructor(
     name,
     {
+      subname = null,
       isLandscape = false,
       hasBack = false,
       traits = [],
@@ -12,6 +13,7 @@ export class Modular extends Card {
     } = {},
   ) {
     super(name, {
+      subname,
       isLandscape,
       hasBack,
       traits,

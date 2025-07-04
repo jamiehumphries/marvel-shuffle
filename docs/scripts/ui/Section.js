@@ -147,7 +147,8 @@ export class Section extends Toggleable {
 
   get valid() {
     const countedCards = this.cards.filter(
-      (card) => !card.isUncounted || this.requiredCards.includes(card),
+      (card) =>
+        !this.extraCards.includes(card) || this.requiredCards.includes(card),
     );
 
     const count = countedCards.length;

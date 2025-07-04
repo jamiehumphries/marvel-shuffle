@@ -65,6 +65,12 @@ export class ModularSection extends Section {
     return cards;
   }
 
+  getCardOptionSets(count, isShuffleAll = false) {
+    return this.scenarioSection.trueCards
+      .flatMap((card) => card.schemes)
+      .concat(super.getCardOptionSets(count, isShuffleAll));
+  }
+
   updateRequiredLabels() {
     const slots = this.slots || [];
     for (const slot of slots) {

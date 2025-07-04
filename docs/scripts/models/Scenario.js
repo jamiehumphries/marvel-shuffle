@@ -12,6 +12,7 @@ export class Scenario extends Card {
       hasBack = false,
       hasGiantForm = false,
       additionalModularsPerHero = 0,
+      schemes = [],
     } = {},
   ) {
     const [baseChildCardCount, defaultChildCards] = Array.isArray(
@@ -32,6 +33,7 @@ export class Scenario extends Card {
       additionalChildCardsPerHero,
       hasGiantForm,
     });
+    this.schemes = schemes;
   }
 
   get campaign() {

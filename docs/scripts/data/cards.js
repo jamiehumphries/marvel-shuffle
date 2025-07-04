@@ -58,6 +58,7 @@ const falcon = cardSet("Falcon");
 const winterSoldier = cardSet("Winter Soldier");
 const tricksterTakeover = cardSet("Trickster Takeover");
 const civilWar = cardSet("Civil War");
+const synthezoidSmackdown = cardSet("Synthezoid Smackdown");
 
 // MODULARS
 
@@ -433,6 +434,10 @@ export const scenarios = [
     ...flattenSchemes(registration),
     ...flattenSchemes(resistance),
   ),
+  synthezoidSmackdown(
+    scenario("She-Hulk", 0, "#00b050"),
+    scenario("Vision", 0, "#ff0000"),
+  ),
 ];
 
 // DIFFICULTIES
@@ -550,7 +555,7 @@ export const heroes = [
   hero("Nebula", null, JUSTICE, "#a9cbe9"),
   hero("War Machine", "James Rhodes", LEADERSHIP, "#808080"),
   hero("Valkyrie", "Brunnhilde", AGGRESSION, "#404040"),
-  hero("Vision", null, PROTECTION, "#ff3300"),
+  hero("Vision", null, PROTECTION, "#ff0000"),
   sinisterMotives(
     hero("Ghost-Spider", "Gwen Stacy", PROTECTION, "#f2f2f2"),
     hero("Spider-Man", "Miles Morales", JUSTICE, "#404040"),

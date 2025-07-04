@@ -57,6 +57,7 @@ const silk = cardSet("Silk");
 const falcon = cardSet("Falcon");
 const winterSoldier = cardSet("Winter Soldier");
 const tricksterTakeover = cardSet("Trickster Takeover");
+const civilWar = cardSet("Civil War");
 
 // MODULARS
 
@@ -236,16 +237,71 @@ export const modulars = [
   tricksterTakeover(
     modular("Trickster Magic", { isLandscape }),
   ),
+  civilWar(
+    modular("Mighty Avengers"),
+    modular("The Initiative"),
+    modular("Maria Hill"),
+    modular("Cape-Killer"),
+    modular("Martial Law"),
+    modular("New Avengers", { isLandscape }),
+    modular("Secret Avengers"),
+    modular("Spider-Man"),
+    modular("Defenders", { isLandscape }),
+  ),
 ];
 
+function scheme(name) {
+  return modular(name, { subname: "Main Scheme", isLandscape, hasBack });
+}
+
+const registration = {
+  schemes: [
+    [
+      scheme("S.H.I.E.L.D. Recruits"),
+      scheme("Registration 2"), // TODO
+      scheme("Registration 3"), // TODO
+      scheme("Cut Off Support"),
+    ],
+    [
+      scheme("Registration 5"), // TODO
+      scheme("Registration 6"), // TODO
+      scheme("Registration 7"), // TODO
+      scheme("Negative Zone Prison"),
+    ],
+  ],
+};
+
+const resistance = {
+  schemes: [
+    [
+      scheme("Resistance 1"), // TODO
+      scheme("Rallying Call"),
+      scheme("Resistance 3"), // TODO
+      scheme("Going Underground"),
+    ],
+    [
+      scheme("Neighbourhood Protectors"),
+      scheme("Resistance 6"), // TODO
+      scheme("Resistance 7"), // TODO
+      scheme("Resistance 8"), // TODO
+    ],
+  ],
+};
+
 export const extraModulars = [
+  // Scenario specific modulars
   modular("Magneto", { hasBack }),
-  modular("Longshot", { isUncounted }),
-  modular("Hope Summers", { hasBack: Hero, isUncounted }),
-  modular("Dreadpool", { requiredReason: "for ‘Pool aspect" }),
   modular("Prelates", { hasBack }),
   modular("S.H.I.E.L.D. Executive Board", { hasBack }),
   modular("Executive Board Evidence", { hasBack }),
+  // Uncounted modulars
+  modular("Longshot", { isUncounted }),
+  modular("Hope Summers", { hasBack: Hero, isUncounted }),
+  // Dreadpool for ‘Pool aspect
+  modular("Dreadpool", { requiredReason: "for ‘Pool aspect" }),
+  // Civil War main schemes
+  ...registration.schemes.flatMap((scheme) => scheme),
+  ...resistance.schemes.flatMap((scheme) => scheme),
 ];
 
 // SCENARIOS
@@ -365,6 +421,12 @@ export const scenarios = [
     scenario("Enchantress", "Trickster Magic", "#00b050"),
     scenario("God of Lies", "Trickster Magic", "#ffc000", { hasBack }),
   ),
+  civilWar(
+    scenario("Iron Man", ["Mighty Avengers", "The Initiative"], "#ffc000", { ...registration }),
+    scenario("Captain Marvel", ["Cape-Killer", "Martial Law"], "#305496", { ...registration }),
+    scenario("Captain America", ["New Avengers", "Secret Avengers"], "#0070c0", { ...resistance }),
+    scenario("Spider-Woman", ["Spider-Man", "Defenders"], "#ff0000", { ...resistance }),
+  ),
 ];
 
 // DIFFICULTIES
@@ -448,7 +510,7 @@ function hero(name, alterEgo, aspects, color, options = {}) {
 export const heroes = [
   coreSet(
     hero("Spider-Man", "Peter Parker", JUSTICE, "#ff0000"),
-    hero("Captain Marvel", "Carol Danvers", LEADERSHIP, "#0070c0"),
+    hero("Captain Marvel", "Carol Danvers", LEADERSHIP, "#305496"),
     hero("She-Hulk", "Jennifer Walters", AGGRESSION, "#00b050"),
     hero("Iron Man", "Tony Stark", AGGRESSION, "#ffc000"),
     hero("Black Panther", "T’Challa", PROTECTION, "#404040"),
@@ -510,7 +572,7 @@ export const heroes = [
   hero("X-23", "Laura Kinney", AGGRESSION, "#404040"),
   hero("Deadpool", "Wade Wilson", POOL, "#ff3737"),
   ageOfApocalypse(
-    hero("Bishop", "Lucas Bishop", LEADERSHIP, "#0070c0"),
+    hero("Bishop", "Lucas Bishop", LEADERSHIP, "#305496"),
     hero("Magik", "Illyana Rasputin", AGGRESSION, "#ffc000"),
   ),
   hero("Iceman", "Bobby Drake", AGGRESSION, "#81deff"),
@@ -525,4 +587,8 @@ export const heroes = [
   hero("Silk", "Cindy Moon", PROTECTION, "#f2f2f2"),
   hero("Falcon", "Sam Wilson", LEADERSHIP, "#c00000"),
   hero("Winter Soldier", "Bucky Barnes", AGGRESSION, "#c7d0db"),
+  civilWar(
+    hero("Hulkling", "Teddy Altman", PROTECTION, "#00b050"),
+    hero("Tigra", "Greer Grant Nelson", AGGRESSION, "#ed7d31"),
+  ),
 ];

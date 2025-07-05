@@ -254,6 +254,10 @@ function scheme(name) {
   return modular(name, { subname: "Main Scheme", isLandscape, hasBack });
 }
 
+function flattenSchemes(set) {
+  return set.schemes.flatMap((scheme) => scheme);
+}
+
 const registration = {
   schemes: [
     [
@@ -299,8 +303,8 @@ export const extraModulars = [
   modular("S.H.I.E.L.D. Executive Board", { hasBack }),
   modular("Executive Board Evidence", { hasBack }),
   // Civil War main schemes
-  ...registration.schemes.flatMap((scheme) => scheme),
-  ...resistance.schemes.flatMap((scheme) => scheme),
+  ...flattenSchemes(registration),
+  ...flattenSchemes(resistance),
 ];
 
 // SCENARIOS
@@ -425,6 +429,9 @@ export const scenarios = [
     scenario("Captain Marvel", ["Cape-Killer", "Martial Law"], "#305496", { ...registration }),
     scenario("Captain America", ["New Avengers", "Secret Avengers"], "#0070c0", { ...resistance }),
     scenario("Spider-Woman", ["Spider-Man", "Defenders"], "#ff0000", { ...resistance }),
+  ).withExtraOptions(
+    ...flattenSchemes(registration),
+    ...flattenSchemes(resistance),
   ),
 ];
 

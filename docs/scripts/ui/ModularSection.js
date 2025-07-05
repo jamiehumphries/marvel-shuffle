@@ -68,6 +68,10 @@ export class ModularSection extends Section {
   getCardOptionSets(count, isShuffleAll = false) {
     return this.scenarioSection.trueCards
       .flatMap((card) => card.schemes)
+      .map((schemes) => {
+        const filteredSchemes = schemes.filter((card) => card.checked);
+        return filteredSchemes.length > 0 ? filteredSchemes : [schemes[0]];
+      })
       .concat(super.getCardOptionSets(count, isShuffleAll));
   }
 

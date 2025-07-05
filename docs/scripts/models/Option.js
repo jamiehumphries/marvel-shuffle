@@ -25,8 +25,8 @@ export class Option extends Model {
 
   get checked() {
     if (this._checked === undefined) {
-      if (this.children) {
-        this._checked = this.children.every((child) => child.checked);
+      if (this.suboptions) {
+        this._checked = this.suboptions.every((option) => option.checked);
       } else {
         const storedValue = getItem(this.id);
         this._checked = storedValue === null ? false : storedValue;
@@ -53,12 +53,16 @@ export class Option extends Model {
     }
   }
 
+  get suboptions() {
+    return this.children;
+  }
+
   get anyDescendantChecked() {
-    if (!this.children) {
+    if (!this.suboptions) {
       return false;
     }
-    return this.children.some(
-      (child) => child.checked || child.anyDescendantChecked,
+    return this.suboptions.some(
+      (option) => option.checked || option.anyDescendantChecked,
     );
   }
 
@@ -114,20 +118,20 @@ export class Option extends Model {
   setChecked(value, { cascadeUp = false, cascadeDown = false } = {}) {
     this._checked = value;
     this.onChange(value);
-    if (!this.children) {
+    if (!this.suboptions) {
       setItem(this.id, value);
     }
     if (this.checkbox) {
       this.checkbox.checked = value;
     }
-    if (this.children && cascadeDown) {
-      for (const child of this.children) {
-        child.setChecked(value, { cascadeDown: true });
+    if (this.suboptions && cascadeDown) {
+      for (const option of this.suboptions) {
+        option.setChecked(value, { cascadeDown: true });
       }
     }
     if (this.parent && cascadeUp) {
-      const siblings = this.parent.children;
-      const allSiblingsChecked = siblings.every((child) => child.checked);
+      const siblings = this.parent.suboptions;
+      const allSiblingsChecked = siblings.every((option) => option.checked);
       this.parent.setChecked(allSiblingsChecked, { cascadeUp: true });
     }
     this.updateIndeterminateState();

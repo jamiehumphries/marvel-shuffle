@@ -7,12 +7,25 @@ export class CardSet extends Option {
     const children = cards;
     super(name, { type, slugModifier, children });
     this.isCampaign = isCampaign;
+    this.extraOptions = [];
   }
 
-  appendTo(element) {
-    super.appendTo(element, "set");
-    for (const card of this.children) {
-      card.appendTo(element, "set-member");
+  get suboptions() {
+    return super.suboptions.concat(this.extraOptions);
+  }
+
+  appendTo(element, ...classes) {
+    super.appendTo(element, ...classes, "set");
+    for (const option of this.suboptions) {
+      option.appendTo(element, "set-member");
     }
+  }
+
+  withExtraOptions(...options) {
+    this.extraOptions = options;
+    for (const option of options) {
+      option.parent = this;
+    }
+    return this;
   }
 }

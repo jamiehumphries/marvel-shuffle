@@ -254,43 +254,47 @@ function scheme(name) {
   return modular(name, { subname: "Main Scheme", isLandscape, hasBack });
 }
 
+function schemeSet(...stages) {
+  return {
+    schemes: stages.map((stage) => stage.map((name) => scheme(name))),
+  };
+}
+
 function flattenSchemes(set) {
   return set.schemes.flatMap((scheme) => scheme);
 }
 
-const registration = {
-  schemes: [
-    [
-      scheme("S.H.I.E.L.D. Recruits"),
-      scheme("Registration 2"), // TODO
-      scheme("Registration 3"), // TODO
-      scheme("Cut Off Support"),
-    ],
-    [
-      scheme("Registration 5"), // TODO
-      scheme("Registration 6"), // TODO
-      scheme("Registration 7"), // TODO
-      scheme("Negative Zone Prison"),
-    ],
+// prettier-ignore
+const registration = schemeSet(
+  [
+    "S.H.I.E.L.D. Recruits",
+    "Registration 2",
+    "Registration 3",
+    "Cut Off Support",
   ],
-};
+  [
+    "Registration 5",
+    "Registration 6",
+    "Registration 7",
+    "Negative Zone Prison",
+  ],
+);
 
-const resistance = {
-  schemes: [
-    [
-      scheme("Resistance 1"), // TODO
-      scheme("Rallying Call"),
-      scheme("Resistance 3"), // TODO
-      scheme("Going Underground"),
-    ],
-    [
-      scheme("Neighbourhood Protectors"),
-      scheme("Resistance 6"), // TODO
-      scheme("Resistance 7"), // TODO
-      scheme("Resistance 8"), // TODO
-    ],
+// prettier-ignore
+const resistance = schemeSet(
+  [
+    "Resistance 1",
+    "Rallying Call",
+    "Resistance 3",
+    "Going Underground",
   ],
-};
+  [
+    "Neighbourhood Protectors",
+    "Resistance 6",
+    "Resistance 7",
+    "Resistance 8",
+  ],
+);
 
 export const extraModulars = [
   // Scenario specific modulars

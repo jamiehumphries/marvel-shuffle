@@ -1,4 +1,4 @@
-import { Card } from "./Card.js";
+import { Card } from "./Card.js?v=5f9e758a";
 
 export const STANDARD = "standard";
 export const EXPERT = "expert";

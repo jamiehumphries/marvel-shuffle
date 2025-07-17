@@ -9,6 +9,7 @@ import {
 import { flatten } from "./helpers.js";
 
 const gallery = document.getElementById("gallery");
+const cardTemplate = document.getElementById("card");
 
 const cardsByType = [
   scenarios,
@@ -19,7 +20,6 @@ const cardsByType = [
 ].map((cardsOrSets) =>
   flatten(cardsOrSets).sort((c1, c2) => c1.name.localeCompare(c2.name)),
 );
-const cardTemplate = document.getElementById("card");
 
 for (const cards of cardsByType) {
   const h2 = document.createElement("h2");

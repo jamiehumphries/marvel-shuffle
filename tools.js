@@ -153,14 +153,7 @@ async function updateAssetVersion(asset) {
   const hash = await computeHash(path);
   const results = applyAssetHash(`/${nameForRegex}`, hash);
 
-  let hasChanged = false;
-  for (const result of results) {
-    if (!result.hasChanged) {
-      continue;
-    }
-    hasChanged = true;
-  }
-
+  const hasChanged = results.some((result) => result.hasChanged);
   return { hasChanged };
 }
 

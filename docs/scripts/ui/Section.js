@@ -236,7 +236,7 @@ export class Section extends Toggleable {
     const slotsContainer = this.root.querySelector(".slots");
     const slotTemplate = document.getElementById("slot");
     for (let i = 0; i < this.maxSlots; i++) {
-      const element = slotTemplate.content.firstElementChild.cloneNode(true);
+      const element = slotTemplate.content.cloneNode(true);
       slotsContainer.appendChild(element);
     }
 

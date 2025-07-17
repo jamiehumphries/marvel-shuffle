@@ -1,0 +1,30 @@
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 3rem;
+}
+
+h1,
+h2,
+h3 {
+  margin: 1rem 0;
+  width: 100%;
+  text-align: center;
+}
+
+h1 img {
+  height: 6rem;
+}
+
+.card {
+  margin-bottom: 1rem;
+}
+
+.card img {
+  width: 196px;
+}
+
+.card img:first-of-type {
+  margin-right: 0.1rem;
+}

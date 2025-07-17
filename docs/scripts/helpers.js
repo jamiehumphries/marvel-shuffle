@@ -6,6 +6,10 @@ export function filter(array, toRemove) {
   return array.filter((el) => !toRemove.includes(el));
 }
 
+export function flatten(cardsOrSets) {
+  return cardsOrSets.flatMap((cardOrSet) => cardOrSet.children || [cardOrSet]);
+}
+
 export function passesRestriction(restrictedValues, testValues) {
   if (restrictedValues === null) {
     return true;

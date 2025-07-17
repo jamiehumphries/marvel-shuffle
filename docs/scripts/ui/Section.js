@@ -1,5 +1,10 @@
 import { getItem, resetItem, setItem } from "../data/storage.js";
-import { chooseRandom, filter, requestPostAnimationFrame } from "../helpers.js";
+import {
+  chooseRandom,
+  filter,
+  flatten,
+  requestPostAnimationFrame,
+} from "../helpers.js";
 import { All } from "../models/All.js";
 import { Aspect } from "../models/Aspect.js";
 import { CardTier } from "../models/CardTier.js";
@@ -493,10 +498,6 @@ export class Section extends Toggleable {
   flattenParentCards(selector) {
     return distinct(this.parentCards.flatMap(selector));
   }
-}
-
-function flatten(cardsOrSets) {
-  return cardsOrSets.flatMap((cardOrSet) => cardOrSet.children || [cardOrSet]);
 }
 
 function distinct(array) {

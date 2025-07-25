@@ -1,7 +1,6 @@
 :root {
   --nav-bar-height: calc(1rem + 2 * var(--table-padding));
   --scroll-buffer: 20rem;
-  --background-color: white;
 }
 
 .nav-bar {

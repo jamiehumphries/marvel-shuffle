@@ -32,6 +32,7 @@
   --button-image-brightness-hover: 90%;
 
   --option-border-and-check-color: #000000;
+  --option-background-color: var(--background-color);
   --option-background-color-hover: #eeeeee;
   --option-background-color-checked: #ddf0f6;
   --option-background-color-checked-hover: #c7e6f1;
@@ -385,6 +386,7 @@ fieldset legend::after {
   margin-bottom: 0.25rem;
   border: 1px solid var(--option-border-and-check-color);
   border-radius: 0.5rem;
+  background-color: var(--option-background-color);
   padding: 0.3rem 0.5rem;
 }
 
@@ -471,6 +473,7 @@ fieldset legend::after {
   box-sizing: border-box;
   margin-right: 8px;
   border: 2px solid var(--option-border-and-check-color);
+  background-color: var(--option-background-color);
   width: 20px;
   height: 20px;
 }

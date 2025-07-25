@@ -1,4 +1,6 @@
 :root {
+  --background-color: #ffffff;
+
   --link-color: #093156;
   --link-color-hover: #5da2bf;
 
@@ -17,6 +19,7 @@
 }
 
 body {
+  background-color: var(--background-color);
   font-family: "Back Issues BB", sans-serif;
   text-transform: lowercase;
 }

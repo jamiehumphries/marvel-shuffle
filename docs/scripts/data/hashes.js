@@ -214,6 +214,8 @@ export const hashes = {
   "/images/modular/legions-of-hel/front.png": "19f02ae9",
   "/images/modular/legions-of-hydra/front.png": "c53ef56e",
   "/images/modular/longshot/front.png": "5f59d008",
+  "/images/modular/magneto/back.png": "2a18e1ad",
+  "/images/modular/magneto/front.png": "bb970314",
   "/images/modular/master-of-time/front.png": "d04b379c",
   "/images/modular/masters-of-evil/front.png": "d06c7d95",
   "/images/modular/menagerie-medley/front.png": "cd0476af",

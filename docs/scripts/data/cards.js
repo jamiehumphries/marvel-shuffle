@@ -239,6 +239,7 @@ export const modulars = [
 ];
 
 export const extraModulars = [
+  modular("Magneto", { hasBack }),
   modular("Longshot", { isUncounted }),
   modular("Hope Summers", { hasBack, isUncounted }),
   modular("Dreadpool", { requiredReason: "for ‘Pool aspect" }),
@@ -330,7 +331,7 @@ export const scenarios = [
   mutantGenesis(
     scenario("Sabretooth", ["Brotherhood", "Mystique"], "#ffc000"),
     scenario("Project Wideawake", "Sentinels", "#9933ff", { required: "Zero Tolerance" }),
-    scenario("Master Mold", "Zero Tolerance", "#7030a0", { required: "Sentinels" }),
+    scenario("Master Mold", "Zero Tolerance", "#7030a0", { required: ["Sentinels", "Magneto"] }),
     scenario("Mansion Attack", "Mystique", "#d0cece", { required: "Brotherhood", hasBack }),
     scenario("Magneto", "Acolytes", "#c00000"),
   ),

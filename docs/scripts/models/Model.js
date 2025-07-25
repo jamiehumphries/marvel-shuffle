@@ -1,4 +1,4 @@
-import { hashes } from "../data/hashes.js";
+import { hashes } from "../data/hashes.js?v=f497e1c0";
 
 export class Model {
   static get slug() {

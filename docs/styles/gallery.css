@@ -21,10 +21,17 @@ h1 img {
   margin-bottom: 1rem;
 }
 
-.card img {
-  width: 196px;
+.card-images {
+  --card-width: 196px;
+  display: flex;
+  justify-content: space-between;
+  width: calc(2 * var(--card-width) + 0.4rem);
 }
 
-.card img:first-of-type {
-  margin-right: 0.1rem;
+.card-images img {
+  width: var(--card-width);
+}
+
+.card.double-size .card-images {
+  justify-content: center;
 }

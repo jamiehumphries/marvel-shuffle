@@ -27,17 +27,30 @@ for (const cards of cardsByType) {
   gallery.appendChild(h2);
 
   for (const card of cards) {
-    const element = cardTemplate.content.cloneNode(true);
+    appendCard(card);
 
-    const title = element.querySelector(".title");
-    title.innerText = card.name;
-
-    const back = element.querySelector(".back");
-    back.src = card.backSrc;
-
-    const front = element.querySelector(".front");
-    front.src = card.frontSrc;
-
-    gallery.appendChild(element);
+    if (card.hasGiantForm || card.hasWideForm) {
+      const name = `${card.name} (inner)`;
+      const frontSrc = card.frontInnerSrc;
+      const backSrc = card.backInnerSrc;
+      appendCard({ name, frontSrc, backSrc }, "double-size");
+    }
   }
+}
+
+function appendCard({ name, frontSrc, backSrc }, ...classes) {
+  const element = cardTemplate.content.firstElementChild.cloneNode(true);
+
+  const title = element.querySelector(".title");
+  title.innerText = name;
+
+  const back = element.querySelector(".back");
+  back.src = backSrc;
+
+  const front = element.querySelector(".front");
+  front.src = frontSrc;
+
+  element.classList.add(...classes);
+
+  gallery.appendChild(element);
 }

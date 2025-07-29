@@ -7,10 +7,32 @@
 
 h1,
 h2,
-h3 {
-  margin: 1rem 0;
+h3,
+.subname {
   width: 100%;
   text-align: center;
+}
+
+h1,
+h2 {
+  margin: 1rem 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 3rem;
+}
+
+h3 {
+  margin: 0;
+  font-weight: normal;
+  font-size: 1.2rem;
+}
+
+.subname {
+  font-size: 0.7rem;
 }
 
 h1 img {

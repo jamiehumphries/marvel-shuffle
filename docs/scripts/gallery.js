@@ -18,7 +18,10 @@ const cardsByType = [
   heroes,
   aspects,
 ].map((cardsOrSets) =>
-  flatten(cardsOrSets).sort((c1, c2) => c1.name.localeCompare(c2.name)),
+  flatten(cardsOrSets).sort(
+    (c1, c2) =>
+      c1.name.localeCompare(c2.name) || c1.subname.localeCompare(c2.subname),
+  ),
 );
 
 for (const cards of cardsByType) {
@@ -30,26 +33,21 @@ for (const cards of cardsByType) {
     appendCard(card);
 
     if (card.hasGiantForm || card.hasWideForm) {
-      const name = `${card.name} (inner)`;
+      const name = `${card.name} (1C)`;
       const frontSrc = card.frontInnerSrc;
       const backSrc = card.backInnerSrc;
-      appendCard({ name, frontSrc, backSrc }, "double-size");
+      appendCard({ ...card, name, frontSrc, backSrc }, "double-size");
     }
   }
 }
 
-function appendCard({ name, frontSrc, backSrc }, ...classes) {
+function appendCard({ name, subname, frontSrc, backSrc }, ...classes) {
   const element = cardTemplate.content.firstElementChild.cloneNode(true);
 
-  const title = element.querySelector(".title");
-  title.innerText = name;
-
-  const back = element.querySelector(".back");
-  back.src = backSrc;
-
-  const front = element.querySelector(".front");
-  front.src = frontSrc;
-
+  element.querySelector(".name").innerText = name;
+  element.querySelector(".subname").innerText = subname;
+  element.querySelector(".back").src = backSrc;
+  element.querySelector(".front").src = frontSrc;
   element.classList.add(...classes);
 
   gallery.appendChild(element);

@@ -28,7 +28,7 @@ export class Section extends Toggleable {
     this.extraCards = extraCards;
     this.isInitialized = false;
 
-    this.sets = cardsOrSets.filter((set) => !!set.children);
+    this.sets = cardsOrSets.filter((cardOrSet) => !!cardOrSet.children);
     this.coreSet = this.sets.find((set) => set.name === "Core Set");
     this.selectableCards = flatten(this.cardsOrSets);
     this.uncountedCards = this.extraCards.filter((card) => card.isUncounted);

@@ -57,5 +57,5 @@ function appendInner(card) {
   const frontSrc = card.frontInnerSrc;
   const backSrc = card.backInnerSrc;
   const isLandscape = card.hasGiantForm;
-  append({ ...card, name, frontSrc, backSrc, isLandscape }, "double-size");
+  append({ ...card, name, frontSrc, backSrc, isLandscape }, "inner");
 }

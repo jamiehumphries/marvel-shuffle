@@ -5,8 +5,8 @@ import {
   heroes,
   modulars,
   scenarios,
-} from "./data/cards.js";
-import { flatten } from "./helpers.js";
+} from "./data/cards.js?v=93d9f49b";
+import { flatten } from "./helpers.js?v=7cb83087";
 
 const gallery = document.getElementById("gallery");
 const cardTemplate = document.getElementById("card");

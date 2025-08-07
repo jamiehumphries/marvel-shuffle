@@ -600,6 +600,6 @@ export const heroes = [
   hero("Winter Soldier", "Bucky Barnes", AGGRESSION, "#c7d0db"),
   civilWar(
     hero("Hulkling", "Teddy Altman", PROTECTION, "#00b050"),
-    hero("Tigra", "Greer Grant Nelson", AGGRESSION, "#ed7d31"),
+    hero("Tigra", "Greer Nelson", AGGRESSION, "#ed7d31"),
   ),
 ];

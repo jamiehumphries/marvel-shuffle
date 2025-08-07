@@ -26,7 +26,7 @@ const cardsByType = [
 
 for (const cards of cardsByType) {
   const h2 = document.createElement("h2");
-  h2.innerText = cards[0].type.namePlural;
+  h2.innerText = `${cards[0].type.namePlural} (${cards.length})`;
   gallery.appendChild(h2);
 
   for (const card of cards) {

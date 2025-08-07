@@ -217,7 +217,7 @@ function canIncludeSuggestedCard(card, hero, allowedAspects) {
     (card.minHp === null || hero.hp >= card.minHp) &&
     passesRestriction(card.teamUp, [hero.name, hero.subname]) &&
     passesRestriction(card.traitLocks, hero.traits) &&
-    ![hero, ...hero.uniqueDeckCards].some((c2) => violatesUnique(card, c2)) &&
+    ![hero, ...hero.exludedDeckCards].some((c2) => violatesUnique(card, c2)) &&
     (allowedAspects.includes(card.aspect) || hero.include(card))
   );
 }

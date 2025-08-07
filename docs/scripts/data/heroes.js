@@ -4,7 +4,7 @@ export const heroes = [
     alterEgo: "Peter Parker",
     hp: 10,
     traitKeys: ["AVENGER", "GENIUS"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Black Cat", subname: "Felicia Hardy" },
       { name: "Aunt May", subname: null },
     ],
@@ -14,7 +14,7 @@ export const heroes = [
     alterEgo: "Carol Danvers",
     hp: 12,
     traitKeys: ["AVENGER", "SOLDIER", "S.H.I.E.L.D.", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Spider-Woman", subname: "Jessica Drew" },
       { name: "Alpha Flight Station", subname: null },
       { name: "Captain Marvel’s Helmet", subname: null },
@@ -25,14 +25,14 @@ export const heroes = [
     alterEgo: "Jennifer Walters",
     hp: 15,
     traitKeys: ["AVENGER"],
-    uniqueDeckCards: [{ name: "Hellcat", subname: "Patsy Walker" }],
+    exludedDeckCards: [{ name: "Hellcat", subname: "Patsy Walker" }],
   },
   {
     name: "Iron Man",
     alterEgo: "Tony Stark",
     hp: 9,
     traitKeys: ["AVENGER", "GENIUS", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "War Machine", subname: "James Rhodes" },
       { name: "Pepper Potts", subname: null },
       { name: "Stark Tower", subname: null },
@@ -46,7 +46,7 @@ export const heroes = [
     alterEgo: "T’Challa",
     hp: 11,
     traitKeys: ["AVENGER", "WAKANDA"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Shuri", subname: null },
       { name: "The Golden City", subname: null },
     ],
@@ -56,7 +56,7 @@ export const heroes = [
     alterEgo: "Steve Rogers",
     hp: 11,
     traitKeys: ["AVENGER", "SOLDIER", "S.H.I.E.L.D."],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Agent 13", subname: "Sharon Carter" },
       { name: "Steve’s Apartment", subname: null },
       { name: "Captain America’s Helmet", subname: null },
@@ -68,7 +68,7 @@ export const heroes = [
     alterEgo: "Clint Barton",
     hp: 9,
     traitKeys: ["AVENGER", "S.H.I.E.L.D."],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Hawkeye’s Bow", subname: null },
       { name: "Hawkeye’s Quiver", subname: null },
       { name: "Mockingbird", subname: "Bobbi Morse" },
@@ -79,7 +79,7 @@ export const heroes = [
     alterEgo: "Jessica Drew",
     hp: 11,
     traitKeys: ["AVENGER", "SPY", "S.H.I.E.L.D."],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Captain Marvel", subname: "Carol Danvers" },
       { name: "Jessica Drew’s Apartment", subname: null },
     ],
@@ -89,7 +89,7 @@ export const heroes = [
     alterEgo: "Kamala Khan",
     hp: 10,
     traitKeys: ["CHAMPION"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Red Dagger", subname: null },
       { name: "Aamir Khan", subname: null },
       { name: "Bruno Carrelli", subname: null },
@@ -102,7 +102,7 @@ export const heroes = [
     alterEgo: "Odinson",
     hp: 14,
     traitKeys: ["ASGARD", "AVENGER", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Lady Sif", subname: null },
       { name: "Asgard", subname: null },
       { name: "Mjolnir", subname: null },
@@ -114,7 +114,7 @@ export const heroes = [
     alterEgo: "Natasha Romanoff",
     hp: 9,
     traitKeys: ["AVENGER", "SPY", "S.H.I.E.L.D."],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Winter Soldier", subname: "Bucky Barnes" },
       { name: "Safe House #29", subname: null },
       { name: "Synth-Suit", subname: null },
@@ -125,7 +125,7 @@ export const heroes = [
     alterEgo: "Stephen Strange",
     hp: 10,
     traitKeys: ["AVENGER", "MYSTIC", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Wong", subname: null },
       { name: "Sanctum Sanctorum", subname: null },
       { name: "Cloak of Levitation", subname: null },
@@ -137,14 +137,14 @@ export const heroes = [
     alterEgo: "Bruce Banner",
     hp: 18,
     traitKeys: ["AVENGER", "GENIUS"],
-    uniqueDeckCards: [{ name: "Banner’s Laboratory", subname: null }],
+    exludedDeckCards: [{ name: "Banner’s Laboratory", subname: null }],
   },
   {
     name: "Ant-Man",
     alterEgo: "Scott Lang",
     hp: 12,
     traitKeys: ["AVENGER", "CIVILIAN"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Wasp", subname: "Nadia Van Dyne" },
       { name: "Ant-Man’s Helmet", subname: null },
     ],
@@ -154,7 +154,7 @@ export const heroes = [
     alterEgo: "Nadia Van Dyne",
     hp: 11,
     traitKeys: ["AVENGER", "GENIUS", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Ant-Man", subname: "Scott Lang" },
       { name: "Bio-Synthetic Wings", subname: null },
       { name: "Wasp’s Helmet", subname: null },
@@ -165,7 +165,7 @@ export const heroes = [
     alterEgo: "Pietro Maximoff",
     hp: 9,
     traitKeys: ["AVENGER", "CIVILIAN"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Scarlet Witch", subname: "Wanda Maximoff" },
       { name: "Serval Industries", subname: null },
     ],
@@ -175,7 +175,7 @@ export const heroes = [
     alterEgo: "Wanda Maximoff",
     hp: 10,
     traitKeys: ["AVENGER", "MYSTIC"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Quicksilver", subname: "Pietro Maximoff" },
       { name: "Agatha Harkness", subname: null },
     ],
@@ -185,21 +185,21 @@ export const heroes = [
     alterEgo: null,
     hp: 10,
     traitKeys: ["GUARDIAN"],
-    uniqueDeckCards: [],
+    exludedDeckCards: [],
   },
   {
     name: "Rocket Raccoon",
     alterEgo: null,
     hp: 9,
     traitKeys: ["GUARDIAN", "GENIUS", "AERIAL"],
-    uniqueDeckCards: [],
+    exludedDeckCards: [],
   },
   {
     name: "Star-Lord",
     alterEgo: "Peter Quill",
     hp: 10,
     traitKeys: ["GUARDIAN", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Nova Prime", subname: "Richard Rider" },
       { name: "Bad Boy", subname: null },
       { name: "Leader of the Guardians", subname: null },
@@ -211,7 +211,7 @@ export const heroes = [
     alterEgo: null,
     hp: 10,
     traitKeys: ["GUARDIAN"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Nebula", subname: null },
       { name: "Gamora’s Sword", subname: null },
     ],
@@ -221,7 +221,7 @@ export const heroes = [
     alterEgo: null,
     hp: 14,
     traitKeys: ["GUARDIAN"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Mantis", subname: null },
       { name: "Drax’s Knife", subname: null },
       { name: "Drax’s Other Knife", subname: null },
@@ -232,7 +232,7 @@ export const heroes = [
     alterEgo: "Flash Thompson",
     hp: 12,
     traitKeys: ["GUARDIAN", "SOLDIER"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Project Rebirth 2.0", subname: null },
       { name: "Multi-Gun", subname: null },
     ],
@@ -242,14 +242,14 @@ export const heroes = [
     alterEgo: "Monica Rambeau",
     hp: 11,
     traitKeys: ["AERIAL", "AVENGER", "CIVILIAN"],
-    uniqueDeckCards: [{ name: "Blue Marvel", subname: "Adam Brashear" }],
+    exludedDeckCards: [{ name: "Blue Marvel", subname: "Adam Brashear" }],
   },
   {
     name: "Adam Warlock",
     alterEgo: null,
     hp: 11,
     traitKeys: ["GUARDIAN", "MYSTIC"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Pip the Troll", subname: null },
       { name: "Soul World", subname: null },
       { name: "Karmic Staff", subname: null },
@@ -261,21 +261,21 @@ export const heroes = [
     alterEgo: null,
     hp: 9,
     traitKeys: ["GUARDIAN"],
-    uniqueDeckCards: [{ name: "Gamora", subname: null }],
+    exludedDeckCards: [{ name: "Gamora", subname: null }],
   },
   {
     name: "War Machine",
     alterEgo: "James Rhodes",
     hp: 10,
     traitKeys: ["AVENGER", "SOLDIER", "S.H.I.E.L.D.", "AERIAL"],
-    uniqueDeckCards: [{ name: "Iron Man", subname: "Tony Stark" }],
+    exludedDeckCards: [{ name: "Iron Man", subname: "Tony Stark" }],
   },
   {
     name: "Valkyrie",
     alterEgo: "Brunnhilde",
     hp: 12,
     traitKeys: ["ASGARD", "AVENGER", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Annabelle Riggs", subname: null },
       { name: "Valhalla", subname: null },
       { name: "Valkyrie’s Spear", subname: null },
@@ -288,7 +288,7 @@ export const heroes = [
     alterEgo: null,
     hp: 11,
     traitKeys: ["AVENGER", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Vivian", subname: null },
       { name: "616 Hickory Branch Lane", subname: null },
       { name: "Solar Gem", subname: null },
@@ -300,14 +300,14 @@ export const heroes = [
     alterEgo: "Gwen Stacy",
     hp: 10,
     traitKeys: ["WEB-WARRIOR", "CIVILIAN"],
-    uniqueDeckCards: [{ name: "George Stacy", subname: null }],
+    exludedDeckCards: [{ name: "George Stacy", subname: null }],
   },
   {
     name: "Spider-Man",
     alterEgo: "Miles Morales",
     hp: 9,
     traitKeys: ["CHAMPION", "WEB-WARRIOR", "CIVILIAN"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Ganke Lee", subname: null },
       { name: "Jefferson Davis", subname: null },
     ],
@@ -317,7 +317,7 @@ export const heroes = [
     alterEgo: "Sam Alexander",
     hp: 10,
     traitKeys: ["CHAMPION", "CIVILIAN", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Ms. Marvel", subname: "Kamala Khan" },
       { name: "Jesse Alexander", subname: null },
       { name: "Supernova Helmet", subname: null },
@@ -328,7 +328,7 @@ export const heroes = [
     alterEgo: "Riri Williams",
     hp: 10,
     traitKeys: ["CHAMPION", "GENIUS", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Brawn", subname: "Amadeus Cho" },
       { name: "Ronnie Williams", subname: null },
       { name: "Tony Stark A.I.", subname: null },
@@ -339,7 +339,7 @@ export const heroes = [
     alterEgo: "Peter Porker",
     hp: 12,
     traitKeys: ["WEB-WARRIOR", "CIVILIAN", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Captain Americat", subname: "Steve Mouser" },
       { name: "The Daily Beagle", subname: null },
     ],
@@ -349,7 +349,7 @@ export const heroes = [
     alterEgo: "Peni Parker",
     hp: 14,
     traitKeys: ["WEB-WARRIOR", "CIVILIAN"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "SP//dr", subname: null },
       { name: "SP//dr", subname: null },
       { name: "VEN#m", subname: "Addy Brock" },
@@ -361,7 +361,7 @@ export const heroes = [
     alterEgo: "Piotr Rasputin",
     hp: 14,
     traitKeys: ["X-MEN", "MUTANT"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Shadowcat", subname: "Kitty Pryde" },
       { name: "Piotr’s Studio", subname: null },
     ],
@@ -371,7 +371,7 @@ export const heroes = [
     alterEgo: "Kitty Pryde",
     hp: 9,
     traitKeys: ["X-MEN", "MUTANT"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Lockheed", subname: null },
       { name: "Kitty’s Room", subname: null },
     ],
@@ -381,7 +381,7 @@ export const heroes = [
     alterEgo: "Scott Summers",
     hp: 10,
     traitKeys: ["X-MEN", "MUTANT"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Phoenix", subname: "Jean Grey" },
       { name: "Ruby Quartz Visor", subname: null },
       { name: "Field Commander", subname: null },
@@ -392,7 +392,7 @@ export const heroes = [
     alterEgo: "Jean Grey",
     hp: 9,
     traitKeys: ["PSIONIC", "X-MEN", "MUTANT", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Cyclops", subname: "Scott Summers" },
       { name: "White Hot Room", subname: null },
       { name: "Phoenix Suit", subname: null },
@@ -403,7 +403,7 @@ export const heroes = [
     alterEgo: "Logan",
     hp: 10,
     traitKeys: ["X-MEN", "MUTANT"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Wolverine’s Claws", subname: null },
       { name: "Jubilee", subname: "Jubilation Lee" },
       { name: "Logan’s Cabin", subname: null },
@@ -414,7 +414,7 @@ export const heroes = [
     alterEgo: "Ororo Munroe",
     hp: 10,
     traitKeys: ["X-MEN", "MUTANT", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Storm’s Crown", subname: null },
       { name: "Storm’s Cape", subname: null },
       { name: "Ororo’s Garden", subname: null },
@@ -425,7 +425,7 @@ export const heroes = [
     alterEgo: "Remy LeBeau",
     hp: 9,
     traitKeys: ["THIEF", "X-MEN", "MUTANT"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Rogue", subname: "Anna Marie" },
       { name: "The Thieves Guild", subname: null },
       { name: "Gambit’s Staff", subname: null },
@@ -437,7 +437,7 @@ export const heroes = [
     alterEgo: "Anna Marie",
     hp: 11,
     traitKeys: ["X-MEN", "MUTANT", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Gambit", subname: "Remy LeBeau" },
       { name: "Rogue’s Jacket", subname: null },
     ],
@@ -447,7 +447,7 @@ export const heroes = [
     alterEgo: "Nathan Summers",
     hp: 12,
     traitKeys: ["SOLDIER", "X-FORCE", "MUTANT", "PSIONIC"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Technovirus Purge", subname: null },
       { name: "Graymalkin", subname: null },
       { name: "Professor", subname: null },
@@ -459,7 +459,7 @@ export const heroes = [
     alterEgo: "Neena Thurman",
     hp: 9,
     traitKeys: ["POSSE", "X-FORCE", "MUTANT"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Diamondback", subname: "Rachel Leighton" },
       { name: "Outlaw", subname: "Inez Temple" },
       { name: "Pip the Pug", subname: null },
@@ -471,14 +471,14 @@ export const heroes = [
     alterEgo: "Betsy Braddock",
     hp: 10,
     traitKeys: ["PSIONIC", "X-FORCE", "MUTANT"],
-    uniqueDeckCards: [{ name: "Angel", subname: "Warren Worthington III" }],
+    exludedDeckCards: [{ name: "Angel", subname: "Warren Worthington III" }],
   },
   {
     name: "Angel",
     alterEgo: "Warren Worthington III",
     hp: 12,
     traitKeys: ["AERIAL", "X-FORCE", "MUTANT"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Psylocke", subname: "Betsy Braddock" },
       { name: "Worthington Industries", subname: null },
     ],
@@ -488,7 +488,7 @@ export const heroes = [
     alterEgo: "Laura Kinney",
     hp: 10,
     traitKeys: ["X-FORCE", "MUTANT"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "X-23’s Claws", subname: null },
       { name: "Honey Badger", subname: "Gabby Kinney" },
     ],
@@ -498,14 +498,14 @@ export const heroes = [
     alterEgo: "Wade Wilson",
     hp: 9,
     traitKeys: ["X-FORCE", "MUTANT"],
-    uniqueDeckCards: [{ name: "Cable", subname: "Nathan Summers" }],
+    exludedDeckCards: [{ name: "Cable", subname: "Nathan Summers" }],
   },
   {
     name: "Bishop",
     alterEgo: "Lucas Bishop",
     hp: 12,
     traitKeys: ["X-MEN", "MUTANT"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Malcolm", subname: null },
       { name: "Randall", subname: null },
       { name: "Bishop’s Rifle", subname: null },
@@ -517,7 +517,7 @@ export const heroes = [
     alterEgo: "Illyana Rasputin",
     hp: 10,
     traitKeys: ["MYSTIC", "X-MEN", "MUTANT"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Colossus", subname: "Piotr Rasputin" },
       { name: "Limbo", subname: null },
       { name: "Magik’s Crown", subname: null },
@@ -530,14 +530,14 @@ export const heroes = [
     alterEgo: "Bobby Drake",
     hp: 11,
     traitKeys: ["X-MEN", "MUTANT", "AERIAL"],
-    uniqueDeckCards: [],
+    exludedDeckCards: [],
   },
   {
     name: "Jubilee",
     alterEgo: "Jubilation Lee",
     hp: 9,
     traitKeys: ["X-MEN", "MUTANT"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Wolverine", subname: "Logan" },
       { name: "Shopping Spree", subname: null },
       { name: "Jubilee’s Coat", subname: null },
@@ -549,7 +549,7 @@ export const heroes = [
     alterEgo: "Kurt Wagner",
     hp: 9,
     traitKeys: ["X-MEN", "MUTANT"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Daytripper", subname: "Amanda Sefton" },
       { name: "Kurt’s Chapel", subname: null },
       { name: "Kurt’s Cutlasses", subname: null },
@@ -561,7 +561,7 @@ export const heroes = [
     alterEgo: "Erik Lehnsherr",
     hp: 10,
     traitKeys: ["X-MEN", "MUTANT", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Asteroid M", subname: null },
       { name: "Magneto’s Helmet", subname: null },
       { name: "Magneto’s Armor", subname: null },
@@ -573,7 +573,7 @@ export const heroes = [
     alterEgo: null,
     hp: 9,
     traitKeys: ["S.H.I.E.L.D.", "SPY"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Nick Fury", subname: null },
       { name: "The Iliad", subname: null },
       { name: "S.H.I.E.L.D. Director", subname: null },
@@ -584,7 +584,7 @@ export const heroes = [
     alterEgo: null,
     hp: 10,
     traitKeys: ["S.H.I.E.L.D.", "SOLDIER", "SPY", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Maria Hill", subname: null },
       { name: "Fury’s Flying Car", subname: null },
       { name: "Safe House #221", subname: null },
@@ -596,7 +596,7 @@ export const heroes = [
     alterEgo: "Shuri",
     hp: 11,
     traitKeys: ["WAKANDA", "GENIUS"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "T’Challa", subname: null },
       { name: "The Elephant’s Trunk", subname: null },
       { name: "Queen Ramonda", subname: null },
@@ -608,7 +608,7 @@ export const heroes = [
     alterEgo: "Cindy Moon",
     hp: 10,
     traitKeys: ["WEB-WARRIOR", "GENIUS", "AERIAL"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Get the Scoop", subname: null },
       { name: "Albert Moon", subname: null },
       { name: "J. Jonah Jameson", subname: null },
@@ -619,14 +619,14 @@ export const heroes = [
     alterEgo: "Sam Wilson",
     hp: 10,
     traitKeys: ["AERIAL", "AVENGER", "S.H.I.E.L.D."],
-    uniqueDeckCards: [{ name: "Redwing", subname: null }],
+    exludedDeckCards: [{ name: "Redwing", subname: null }],
   },
   {
     name: "Winter Soldier",
     alterEgo: "Bucky Barnes",
     hp: 11,
     traitKeys: ["S.H.I.E.L.D.", "SOLDIER", "SPY"],
-    uniqueDeckCards: [
+    exludedDeckCards: [
       { name: "Cybernetic Arm", subname: null },
       { name: "Black Widow", subname: "Natasha Romanoff" },
       { name: "Safe House #30", subname: null },

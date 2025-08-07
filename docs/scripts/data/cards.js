@@ -7,8 +7,8 @@ import { Hero } from "../models/Hero.js";
 import { Modular } from "../models/Modular.js";
 import { Scenario } from "../models/Scenario.js";
 
-function ensureArray(arrayOrString) {
-  return Array.isArray(arrayOrString) ? arrayOrString : [arrayOrString];
+function ensureArray(possibleArray) {
+  return Array.isArray(possibleArray) ? possibleArray : [possibleArray];
 }
 
 // Modifiers
@@ -490,7 +490,11 @@ function hero(name, alterEgo, aspects, color, options = {}) {
 
   const traitKeys = data?.traitKeys || [];
   const hp = data?.hp || 0;
-  const uniqueDeckCards = data?.uniqueDeckCards || [];
+  const exludedDeckCards = data?.exludedDeckCards || [];
+
+  if (options.exclude) {
+    exludedDeckCards.push(...ensureArray(options.exclude));
+  }
 
   aspects = ensureArray(aspects);
 
@@ -512,7 +516,7 @@ function hero(name, alterEgo, aspects, color, options = {}) {
     color,
     traitKeys,
     hp,
-    uniqueDeckCards,
+    exludedDeckCards,
     options,
   );
 }
@@ -600,6 +604,6 @@ export const heroes = [
   hero("Winter Soldier", "Bucky Barnes", AGGRESSION, "#c7d0db"),
   civilWar(
     hero("Hulkling", "Teddy Altman", PROTECTION, "#00b050"),
-    hero("Tigra", "Greer Nelson", AGGRESSION, "#ed7d31"),
+    hero("Tigra", "Greer Nelson", AGGRESSION, "#ed7d31", { exclude: { name: "Tigra", subname: "Greer Grant Nelson" } }),
   ),
 ];

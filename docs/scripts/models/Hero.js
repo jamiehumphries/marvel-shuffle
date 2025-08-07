@@ -8,7 +8,7 @@ export class Hero extends Card {
     color,
     traits,
     hp,
-    uniqueDeckCards,
+    exludedDeckCards,
     { hasGiantForm = false, hasWideForm = false, include = () => false } = {},
   ) {
     const subname = alterEgo;
@@ -26,7 +26,7 @@ export class Hero extends Card {
       hasWideForm,
     });
     this.hp = hp;
-    this.uniqueDeckCards = uniqueDeckCards;
+    this.exludedDeckCards = exludedDeckCards;
     this.include = include;
   }
 

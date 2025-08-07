@@ -30,20 +30,19 @@ for (const cards of cardsByType) {
   gallery.appendChild(h2);
 
   for (const card of cards) {
-    appendCard(card);
-
+    append(card);
     if (card.hasGiantForm || card.hasWideForm) {
-      const name = `${card.name} (1C)`;
-      const frontSrc = card.frontInnerSrc;
-      const backSrc = card.backInnerSrc;
-      appendCard({ ...card, name, frontSrc, backSrc }, "double-size");
+      appendInner(card);
     }
   }
 }
 
-function appendCard({ name, subname, frontSrc, backSrc }, ...classes) {
-  const element = cardTemplate.content.firstElementChild.cloneNode(true);
+function append({ name, subname, frontSrc, backSrc, isLandscape }, ...classes) {
+  if (isLandscape) {
+    classes = classes.concat("landscape");
+  }
 
+  const element = cardTemplate.content.firstElementChild.cloneNode(true);
   element.querySelector(".name").innerText = name;
   element.querySelector(".subname").innerText = subname;
   element.querySelector(".back").src = backSrc;
@@ -51,4 +50,12 @@ function appendCard({ name, subname, frontSrc, backSrc }, ...classes) {
   element.classList.add(...classes);
 
   gallery.appendChild(element);
+}
+
+function appendInner(card) {
+  const name = `${card.name} *`;
+  const frontSrc = card.frontInnerSrc;
+  const backSrc = card.backInnerSrc;
+  const isLandscape = card.hasGiantForm;
+  append({ ...card, name, frontSrc, backSrc, isLandscape }, "double-size");
 }

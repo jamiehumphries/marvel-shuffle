@@ -45,13 +45,20 @@ h1 img {
 
 .card-images {
   --card-width: 196px;
+  --slot-width: calc(2 * var(--card-width) + 0.4rem);
   display: flex;
   justify-content: space-between;
-  width: calc(2 * var(--card-width) + 0.4rem);
+  align-items: center;
+  width: var(--slot-width);
 }
 
 .card-images img {
   width: var(--card-width);
+}
+
+.card.landscape .card-images {
+  rotate: 90deg;
+  height: var(--slot-width);
 }
 
 .card.double-size .card-images {

@@ -131,6 +131,8 @@ export const hashes = {
   "/images/hero/storm-ororo-munroe/front.png": "c16dd192",
   "/images/hero/thor-odinson/back.png": "fd365610",
   "/images/hero/thor-odinson/front.png": "726ec2e8",
+  "/images/hero/tigra-greer-nelson/back.png": "cc08413d",
+  "/images/hero/tigra-greer-nelson/front.png": "8f3a83d6",
   "/images/hero/valkyrie-brunnhilde/back.png": "8685abb4",
   "/images/hero/valkyrie-brunnhilde/front.png": "1a2e861e",
   "/images/hero/venom-flash-thompson/back.png": "02b7ed62",

@@ -69,3 +69,7 @@ h1 img {
 .card.campaign .card-images {
   justify-content: center;
 }
+
+.card.inner.landscape .card-images {
+  justify-content: start;
+}

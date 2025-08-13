@@ -7,6 +7,7 @@ import {
   scenarios,
 } from "./data/cards.js";
 import { flatten } from "./helpers.js";
+import { Campaign } from "./models/Campaign.js";
 
 const gallery = document.getElementById("gallery");
 const cardTemplate = document.getElementById("card");
@@ -25,16 +26,28 @@ const cardsByType = [
 );
 
 for (const cards of cardsByType) {
-  const h2 = document.createElement("h2");
-  h2.innerText = `${cards[0].type.namePlural} (${cards.length})`;
-  gallery.appendChild(h2);
-
+  appendTitle(cards[0].type.namePlural, cards.length);
   for (const card of cards) {
     append(card);
     if (card.hasGiantForm || card.hasWideForm) {
       appendInner(card);
     }
   }
+}
+
+const campaignSets = scenarios.filter((set) => set.isCampaign);
+appendTitle("Campaigns", campaignSets.length);
+for (const set of campaignSets) {
+  const frontSrc = new Campaign(set).imageSrc;
+  const backSrc = "";
+  const isLandscape = false;
+  append({ ...set, frontSrc, backSrc, isLandscape }, "campaign");
+}
+
+function appendTitle(title, count) {
+  const h2 = document.createElement("h2");
+  h2.innerText = `${title} (${count})`;
+  gallery.appendChild(h2);
 }
 
 function append({ name, subname, frontSrc, backSrc, isLandscape }, ...classes) {

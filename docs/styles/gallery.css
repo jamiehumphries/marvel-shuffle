@@ -56,11 +56,16 @@ h1 img {
   width: var(--card-width);
 }
 
+.card-images img[src=""] {
+  display: none;
+}
+
 .card.landscape .card-images {
   rotate: 90deg;
   height: var(--slot-width);
 }
 
-.card.inner .card-images {
+.card.inner .card-images,
+.card.campaign .card-images {
   justify-content: center;
 }

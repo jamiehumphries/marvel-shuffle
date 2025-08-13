@@ -11176,7 +11176,7 @@ export const deck = [
     name: "S.H.I.E.L.D. Deputy",
     subname: null,
     type: "Upgrade",
-    traits: ["WEAPON"],
+    traits: ["TITLE"],
     traitLocks: ["S.H.I.E.L.D."],
     teamUp: null,
     minHp: null,

@@ -157,7 +157,7 @@ function mapName(name) {
   return name
     ? (nameFixes[name] || name)
         .replace(/(?<=^| )"/, "“")
-        .replace(/"(?=$|)/, "”")
+        .replace(/"(?=$| )/, "”")
         .replace(/(?<=^| )'/, "‘")
         .replaceAll("'", "’")
     : null;

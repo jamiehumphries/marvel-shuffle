@@ -37,17 +37,15 @@ export class Card extends Option {
     this.isUncounted = isUncounted;
     this.requiredReason = requiredReason;
 
-    this.frontSrc = this.image(this.slug, "front.png");
-    this.backSrc = hasBack
-      ? this.image(this.slug, "back.png")
-      : this.image("back.png");
+    this.frontSrc = this.image("front");
+    this.backSrc =
+      hasBack === true
+        ? this.image("back")
+        : Model.buildImage(hasBack || this.type, "back");
 
     const hasInnerForm = hasGiantForm || hasWideForm;
     [this.frontInnerSrc, this.backInnerSrc] = hasInnerForm
-      ? [
-          this.image(this.slug, "front-inner.png"),
-          this.image(this.slug, "back-inner.png"),
-        ]
+      ? [this.image("front-inner"), this.image("back-inner")]
       : [null, null];
   }
 
@@ -60,7 +58,7 @@ export class Card extends Option {
   }
 
   static get placeholderImageSrc() {
-    return (this._placeholderImageSrc ||= Model.buildImage(this, "back.png"));
+    return (this._placeholderImageSrc ||= Model.buildImage(this, "back"));
   }
 
   childCardCount(numberOfHeroes) {
@@ -71,7 +69,7 @@ export class Card extends Option {
     );
   }
 
-  image(...pathParts) {
-    return Model.buildImage(this.type, ...pathParts);
+  image(side) {
+    return Model.buildImage(this.type, this.slug, side);
   }
 }

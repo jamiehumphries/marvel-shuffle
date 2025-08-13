@@ -15,7 +15,7 @@ export class Model {
   }
 
   static buildImage(type, ...pathParts) {
-    const path = ["/images", type.slug, ...pathParts].join("/");
+    const path = ["/images", type.slug, ...pathParts].join("/") + ".png";
     const hash = hashes[path];
     return hash ? `${path}?v=${hash}` : type.placeholderImageSrc;
   }

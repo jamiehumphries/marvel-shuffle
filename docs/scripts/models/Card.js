@@ -1,5 +1,5 @@
-import { Model } from "./Model.js";
-import { Option } from "./Option.js";
+import { Model } from "./Model.js?v=e8bcf0fa";
+import { Option } from "./Option.js?v=1112777c";
 
 export class Card extends Option {
   constructor(

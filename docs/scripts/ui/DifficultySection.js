@@ -46,13 +46,6 @@ export class DifficultySection extends Section {
       return 0;
     }
 
-    const includeExpertToAvoidCompleted = this.standardCardOptions.every(
-      (card) => this.getPriority(card) === 0,
-    );
-    if (includeExpertToAvoidCompleted) {
-      return 1;
-    }
-
     return 1 - 1 / (this.expertCardOptions.length + 1);
   }
 
@@ -109,7 +102,20 @@ export class DifficultySection extends Section {
   }
 
   getRandomCount() {
-    return Math.random() < this.includeExpertProbability ? 2 : 1;
+    switch (this.includeExpertProbability) {
+      case 0:
+        return 1;
+      case 1:
+        return 2;
+      default:
+        const includeExpertToAvoidCompleted = this.standardCardOptions.every(
+          (card) => this.getPriority(card) === 0,
+        );
+        if (includeExpertToAvoidCompleted) {
+          return 2;
+        }
+        return Math.random() < this.includeExpertProbability ? 2 : 1;
+    }
   }
 
   getCardOptionSets(count) {

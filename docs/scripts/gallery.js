@@ -5,9 +5,9 @@ import {
   heroes,
   modulars,
   scenarios,
-} from "./data/cards.js";
-import { flatten } from "./helpers.js";
-import { Campaign } from "./models/Campaign.js";
+} from "./data/cards.js?v=83bea52f";
+import { flatten } from "./helpers.js?v=7cb83087";
+import { Campaign } from "./models/Campaign.js?v=f107661f";
 
 const gallery = document.getElementById("gallery");
 const cardTemplate = document.getElementById("card");

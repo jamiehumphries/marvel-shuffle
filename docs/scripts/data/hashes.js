@@ -71,6 +71,8 @@ export const hashes = {
   "/images/hero/hawkeye-clint-barton/front.png": "866bd195",
   "/images/hero/hulk-bruce-banner/back.png": "a3f857ac",
   "/images/hero/hulk-bruce-banner/front.png": "5cfb855c",
+  "/images/hero/hulkling-teddy-altman/back.png": "63e6f4a7",
+  "/images/hero/hulkling-teddy-altman/front.png": "e5dde82c",
   "/images/hero/iceman-bobby-drake/back.png": "3cb37f1c",
   "/images/hero/iceman-bobby-drake/front.png": "689eec95",
   "/images/hero/iron-man-tony-stark/back.png": "17308db9",

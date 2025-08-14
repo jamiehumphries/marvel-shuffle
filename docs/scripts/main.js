@@ -6,7 +6,7 @@ import {
   setUserId,
 } from "./data/storage.js";
 import { renderTable } from "./data/tracker.js";
-import { filter, requestPostAnimationFrame } from "./helpers.js";
+import { requestPostAnimationFrame } from "./helpers.js";
 import { AspectSection } from "./ui/AspectSection.js";
 import { DifficultySection } from "./ui/DifficultySection.js";
 import { ExtraModularSection } from "./ui/ExtraModularSection.js";
@@ -183,18 +183,13 @@ function toggleSettings() {
     section.button.disabled = settingsVisible;
   }
 
-  if (settingsVisible) {
-    settings.previouslyVisibleSections = getVisibleSections();
-  } else {
-    updateSectionVisibility();
-
-    const newlyVisibleSections = filter(
-      getVisibleSections(),
-      settings.previouslyVisibleSections,
-    );
-
-    for (const section of newlyVisibleSections) {
-      section.shuffle({ animate: false, isShuffleAll: true });
+  if (!settingsVisible) {
+    for (const section of sections) {
+      const wasVisible = section.visible;
+      section.updateVisibility();
+      if (section.visible && !wasVisible) {
+        section.shuffle({ animate: false });
+      }
     }
 
     requestPostAnimationFrame(() => {
@@ -204,16 +199,6 @@ function toggleSettings() {
     });
 
     updateTrackingTable();
-  }
-}
-
-function getVisibleSections() {
-  return sections.filter((section) => section.visible);
-}
-
-function updateSectionVisibility() {
-  for (const section of sections) {
-    section.updateVisibility();
   }
 }
 

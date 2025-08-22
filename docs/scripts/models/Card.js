@@ -6,6 +6,7 @@ export class Card extends Option {
     name,
     {
       subname = null,
+      optionSubname = null,
       color = null,
       isLandscape = false,
       hasBack = false,
@@ -22,7 +23,7 @@ export class Card extends Option {
     } = {},
   ) {
     const slugModifier = subname;
-    super(name, { subname, slugModifier });
+    super(name, { subname, optionSubname, slugModifier });
 
     this.color = color;
     this.isLandscape = isLandscape;

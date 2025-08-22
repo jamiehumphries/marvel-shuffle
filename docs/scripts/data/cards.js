@@ -250,51 +250,66 @@ export const modulars = [
   ),
 ];
 
-function scheme(name) {
-  return modular(name, { subname: "Main Scheme", isLandscape, hasBack });
-}
+function schemeGroup(groupName, stagesBySet) {
+  const group = { all: [], stages: [] };
 
-function schemeSet(...stages) {
-  return {
-    schemes: stages.map((stage) => stage.map((name) => scheme(name))),
-  };
-}
+  for (const [setName, stages] of Object.entries(stagesBySet)) {
+    group[setName] ||= [];
+    for (let i = 0; i < stages.length; i++) {
+      const stage = stages[i];
+      group.stages[i] ||= [];
+      for (const schemeName of stage) {
+        const scheme = modular(schemeName, {
+          subname: "Main Scheme",
+          optionSubname: `${groupName} - Stage ${i + 1}`,
+          isLandscape,
+          hasBack,
+        });
+        group[setName].push(scheme);
+        group.stages[i].push(scheme);
+        group.all.push(scheme);
+      }
+    }
+  }
 
-function flattenSchemes(set) {
-  return set.schemes.flatMap((scheme) => scheme);
+  return group;
 }
 
 // prettier-ignore
-const registration = schemeSet(
-  [
-    "S.H.I.E.L.D. Recruits",
-    "Registration 2",
-    "Registration 3",
-    "Cut Off Support",
+const registration = schemeGroup("Registration", {
+  civilWar: [
+    [
+      "S.H.I.E.L.D. Recruits",
+      "Registration Scheme 2",
+      "Registration Scheme 3",
+      "Cut Off Support",
+    ],
+    [
+      "Registration Scheme 5",
+      "Registration Scheme 6",
+      "Registration Scheme 7",
+      "Negative Zone Prison",
+    ],
   ],
-  [
-    "Registration 5",
-    "Registration 6",
-    "Registration 7",
-    "Negative Zone Prison",
-  ],
-);
+});
 
 // prettier-ignore
-const resistance = schemeSet(
-  [
-    "Resistance 1",
-    "Rallying Call",
-    "Resistance 3",
-    "Going Underground",
+const resistance = schemeGroup("Resistance", {
+  civilWar: [
+    [
+      "Resistance Scheme 1",
+      "Rallying Call",
+      "Resistance Scheme 3",
+      "Going Underground",
+    ],
+    [
+      "Neighbourhood Protectors",
+      "Resistance Scheme 6",
+      "Resistance Scheme 7",
+      "Resistance Scheme 8",
+    ],
   ],
-  [
-    "Neighbourhood Protectors",
-    "Resistance 6",
-    "Resistance 7",
-    "Resistance 8",
-  ],
-);
+});
 
 export const extraModulars = [
   // Scenario specific modulars
@@ -308,8 +323,8 @@ export const extraModulars = [
   // Dreadpool for ‘Pool aspect
   modular("Dreadpool", { requiredReason: "for ‘Pool aspect" }),
   // Civil War main schemes
-  ...flattenSchemes(registration),
-  ...flattenSchemes(resistance),
+  ...registration.all,
+  ...resistance.all,
 ];
 
 // SCENARIOS
@@ -337,6 +352,7 @@ function scenario(name, modularNamesOrNumber, color, options = {}) {
     );
   }
   options.required &&= findModulars(options.required);
+  options.schemes &&= options.schemes.stages;
   const modularsOrNumber =
     typeof modularNamesOrNumber === "number"
       ? modularNamesOrNumber
@@ -430,13 +446,13 @@ export const scenarios = [
     scenario("God of Lies", "Trickster Magic", "#ffc000", { hasBack }),
   ),
   civilWar(
-    scenario("Iron Man", ["Mighty Avengers", "The Initiative"], "#ffc000", { ...registration }),
-    scenario("Captain Marvel", ["Cape-Killer", "Martial Law"], "#305496", { ...registration }),
-    scenario("Captain America", ["New Avengers", "Secret Avengers"], "#0070c0", { ...resistance }),
-    scenario("Spider-Woman", ["Spider-Man", "Defenders"], "#ff0000", { ...resistance }),
+    scenario("Iron Man", ["Mighty Avengers", "The Initiative"], "#ffc000", { schemes: registration }),
+    scenario("Captain Marvel", ["Cape-Killer", "Martial Law"], "#305496", { schemes: registration }),
+    scenario("Captain America", ["New Avengers", "Secret Avengers"], "#0070c0", { schemes: resistance }),
+    scenario("Spider-Woman", ["Spider-Man", "Defenders"], "#ff0000", { schemes: resistance }),
   ).withExtraOptions(
-    ...flattenSchemes(registration),
-    ...flattenSchemes(resistance),
+    ...registration.civilWar,
+    ...resistance.civilWar,
   ),
 ];
 

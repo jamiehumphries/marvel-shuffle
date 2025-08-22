@@ -54,6 +54,7 @@ const falcon = cardSet("Falcon");
 const winterSoldier = cardSet("Winter Soldier");
 const tricksterTakeover = cardSet("Trickster Takeover");
 const civilWar = cardSet("Civil War");
+const synthezoidSmackdown = cardSet("Synthezoid Smackdown");
 
 // MODULARS
 
@@ -245,6 +246,12 @@ export const modulars = [
     modular("Spider-Man"),
     modular("Defenders", { isLandscape }),
   ),
+  synthezoidSmackdown(
+    modular("Thunderbolts"),
+    modular("Taskmaster", { traits: "Thunderbolt" }),
+    modular("Young Avengers", { isLandscape }),
+    modular("Moon Knight"),
+  )
 ];
 
 function schemeGroup(groupName, stagesBySet) {
@@ -298,6 +305,14 @@ const registration = schemeGroup("Registration", {
       "Negative Zone Prison",
     ],
   ],
+  synthezoidSmackdown: [
+    [
+      "Enforce the Law",
+    ],
+    [
+      "Mighty Avengers",
+    ],
+  ],
 });
 
 // prettier-ignore
@@ -314,6 +329,14 @@ const resistance = schemeGroup("Resistance", {
       "Resistance Scheme 6",
       "Resistance Scheme 7",
       "Resistance Scheme 8",
+    ],
+  ],
+  synthezoidSmackdown: [
+    [
+      "Protect Secret Identities",
+    ],
+    [
+      "Expose Overreach",
     ],
   ],
 });
@@ -461,6 +484,13 @@ export const scenarios = [
     ...registration.civilWar,
     ...resistance.civilWar,
   ),
+  synthezoidSmackdown(
+    scenario("She-Hulk", ["Thunderbolts", "Taskmaster"], "#00b050", { schemes: registration("Enforce the Law", "Mighty Avengers") }),
+    scenario("Vision", ["Young Avengers", "Moon Knight"], "#ff0000", { schemes: resistance("Protect Secret Identities", "Expose Overreach") }),
+  ).withExtraOptions(
+    ...registration.synthezoidSmackdown,
+    ...resistance.synthezoidSmackdown,
+  ),
 ];
 
 // DIFFICULTIES
@@ -582,7 +612,7 @@ export const heroes = [
   hero("Nebula", null, JUSTICE, "#a9cbe9"),
   hero("War Machine", "James Rhodes", LEADERSHIP, "#808080"),
   hero("Valkyrie", "Brunnhilde", AGGRESSION, "#404040"),
-  hero("Vision", null, PROTECTION, "#ff3300"),
+  hero("Vision", null, PROTECTION, "#ff0000"),
   sinisterMotives(
     hero("Ghost-Spider", "Gwen Stacy", PROTECTION, "#f2f2f2"),
     hero("Spider-Man", "Miles Morales", JUSTICE, "#404040"),

@@ -1,5 +1,5 @@
 import { heroes as heroData } from "../data/heroes.js";
-import { ensureArray, passesRestriction } from "../helpers.js";
+import { ensureArray, filter, passesRestriction } from "../helpers.js";
 import { Aspect } from "../models/Aspect.js";
 import { CardSet } from "../models/CardSet.js";
 import { Difficulty } from "../models/Difficulty.js";
@@ -247,7 +247,17 @@ export const modulars = [
 ];
 
 function schemeGroup(groupName, stagesBySet) {
-  const group = { all: [], stages: [] };
+  const group = (...defaultSchemes) => {
+    return defaultSchemes.map((name, i) => {
+      const schemes = group.stages[i];
+      const defaultScheme = findModular(name, schemes);
+      const otherSchemes = filter(schemes, defaultScheme);
+      return [defaultScheme, ...otherSchemes];
+    });
+  };
+
+  group.all = [];
+  group.stages = [];
 
   for (const [setName, stages] of Object.entries(stagesBySet)) {
     group[setName] ||= [];
@@ -333,8 +343,9 @@ function findModulars(names) {
   return ensureArray(names).map((name) => findModular(name));
 }
 
-function findModular(name) {
-  const modular = allModulars.find((modular) => modular.name === name);
+function findModular(name, modulars = null) {
+  modulars ||= allModulars;
+  const modular = modulars.find((modular) => modular.name === name);
   if (!modular) {
     throw new Error(`Could not find modular named "${name}".`);
   }
@@ -348,7 +359,6 @@ function scenario(name, modularNamesOrNumber, color, options = {}) {
     );
   }
   options.required &&= findModulars(options.required);
-  options.schemes &&= options.schemes.stages;
   const modularsOrNumber =
     typeof modularNamesOrNumber === "number"
       ? modularNamesOrNumber
@@ -442,10 +452,10 @@ export const scenarios = [
     scenario("God of Lies", "Trickster Magic", "#ffc000", { hasBack }),
   ),
   civilWar(
-    scenario("Iron Man", ["Mighty Avengers", "The Initiative"], "#ffc000", { schemes: registration }),
-    scenario("Captain Marvel", ["Cape-Killer", "Martial Law"], "#305496", { schemes: registration }),
-    scenario("Captain America", ["New Avengers", "Secret Avengers"], "#0070c0", { schemes: resistance }),
-    scenario("Spider-Woman", ["Spider-Man", "Defenders"], "#ff0000", { schemes: resistance }),
+    scenario("Iron Man", ["Mighty Avengers", "The Initiative"], "#ffc000", { schemes: registration("S.H.I.E.L.D. Recruits", "Registration Scheme 5") }),
+    scenario("Captain Marvel", ["Cape-Killer", "Martial Law"], "#305496", { schemes: registration("Registration Scheme 2", "Registration Scheme 6") }),
+    scenario("Captain America", ["New Avengers", "Secret Avengers"], "#0070c0", { schemes: resistance("Resistance Scheme 1", "Neighbourhood Protectors") }),
+    scenario("Spider-Woman", ["Spider-Man", "Defenders"], "#ff0000", { schemes: resistance("Rallying Call", "Resistance Scheme 6") }),
   ).withExtraOptions(
     ...registration.civilWar,
     ...resistance.civilWar,

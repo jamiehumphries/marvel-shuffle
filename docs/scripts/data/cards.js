@@ -1,15 +1,11 @@
 import { heroes as heroData } from "../data/heroes.js";
-import { passesRestriction } from "../helpers.js";
+import { ensureArray, passesRestriction } from "../helpers.js";
 import { Aspect } from "../models/Aspect.js";
 import { CardSet } from "../models/CardSet.js";
 import { Difficulty } from "../models/Difficulty.js";
 import { Hero } from "../models/Hero.js";
 import { Modular } from "../models/Modular.js";
 import { Scenario } from "../models/Scenario.js";
-
-function ensureArray(possibleArray) {
-  return Array.isArray(possibleArray) ? possibleArray : [possibleArray];
-}
 
 // Modifiers
 const isLandscape = true;

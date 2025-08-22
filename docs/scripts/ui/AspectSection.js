@@ -37,7 +37,7 @@ export class AspectSection extends Section {
   }
 
   get cousinSections() {
-    return (this._cousinSections ||= filter(this.aspectSections, [this]));
+    return (this._cousinSections ||= filter(this.aspectSections, this));
   }
 
   get previousCousinSections() {

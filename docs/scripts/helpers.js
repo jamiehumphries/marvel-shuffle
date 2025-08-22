@@ -2,7 +2,12 @@ export function chooseRandom(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
+export function ensureArray(possibleArray) {
+  return Array.isArray(possibleArray) ? possibleArray : [possibleArray];
+}
+
 export function filter(array, toRemove) {
+  toRemove = ensureArray(toRemove);
   return array.filter((el) => !toRemove.includes(el));
 }
 

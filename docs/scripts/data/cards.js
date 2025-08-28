@@ -237,6 +237,7 @@ export const modulars = [
     modular("Mighty Avengers"),
     modular("The Initiative"),
     modular("Maria Hill"),
+    modular("Dangerous Recruits"),
     modular("Cape-Killer"),
     modular("Martial Law"),
     modular("New Avengers", { isLandscape }),

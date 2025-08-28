@@ -181,6 +181,7 @@ export const hashes = {
   "/images/modular/crime/front.png": "4ef26489",
   "/images/modular/crossfires-crew/front.png": "0e4ba1ed",
   "/images/modular/cut-off-support-main-scheme/front.png": "455a7346",
+  "/images/modular/dangerous-recruits/front.png": "39e25887",
   "/images/modular/dark-riders/front.png": "97aec7c6",
   "/images/modular/deathstrike/front.png": "0850370f",
   "/images/modular/defenders/front.png": "7578c55e",

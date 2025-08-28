@@ -206,7 +206,7 @@ export const modulars = [
     modular("Crazy Gang", { isLandscape }),
   ),
   magneto(
-    modular("Hellfire", { isLandscape }),
+    modular("Hellfire"),
   ),
   agentsOfShield(
     modular("A.I.M. Abduction"),

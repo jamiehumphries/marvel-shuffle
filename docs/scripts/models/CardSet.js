@@ -1,9 +1,10 @@
+import { flatten } from "../helpers.js";
 import { Option } from "./Option.js";
 
 export class CardSet extends Option {
-  constructor(name, cards, isCampaign) {
-    const type = cards[0].constructor;
-    const slugModifier = "set";
+  constructor(name, cards, { isCampaign = false, parentSetSlug = null }) {
+    const type = flatten(cards)[0].constructor;
+    const slugModifier = parentSetSlug ? `${parentSetSlug}-set` : "set";
     const children = cards;
     super(name, { type, slugModifier, children });
     this.isCampaign = isCampaign;

@@ -1,13 +1,15 @@
 import { heroes as heroData } from "../data/heroes.js";
-import { ensureArray, filter, passesRestriction } from "../helpers.js";
+import { ensureArray, filter, flatten, passesRestriction } from "../helpers.js";
 import { Aspect } from "../models/Aspect.js";
 import { CardSet } from "../models/CardSet.js";
 import { Difficulty } from "../models/Difficulty.js";
 import { Hero } from "../models/Hero.js";
+import { Model } from "../models/Model.js";
 import { Modular } from "../models/Modular.js";
 import { Scenario } from "../models/Scenario.js";
 
 // Modifiers
+const isCampaign = true;
 const isLandscape = true;
 const hasBack = true;
 const hasGiantForm = true;
@@ -16,38 +18,38 @@ const isUncounted = true;
 
 // SETS
 
-function cardSet(name, isCampaign = false) {
-  return (...cards) => new CardSet(name, cards, isCampaign);
+function cardSet(name, options = {}) {
+  return (...cards) => new CardSet(name, cards, options);
 }
 
 const coreSet = cardSet("Core Set");
 const theGreenGoblin = cardSet("The Green Goblin");
 const theWreckingCrew = cardSet("The Wrecking Crew");
 const printAndPlay = cardSet("Print-and-Play");
-const theRiseOfRedSkull = cardSet("The Rise of Red Skull", true);
+const theRiseOfRedSkull = cardSet("The Rise of Red Skull", { isCampaign });
 const theOnceAndFutureKang = cardSet("The Once and Future Kang");
-const theGalaxysMostWanted = cardSet("The Galaxy’s Most Wanted", true);
-const theMadTitansShadow = cardSet("The Mad Titan’s Shadow", true);
+const theGalaxysMostWanted = cardSet("The Galaxy’s Most Wanted", { isCampaign }); // prettier-ignore
+const theMadTitansShadow = cardSet("The Mad Titan’s Shadow", { isCampaign });
 const theHood = cardSet("The Hood");
-const sinisterMotives = cardSet("Sinister Motives", true);
+const sinisterMotives = cardSet("Sinister Motives", { isCampaign });
 const nova = cardSet("Nova");
 const ironheart = cardSet("Ironheart");
 const spiderHam = cardSet("Spider-Ham");
 const spdr = cardSet("SP//dr");
-const mutantGenesis = cardSet("Mutant Genesis", true);
-const mojoMania = cardSet("MojoMania", true);
+const mutantGenesis = cardSet("Mutant Genesis", { isCampaign });
+const mojoMania = cardSet("MojoMania", { isCampaign });
 const wolverine = cardSet("Wolverine");
 const storm = cardSet("Storm");
 const gambit = cardSet("Gambit");
 const rogue = cardSet("Rogue");
-const neXtEvolution = cardSet("NeXt Evolution", true);
+const neXtEvolution = cardSet("NeXt Evolution", { isCampaign });
 const deadpool = cardSet("Deadpool");
-const ageOfApocalypse = cardSet("Age of Apocalypse", true);
+const ageOfApocalypse = cardSet("Age of Apocalypse", { isCampaign });
 const iceman = cardSet("Iceman");
 const jubilee = cardSet("Jubilee");
 const nightcrawler = cardSet("Nightcrawler");
 const magneto = cardSet("Magneto");
-const agentsOfShield = cardSet("Agents of S.H.I.E.L.D.", true);
+const agentsOfShield = cardSet("Agents of S.H.I.E.L.D.", { isCampaign });
 const blackPanther = cardSet("Black Panther");
 const silk = cardSet("Silk");
 const falcon = cardSet("Falcon");
@@ -57,9 +59,85 @@ const civilWar = cardSet("Civil War");
 
 // MODULARS
 
-function modular(name, options) {
+function modular(name, options = {}) {
   return new Modular(name, options);
 }
+
+function schemeGroup(groupName, stagesBySet) {
+  const group = {};
+
+  group.all = [];
+  group.stages = [];
+
+  for (const [setName, stages] of Object.entries(stagesBySet)) {
+    const parentSetSlug = Model.buildSlug(...setName.split(/(?=[A-Z])/g));
+    group[setName] ||= cardSet(groupName, { parentSetSlug });
+    group[setName].schemes = [];
+    for (let i = 0; i < stages.length; i++) {
+      const stage = stages[i];
+      group.stages[i] ||= [];
+      for (const schemeName of stage) {
+        const scheme = modular(schemeName, {
+          subname: "Main Scheme",
+          isLandscape,
+          hasBack,
+        });
+        group[setName].schemes.push(scheme);
+        group.stages[i].push(scheme);
+        group.all.push(scheme);
+      }
+    }
+  }
+
+  group.schemes = (...defaultSchemes) => {
+    return {
+      schemes: defaultSchemes.map((name, i) => {
+        const schemes = group.stages[i];
+        const defaultScheme = findModular(name, schemes);
+        const otherSchemes = filter(schemes, defaultScheme);
+        return [defaultScheme, ...otherSchemes];
+      }),
+    };
+  };
+
+  return group;
+}
+
+// prettier-ignore
+const registration = schemeGroup("Registration", {
+  civilWar: [
+    [
+      "S.H.I.E.L.D. Recruits",
+      "Registration Scheme 2",
+      "Registration Scheme 3",
+      "Cut Off Support",
+    ],
+    [
+      "Registration Scheme 5",
+      "Registration Scheme 6",
+      "Registration Scheme 7",
+      "Negative Zone Prison",
+    ],
+  ],
+});
+
+// prettier-ignore
+const resistance = schemeGroup("Resistance", {
+  civilWar: [
+    [
+      "Resistance Scheme 1",
+      "Rallying Call",
+      "Resistance Scheme 3",
+      "Going Underground",
+    ],
+    [
+      "Neighbourhood Protectors",
+      "Resistance Scheme 6",
+      "Resistance Scheme 7",
+      "Resistance Scheme 8",
+    ],
+  ],
+});
 
 // prettier-ignore
 export const modulars = [
@@ -234,89 +312,23 @@ export const modulars = [
     modular("Trickster Magic", { isLandscape }),
   ),
   civilWar(
-    modular("Mighty Avengers"),
-    modular("The Initiative"),
-    modular("Maria Hill"),
-    modular("Dangerous Recruits"),
-    modular("Cape-Killer"),
-    modular("Martial Law"),
-    modular("Heroes for Hire"),
-    modular("New Avengers", { isLandscape }),
-    modular("Secret Avengers"),
-    modular("Spider-Man"),
-    modular("Defenders", { isLandscape }),
+    registration.civilWar(
+      modular("Mighty Avengers"),
+      modular("The Initiative"),
+      modular("Maria Hill"),
+      modular("Dangerous Recruits"),
+      modular("Cape-Killer"),
+      modular("Martial Law"),
+      modular("Heroes for Hire"),
+    ),
+    resistance.civilWar(
+      modular("New Avengers", { isLandscape }),
+      modular("Secret Avengers"),
+      modular("Spider-Man"),
+      modular("Defenders", { isLandscape }),
+    ),
   ),
 ];
-
-function schemeGroup(groupName, stagesBySet) {
-  const group = (...defaultSchemes) => {
-    return defaultSchemes.map((name, i) => {
-      const schemes = group.stages[i];
-      const defaultScheme = findModular(name, schemes);
-      const otherSchemes = filter(schemes, defaultScheme);
-      return [defaultScheme, ...otherSchemes];
-    });
-  };
-
-  group.all = [];
-  group.stages = [];
-
-  for (const [setName, stages] of Object.entries(stagesBySet)) {
-    group[setName] ||= [];
-    for (let i = 0; i < stages.length; i++) {
-      const stage = stages[i];
-      group.stages[i] ||= [];
-      for (const schemeName of stage) {
-        const scheme = modular(schemeName, {
-          subname: "Main Scheme",
-          isLandscape,
-          hasBack,
-        });
-        group[setName].push(scheme);
-        group.stages[i].push(scheme);
-        group.all.push(scheme);
-      }
-    }
-  }
-
-  return group;
-}
-
-// prettier-ignore
-const registration = schemeGroup("Registration", {
-  civilWar: [
-    [
-      "S.H.I.E.L.D. Recruits",
-      "Registration Scheme 2",
-      "Registration Scheme 3",
-      "Cut Off Support",
-    ],
-    [
-      "Registration Scheme 5",
-      "Registration Scheme 6",
-      "Registration Scheme 7",
-      "Negative Zone Prison",
-    ],
-  ],
-});
-
-// prettier-ignore
-const resistance = schemeGroup("Resistance", {
-  civilWar: [
-    [
-      "Resistance Scheme 1",
-      "Rallying Call",
-      "Resistance Scheme 3",
-      "Going Underground",
-    ],
-    [
-      "Neighbourhood Protectors",
-      "Resistance Scheme 6",
-      "Resistance Scheme 7",
-      "Resistance Scheme 8",
-    ],
-  ],
-});
 
 export const extraModulars = [
   // Scenario specific modulars
@@ -336,9 +348,7 @@ export const extraModulars = [
 
 // SCENARIOS
 
-const allModulars = modulars
-  .flatMap((cardOrSet) => cardOrSet.children || [cardOrSet])
-  .concat(extraModulars);
+const allModulars = flatten(modulars).concat(extraModulars);
 
 function findModulars(names) {
   return ensureArray(names).map((name) => findModular(name));
@@ -453,13 +463,14 @@ export const scenarios = [
     scenario("God of Lies", "Trickster Magic", "#ffc000", { hasBack }),
   ),
   civilWar(
-    scenario("Iron Man", ["Mighty Avengers", "The Initiative"], "#ffc000", { schemes: registration("S.H.I.E.L.D. Recruits", "Registration Scheme 5") }),
-    scenario("Captain Marvel", ["Cape-Killer", "Martial Law"], "#305496", { schemes: registration("Registration Scheme 2", "Registration Scheme 6") }),
-    scenario("Captain America", ["New Avengers", "Secret Avengers"], "#0070c0", { schemes: resistance("Resistance Scheme 1", "Neighbourhood Protectors") }),
-    scenario("Spider-Woman", ["Spider-Man", "Defenders"], "#ff0000", { schemes: resistance("Rallying Call", "Resistance Scheme 6") }),
-  ).withExtraOptions(
-    ...registration.civilWar,
-    ...resistance.civilWar,
+    registration.civilWar(
+      scenario("Iron Man", ["Mighty Avengers", "The Initiative"], "#ffc000", { ...registration.schemes("S.H.I.E.L.D. Recruits", "Registration Scheme 5") }),
+      scenario("Captain Marvel", ["Cape-Killer", "Martial Law"], "#305496", { ...registration.schemes("Registration Scheme 2", "Registration Scheme 6") }),
+    ).withExtraOptions(...registration.civilWar.schemes),
+    resistance.civilWar(
+      scenario("Captain America", ["New Avengers", "Secret Avengers"], "#0070c0", { ...resistance.schemes("Resistance Scheme 1", "Neighbourhood Protectors") }),
+      scenario("Spider-Woman", ["Spider-Man", "Defenders"], "#ff0000", { ...resistance.schemes("Rallying Call", "Resistance Scheme 6") }),
+    ).withExtraOptions(...resistance.civilWar.schemes),
   ),
 ];
 

@@ -454,6 +454,10 @@ fieldset legend::after {
   margin-left: var(--option-inset);
 }
 
+.option.set-member.set {
+  margin-left: calc(var(--option-inset) / 2);
+}
+
 .option input {
   position: absolute;
   opacity: 0;

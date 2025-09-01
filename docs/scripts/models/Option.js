@@ -6,7 +6,6 @@ export class Option extends Model {
     name,
     {
       subname = null,
-      optionSubname = null,
       type = null,
       slug = null,
       slugModifier = null,
@@ -17,7 +16,6 @@ export class Option extends Model {
     super();
     this.name = name;
     this.subname = subname;
-    this.optionSubname = optionSubname;
     this.type = type || this.constructor;
     this.slug = slug || Model.buildSlug(this.name, slugModifier);
     this.id = `${this.type.slug}--${this.slug}`;
@@ -92,9 +90,9 @@ export class Option extends Model {
     const nameDiv = document.createElement("div");
     nameDiv.innerText = this.name;
 
-    if (this.subname || this.optionSubname) {
+    if (this.subname) {
       const subnameDiv = document.createElement("div");
-      subnameDiv.innerText = this.optionSubname || this.subname;
+      subnameDiv.innerText = this.subname;
       subnameDiv.classList.add("subname");
       nameDiv.appendChild(subnameDiv);
     }

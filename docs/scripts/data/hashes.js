@@ -209,6 +209,7 @@ export const hashes = {
   "/images/modular/guerilla-tactics/front.png": "d8f417ce",
   "/images/modular/hard-sound/front.png": "2b158877",
   "/images/modular/hellfire/front.png": "d35c6c6b",
+  "/images/modular/heroes-for-hire/front.png": "62716be0",
   "/images/modular/hope-summers/front.png": "bbf9a41f",
   "/images/modular/horror/front.png": "c02ca73e",
   "/images/modular/hounds/front.png": "a4cb389f",

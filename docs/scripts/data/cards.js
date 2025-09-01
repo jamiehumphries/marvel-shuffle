@@ -240,6 +240,7 @@ export const modulars = [
     modular("Dangerous Recruits"),
     modular("Cape-Killer"),
     modular("Martial Law"),
+    modular("Heroes for Hire"),
     modular("New Avengers", { isLandscape }),
     modular("Secret Avengers"),
     modular("Spider-Man"),

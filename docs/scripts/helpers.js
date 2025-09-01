@@ -12,7 +12,7 @@ export function filter(array, toRemove) {
 }
 
 export function flatten(cardsOrSets) {
-  return cardsOrSets.flatMap((cardOrSet) =>
+  return ensureArray(cardsOrSets).flatMap((cardOrSet) =>
     cardOrSet.children ? flatten(cardOrSet.children) : [cardOrSet],
   );
 }

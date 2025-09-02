@@ -66,12 +66,12 @@ function modular(name, options = {}) {
 function schemeGroup(groupName, stagesBySet) {
   const group = {};
 
-  group.all = [];
+  group.allSchemes = [];
   group.stages = [];
 
   for (const [setName, stages] of Object.entries(stagesBySet)) {
     const parentSetSlug = Model.buildSlug(...setName.split(/(?=[A-Z])/g));
-    group[setName] ||= cardSet(groupName, { parentSetSlug });
+    group[setName] = cardSet(groupName, { parentSetSlug });
     group[setName].schemes = [];
     for (let i = 0; i < stages.length; i++) {
       const stage = stages[i];
@@ -82,9 +82,9 @@ function schemeGroup(groupName, stagesBySet) {
           isLandscape,
           hasBack,
         });
-        group[setName].schemes.push(scheme);
+        group.allSchemes.push(scheme);
         group.stages[i].push(scheme);
-        group.all.push(scheme);
+        group[setName].schemes.push(scheme);
       }
     }
   }
@@ -342,8 +342,8 @@ export const extraModulars = [
   // Dreadpool for ‘Pool aspect
   modular("Dreadpool", { requiredReason: "for ‘Pool aspect" }),
   // Civil War main schemes
-  ...registration.all,
-  ...resistance.all,
+  ...registration.allSchemes,
+  ...resistance.allSchemes,
 ];
 
 // SCENARIOS

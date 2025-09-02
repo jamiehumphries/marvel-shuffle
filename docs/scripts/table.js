@@ -38,5 +38,5 @@ function getGroups(cardsOrSets) {
     .map((group) => group.filter((card) => card.checked))
     .filter((group) => group.length > 0);
 
-  return filteredGroups.length > 0 ? filteredGroups : [cardsOrSets[0].children];
+  return filteredGroups.length > 0 ? filteredGroups : [flatten(cardsOrSets[0])];
 }

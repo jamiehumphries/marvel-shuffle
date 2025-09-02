@@ -11,8 +11,12 @@ export class CardSet extends Option {
     this.extraOptions = [];
   }
 
+  get allCards() {
+    return (this._allCards ||= flatten(this.children));
+  }
+
   get suboptions() {
-    return super.suboptions.concat(this.extraOptions);
+    return (this._suboptions ||= super.suboptions.concat(this.extraOptions));
   }
 
   appendTo(element, ...classes) {

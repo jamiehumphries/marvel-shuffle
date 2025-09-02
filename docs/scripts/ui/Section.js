@@ -442,9 +442,9 @@ export class Section extends Toggleable {
       new CardTier(this.requiredCards, { isOrdered, isRequired }),
       new CardTier(this.checkedCards),
       new CardTier(this.defaultCards, { isOrdered }),
-      new CardTier(this.parentSet?.children),
-      new CardTier(this.coreSet?.children),
-    ].filter((tier) => tier.cards?.length > 0);
+      new CardTier(this.parentSet?.allCards),
+      new CardTier(this.coreSet?.allCards),
+    ].filter((tier) => tier.cards.length > 0);
   }
 
   onTransitionEnd(event) {

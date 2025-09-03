@@ -469,7 +469,7 @@ export const scenarios = [
     ).withExtraOptions(...registration.civilWar.schemes),
     resistance.civilWar(
       scenario("Captain America", ["New Avengers", "Secret Avengers"], "#0070c0", { ...resistance.schemes("Resistance Scheme 1", "Neighbourhood Protectors") }),
-      scenario("Spider-Woman", ["Spider-Man", "Defenders"], "#ff0000", { ...resistance.schemes("Rallying Call", "Resistance Scheme 6") }),
+      scenario("Spider-Woman", ["Spider-Man", "Defenders"], "#ffc000", { ...resistance.schemes("Rallying Call", "Resistance Scheme 6") }),
     ).withExtraOptions(...resistance.civilWar.schemes),
   ),
 ];

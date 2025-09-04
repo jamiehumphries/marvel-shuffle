@@ -61,6 +61,7 @@ const falcon = cardSet("Falcon");
 const winterSoldier = cardSet("Winter Soldier");
 const tricksterTakeover = cardSet("Trickster Takeover");
 const civilWar = cardSet("Civil War");
+const synthezoidSmackdown = cardSet("Synthezoid Smackdown");
 const hercules = cardSet("Hercules");
 
 // MODULARS
@@ -129,6 +130,14 @@ const registration = schemeGroup("Registration", {
       "Negative Zone Prison",
     ],
   ],
+  synthezoidSmackdown: [
+    [
+      "Enforce the Law",
+    ],
+    [
+      "Mighty Avengers",
+    ],
+  ],
 });
 
 // prettier-ignore
@@ -145,6 +154,14 @@ const resistance = schemeGroup("Resistance", {
       "Guerilla Warfare",
       "Secret Avengers",
       "Superhero Jailbreak",
+    ],
+  ],
+  synthezoidSmackdown: [
+    [
+      "Protect Secret Identities",
+    ],
+    [
+      "Expose Overreach",
     ],
   ],
 });
@@ -346,6 +363,16 @@ export const modulars = [
       modular("Cloak & Dagger", { isLandscape }),
     ),
   ),
+  synthezoidSmackdown(
+    registration.synthezoidSmackdown(
+      modular("Thunderbolts"),
+      modular("Taskmaster", { traits: "Thunderbolt" }),
+    ),
+    resistance.synthezoidSmackdown(
+      modular("Young Avengers", { isLandscape }),
+      modular("Moon Knight"),
+    ),
+  ),
   hercules(
     modular("All Versus All", { isLandscape }),
   ),
@@ -362,7 +389,7 @@ export const extraModulars = [
   modular("Hope Summers", { hasBack: Aspect, isUncounted }),
   // Dreadpool for ‘Pool aspect
   modular("Dreadpool", { requiredReason: "for ‘Pool aspect" }),
-  // Civil War main schemes
+  // Customisable main schemes
   ...registration.allSchemes,
   ...resistance.allSchemes,
 ];
@@ -507,6 +534,16 @@ export const scenarios = [
         { ...resistance.schemes("Open Rebellion", "Neighbourhood Protectors") }),
     ).withExtraOptions(...resistance.civilWar.schemes),
   ),
+  synthezoidSmackdown(
+    registration.synthezoidSmackdown(
+      scenario("She-Hulk", ["Thunderbolts", "Taskmaster"], "#00b050",
+        { ...registration.schemes("Enforce the Law", "Mighty Avengers") }),
+    ).withExtraOptions(...registration.synthezoidSmackdown.schemes),
+    resistance.synthezoidSmackdown(
+      scenario("Vision", ["Young Avengers", "Moon Knight"], "#ff0000",
+        { ...resistance.schemes("Protect Secret Identities", "Expose Overreach") }),
+    ).withExtraOptions(...resistance.synthezoidSmackdown.schemes),
+  )
 ];
 
 // DIFFICULTIES
@@ -636,7 +673,7 @@ export const heroes = [
   hero("Nebula", null, JUSTICE, "#a9cbe9"),
   hero("War Machine", "James Rhodes", LEADERSHIP, "#808080"),
   hero("Valkyrie", "Brunnhilde", AGGRESSION, "#404040"),
-  hero("Vision", null, PROTECTION, "#ff3300"),
+  hero("Vision", null, PROTECTION, "#ff0000"),
   sinisterMotives(
     hero("Ghost-Spider", "Gwen Stacy", PROTECTION, "#f2f2f2"),
     hero("Spider-Man", "Miles Morales", JUSTICE, "#404040"),

@@ -324,6 +324,7 @@ export const modulars = [
     resistance.civilWar(
       modular("New Avengers", { isLandscape }),
       modular("Secret Avengers"),
+      modular("Namor"),
       modular("Spider-Man"),
       modular("Defenders", { isLandscape }),
     ),

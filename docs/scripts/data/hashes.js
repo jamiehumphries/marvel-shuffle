@@ -236,6 +236,7 @@ export const hashes = {
   "/images/modular/mutant-insurrection/front.png": "7cce37d4",
   "/images/modular/mutant-slayers/front.png": "dc5fb0b3",
   "/images/modular/mystique/front.png": "1cf42114",
+  "/images/modular/namor/front.png": "ef4cd821",
   "/images/modular/nasty-boys/front.png": "eb87ec5d",
   "/images/modular/negative-zone-prison-main-scheme-stage-2/front.png":
     "bedccd09",

@@ -327,6 +327,7 @@ export const modulars = [
       modular("Namor"),
       modular("Spider-Man"),
       modular("Defenders", { isLandscape }),
+      modular("Cloak & Dagger"),
     ),
   ),
 ];

@@ -177,6 +177,7 @@ export const hashes = {
   "/images/modular/children-of-thanos/front.png": "ab16041e",
   "/images/modular/city-in-chaos/front.png": "6a6f6320",
   "/images/modular/clan-akkaba/front.png": "d66572b4",
+  "/images/modular/cloak-dagger/front.png": "75f01bb9",
   "/images/modular/crazy-gang/front.png": "a1e47e53",
   "/images/modular/crime/front.png": "4ef26489",
   "/images/modular/crossfires-crew/front.png": "0e4ba1ed",

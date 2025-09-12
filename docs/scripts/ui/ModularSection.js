@@ -31,6 +31,16 @@ export class ModularSection extends Section {
       });
   }
 
+  getRandomCount() {
+    if (this.minCount == this.maxCount) {
+      return this.minCount;
+    }
+    const maxOptionSets = super.getCardOptionSets(this.maxCount);
+    return maxOptionSets.every((set) => set.length === 1)
+      ? this.maxCount
+      : super.getRandomCount();
+  }
+
   setCards(value) {
     super.setCards(value);
     this.updateRequiredLabels();

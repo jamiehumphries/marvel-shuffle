@@ -4,6 +4,7 @@ import {
   filter,
   flatten,
   requestPostAnimationFrame,
+  sum,
 } from "../helpers.js";
 import { All } from "../models/All.js";
 import { Aspect } from "../models/Aspect.js";
@@ -66,14 +67,12 @@ export class Section extends Toggleable {
     }
 
     const maxHeroes = this.settings.maxAllowedHeroes;
-    const sum = (count, section) => {
+    return (this._maxSlots = sum(this.parentSections, (section) => {
       const childCardCounts = section.selectableCards.map((card) =>
         card.childCardCount(maxHeroes),
       );
-      return count + Math.max(...childCardCounts);
-    };
-
-    return this.parentSections.reduce(sum, 0);
+      return Math.max(...childCardCounts);
+    }));
   }
 
   get childSection() {
@@ -133,12 +132,15 @@ export class Section extends Toggleable {
       return 1;
     }
     const heroCount = this.settings.numberOfHeroes;
-    const sum = (count, card) => count + card.childCardCount(heroCount);
-    return this.parentCards.reduce(sum, 0);
+    return sum(this.parentCards, (card) => card.childCardCount(heroCount));
   }
 
   get minCount() {
-    return this.baseCount;
+    const minCountVariability = sum(
+      this.parentCards,
+      (card) => card.minChildCardCountVariability,
+    );
+    return this.baseCount - minCountVariability;
   }
 
   get maxCount() {

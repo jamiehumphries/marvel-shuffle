@@ -10,6 +10,7 @@ export class Card extends Option {
       isLandscape = false,
       hasBack = false,
       baseChildCardCount = 0,
+      minChildCardCountVariability = 0,
       excludedChildCards = [],
       requiredChildCards = [],
       defaultChildCards = [],
@@ -27,6 +28,7 @@ export class Card extends Option {
     this.color = color;
     this.isLandscape = isLandscape;
     this.baseChildCardCount = baseChildCardCount;
+    this.minChildCardCountVariability = minChildCardCountVariability;
     this.excludedChildCards = excludedChildCards;
     this.requiredChildCards = requiredChildCards;
     this.defaultChildCards = defaultChildCards;

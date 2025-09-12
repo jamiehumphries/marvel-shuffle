@@ -32,3 +32,7 @@ export function requestPostAnimationFrame(callback) {
     port2.postMessage(undefined);
   });
 }
+
+export function sum(array, valueSelector) {
+  return array.reduce((count, item) => count + valueSelector(item), 0);
+}

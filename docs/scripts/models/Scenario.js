@@ -12,6 +12,7 @@ export class Scenario extends Card {
       hasBack = false,
       hasGiantForm = false,
       additionalModularsPerHero = 0,
+      minModularsVariability = 0,
       schemes = [],
     } = {},
   ) {
@@ -20,6 +21,7 @@ export class Scenario extends Card {
     )
       ? [modularsOrNumber.length, modularsOrNumber]
       : [modularsOrNumber, []];
+    const minChildCardCountVariability = minModularsVariability;
     const excludedChildCards = exclude;
     const requiredChildCards = required;
     const additionalChildCardsPerHero = additionalModularsPerHero;
@@ -27,6 +29,7 @@ export class Scenario extends Card {
       color,
       hasBack,
       baseChildCardCount,
+      minChildCardCountVariability,
       excludedChildCards,
       requiredChildCards,
       defaultChildCards,

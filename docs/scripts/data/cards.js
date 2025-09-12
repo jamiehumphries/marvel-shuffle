@@ -98,6 +98,7 @@ function schemeGroup(groupName, stagesBySet) {
         return [defaultScheme, ...otherSchemes];
       }),
       excludedSet: group.excludedSet,
+      minModularsVariability: 1,
     };
   };
 

@@ -35,7 +35,7 @@ export class ModularSection extends Section {
     if (this.minCount == this.maxCount) {
       return this.minCount;
     }
-    const maxOptionSets = super.getCardOptionSets(this.maxCount);
+    const maxOptionSets = this.getCardOptionSets(this.maxCount);
     return maxOptionSets.every((set) => set.length === 1)
       ? this.maxCount
       : super.getRandomCount();
@@ -76,13 +76,14 @@ export class ModularSection extends Section {
   }
 
   getCardOptionSets(count, isShuffleAll = false) {
-    return this.scenarioSection.trueCards
-      .flatMap((card) => card.schemes)
-      .map((schemes) => {
-        const filteredSchemes = schemes.filter((card) => card.checked);
-        return filteredSchemes.length > 0 ? filteredSchemes : [schemes[0]];
-      })
-      .concat(super.getCardOptionSets(count, isShuffleAll));
+    const scenario = this.scenarioSection.trueCards[0];
+    const schemeOptionSets = scenario.schemes.map((schemes) => {
+      const filteredSchemes = schemes.filter((card) => card.checked);
+      return filteredSchemes.length > 0 ? filteredSchemes : [schemes[0]];
+    });
+    return schemeOptionSets.concat(
+      super.getCardOptionSets(count - schemeOptionSets.length, isShuffleAll),
+    );
   }
 
   updateRequiredLabels() {

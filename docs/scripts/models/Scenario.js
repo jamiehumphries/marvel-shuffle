@@ -44,4 +44,8 @@ export class Scenario extends Card {
       ? new Campaign(this.parent)
       : null);
   }
+
+  childCardCount(numberOfHeroes) {
+    return super.childCardCount(numberOfHeroes) + this.schemes.length;
+  }
 }

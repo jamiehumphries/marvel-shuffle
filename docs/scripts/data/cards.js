@@ -113,7 +113,7 @@ const registration = schemeGroup("Registration", {
       "Cut Off Support",
     ],
     [
-      "Registration Scheme 5",
+      "Hunting Rebel Heroes",
       "Registration Scheme 6",
       "Registration Scheme 7",
       "Negative Zone Prison",
@@ -125,15 +125,15 @@ const registration = schemeGroup("Registration", {
 const resistance = schemeGroup("Resistance", {
   civilWar: [
     [
-      "Resistance Scheme 1",
+      "Gathering Support",
       "Rallying Call",
-      "Resistance Scheme 3",
+      "Open Rebellion",
       "Going Underground",
     ],
     [
       "Neighbourhood Protectors",
-      "Resistance Scheme 6",
-      "Resistance Scheme 7",
+      "Guerilla Warfare",
+      "Secret Avengers",
       "Resistance Scheme 8",
     ],
   ],
@@ -320,13 +320,16 @@ export const modulars = [
       modular("Cape-Killer"),
       modular("Martial Law"),
       modular("Heroes for Hire"),
+      modular("Paladin"),
     ),
     resistance.civilWar(
       modular("New Avengers", { isLandscape }),
       modular("Secret Avengers"),
       modular("Namor"),
+      modular("Atlanteans"),
       modular("Spider-Man"),
       modular("Defenders", { isLandscape }),
+      modular("Hell’s Kitchen"),
       modular("Cloak & Dagger"),
     ),
   ),
@@ -466,12 +469,16 @@ export const scenarios = [
   ),
   civilWar(
     registration.civilWar(
-      scenario("Iron Man", ["Mighty Avengers", "The Initiative"], "#ffc000", { ...registration.schemes("S.H.I.E.L.D. Recruits", "Registration Scheme 5") }),
-      scenario("Captain Marvel", ["Cape-Killer", "Martial Law"], "#305496", { ...registration.schemes("Registration Scheme 2", "Registration Scheme 6") }),
+      scenario("Iron Man", ["Mighty Avengers", "The Initiative", "Maria Hill", "Dangerous Recruits"], "#ffc000",
+        { ...registration.schemes("Cut Off Support", "Negative Zone Prison") }),
+      scenario("Captain Marvel", ["Cape-Killer", "Martial Law", "Heroes for Hire", "Paladin"], "#305496",
+        { ...registration.schemes("S.H.I.E.L.D. Recruits", "Hunting Rebel Heroes") }),
     ).withExtraOptions(...registration.civilWar.schemes),
     resistance.civilWar(
-      scenario("Captain America", ["New Avengers", "Secret Avengers"], "#0070c0", { ...resistance.schemes("Resistance Scheme 1", "Neighbourhood Protectors") }),
-      scenario("Spider-Woman", ["Spider-Man", "Defenders"], "#ffc000", { ...resistance.schemes("Rallying Call", "Resistance Scheme 6") }),
+      scenario("Captain America", ["New Avengers", "Secret Avengers", "Namor", "Atlanteans"], "#0070c0",
+        { ...resistance.schemes("Gathering Support", "Secret Avengers") }),
+      scenario("Spider-Woman", ["Spider-Man", "Defenders", "Hell’s Kitchen", "Cloak & Dagger"], "#ffc000",
+        { ...resistance.schemes("Open Rebellion", "Neighbourhood Protectors") }),
     ).withExtraOptions(...resistance.civilWar.schemes),
   ),
 ];

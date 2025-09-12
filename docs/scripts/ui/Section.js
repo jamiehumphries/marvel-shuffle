@@ -61,18 +61,19 @@ export class Section extends Toggleable {
       return this._maxSlots;
     }
 
-    if (this.parentSections.length === 0) {
-      this._maxSlots = 1;
-      return this._maxSlots;
+    if (this.parentSections.length === 0 && this.uncountedCards.length === 0) {
+      return (this._maxSlots = 1);
     }
 
     const maxHeroes = this.settings.maxAllowedHeroes;
-    return (this._maxSlots = sum(this.parentSections, (section) => {
+    const maxCountedCards = sum(this.parentSections, (section) => {
       const childCardCounts = section.selectableCards.map((card) =>
         card.childCardCount(maxHeroes),
       );
       return Math.max(...childCardCounts);
-    }));
+    });
+
+    return (this._maxSlots = maxCountedCards + this.uncountedCards.length);
   }
 
   get childSection() {

@@ -64,7 +64,7 @@ function modular(name, options = {}) {
 }
 
 function schemeGroup(groupName, stagesBySet) {
-  const group = {};
+  const group = { name: groupName };
 
   group.allSchemes = [];
   group.stages = [];
@@ -97,6 +97,7 @@ function schemeGroup(groupName, stagesBySet) {
         const otherSchemes = filter(schemes, defaultScheme);
         return [defaultScheme, ...otherSchemes];
       }),
+      excludedSet: group.excludedSet,
     };
   };
 
@@ -138,6 +139,9 @@ const resistance = schemeGroup("Resistance", {
     ],
   ],
 });
+
+registration.excludedSet = resistance.name;
+resistance.excludedSet = registration.name;
 
 // prettier-ignore
 export const modulars = [
@@ -353,15 +357,16 @@ export const extraModulars = [
 
 // SCENARIOS
 
-const allModulars = flatten(modulars).concat(extraModulars);
+const customisationModulars = flatten(modulars);
+const allModulars = customisationModulars.concat(extraModulars);
 
 function findModulars(names) {
   return ensureArray(names).map((name) => findModular(name));
 }
 
-function findModular(name, modulars = null) {
-  modulars ||= allModulars;
-  const modular = modulars.find((modular) => modular.name === name);
+function findModular(name, searchArray = null) {
+  searchArray ||= allModulars;
+  const modular = searchArray.find((modular) => modular.name === name);
   if (!modular) {
     throw new Error(`Could not find modular named "${name}".`);
   }
@@ -370,15 +375,22 @@ function findModular(name, modulars = null) {
 
 function scenario(name, modularNamesOrNumber, color, options = {}) {
   if (options.requiredTrait) {
-    options.exclude = allModulars.filter(
+    options.exclude = customisationModulars.filter(
       (modular) => !ensureArray(modular.traits).includes(options.requiredTrait),
     );
+  } else if (options.excludedSet) {
+    options.exclude = customisationModulars.filter(
+      (modular) => modular.parent?.name === options.excludedSet,
+    );
   }
+
   options.required &&= findModulars(options.required);
+
   const modularsOrNumber =
     typeof modularNamesOrNumber === "number"
       ? modularNamesOrNumber
       : findModulars(modularNamesOrNumber);
+
   return new Scenario(name, modularsOrNumber, color, options);
 }
 

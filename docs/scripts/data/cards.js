@@ -110,14 +110,14 @@ const registration = schemeGroup("Registration", {
   civilWar: [
     [
       "S.H.I.E.L.D. Recruits",
-      "Registration Scheme 2",
-      "Registration Scheme 3",
+      "Homeland Security",
+      "Public Outrage",
       "Cut Off Support",
     ],
     [
+      "The Initiative",
       "Hunting Rebel Heroes",
-      "Registration Scheme 6",
-      "Registration Scheme 7",
+      "No Going Back",
       "Negative Zone Prison",
     ],
   ],
@@ -136,7 +136,7 @@ const resistance = schemeGroup("Resistance", {
       "Neighbourhood Protectors",
       "Guerilla Warfare",
       "Secret Avengers",
-      "Resistance Scheme 8",
+      "Superhero Jailbreak",
     ],
   ],
 });
@@ -319,23 +319,23 @@ export const modulars = [
   civilWar(
     registration.civilWar(
       modular("Mighty Avengers"),
-      modular("The Initiative"),
+      modular("The Initiative"), //, { isLandscape }),
       modular("Maria Hill"),
-      modular("Dangerous Recruits"),
+      modular("Dangerous Recruits"), //, { isLandscape }),
       modular("Cape-Killer"),
       modular("Martial Law"),
-      modular("Heroes for Hire"),
+      modular("Heroes for Hire"), //, { isLandscape }),
       modular("Paladin"),
     ),
     resistance.civilWar(
       modular("New Avengers", { isLandscape }),
-      modular("Secret Avengers"),
+      modular("Secret Avengers"), //, { isLandscape }),
       modular("Namor"),
       modular("Atlanteans"),
       modular("Spider-Man"),
       modular("Defenders", { isLandscape }),
-      modular("Hell’s Kitchen"),
-      modular("Cloak & Dagger"),
+      modular("Hell’s Kitchen", { isLandscape }),
+      modular("Cloak & Dagger"), //, { isLandscape }),
     ),
   ),
 ];

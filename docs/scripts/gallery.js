@@ -8,9 +8,13 @@ import {
 } from "./data/cards.js";
 import { flatten } from "./helpers.js";
 import { Campaign } from "./models/Campaign.js";
+import { Model } from "./models/Model.js";
 
 const gallery = document.getElementById("gallery");
 const cardTemplate = document.getElementById("card");
+
+const params = new URLSearchParams(window.location.search);
+const search = params.get("s");
 
 const cardsByType = [
   scenarios,
@@ -19,13 +23,18 @@ const cardsByType = [
   heroes,
   aspects,
 ].map((cardsOrSets) =>
-  flatten(cardsOrSets).sort(
-    (c1, c2) =>
-      c1.name.localeCompare(c2.name) || c1.subname.localeCompare(c2.subname),
-  ),
+  flatten(cardsOrSets)
+    .filter(matchesSearch)
+    .sort(
+      (c1, c2) =>
+        c1.name.localeCompare(c2.name) || c1.subname.localeCompare(c2.subname),
+    ),
 );
 
 for (const cards of cardsByType) {
+  if (cards.length === 0) {
+    continue;
+  }
   appendTitle(cards[0].type.namePlural, cards.length);
   for (const card of cards) {
     append(card);
@@ -35,13 +44,28 @@ for (const cards of cardsByType) {
   }
 }
 
-const campaignSets = scenarios.filter((set) => set.isCampaign);
-appendTitle("Campaigns", campaignSets.length);
-for (const set of campaignSets) {
-  const frontSrc = new Campaign(set).imageSrc;
-  const backSrc = "";
-  const isLandscape = false;
-  append({ ...set, frontSrc, backSrc, isLandscape }, "campaign");
+if (search === null) {
+  const campaignSets = scenarios.filter((set) => set.isCampaign);
+  appendTitle("Campaigns", campaignSets.length);
+  for (const set of campaignSets) {
+    const frontSrc = new Campaign(set).imageSrc;
+    const backSrc = "";
+    const isLandscape = false;
+    append({ ...set, frontSrc, backSrc, isLandscape }, "campaign");
+  }
+}
+
+function matchesSearch(cardOrSet) {
+  if (!search) {
+    return true;
+  }
+  if (cardOrSet === undefined) {
+    return false;
+  }
+  return (
+    Model.buildSlug(cardOrSet.name) === search ||
+    matchesSearch(cardOrSet.parent)
+  );
 }
 
 function appendTitle(title, count) {

@@ -108,6 +108,10 @@ export class Section extends Toggleable {
     return this.sets.find((set) => set.name === primaryParentSetName);
   }
 
+  get trueCard() {
+    return this.maxSlots === 1 ? this.trueCards[0] : undefined;
+  }
+
   get trueCards() {
     return this.visible ? this.incomingCards || this.cards || [] : [];
   }

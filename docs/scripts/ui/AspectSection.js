@@ -167,7 +167,7 @@ export class AspectSection extends Section {
 
   getValidSuggestedCards() {
     const heroSection = this.parentSections[0];
-    const hero = heroSection.trueCards[0];
+    const hero = heroSection.trueCard;
     if (!this.visible || !hero) {
       return deck;
     }

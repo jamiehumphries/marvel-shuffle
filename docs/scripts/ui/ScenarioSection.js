@@ -8,8 +8,7 @@ export class ScenarioSection extends Section {
   }
 
   get nextScenario() {
-    const trueCard = this.trueCards[0];
-    const cardSet = trueCard?.parent;
+    const cardSet = this.trueCard?.parent;
     if (!cardSet?.isCampaign) {
       return null;
     }

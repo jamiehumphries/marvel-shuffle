@@ -76,7 +76,7 @@ export class ModularSection extends Section {
   }
 
   getCardOptionSets(count, isShuffleAll = false) {
-    const scenario = this.scenarioSection.trueCards[0];
+    const scenario = this.scenarioSection.trueCard;
     const schemeOptionSets = scenario.schemes.map((schemes) => {
       const filteredSchemes = schemes.filter((card) => card.checked);
       return filteredSchemes.length > 0 ? filteredSchemes : [schemes[0]];

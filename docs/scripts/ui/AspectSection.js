@@ -2,6 +2,7 @@ import { aspects } from "../data/cards.js";
 import { deck } from "../data/deck.js";
 import { getItem, resetItem, setItem } from "../data/storage.js";
 import { chooseRandom, filter, passesRestriction } from "../helpers.js";
+import { Hero } from "../models/Hero.js";
 import { Section } from "./Section.js";
 
 const BASIC = "Basic";
@@ -57,6 +58,9 @@ export class AspectSection extends Section {
 
   initializeSectionRelationships() {
     this.childSection = this.modularSection;
+    this.parentHeroSection = this.parentSections.find(
+      (section) => section.type === Hero,
+    );
   }
 
   initializeLayout() {
@@ -166,8 +170,7 @@ export class AspectSection extends Section {
   }
 
   getValidSuggestedCards() {
-    const heroSection = this.parentSections[0];
-    const hero = heroSection.trueCard;
+    const hero = this.parentHeroSection.trueCard;
     if (!this.visible || !hero) {
       return deck;
     }

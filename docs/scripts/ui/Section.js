@@ -217,7 +217,7 @@ export class Section extends Toggleable {
 
   initializeSectionMapping(sections) {
     const getSections = (type) =>
-      sections.filter((section) => section.type.name === type.name);
+      sections.filter((section) => section.type === type);
     const getSection = (type, n = 1) =>
       getSections(type).find((section) => section.nthOfType === n);
     this.scenarioSection = getSection(Scenario);

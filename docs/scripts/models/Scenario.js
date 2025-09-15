@@ -8,6 +8,7 @@ export class Scenario extends Card {
     color,
     {
       exclude = [],
+      hardExclude = [],
       required = [],
       hasBack = false,
       hasGiantForm = false,
@@ -23,6 +24,7 @@ export class Scenario extends Card {
       : [modularsOrNumber, []];
     const minChildCardCountVariability = minModularsVariability;
     const excludedChildCards = exclude;
+    const hardExcludedChildCards = hardExclude;
     const requiredChildCards = required;
     const additionalChildCardsPerHero = additionalModularsPerHero;
     super(name, {
@@ -31,6 +33,7 @@ export class Scenario extends Card {
       baseChildCardCount,
       minChildCardCountVariability,
       excludedChildCards,
+      hardExcludedChildCards,
       requiredChildCards,
       defaultChildCards,
       additionalChildCardsPerHero,

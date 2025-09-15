@@ -14,6 +14,11 @@ export class ExtraModularSection extends Section {
     return (this._sectionNamePlural ||= modifyName(super.sectionNamePlural));
   }
 
+  get excludedCards() {
+    const scenario = this.scenarioSection.trueCard;
+    return super.excludedCards.concat(scenario.hardExcludedChildCards);
+  }
+
   get placeholder() {
     return (this._placeholder ||= new this.type(
       `No ${this.sectionNamePlural}`,

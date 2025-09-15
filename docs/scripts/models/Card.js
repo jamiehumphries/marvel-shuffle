@@ -12,6 +12,7 @@ export class Card extends Option {
       baseChildCardCount = 0,
       minChildCardCountVariability = 0,
       excludedChildCards = [],
+      hardExcludedChildCards = [],
       requiredChildCards = [],
       defaultChildCards = [],
       additionalChildCardsPerHero = 0,
@@ -29,7 +30,8 @@ export class Card extends Option {
     this.isLandscape = isLandscape;
     this.baseChildCardCount = baseChildCardCount;
     this.minChildCardCountVariability = minChildCardCountVariability;
-    this.excludedChildCards = excludedChildCards;
+    this.excludedChildCards = excludedChildCards.concat(hardExcludedChildCards);
+    this.hardExcludedChildCards = hardExcludedChildCards;
     this.requiredChildCards = requiredChildCards;
     this.defaultChildCards = defaultChildCards;
     this.additionalChildCardsPerHero = additionalChildCardsPerHero;

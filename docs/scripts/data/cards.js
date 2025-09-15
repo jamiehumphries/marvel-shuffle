@@ -379,8 +379,10 @@ function scenario(name, modularNamesOrNumber, color, options = {}) {
     options.exclude = customisationModulars.filter(
       (modular) => !ensureArray(modular.traits).includes(options.requiredTrait),
     );
-  } else if (options.excludedSet) {
-    options.exclude = customisationModulars.filter(
+  }
+
+  if (options.excludedSet) {
+    options.hardExclude = customisationModulars.filter(
       (modular) => modular.parent?.name === options.excludedSet,
     );
   }

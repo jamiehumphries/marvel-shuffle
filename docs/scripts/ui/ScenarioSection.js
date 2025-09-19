@@ -13,7 +13,7 @@ export class ScenarioSection extends Section {
       return null;
     }
 
-    const scenarioIndex = cardSet.children.indexOf(trueCard);
+    const scenarioIndex = cardSet.children.indexOf(this.trueCard);
     return cardSet.children[scenarioIndex + 1] || null;
   }
 

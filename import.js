@@ -32,6 +32,8 @@ const minHpRegex =
   /^Play only if your identity has at least (\d+) printed hit points\./i;
 const gainsRegex = /gains? the \[\[([^\]]+)\]\] trait/i;
 
+const resourceKeyPreifx = "resource_";
+
 const traitJoinPattern = "(?:,? or |,? and | character and an? |, )";
 const traitJoinRegex = new RegExp(traitJoinPattern, "i");
 
@@ -127,6 +129,7 @@ function buildCard(entry, traitLockRegex) {
     name: mapName(entry.name),
     subname: mapName(entry.subname),
     type: mapName(entry.type_name),
+    resources: parseResources(entry),
     traits: parseTraits(entry),
     traitLocks: parseTraitLocks(entry, traitLockRegex),
     teamUp: parseTeamUp(entry),
@@ -161,6 +164,12 @@ function mapName(name) {
         .replace(/(?<=^| )'/, "‘")
         .replaceAll("'", "’")
     : null;
+}
+
+function parseResources(entry) {
+  return Object.entries(entry)
+    .filter(([key, value]) => key.startsWith(resourceKeyPreifx) && value > 0)
+    .map(([key, _]) => key.substring(resourceKeyPreifx.length).toUpperCase());
 }
 
 function parseTraits(entry) {

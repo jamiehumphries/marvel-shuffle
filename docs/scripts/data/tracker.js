@@ -16,7 +16,7 @@ export function renderTable(scenarios, heroes, difficulties = []) {
     difficulties = getTrackedDifficulties();
   }
 
-  document.documentElement.style.setProperty(
+  document.body.style.setProperty(
     "--number-of-difficulties",
     difficulties.length,
   );

@@ -557,12 +557,12 @@ function hero(name, alterEgo, aspects, color, options = {}) {
   aspects = ensureArray(aspects);
 
   if (options.include) {
-    let { traits, type } = options.include;
-    traits = traits
-      ? ensureArray(traits).map((trait) => trait.toUpperCase())
-      : null;
-    type = type ? ensureArray(type) : null;
+    let { resources, traits, type } = options.include;
+    resources = ensureArrayOrNull(resources, true);
+    traits = ensureArrayOrNull(traits, true);
+    type = ensureArrayOrNull(type);
     options.include = (card) =>
+      passesRestriction(resources, card.resources) &&
       passesRestriction(traits, card.traits) &&
       passesRestriction(type, [card.type]);
   }
@@ -577,6 +577,14 @@ function hero(name, alterEgo, aspects, color, options = {}) {
     exludedDeckCards,
     options,
   );
+}
+
+function ensureArrayOrNull(possibleArray, toUpperCase = false) {
+  return possibleArray
+    ? ensureArray(possibleArray).map((item) =>
+        toUpperCase ? item.toUpperCase() : item,
+      )
+    : null;
 }
 
 // prettier-ignore
@@ -664,4 +672,5 @@ export const heroes = [
     hero("Hulkling", "Teddy Altman", PROTECTION, "#00b050"),
     hero("Tigra", "Greer Nelson", AGGRESSION, "#ed7d31", { exclude: { name: "Tigra", subname: "Greer Grant Nelson" } }),
   ),
+  hero("Wonder Man", "Simon Williams", JUSTICE, "#ff0000", { include: { type: "Event", resources: "Energy" } }),
 ];

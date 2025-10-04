@@ -151,6 +151,8 @@ export const hashes = {
   "/images/hero/winter-soldier-bucky-barnes/front.png": "78f8041d",
   "/images/hero/wolverine-logan/back.png": "492eefb7",
   "/images/hero/wolverine-logan/front.png": "2f77c6e1",
+  "/images/hero/wonder-man-simon-williams/back.png": "a855a422",
+  "/images/hero/wonder-man-simon-williams/front.png": "a0d499c8",
   "/images/hero/x-23-laura-kinney/back.png": "f1825135",
   "/images/hero/x-23-laura-kinney/front.png": "45f275fd",
   "/images/modular/a-mess-of-things/front.png": "025da43f",

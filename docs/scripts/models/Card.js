@@ -43,10 +43,7 @@ export class Card extends Option {
 
     this.frontSrc = this.image("front");
     this.hasBack = hasBack;
-    this.backSrc =
-      hasBack === true
-        ? this.image("back")
-        : Model.buildImage(hasBack || this.type, "back");
+    this.backSrc = this.chooseBackSrc();
 
     const hasInnerForm = hasGiantForm || hasWideForm;
     [this.frontInnerSrc, this.backInnerSrc] = hasInnerForm
@@ -72,6 +69,23 @@ export class Card extends Option {
       this.baseChildCardCount +
       this.additionalChildCardsPerHero * numberOfHeroes
     );
+  }
+
+  chooseBackSrc() {
+    if (this.hasBack === true) {
+      return this.image("back");
+    }
+
+    if (typeof this.hasBack === "function") {
+      return Model.buildImage(this.hasBack, "back");
+    }
+
+    if (typeof this.hasBack === "string") {
+      const slug = Model.buildSlug(this.hasBack);
+      return Model.buildImage(this.type, slug, "back");
+    }
+
+    return Model.buildImage(this.type, "back");
   }
 
   image(side) {

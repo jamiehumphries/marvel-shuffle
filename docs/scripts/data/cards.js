@@ -77,10 +77,12 @@ function schemeGroup(groupName, stagesBySet) {
       const stage = stages[i];
       group.stages[i] ||= [];
       for (const schemeName of stage) {
+        const subname = `Main Scheme - Stage ${i + 1}`;
+        const backName = `${groupName} - ${subname}`;
         const scheme = modular(schemeName, {
-          subname: `Main Scheme - Stage ${i + 1}`,
+          subname,
           isLandscape,
-          hasBack,
+          hasBack: backName,
         });
         group.allSchemes.push(scheme);
         group.stages[i].push(scheme);

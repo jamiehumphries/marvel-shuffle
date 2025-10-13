@@ -71,7 +71,7 @@ async function updateImage(file, force) {
   await exec(
     `convert ${sourcePath} \
       -strip \
-      ${width > height ? "-rotate 270" : ""} \
+      ${width > height ? `-rotate ${name === "back" ? 90 : 270}` : ""} \
       -trim +repage \
       -resize 294x418^ \
       -gravity center -crop 294x418+0+0 +repage \

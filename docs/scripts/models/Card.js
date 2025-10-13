@@ -42,6 +42,7 @@ export class Card extends Option {
     this.requiredReason = requiredReason;
 
     this.frontSrc = this.image("front");
+    this.hasBack = hasBack;
     this.backSrc =
       hasBack === true
         ? this.image("back")

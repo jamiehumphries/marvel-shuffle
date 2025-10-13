@@ -37,7 +37,7 @@ for (const cards of cardsByType) {
   }
   appendTitle(cards[0].type.namePlural, cards.length);
   for (const card of cards) {
-    append(card);
+    append(card, ...getPlaceholderUsageClasses(card));
     if (card.hasGiantForm || card.hasWideForm) {
       appendInner(card);
     }
@@ -95,4 +95,26 @@ function appendInner(card) {
   const backSrc = card.backInnerSrc;
   const isLandscape = card.hasGiantForm;
   append({ ...card, name, frontSrc, backSrc, isLandscape }, "inner");
+}
+
+function getPlaceholderUsageClasses(card) {
+  const classes = [];
+
+  const placeholderUsage = {
+    front: card.frontSrc === card.type.placeholderImageSrc,
+    back: card.hasBack && card.backSrc === card.type.placeholderImageSrc,
+  };
+
+  for (const [side, isPlaceholder] of Object.entries(placeholderUsage)) {
+    if (!isPlaceholder) {
+      continue;
+    }
+    classes.push(`placeholder-${side}`);
+    console.log(
+      `%c "${card.name}" (${card.type.name}) is using a placeholder ${side} image.`,
+      "color: red",
+    );
+  }
+
+  return classes;
 }

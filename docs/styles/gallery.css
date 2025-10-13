@@ -1,3 +1,8 @@
+:root {
+  --gap: 0.4rem;
+  --placeholder-warning-color: red;
+}
+
 #gallery {
   display: flex;
   flex-wrap: wrap;
@@ -45,7 +50,7 @@ h1 img {
 
 .card-images {
   --card-width: 196px;
-  --slot-width: calc(2 * var(--card-width) + 0.4rem);
+  --slot-width: calc(2 * var(--card-width) + var(--gap));
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -72,4 +77,15 @@ h1 img {
 
 .card.inner.landscape .card-images {
   justify-content: start;
+}
+
+.placeholder-front,
+.placeholder-back {
+  color: var(--placeholder-warning-color);
+}
+
+.placeholder-front img.front,
+.placeholder-back img.back {
+  outline: 2px solid var(--placeholder-warning-color);
+  outline-offset: calc(var(--gap) / 2 - 1px);
 }

@@ -171,6 +171,9 @@ function tryUseBookmarkUrl(url) {
 
 function shuffleAll() {
   for (const section of sections) {
+    if (!section.visible) {
+      continue;
+    }
     section.shuffle({ isShuffleAll: true });
   }
 }

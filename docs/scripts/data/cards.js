@@ -321,23 +321,23 @@ export const modulars = [
   civilWar(
     registration.civilWar(
       modular("Mighty Avengers"),
-      modular("The Initiative"), //, { isLandscape }),
+      modular("The Initiative", { isLandscape }),
       modular("Maria Hill"),
-      modular("Dangerous Recruits"), //, { isLandscape }),
+      modular("Dangerous Recruits", { isLandscape }),
       modular("Cape-Killer"),
       modular("Martial Law"),
-      modular("Heroes for Hire"), //, { isLandscape }),
+      modular("Heroes for Hire", { isLandscape }),
       modular("Paladin"),
     ),
     resistance.civilWar(
       modular("New Avengers", { isLandscape }),
-      modular("Secret Avengers"), //, { isLandscape }),
+      modular("Secret Avengers", { isLandscape }),
       modular("Namor"),
       modular("Atlanteans"),
       modular("Spider-Man"),
       modular("Defenders", { isLandscape }),
       modular("Hell’s Kitchen", { isLandscape }),
-      modular("Cloak & Dagger"), //, { isLandscape }),
+      modular("Cloak & Dagger", { isLandscape }),
     ),
   ),
 ];

@@ -1,12 +1,17 @@
-import { heroes as heroData } from "../data/heroes.js";
-import { ensureArray, filter, flatten, passesRestriction } from "../helpers.js";
-import { Aspect } from "../models/Aspect.js";
-import { CardSet } from "../models/CardSet.js";
-import { Difficulty } from "../models/Difficulty.js";
-import { Hero } from "../models/Hero.js";
-import { Model } from "../models/Model.js";
-import { Modular } from "../models/Modular.js";
-import { Scenario } from "../models/Scenario.js";
+import { heroes as heroData } from "../data/heroes.js?v=af452101";
+import {
+  ensureArray,
+  filter,
+  flatten,
+  passesRestriction,
+} from "../helpers.js?v=85ee0a71";
+import { Aspect } from "../models/Aspect.js?v=c3ef2143";
+import { CardSet } from "../models/CardSet.js?v=aced3e93";
+import { Difficulty } from "../models/Difficulty.js?v=7b55b67c";
+import { Hero } from "../models/Hero.js?v=25595446";
+import { Model } from "../models/Model.js?v=b19a6e7e";
+import { Modular } from "../models/Modular.js?v=2e7512f4";
+import { Scenario } from "../models/Scenario.js?v=981f7146";
 
 // Modifiers
 const isCampaign = true;

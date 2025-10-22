@@ -1,13 +1,23 @@
 import { execSync } from "child_process";
+import { exit } from "process";
 import { replaceInFileSync } from "replace-in-file";
+import { styleText } from "util";
 
 const level = process.argv[2] || "patch";
 
 const $ = (command) => execSync(command).toString().trim();
 
-console.time("Release");
+const hasChanges = $("git status --porcelain") !== "";
+if (hasChanges) {
+  abort("Cannot release when there are uncommitted changes.");
+}
 
-$("git stash --include-untracked --quiet");
+const branch = $("git branch --show-current");
+if (branch !== "main") {
+  abort(`Cannot build release from '${branch}' branch (must be on 'main').`);
+}
+
+console.time("Release");
 
 const version = $(`npm version ${level} --no-git-tag-version`);
 
@@ -34,9 +44,10 @@ $(`git tag --force ${version} release`);
 
 $("git reset --hard");
 
-const hasStash = !!$("git stash list");
-if (hasStash) {
-  $("git stash pop --index --quiet");
-}
-
 console.timeEnd("Release");
+
+function abort(message) {
+  console.error(styleText("red", message + "\n"));
+  execSync("git status", { stdio: "inherit" });
+  exit();
+}

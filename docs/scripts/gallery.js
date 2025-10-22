@@ -76,7 +76,7 @@ function appendTitle(title, count) {
 
 function append({ name, subname, frontSrc, backSrc, isLandscape }, ...classes) {
   if (isLandscape) {
-    classes = classes.concat("landscape");
+    classes.push("landscape");
   }
 
   const element = cardTemplate.content.firstElementChild.cloneNode(true);

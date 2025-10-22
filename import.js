@@ -161,6 +161,8 @@ function deduplicate(cards) {
 function mapName(name) {
   return name
     ? (nameFixes[name] || name)
+        .normalize("NFD")
+        .replaceAll(/\p{Diacritic}/gu, "")
         .replace(/(?<=^| )"/, "“")
         .replace(/"(?=$| )/, "”")
         .replace(/(?<=^| )'/, "‘")

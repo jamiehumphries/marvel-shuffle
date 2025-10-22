@@ -271,12 +271,19 @@ function warnAboutMissingImages(cards) {
 
   const messageParts = [
     "Missing images for:",
-    ...cardsWithMissingImages.map((card) => `  • ${card.name} (${card.id})`),
+    ...cardsWithMissingImages
+      .map((card) => `${card.name} (${card.id})`)
+      .map(messageListItem),
     "From packs:",
-    ...packsWithMissingImages.map((pack) => `  • ${pack}`),
+    ...packsWithMissingImages.map(messageListItem),
   ];
 
   console.log(styleText("yellow", messageParts.join("\n")));
+}
+
+function messageListItem(text, i) {
+  const number = (i + 1).toString().padStart(4, " ");
+  return `${number}. ${text}`;
 }
 
 function distinct(array) {

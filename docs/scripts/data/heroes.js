@@ -635,4 +635,25 @@ export const heroes = [
       { name: "Winter Rifle", subname: null },
     ],
   },
+  {
+    name: "Tigra",
+    alterEgo: "Greer Nelson",
+    hp: 10,
+    traitKeys: ["AVENGER"],
+    exludedDeckCards: [
+      { name: "Moon Knight", subname: "Marc Spector" },
+      { name: "Precinct HQ", subname: null },
+      { name: "Cat’s Head Amulet", subname: null },
+    ],
+  },
+  {
+    name: "Hulkling",
+    alterEgo: "Teddy Altman",
+    hp: 13,
+    traitKeys: ["AVENGER", "AERIAL"],
+    exludedDeckCards: [
+      { name: "Wiccan", subname: "William Kaplan" },
+      { name: "Altman Residence", subname: null },
+    ],
+  },
 ];

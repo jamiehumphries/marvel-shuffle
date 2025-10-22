@@ -1,5 +1,5 @@
-import { requestPostAnimationFrame } from "../helpers.js";
-import { Toggleable } from "./Toggleable.js";
+import { requestPostAnimationFrame } from "../helpers.js?v=85ee0a71";
+import { Toggleable } from "./Toggleable.js?v=8474d19e";
 
 export class Slot extends Toggleable {
   constructor(root) {

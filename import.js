@@ -10,6 +10,7 @@ const imagesSourcePath =
   "https://cerebrodatastorage.blob.core.windows.net/cerebro-cards/official/";
 
 const imagesRoot = "docs/images/deck";
+const fallbackImgSrc = imgSrc(resolve(imagesRoot, "back.png"));
 
 const identityTypeCodes = ["hero", "alter_ego"];
 const characterTypeCodes = [...identityTypeCodes, "ally"];
@@ -72,6 +73,7 @@ async function importCards(data, force) {
   );
 
   await Promise.all(cards.map((card) => fetchImage(card, force)));
+  warnAboutMissingImages(cards);
 
   return cards;
 }
@@ -215,7 +217,7 @@ async function fetchImage(card, force) {
   const fileName = `${id}.jpg`;
   const url = imagesSourcePath + fileName;
   const outputPath = resolve(imagesRoot, fileName);
-  card.imgSrc = "/" + relative("docs", outputPath);
+  card.imgSrc = imgSrc(outputPath);
 
   if (!force && (await exists(outputPath))) {
     return;
@@ -234,9 +236,7 @@ async function fetchImage(card, force) {
     });
   } catch (error) {
     error.response.data.destroy();
-    console.warn(
-      styleText("yellow", `Failed to download "${name}" from: ${url}`),
-    );
+    card.imgSrc = fallbackImgSrc;
     return;
   }
 
@@ -255,7 +255,34 @@ async function fetchImage(card, force) {
 
   await compareAndUpdateImage(tempPath, outputPath, 0.15);
 
-  console.log(`Downloaded ${fileName} (${name})`);
+  console.log(styleText("green", `Downloaded image for ${name} (${id})`));
+}
+
+function imgSrc(path) {
+  return "/" + relative("docs", path);
+}
+
+function warnAboutMissingImages(cards) {
+  const cardsWithMissingImages = cards.filter(
+    (card) => card.imgSrc === fallbackImgSrc,
+  );
+
+  if (cardsWithMissingImages.length === 0) {
+    return;
+  }
+
+  const packsWithMissingImages = distinct(
+    cardsWithMissingImages.flatMap((card) => card.packs),
+  );
+
+  const messageParts = [
+    "Missing images for:",
+    ...cardsWithMissingImages.map((card) => `  • ${card.name} (${card.id})`),
+    "From packs:",
+    ...packsWithMissingImages.map((pack) => `  • ${pack}`),
+  ];
+
+  console.log(styleText("yellow", messageParts.join("\n")));
 }
 
 function distinct(array) {

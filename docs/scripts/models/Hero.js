@@ -1,3 +1,4 @@
+import { Aspect } from "./Aspect.js";
 import { Card } from "./Card.js";
 
 export class Hero extends Card {
@@ -32,5 +33,9 @@ export class Hero extends Card {
 
   static get namePlural() {
     return "Heroes";
+  }
+
+  static get placeholderImageSrc() {
+    return Aspect.placeholderImageSrc;
   }
 }

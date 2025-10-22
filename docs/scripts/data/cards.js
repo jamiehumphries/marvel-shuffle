@@ -181,7 +181,7 @@ export const modulars = [
     modular("Kree Militants"),
     modular("Menagerie Medley"),
     modular("Space Pirates"),
-    modular("Ship Command", { hasBack: Hero }),
+    modular("Ship Command", { hasBack: Aspect }),
     modular("Power Stone"),
     modular("Badoon Headhunter"),
   ),
@@ -350,7 +350,7 @@ export const extraModulars = [
   modular("Executive Board Evidence", { hasBack }),
   // Uncounted modulars
   modular("Longshot", { isUncounted }),
-  modular("Hope Summers", { hasBack: Hero, isUncounted }),
+  modular("Hope Summers", { hasBack: Aspect, isUncounted }),
   // Dreadpool for ‘Pool aspect
   modular("Dreadpool", { requiredReason: "for ‘Pool aspect" }),
   // Civil War main schemes
@@ -460,7 +460,7 @@ export const scenarios = [
     scenario("Mojo", 1, "#ffcc00", { requiredTrait: "Show", additionalModularsPerHero: 1 }),
   ),
   neXtEvolution(
-    scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], "#00b050", { hasBack: Hero }),
+    scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], "#00b050", { hasBack: Aspect }),
     scenario("On the Run", ["Military Grade", "Nasty Boys"], "#7030a0", { required: "Mutant Slayers", hasBack }),
     scenario("Juggernaut", "Black Tom Cassidy", "#c00000", { required: "Hope Summers" }),
     scenario("Mister Sinister", "Nasty Boys", "#305496", { required: ["Flight", "Super Strength", "Telepathy", "Hope Summers"] }),

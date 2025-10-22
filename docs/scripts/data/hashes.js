@@ -31,7 +31,6 @@ export const hashes = {
   "/images/hero/ant-man-scott-lang/back.png": "f4dc88a3",
   "/images/hero/ant-man-scott-lang/front-inner.png": "32652b63",
   "/images/hero/ant-man-scott-lang/front.png": "f0fa3cbe",
-  "/images/hero/back.png": "4d6cc806",
   "/images/hero/bishop-lucas-bishop/back.png": "5da796f8",
   "/images/hero/bishop-lucas-bishop/front.png": "b7466013",
   "/images/hero/black-panther-shuri/back.png": "9ab8f99a",

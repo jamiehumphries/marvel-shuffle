@@ -14,14 +14,6 @@ const fallbackImgSrc = imgSrc(resolve(imagesRoot, "back.png"));
 
 const identityTypeCodes = ["hero", "alter_ego"];
 const characterTypeCodes = [...identityTypeCodes, "ally"];
-const deckFactionCodes = [
-  "aggression",
-  "justice",
-  "leadership",
-  "protection",
-  "pool",
-  "basic",
-];
 
 const nameFixes = {
   "SP//dr Suit": "SP//dr",
@@ -63,7 +55,6 @@ async function importCards(data, force) {
   );
 
   const cardsWithDuplicates = data
-    .filter((entry) => deckFactionCodes.includes(entry.faction_code))
     .filter((entry) => entry.card_set_type_name_code === undefined)
     .filter((entry) => !entry.text.match(linkedRegex))
     .sort((c1, c2) => c1.code.localeCompare(c2.code))

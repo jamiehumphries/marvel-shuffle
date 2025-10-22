@@ -98,23 +98,21 @@ function appendInner(card) {
 }
 
 function getPlaceholderUsageClasses(card) {
-  const classes = [];
+  const placeholderSides = [];
+  if (card.frontSrc === card.type.placeholderImageSrc) {
+    placeholderSides.push("front");
+  }
+  if (card.hasBack && card.backSrc === card.type.placeholderImageSrc) {
+    placeholderSides.push("back");
+  }
 
-  const placeholderUsage = {
-    front: card.frontSrc === card.type.placeholderImageSrc,
-    back: card.hasBack && card.backSrc === card.type.placeholderImageSrc,
-  };
-
-  for (const [side, isPlaceholder] of Object.entries(placeholderUsage)) {
-    if (!isPlaceholder) {
-      continue;
-    }
-    classes.push(`placeholder-${side}`);
+  if (placeholderSides.length > 0) {
     console.log(
-      `%c "${card.name}" (${card.type.name}) is using a placeholder ${side} image.`,
+      `%c ${card.name} (${card.type.name}) is using a placeholder image` +
+        ` for its ${placeholderSides.join(" and ")} side`,
       "color: red",
     );
   }
 
-  return classes;
+  return placeholderSides.map((side) => `placeholder-${side}`);
 }

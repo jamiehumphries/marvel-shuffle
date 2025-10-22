@@ -1,6 +1,8 @@
 :root {
-  --gap: 0.4rem;
-  --placeholder-warning-color: red;
+  --card-margin-bottom: 1rem;
+  --card-side-gap: 0.4rem;
+  --placeholder-background-color: yellow;
+  --placeholder-text-color: crimson;
 }
 
 #gallery {
@@ -45,12 +47,12 @@ h1 img {
 }
 
 .card {
-  margin-bottom: 1rem;
+  margin-bottom: var(--card-margin-bottom);
 }
 
 .card-images {
   --card-width: 196px;
-  --slot-width: calc(2 * var(--card-width) + var(--gap));
+  --slot-width: calc(2 * var(--card-width) + var(--card-side-gap));
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -81,11 +83,15 @@ h1 img {
 
 .placeholder-front,
 .placeholder-back {
-  color: var(--placeholder-warning-color);
+  outline: calc(var(--card-margin-bottom) / 2 - 1px) solid
+    var(--placeholder-background-color);
+  background-color: var(--placeholder-background-color);
+  color: var(--placeholder-text-color);
 }
 
 .placeholder-front img.front,
 .placeholder-back img.back {
-  outline: 2px solid var(--placeholder-warning-color);
-  outline-offset: calc(var(--gap) / 2 - 1px);
+  z-index: 1;
+  outline: 2px solid var(--placeholder-text-color);
+  outline-offset: calc(var(--card-side-gap) / 2 - 1px);
 }

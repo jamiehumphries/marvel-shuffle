@@ -1,4 +1,4 @@
-import { Card } from "./Card.js";
+import { Card } from "./Card.js?v=0caf332c";
 
 export class Aspect extends Card {
   constructor(name, { required = [] } = {}) {

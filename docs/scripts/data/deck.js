@@ -11863,7 +11863,7 @@ export const deck = [
     packs: ["Civil War"],
     aspect: "Aggression",
     aspectCode: "aggression",
-    name: "Coup de Grace",
+    name: "Coup de Grâce",
     subname: null,
     type: "Event",
     resources: ["MENTAL"],

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { openSync as openFontSync } from "fontkit";
 import { createWriteStream } from "fs";
 import { imageSizeFromFile } from "image-size/fromFile";
 import { relative, resolve } from "path";
@@ -29,6 +30,10 @@ const resourceKeyPreifx = "resource_";
 
 const traitJoinPattern = "(?:,? or |,? and | character and an? |, )";
 const traitJoinRegex = new RegExp(traitJoinPattern, "i");
+
+const charSet = openFontSync(
+  "./docs/styles/fonts/BackIssuesBB_reg.otf",
+).characterSet;
 
 export async function importAllDeckCards(force = false) {
   const { data } = await axios.get(cardsApi);
@@ -151,15 +156,31 @@ function deduplicate(cards) {
 }
 
 function mapName(name) {
+  if (!name) {
+    return null;
+  }
+  name = nameFixes[name] || name;
+  checkCharacters(name);
   return name
-    ? (nameFixes[name] || name)
-        .normalize("NFD")
-        .replaceAll(/\p{Diacritic}/gu, "")
-        .replace(/(?<=^| )"/, "“")
-        .replace(/"(?=$| )/, "”")
-        .replace(/(?<=^| )'/, "‘")
-        .replaceAll("'", "’")
-    : null;
+    .replace(/(?<=^| )"/, "“")
+    .replace(/"(?=$| )/, "”")
+    .replace(/(?<=^| )'/, "‘")
+    .replaceAll("'", "’");
+}
+
+function checkCharacters(name) {
+  const chars = name.split("");
+  const unsupportedChars = chars.filter(
+    (char) => !charSet.includes(char.charCodeAt(0)),
+  );
+  if (unsupportedChars.length > 0) {
+    console.warn(
+      styleText(
+        "yellow",
+        `"${name}" has unsupported characters: ${unsupportedChars.join(", ")}`,
+      ),
+    );
+  }
 }
 
 function parseResources(entry) {

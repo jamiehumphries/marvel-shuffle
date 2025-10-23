@@ -105,7 +105,7 @@ export class AspectSection extends Section {
       if (card) {
         slot.href = card.href;
         img.src = card.imgSrc;
-        img.classList.toggle("landscape", card.landscape);
+        img.classList.toggle("landscape", card.isLandscape);
         name.innerText = card.name;
         subname.innerText = card.subname ? `(${card.subname})` : "";
         aspect.className = `aspect ${card.aspectCode}`;

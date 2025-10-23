@@ -128,7 +128,7 @@ function buildCard(entry, traitLockRegex) {
     traitLocks: parseTraitLocks(entry, traitLockRegex),
     teamUp: parseTeamUp(entry),
     minHp: parseMinHp(entry),
-    landscape: entry.type_code === "player_side_scheme",
+    isLandscape: entry.type_code === "player_side_scheme",
     href: entry.url,
   };
 }

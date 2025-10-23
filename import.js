@@ -32,7 +32,7 @@ const traitJoinPattern = "(?:,? or |,? and | character and an? |, )";
 const traitJoinRegex = new RegExp(traitJoinPattern, "i");
 
 const charSet = openFontSync(
-  "./docs/styles/fonts/BackIssuesBB_reg.otf",
+  "./docs/styles/fonts/BackIssuesBB.otf",
 ).characterSet;
 
 export async function importAllDeckCards(force = false) {

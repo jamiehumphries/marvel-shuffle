@@ -16,6 +16,7 @@ export class Option extends Model {
     super();
     this.name = name;
     this.subname = subname;
+    this.hasI = /II/.test(name + (subname || ""));
     this.type = type || this.constructor;
     this.slug = slug || Model.buildSlug(this.name, slugModifier);
     this.id = `${this.type.slug}--${this.slug}`;
@@ -73,6 +74,10 @@ export class Option extends Model {
 
     for (const className of classes) {
       label.classList.add(className);
+    }
+
+    if (this.hasI) {
+      label.classList.add("has-i");
     }
 
     const input = document.createElement("input");

@@ -74,9 +74,14 @@ function appendTitle(title, count) {
   gallery.appendChild(h2);
 }
 
-function append({ name, subname, frontSrc, backSrc, isLandscape }, ...classes) {
+function append(card, ...classes) {
+  const { name, subname, frontSrc, backSrc, isLandscape, hasI } = card;
+
   if (isLandscape) {
     classes.push("landscape");
+  }
+  if (hasI) {
+    classes.push("has-i");
   }
 
   const element = cardTemplate.content.firstElementChild.cloneNode(true);

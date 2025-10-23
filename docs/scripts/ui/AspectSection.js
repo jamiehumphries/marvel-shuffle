@@ -95,6 +95,7 @@ export class AspectSection extends Section {
     for (let i = 0; i < this.suggestedCardSlots.length; i++) {
       const slot = this.suggestedCardSlots[i];
       const img = slot.querySelector("img");
+      const nameAndSubname = slot.querySelector(".name-and-subname");
       const name = slot.querySelector(".name");
       const subname = slot.querySelector(".subname");
       const aspect = slot.querySelector(".aspect");
@@ -106,6 +107,7 @@ export class AspectSection extends Section {
         slot.href = card.href;
         img.src = card.imgSrc;
         img.classList.toggle("landscape", card.isLandscape);
+        nameAndSubname.classList.toggle("has-i", card.hasI);
         name.innerText = card.name;
         subname.innerText = card.subname ? `(${card.subname})` : "";
         aspect.className = `aspect ${card.aspectCode}`;

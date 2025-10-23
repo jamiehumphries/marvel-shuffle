@@ -31,6 +31,7 @@ export class Slot extends Toggleable {
     this.show();
 
     this.root.classList.toggle("landscape", newCard.isLandscape);
+    this.root.classList.toggle("has-i", newCard.hasI);
     this.root.classList.toggle("has-giant-form", newCard.hasGiantForm);
     this.root.classList.toggle("has-wide-form", newCard.hasWideForm);
 

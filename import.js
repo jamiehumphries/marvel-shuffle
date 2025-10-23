@@ -120,13 +120,15 @@ async function importHeroes(data, cards) {
 }
 
 function buildCard(entry, traitLockRegex) {
+  const name = mapName(entry.name);
+  const subname = mapName(entry.subname);
   return {
     id: (entry.duplicate_of_code || entry.code).toUpperCase(),
     packs: [mapName(entry.pack_name)],
     aspect: mapName(entry.faction_name),
     aspectCode: entry.faction_code,
-    name: mapName(entry.name),
-    subname: mapName(entry.subname),
+    name: name,
+    subname: subname,
     type: mapName(entry.type_name),
     resources: parseResources(entry),
     traits: parseTraits(entry),
@@ -134,6 +136,7 @@ function buildCard(entry, traitLockRegex) {
     teamUp: parseTeamUp(entry),
     minHp: parseMinHp(entry),
     isLandscape: entry.type_code === "player_side_scheme",
+    hasI: /I[I’ ]/.test(name + (subname || "")),
     href: entry.url,
   };
 }

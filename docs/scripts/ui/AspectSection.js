@@ -1,9 +1,13 @@
-import { aspects } from "../data/cards.js";
-import { deck } from "../data/deck.js";
-import { getItem, resetItem, setItem } from "../data/storage.js";
-import { chooseRandom, filter, passesRestriction } from "../helpers.js";
-import { Hero } from "../models/Hero.js";
-import { Section } from "./Section.js";
+import { aspects } from "../data/cards.js?v=be21216e";
+import { deck } from "../data/deck.js?v=124f0d77";
+import { getItem, resetItem, setItem } from "../data/storage.js?v=5a17bb47";
+import {
+  chooseRandom,
+  filter,
+  passesRestriction,
+} from "../helpers.js?v=85ee0a71";
+import { Hero } from "../models/Hero.js?v=a64f729a";
+import { Section } from "./Section.js?v=f4fc2dcf";
 
 const BASIC = "Basic";
 

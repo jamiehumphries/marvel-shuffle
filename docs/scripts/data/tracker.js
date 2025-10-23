@@ -68,7 +68,7 @@ function appendHeaderRows(thead, scenarios, difficulties) {
     for (let i = 0; i < group.length; i++) {
       const scenario = group[i];
 
-      const { name: text, color } = scenario;
+      const { name: text, color, hasI } = scenario;
       const colbreak = i === 0;
       const header = true;
 
@@ -78,6 +78,7 @@ function appendHeaderRows(thead, scenarios, difficulties) {
         colspan: difficulties.length,
         colbreak,
         header,
+        hasI,
       });
       firstRow.appendChild(scenarioCell);
 
@@ -163,13 +164,14 @@ function appendHeroRow(
 ) {
   const row = createRow({ rowbreak });
 
-  const { name: text, subname: subname, color } = hero;
+  const { name: text, subname, color, hasI } = hero;
   const heroCell = createCell({
     text,
     subname,
     color,
     colspan: difficulties.length,
     header: true,
+    hasI,
   });
   row.appendChild(heroCell);
 
@@ -225,6 +227,7 @@ function createCell({
   contentDiv = null,
   text = null,
   subname = null,
+  hasI = false,
   color = null,
   colspan = 1,
   colbreak = false,
@@ -242,6 +245,7 @@ function createCell({
   const classMap = {
     "block-end": blockEnd,
     "col-break": colbreak,
+    "has-i": hasI || difficulty,
     progress,
     difficulty,
   };

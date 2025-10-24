@@ -21,6 +21,7 @@ const nameFixes = {
 };
 
 const teamUpRegex = /^Team-Up \((?:.*\/)?(.*) and (?:.*\/)?(.*)\)\./i;
+const identityRestrictionRegex = /^Play only if you are the (.*) player/;
 const linkedRegex = /^Linked \(.*\)\./i;
 const minHpRegex =
   /^Play only if your identity has at least (\d+) printed hit points\./i;
@@ -133,7 +134,7 @@ function buildCard(entry, traitLockRegex) {
     resources: parseResources(entry),
     traits: parseTraits(entry),
     traitLocks: parseTraitLocks(entry, traitLockRegex),
-    teamUp: parseTeamUp(entry),
+    identityLocks: parseIdentityLocks(entry),
     minHp: parseMinHp(entry),
     isLandscape: entry.type_code === "player_side_scheme",
     hasI: /I[I’ ]/.test(name + (subname || "")),
@@ -212,12 +213,18 @@ function parseTraitLocks(entry, traitLockRegex) {
     : null;
 }
 
+function parseIdentityLocks(entry) {
+  return parseTeamUp(entry) || parseIdentityRestriction(entry);
+}
+
 function parseTeamUp(entry) {
   const match = entry.text.match(teamUpRegex);
-  if (!match) {
-    return null;
-  }
   return match ? match.slice(1, 3).map(mapName) : null;
+}
+
+function parseIdentityRestriction(entry) {
+  const match = entry.text.match(identityRestrictionRegex);
+  return match ? match[1].split(" or ").map(mapName) : null;
 }
 
 function parseMinHp(entry) {

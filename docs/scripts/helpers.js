@@ -4,7 +4,7 @@ export function canIncludeSuggestedCard(card, hero, allowedAspects) {
   return (
     (card.aspect !== BASIC || allowedAspects.includes(BASIC)) &&
     (card.minHp === null || hero.hp >= card.minHp) &&
-    passesRestriction(card.teamUp, [hero.name, hero.subname]) &&
+    passesRestriction(card.identityLocks, [hero.name, hero.subname]) &&
     passesRestriction(card.traitLocks, hero.traits) &&
     ![hero, ...hero.exludedDeckCards].some((c2) => violatesUnique(card, c2)) &&
     (allowedAspects.includes(card.aspect) || hero.include(card))

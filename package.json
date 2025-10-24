@@ -27,13 +27,13 @@
     "serve": "14.2.5"
   },
   "devDependencies": {
-    "axios": "1.12.0",
+    "axios": "1.12.2",
     "fontkit": "2.0.4",
     "glob": "11.0.3",
     "image-size": "2.0.2",
     "prettier": "3.6.2",
     "prettier-plugin-css-order": "2.1.2",
-    "prettier-plugin-organize-imports": "4.2.0",
+    "prettier-plugin-organize-imports": "4.3.0",
     "prettier-plugin-packagejson": "2.5.19",
     "replace-in-file": "8.3.0"
   }

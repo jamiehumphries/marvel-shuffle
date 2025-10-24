@@ -69,3 +69,14 @@
 .suggested-card .aspect.basic {
   color: #727272;
 }
+
+@media (hover: hover) {
+  .suggested-card:hover {
+    color: var(--button-border-and-text-color);
+    font-weight: bold;
+  }
+
+  .suggested-card:hover img {
+    filter: brightness(var(--button-image-brightness-hover));
+  }
+}

@@ -1,11 +1,16 @@
 import { aspects } from "../data/cards.js";
 import { deck } from "../data/deck.js";
 import { getItem, resetItem, setItem } from "../data/storage.js";
-import { chooseRandom, filter, passesRestriction } from "../helpers.js";
+import {
+  BASIC,
+  canIncludeSuggestedCard,
+  chooseRandom,
+  filter,
+  passesRestriction,
+  violatesUnique,
+} from "../helpers.js";
 import { Hero } from "../models/Hero.js";
 import { Section } from "./Section.js";
-
-const BASIC = "Basic";
 
 export class AspectSection extends Section {
   constructor(settings, nthOfType) {
@@ -216,17 +221,6 @@ export class AspectSection extends Section {
   }
 }
 
-function canIncludeSuggestedCard(card, hero, allowedAspects) {
-  return (
-    (card.aspect !== BASIC || allowedAspects.includes(BASIC)) &&
-    (card.minHp === null || hero.hp >= card.minHp) &&
-    passesRestriction(card.teamUp, [hero.name, hero.subname]) &&
-    passesRestriction(card.traitLocks, hero.traits) &&
-    ![hero, ...hero.exludedDeckCards].some((c2) => violatesUnique(card, c2)) &&
-    (allowedAspects.includes(card.aspect) || hero.include(card))
-  );
-}
-
 function allUnique(cards) {
   for (let i = 0; i < cards.length - 1; i++) {
     const card1 = cards[i];
@@ -238,15 +232,4 @@ function allUnique(cards) {
     }
   }
   return true;
-}
-
-function violatesUnique(card1, card2) {
-  return (
-    (card1.name === card2.name &&
-      (card1.subname === null ||
-        card2.subname === null ||
-        card1.subname === card2.subname)) ||
-    (card1.subname === null && card1.name === card2.subname) ||
-    (card2.subname === null && card2.name === card1.subname)
-  );
 }

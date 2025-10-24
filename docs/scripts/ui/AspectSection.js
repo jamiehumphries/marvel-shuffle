@@ -1,6 +1,6 @@
-import { aspects } from "../data/cards.js";
-import { deck } from "../data/deck.js";
-import { getItem, resetItem, setItem } from "../data/storage.js";
+import { aspects } from "../data/cards.js?v=ed3a47d9";
+import { deck } from "../data/deck.js?v=124f0d77";
+import { getItem, resetItem, setItem } from "../data/storage.js?v=5a17bb47";
 import {
   BASIC,
   canIncludeSuggestedCard,
@@ -8,9 +8,9 @@ import {
   filter,
   passesRestriction,
   violatesUnique,
-} from "../helpers.js";
-import { Hero } from "../models/Hero.js";
-import { Section } from "./Section.js";
+} from "../helpers.js?v=13f1a7fe";
+import { Hero } from "../models/Hero.js?v=a64f729a";
+import { Section } from "./Section.js?v=f43e43fc";
 
 export class AspectSection extends Section {
   constructor(settings, nthOfType) {

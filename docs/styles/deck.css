@@ -17,12 +17,9 @@ h2:not(:first-of-type) {
   margin-top: 2rem;
 }
 
-#gallery {
-  display: flex;
-  flex-wrap: wrap;
+.group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 296px);
   justify-content: center;
-}
-
-.suggested-card {
-  width: 296px;
+  gap: 0.5rem;
 }

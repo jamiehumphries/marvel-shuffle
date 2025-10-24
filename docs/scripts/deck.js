@@ -1,9 +1,16 @@
 import { deck } from "./data/deck.js";
+import { Model } from "./models/Model.js";
 
 const gallery = document.getElementById("gallery");
 const cardTemplate = document.getElementById("suggested-card");
 
-const cardsByType = Object.groupBy(deck, (card) => card.aspect);
+const params = new URLSearchParams(window.location.search);
+const pack = params.get("p");
+
+const cardsByType = Object.groupBy(
+  deck.filter(matchesQuery),
+  (card) => card.aspect,
+);
 
 for (const [title, cards] of Object.entries(cardsByType)) {
   appendTitle(title, cards.length);
@@ -13,21 +20,35 @@ for (const [title, cards] of Object.entries(cardsByType)) {
       (c1.subname || "").localeCompare(c2.subname || "")
     );
   });
+  const group = document.createElement("div");
+  group.classList.add("group");
   for (const card of cards) {
-    append(card);
+    append(card, group);
   }
+  gallery.append(group);
 }
 
-function append({
-  name,
-  subname,
-  aspect,
-  aspectCode,
-  type,
-  imgSrc,
-  hasI,
-  isLandscape,
-}) {
+function matchesQuery(card) {
+  return matchesPack(card);
+}
+
+function matchesPack(card) {
+  if (!pack) {
+    return true;
+  }
+  return card.packs.map((name) => Model.buildSlug(name)).includes(pack);
+}
+
+function appendTitle(title, count) {
+  const h2 = document.createElement("h2");
+  h2.innerText = `${title} (${count})`;
+  gallery.appendChild(h2);
+}
+
+function append(card, group) {
+  const { name, subname, aspect, aspectCode, type, imgSrc, hasI, isLandscape } =
+    card;
+
   const element = cardTemplate.content.firstElementChild.cloneNode(true);
   element.querySelector(".name-and-subname").classList.toggle("has-i", hasI);
   element.querySelector(".name").innerText = name;
@@ -43,11 +64,5 @@ function append({
   img.src = imgSrc;
   img.classList.toggle("landscape", isLandscape);
 
-  gallery.appendChild(element);
-}
-
-function appendTitle(title, count) {
-  const h2 = document.createElement("h2");
-  h2.innerText = `${title} (${count})`;
-  gallery.appendChild(h2);
+  group.appendChild(element);
 }

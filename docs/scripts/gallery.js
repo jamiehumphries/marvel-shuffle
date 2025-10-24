@@ -27,7 +27,8 @@ const cardsByType = [
     .filter(matchesSearch)
     .sort(
       (c1, c2) =>
-        c1.name.localeCompare(c2.name) || c1.subname.localeCompare(c2.subname),
+        c1.name.localeCompare(c2.name) ||
+        (c1.subname || "").localeCompare(c2.subname || ""),
     ),
 );
 

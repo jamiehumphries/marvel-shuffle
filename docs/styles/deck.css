@@ -1,0 +1,28 @@
+body {
+  padding-bottom: 1rem;
+}
+
+h1,
+h2 {
+  margin: 1rem 0;
+  width: 100%;
+  text-align: center;
+}
+
+h1 img {
+  height: 6rem;
+}
+
+h2:not(:first-of-type) {
+  margin-top: 2rem;
+}
+
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.suggested-card {
+  width: 296px;
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Marvel Shuffle</title>
+    <meta name="version" content="3.9.7" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta property="description" content="A randomiser for Marvel Champions." />
+    <meta property="og:title" content="Marvel Shuffle" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://www.marvelshuffle.com/images/og.png"
+    />
+    <meta property="og:url" content="https://www.marvelshuffle.com/gallery/" />
+    <meta
+      property="og:description"
+      content="A randomiser for Marvel Champions."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:image"
+      content="https://www.marvelshuffle.com/images/twitter.png"
+    />
+    <link rel="stylesheet" href="/styles/common.css" />
+    <link rel="stylesheet" href="/styles/deck.css" />
+    <link rel="stylesheet" href="/styles/suggested.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body>
+    <main>
+      <h1>
+        <a href="/">
+          <img id="logo" src="/images/logo.png" alt="Marvel Champions" />
+        </a>
+      </h1>
+      <div id="gallery">
+        <template id="suggested-card">
+          <a class="suggested-card" target="_blank">
+            <div class="image-container">
+              <img src="" alt="" />
+            </div>
+            <div>
+              <div class="name-and-subname">
+                <span class="name"></span>
+                <span class="subname"></span>
+              </div>
+              <div class="aspect-and-type">
+                <span class="aspect"></span>
+                <span class="type"></span>
+              </div>
+            </div>
+          </a>
+        </template>
+      </div>
+    </main>
+    <script type="module" src="/scripts/deck.js"></script>
+  </body>
+</html>

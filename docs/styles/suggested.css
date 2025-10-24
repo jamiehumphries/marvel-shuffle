@@ -1,0 +1,71 @@
+:root {
+  --suggested-card-img-size: 2.2rem;
+  --suggested-card-margin: 0.5rem;
+}
+
+.suggested-card {
+  display: flex;
+  margin-top: var(--suggested-card-margin);
+  border-radius: 2px;
+  color: var(--button-border-and-text-color);
+}
+
+.suggested-card .image-container {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.5rem;
+  width: var(--suggested-card-img-size);
+  height: var(--suggested-card-img-size);
+}
+
+.suggested-card img:not(.landscape) {
+  height: var(--suggested-card-img-size);
+}
+
+.suggested-card img.landscape {
+  width: var(--suggested-card-img-size);
+}
+
+.suggested-card > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.suggested-card .name-and-subname {
+  font-size: calc(0.375 * var(--suggested-card-img-size));
+}
+
+.suggested-card .subname {
+  font-size: calc(0.325 * var(--suggested-card-img-size));
+}
+
+.suggested-card .aspect-and-type {
+  font-size: calc(0.25 * var(--suggested-card-img-size));
+}
+
+.suggested-card .aspect.aggression {
+  color: #a00000;
+}
+
+.suggested-card .aspect.justice {
+  color: #b08000;
+}
+
+.suggested-card .aspect.leadership {
+  color: #00518b;
+}
+
+.suggested-card .aspect.protection {
+  color: #00813a;
+}
+
+.suggested-card .aspect.pool {
+  color: #a542a5;
+}
+
+.suggested-card .aspect.basic {
+  color: #727272;
+}

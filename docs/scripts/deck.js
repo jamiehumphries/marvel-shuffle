@@ -15,6 +15,14 @@ const allowedAspects = getAllowedAspects()
 
 const cardsByType = Object.groupBy(deck, (card) => card.aspect);
 
+if (hero) {
+  const heroImg = document.createElement("img");
+  heroImg.classList.add("hero");
+  heroImg.src = hero.frontSrc;
+  heroImg.alt = "";
+  gallery.append(heroImg);
+}
+
 for (const [title, cards] of Object.entries(cardsByType)) {
   const matchedCards = cards
     .filter(matchesQuery)

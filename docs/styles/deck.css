@@ -17,6 +17,16 @@ h2:not(:first-of-type) {
   margin-top: 2rem;
 }
 
+#gallery {
+  display: flex;
+  flex-direction: column;
+}
+
+img.hero {
+  margin: 0 auto 1rem auto;
+  height: 214px;
+}
+
 .group {
   display: grid;
   grid-template-columns: repeat(auto-fill, 296px);

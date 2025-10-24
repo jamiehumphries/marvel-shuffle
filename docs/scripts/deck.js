@@ -1,4 +1,4 @@
-import { aspects, heroes } from "./data/cards.js";
+import { heroes } from "./data/cards.js";
 import { deck } from "./data/deck.js";
 import { BASIC, canIncludeSuggestedCard, flatten } from "./helpers.js";
 import { Model } from "./models/Model.js";
@@ -6,14 +6,12 @@ import { Model } from "./models/Model.js";
 const gallery = document.getElementById("gallery");
 const cardTemplate = document.getElementById("suggested-card");
 
+const cardsByType = Object.groupBy(deck, (card) => card.aspect);
+
 const params = new URLSearchParams(window.location.search);
 const pack = getPack();
 const hero = getHero();
-const allowedAspects = getAllowedAspects()
-  .map((card) => card.name)
-  .concat(BASIC);
-
-const cardsByType = Object.groupBy(deck, (card) => card.aspect);
+const allowedAspects = getAllowedAspects();
 
 if (hero) {
   const heroImg = document.createElement("img");
@@ -56,27 +54,24 @@ function getHero() {
   if (!query) {
     return null;
   }
-  return query ? findMatch(query, heroes) : null;
-}
-
-function getAllowedAspects() {
-  const query = params.get("aspects");
-  if (!query) {
-    return flatten(aspects);
-  }
-  const subqueries = query.split(",");
-  const matches = subqueries
-    .map((subquery) => findMatch(subquery, aspects))
-    .filter((match) => !!match);
-  return matches.length > 0 ? matches : flatten(aspects);
-}
-
-function findMatch(query, set) {
-  const cards = flatten(set);
+  const cards = flatten(heroes);
   return (
     cards.find((card) => Model.buildSlug(card.name, card.subname) === query) ||
     cards.find((card) => Model.buildSlug(card.name) === query)
   );
+}
+
+function getAllowedAspects() {
+  const allAspects = Object.keys(cardsByType);
+  const query = params.get("aspects");
+  if (!query) {
+    return allAspects;
+  }
+  const subqueries = query.split(",");
+  const matches = allAspects.filter((aspect) =>
+    subqueries.includes(Model.buildSlug(aspect)),
+  );
+  return hero ? matches.concat(BASIC) : matches;
 }
 
 function appendTitle(title, count) {

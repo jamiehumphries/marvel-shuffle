@@ -14,7 +14,7 @@ const gallery = document.getElementById("gallery");
 const cardTemplate = document.getElementById("card");
 
 const params = new URLSearchParams(window.location.search);
-const search = params.get("s");
+const search = params.get("search");
 
 const cardsByType = [
   scenarios,
@@ -24,7 +24,7 @@ const cardsByType = [
   aspects,
 ].map((cardsOrSets) =>
   flatten(cardsOrSets)
-    .filter(matchesSearch)
+    .filter(matchesQuery)
     .sort(
       (c1, c2) =>
         c1.name.localeCompare(c2.name) ||
@@ -56,7 +56,7 @@ if (search === null) {
   }
 }
 
-function matchesSearch(cardOrSet) {
+function matchesQuery(cardOrSet) {
   if (!search) {
     return true;
   }
@@ -64,8 +64,7 @@ function matchesSearch(cardOrSet) {
     return false;
   }
   return (
-    Model.buildSlug(cardOrSet.name) === search ||
-    matchesSearch(cardOrSet.parent)
+    Model.buildSlug(cardOrSet.name) === search || matchesQuery(cardOrSet.parent)
   );
 }
 
@@ -76,20 +75,23 @@ function appendTitle(title, count) {
 }
 
 function append(card, ...classes) {
-  const { name, subname, frontSrc, backSrc, isLandscape, hasI } = card;
-
-  if (isLandscape) {
+  if (card.isLandscape) {
     classes.push("landscape");
   }
-  if (hasI) {
+  if (card.hasI) {
     classes.push("has-i");
   }
 
   const element = cardTemplate.content.firstElementChild.cloneNode(true);
-  element.querySelector(".name").innerText = name;
-  element.querySelector(".subname").innerText = subname;
-  element.querySelector(".back").src = backSrc;
-  element.querySelector(".front").src = frontSrc;
+  const name = element.querySelector(".name");
+  const subname = element.querySelector(".subname");
+  const back = element.querySelector(".back");
+  const front = element.querySelector(".front");
+
+  name.innerText = card.name;
+  subname.innerText = card.subname;
+  back.src = card.backSrc;
+  front.src = card.frontSrc;
   element.classList.add(...classes);
 
   gallery.appendChild(element);

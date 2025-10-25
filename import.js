@@ -21,7 +21,7 @@ const nameFixes = {
 };
 
 const teamUpRegex = /^Team-Up \((?:.*\/)?(.*) and (?:.*\/)?(.*)\)\./i;
-const identityRestrictionRegex = /^Play only if you are the (.*) player/;
+const identityRestrictionRegex = /^Play only if you are the (.*) player\./i;
 const linkedRegex = /^Linked \(.*\)\./i;
 const minHpRegex =
   /^Play only if your identity has at least (\d+) printed hit points\./i;
@@ -224,7 +224,7 @@ function parseTeamUp(entry) {
 
 function parseIdentityRestriction(entry) {
   const match = entry.text.match(identityRestrictionRegex);
-  return match ? match[1].split(" or ").map(mapName) : null;
+  return match ? match[1].split(/(?:, | or )/).map(mapName) : null;
 }
 
 function parseMinHp(entry) {

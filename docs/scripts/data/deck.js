@@ -12507,7 +12507,7 @@ export const deck = [
     isLandscape: false,
     hasI: false,
     href: "https://marvelcdb.com/card/56010",
-    imgSrc: "/images/deck/back.png",
+    imgSrc: "/images/deck/56010.jpg",
   },
   {
     id: "56012",
@@ -12525,7 +12525,7 @@ export const deck = [
     isLandscape: false,
     hasI: false,
     href: "https://marvelcdb.com/card/56012",
-    imgSrc: "/images/deck/back.png",
+    imgSrc: "/images/deck/56012.jpg",
   },
   {
     id: "56013",
@@ -12543,7 +12543,7 @@ export const deck = [
     isLandscape: false,
     hasI: false,
     href: "https://marvelcdb.com/card/56013",
-    imgSrc: "/images/deck/back.png",
+    imgSrc: "/images/deck/56013.jpg",
   },
   {
     id: "56016",
@@ -12561,7 +12561,7 @@ export const deck = [
     isLandscape: false,
     hasI: false,
     href: "https://marvelcdb.com/card/56016",
-    imgSrc: "/images/deck/back.png",
+    imgSrc: "/images/deck/56016.jpg",
   },
   {
     id: "56017",
@@ -12579,7 +12579,7 @@ export const deck = [
     isLandscape: false,
     hasI: false,
     href: "https://marvelcdb.com/card/56017",
-    imgSrc: "/images/deck/back.png",
+    imgSrc: "/images/deck/56017.jpg",
   },
   {
     id: "56019",
@@ -12597,7 +12597,7 @@ export const deck = [
     isLandscape: false,
     hasI: false,
     href: "https://marvelcdb.com/card/56019",
-    imgSrc: "/images/deck/back.png",
+    imgSrc: "/images/deck/56019.jpg",
   },
   {
     id: "56041",
@@ -12615,7 +12615,7 @@ export const deck = [
     isLandscape: false,
     hasI: false,
     href: "https://marvelcdb.com/card/56041",
-    imgSrc: "/images/deck/back.png",
+    imgSrc: "/images/deck/56041.jpg",
   },
   {
     id: "56043",
@@ -12633,7 +12633,7 @@ export const deck = [
     isLandscape: false,
     hasI: false,
     href: "https://marvelcdb.com/card/56043",
-    imgSrc: "/images/deck/back.png",
+    imgSrc: "/images/deck/56043.jpg",
   },
   {
     id: "56045",
@@ -12651,7 +12651,7 @@ export const deck = [
     isLandscape: false,
     hasI: false,
     href: "https://marvelcdb.com/card/56045",
-    imgSrc: "/images/deck/back.png",
+    imgSrc: "/images/deck/56045.jpg",
   },
   {
     id: "56046",
@@ -12669,7 +12669,7 @@ export const deck = [
     isLandscape: false,
     hasI: false,
     href: "https://marvelcdb.com/card/56046",
-    imgSrc: "/images/deck/back.png",
+    imgSrc: "/images/deck/56046.jpg",
   },
   {
     id: "56047",
@@ -12687,7 +12687,7 @@ export const deck = [
     isLandscape: false,
     hasI: true,
     href: "https://marvelcdb.com/card/56047",
-    imgSrc: "/images/deck/back.png",
+    imgSrc: "/images/deck/56047.jpg",
   },
   {
     id: "56050",
@@ -12705,7 +12705,7 @@ export const deck = [
     isLandscape: false,
     hasI: false,
     href: "https://marvelcdb.com/card/56050",
-    imgSrc: "/images/deck/back.png",
+    imgSrc: "/images/deck/56050.jpg",
   },
   {
     id: "56052",
@@ -12723,6 +12723,6 @@ export const deck = [
     isLandscape: false,
     hasI: false,
     href: "https://marvelcdb.com/card/56052",
-    imgSrc: "/images/deck/back.png",
+    imgSrc: "/images/deck/56052.jpg",
   },
 ];

@@ -173,7 +173,22 @@ export class Section extends Toggleable {
     }
 
     const optionSets = this.getCardOptionSets(count);
-    return optionSets.every((set, i) => set.includes(this.cards[i]));
+    if (optionSets.some((set, i) => !set.includes(this.cards[i]))) {
+      return false;
+    }
+
+    return this.uncountedCards
+      .filter((card) => !this.requiredCards.includes(card))
+      .every((card) => {
+        switch (this.settings.getProbability(card)) {
+          case 0:
+            return !this.cards.includes(card);
+          case 1:
+            return this.cards.includes(card);
+          default:
+            return true;
+        }
+      });
   }
 
   get visible() {
@@ -332,7 +347,7 @@ export class Section extends Toggleable {
   }
 
   shuffleIfInvalid({ animate = true } = {}) {
-    if (!this.valid && !this.disabled) {
+    if (!this.valid) {
       this.shuffle({ animate });
       return true;
     }
@@ -340,10 +355,14 @@ export class Section extends Toggleable {
   }
 
   shuffle({ forcedCards = null, animate = true, isShuffleAll = false } = {}) {
+    if (this.disabled || !this.visible) {
+      return;
+    }
+
     this.forced = forcedCards !== null;
     const newCards = forcedCards || this.chooseCards(isShuffleAll);
 
-    if (!animate || !this.visible) {
+    if (!animate) {
       this.cards = newCards;
       return;
     }
@@ -377,6 +396,15 @@ export class Section extends Toggleable {
       const filteredOptionSet = filter(optionSet, cards);
       const card = this.randomCard(filteredOptionSet, isShuffleAll);
       cards.push(card);
+    }
+    for (const card of this.uncountedCards) {
+      if (cards.includes(card)) {
+        continue;
+      }
+      const cardProbabilty = this.settings.getProbability(card);
+      if (Math.random() < cardProbabilty) {
+        cards.push(card);
+      }
     }
     return cards;
   }

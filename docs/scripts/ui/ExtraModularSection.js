@@ -1,4 +1,5 @@
 import { modulars } from "../data/cards.js";
+import { Modular } from "../models/Modular.js";
 import { Section } from "./Section.js";
 
 export class ExtraModularSection extends Section {
@@ -20,9 +21,7 @@ export class ExtraModularSection extends Section {
   }
 
   get placeholder() {
-    return (this._placeholder ||= new this.type(
-      `No ${this.sectionNamePlural}`,
-    ));
+    return (this._placeholder ||= new Modular(`No ${this.sectionNamePlural}`));
   }
 
   get maxSlots() {

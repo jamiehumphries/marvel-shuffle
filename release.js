@@ -7,9 +7,9 @@ const level = process.argv[2] || "patch";
 
 const $ = (command) => execSync(command).toString().trim();
 
-const hasChanges = $("git status --porcelain") !== "";
-if (hasChanges) {
-  abort("Cannot release when there are uncommitted changes.");
+const status = $("git status --porcelain");
+if (status !== "") {
+  abort("Cannot build release when there are uncommitted changes.");
 }
 
 const branch = $("git branch --show-current");
@@ -29,8 +29,7 @@ replaceInFileSync({
   to: version.substring(1),
 });
 
-$("git add --all");
-$(`git commit --message="Build ${version}"`);
+$(`git commit --all --message="Build ${version}"`);
 
 $("npm run build");
 $("git add --all");
@@ -39,7 +38,7 @@ $("git branch --force release HEAD");
 
 const tree = $("git write-tree");
 const commit = $(`git commit-tree ${tree} -p release -m "Release ${version}"`);
-$(`git update-ref refs/heads/release ${commit}`);
+$(`git branch --force release ${commit}`);
 $(`git tag --force ${version} release`);
 
 $("git reset --hard");

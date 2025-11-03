@@ -1,6 +1,6 @@
 import { heroes } from "../data/cards.js";
-import { getNumberOfIncompleteGames } from "../data/tracker.js";
-import { filter } from "../helpers.js";
+import { filter } from "../shared/helpers.js";
+import { getNumberOfIncompleteGames } from "../shared/tracker.js";
 import { Section } from "./Section.js";
 
 export class HeroSection extends Section {

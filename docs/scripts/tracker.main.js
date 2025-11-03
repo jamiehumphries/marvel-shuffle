@@ -3,9 +3,9 @@ import {
   scenarios as allScenarios,
 } from "./data/cards.js";
 import { initializeStorage } from "./data/storage.js";
-import { renderTable } from "./data/tracker.js";
-import { flatten } from "./helpers.js";
 import { Setting } from "./models/Setting.js";
+import { flatten } from "./shared/helpers.js";
+import { renderTable } from "./shared/tracker.js";
 
 await initializeStorage();
 

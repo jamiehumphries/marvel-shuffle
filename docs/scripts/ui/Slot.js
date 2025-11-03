@@ -1,4 +1,4 @@
-import { requestPostAnimationFrame } from "../helpers.js";
+import { requestPostAnimationFrame } from "../shared/helpers.js";
 import { Toggleable } from "./Toggleable.js";
 
 export class Slot extends Toggleable {

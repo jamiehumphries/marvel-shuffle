@@ -6,9 +6,9 @@ import {
   modulars,
   scenarios,
 } from "./data/cards.js";
-import { flatten } from "./helpers.js";
 import { Campaign } from "./models/Campaign.js";
 import { Model } from "./models/Model.js";
+import { flatten } from "./shared/helpers.js";
 
 const gallery = document.getElementById("gallery");
 const cardTemplate = document.getElementById("card");

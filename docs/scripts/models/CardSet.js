@@ -1,4 +1,4 @@
-import { flatten } from "../helpers.js";
+import { flatten } from "../shared/helpers.js";
 import { Option } from "./Option.js";
 
 export class CardSet extends Option {

@@ -1,7 +1,7 @@
 import { difficulties } from "../data/cards.js";
 import { getItem, setItem } from "../data/storage.js";
-import { getNumberOfIncompleteGames } from "../data/tracker.js";
 import { EXPERT, STANDARD } from "../models/Difficulty.js";
+import { getNumberOfIncompleteGames } from "../shared/tracker.js";
 import { Section } from "./Section.js";
 
 export class DifficultySection extends Section {

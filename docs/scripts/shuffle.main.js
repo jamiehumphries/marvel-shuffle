@@ -5,8 +5,8 @@ import {
   initializeStorage,
   setUserId,
 } from "./data/storage.js";
-import { renderTable } from "./data/tracker.js";
-import { requestPostAnimationFrame } from "./helpers.js";
+import { requestPostAnimationFrame } from "./shared/helpers.js";
+import { renderTable } from "./shared/tracker.js";
 import { AspectSection } from "./ui/AspectSection.js";
 import { DifficultySection } from "./ui/DifficultySection.js";
 import { ExtraModularSection } from "./ui/ExtraModularSection.js";

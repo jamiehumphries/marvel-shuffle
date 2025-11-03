@@ -1,5 +1,4 @@
 import { heroes as heroData } from "../data/heroes.js";
-import { ensureArray, filter, flatten, passesRestriction } from "../helpers.js";
 import { Aspect } from "../models/Aspect.js";
 import { CardSet } from "../models/CardSet.js";
 import { Difficulty } from "../models/Difficulty.js";
@@ -7,6 +6,12 @@ import { Hero } from "../models/Hero.js";
 import { Model } from "../models/Model.js";
 import { Modular } from "../models/Modular.js";
 import { Scenario } from "../models/Scenario.js";
+import {
+  ensureArray,
+  filter,
+  flatten,
+  passesRestriction,
+} from "../shared/helpers.js";
 
 // Modifiers
 const isCampaign = true;

@@ -16,9 +16,11 @@ import {
 import { Slot } from "./Slot.js";
 import { Toggleable } from "./Toggleable.js";
 
-const cardChangeDelayMs = getComputedStyle(document.documentElement)
-  .getPropertyValue("--card-change-delay")
-  .slice(0, -1 * "ms".length);
+const cardChangeDelayMs = Number(
+  getComputedStyle(document.documentElement)
+    .getPropertyValue("--card-change-delay")
+    .slice(0, -1 * "ms".length),
+);
 
 export class Section extends Toggleable {
   constructor(settings, cardsOrSets, nthOfType, extraCards = []) {

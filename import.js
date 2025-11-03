@@ -32,9 +32,7 @@ const resourceKeyPreifx = "resource_";
 const traitJoinPattern = "(?:,? or |,? and | character and an? |, )";
 const traitJoinRegex = new RegExp(traitJoinPattern, "i");
 
-const charSet = openFontSync(
-  "./docs/styles/fonts/BackIssuesBB.otf",
-).characterSet;
+const { characterSet } = openFontSync("./docs/styles/fonts/BackIssuesBB.otf");
 
 export async function importAllDeckCards(force = false) {
   const { data } = await axios.get(cardsApi);
@@ -175,7 +173,7 @@ function mapName(name) {
 function checkCharacters(name) {
   const chars = name.split("");
   const unsupportedChars = chars.filter(
-    (char) => !charSet.includes(char.charCodeAt(0)),
+    (char) => !characterSet.includes(char.charCodeAt(0)),
   );
   if (unsupportedChars.length > 0) {
     console.warn(

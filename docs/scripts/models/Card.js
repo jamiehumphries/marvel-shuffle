@@ -77,7 +77,8 @@ export class Card extends Option {
     }
 
     if (typeof this.hasBack === "function") {
-      return Model.buildImage(this.hasBack, "back");
+      const backType = this.hasBack;
+      return Model.buildImage(backType, "back");
     }
 
     if (typeof this.hasBack === "string") {

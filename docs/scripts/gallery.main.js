@@ -5,10 +5,10 @@ import {
   heroes,
   modulars,
   scenarios,
-} from "./data/cards.js";
-import { Campaign } from "./models/Campaign.js";
-import { Model } from "./models/Model.js";
-import { flatten } from "./shared/helpers.js";
+} from "./data/cards.js?v=e0591385";
+import { Campaign } from "./models/Campaign.js?v=9e27e633";
+import { Model } from "./models/Model.js?v=b19a6e7e";
+import { flatten } from "./shared/helpers.js?v=f466f5fb";
 
 const gallery = document.getElementById("gallery");
 const cardTemplate = document.getElementById("card");

@@ -61,6 +61,7 @@ const falcon = cardSet("Falcon");
 const winterSoldier = cardSet("Winter Soldier");
 const tricksterTakeover = cardSet("Trickster Takeover");
 const civilWar = cardSet("Civil War");
+const hercules = cardSet("Hercules");
 
 // MODULARS
 
@@ -344,6 +345,9 @@ export const modulars = [
       modular("Hell’s Kitchen", { isLandscape }),
       modular("Cloak & Dagger", { isLandscape }),
     ),
+  ),
+  hercules(
+    modular("All Versus All", { isLandscape }),
   ),
 ];
 
@@ -680,4 +684,5 @@ export const heroes = [
     hero("Tigra", "Greer Nelson", AGGRESSION, "#ed7d31", { exclude: { name: "Tigra", subname: "Greer Grant Nelson" } }),
   ),
   hero("Wonder Man", "Simon Williams", JUSTICE, "#ff0000", { include: { type: "Event", resources: "Energy" } }),
+  hero("Hercules", null, LEADERSHIP, "#ffc000"),
 ];

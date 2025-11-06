@@ -6,9 +6,9 @@
   "scripts": {
     "build": "node build.js hashes assets",
     "deck": "node build.js deck",
-    "deck:force": "node build.js --force deck",
+    "deck:force": "npm run deck -- --force",
     "images": "node build.js images hashes",
-    "images:force": "node build.js --force images hashes",
+    "images:force": "npm run images -- --force",
     "images:hashes": "node build.js hashes",
     "release": "npm run release:patch",
     "release:major": "node release.js major",

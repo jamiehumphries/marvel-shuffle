@@ -662,7 +662,7 @@ export const heroes = [
     hp: 12,
     traitKeys: ["AVENGER", "AERIAL", "CIVILIAN"],
     exludedDeckCards: [
-      { name: "Jet Blast", subname: null },
+      { name: "Jet Belt", subname: null },
       { name: "Mr. Hollywood", subname: null },
     ],
   },

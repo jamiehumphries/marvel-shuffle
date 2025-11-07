@@ -4,6 +4,7 @@ import { createWriteStream } from "fs";
 import { imageSizeFromFile } from "image-size/fromFile";
 import { relative, resolve } from "path";
 import { styleText } from "util";
+import { heroes as existingHeroes } from "./docs/scripts/data/heroes.js";
 import { compareAndUpdateImage, exec, exists, writeCodeFile } from "./tools.js";
 
 const cardsApi = "https://marvelcdb.com/api/public/cards/";
@@ -34,12 +35,24 @@ const traitJoinRegex = new RegExp(traitJoinPattern, "i");
 
 const { characterSet } = openFontSync("./docs/styles/fonts/BackIssuesBB.otf");
 
+const deckFilePath = "docs/scripts/data/deck.js";
+const heroesFilePath = "docs/scripts/data/heroes.js";
+
 export async function importAllDeckCards(force = false) {
   const { data } = await axios.get(cardsApi);
   const cards = await importCards(data, force);
   const heroes = await importHeroes(data, cards);
-  await writeCodeFile("docs/scripts/data/deck.js", cards);
-  await writeCodeFile("docs/scripts/data/heroes.js", heroes);
+
+  for (const existingHero of existingHeroes) {
+    const { name, subname } = existingHero;
+    const match = heroes.find((h) => h.name === name && h.subname === subname);
+    if (!match) {
+      heroes.push(existingHero);
+    }
+  }
+
+  await writeCodeFile(deckFilePath, cards);
+  await writeCodeFile(heroesFilePath, heroes);
 }
 
 async function importCards(data, force) {

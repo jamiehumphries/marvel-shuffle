@@ -656,4 +656,25 @@ export const heroes = [
       { name: "Altman Residence", subname: null },
     ],
   },
+  {
+    name: "Wonder Man",
+    alterEgo: "Simon Williams",
+    hp: 12,
+    traitKeys: ["AVENGER", "AERIAL", "CIVILIAN"],
+    exludedDeckCards: [
+      { name: "Jet Blast", subname: null },
+      { name: "Mr. Hollywood", subname: null },
+    ],
+  },
+  {
+    name: "Hercules",
+    alterEgo: null,
+    hp: 14,
+    traitKeys: ["AVENGER", "OLYMPUS"],
+    exludedDeckCards: [
+      { name: "Amadeus Cho", subname: null },
+      { name: "Gauntlets of Hercules", subname: null },
+      { name: "Herc’s Helm", subname: null },
+    ],
+  },
 ];

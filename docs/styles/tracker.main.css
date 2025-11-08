@@ -1,5 +1,27 @@
 :root {
-  --nav-bar-height: calc(1rem + 2 * var(--table-padding));
+  --table-padding-base: 1rem;
+
+  --table-padding-top: max(
+    env(safe-area-inset-top, 0),
+    var(--table-padding-base)
+  );
+  --table-padding-right: max(
+    env(safe-area-inset-right, 0),
+    var(--table-padding-base)
+  );
+  --table-padding-bottom: max(
+    env(safe-area-inset-bottom, 0),
+    var(--table-padding-base)
+  );
+  --table-padding-left: max(
+    env(safe-area-inset-left, 0),
+    var(--table-padding-base)
+  );
+
+  --nav-bar-height: calc(
+    1rem + var(--table-padding-top) + var(--table-padding-base)
+  );
+
   --scroll-buffer: 20rem;
 }
 
@@ -8,32 +30,41 @@
   position: fixed;
   top: 0;
   left: 0;
-  align-items: center;
+  align-items: end;
   z-index: 3;
 
   box-sizing: border-box;
   background-color: var(--background-color);
-  padding: 0 var(--table-padding);
+  padding: 0 var(--table-padding-left) calc(var(--table-padding-base))
+    var(--table-padding-right);
   width: 100%;
   height: var(--nav-bar-height);
 }
 
+.nav-bar a.link {
+  margin: 0;
+  padding: 0 5px;
+}
+
 *[class^="scroll-mask-"] {
   position: fixed;
-  top: calc(-1 * var(--scroll-buffer));
+  right: calc(-1 * var(--scroll-buffer));
   left: calc(-1 * var(--scroll-buffer));
   z-index: 2;
   background-color: var(--background-color);
 }
 
 .scroll-mask-top {
-  right: calc(-1 * var(--scroll-buffer));
+  top: calc(-1 * var(--scroll-buffer));
   height: calc(var(--scroll-buffer) + var(--nav-bar-height));
 }
 
-.scroll-mask-left {
+.scroll-mask-bottom {
   bottom: calc(-1 * var(--scroll-buffer));
-  width: var(--scroll-buffer);
+  border-top: 1rem solid transparent;
+  background-clip: padding-box;
+  height: var(--scroll-buffer);
+  pointer-events: none;
 }
 
 #tracker {
@@ -80,12 +111,14 @@
   left: 0;
   z-index: 1;
   background-color: var(--background-color);
-  padding-left: var(--table-padding);
+  padding-left: var(--table-padding-left);
 }
 
 #tracker tr > th:not(:first-child).progress {
   position: sticky;
-  left: calc(var(--table-padding) + var(--progress-col) * var(--cell-width));
+  left: calc(
+    var(--table-padding-left) + var(--progress-col) * var(--cell-width)
+  );
   z-index: 1;
 }
 
@@ -93,7 +126,7 @@
 
 #tracker tbody > tr:last-child > th,
 #tracker tbody > tr:last-child > td {
-  padding-bottom: var(--table-padding);
+  padding-bottom: var(--table-padding-bottom);
 }
 
 /* Last column cells */

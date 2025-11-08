@@ -40,6 +40,16 @@
   margin-top: var(--nav-bar-height);
 }
 
+#tracker th,
+#tracker td {
+  visibility: hidden;
+}
+
+#tracker th.show,
+#tracker td.show {
+  visibility: visible;
+}
+
 /* Top left cells (Progress) */
 
 #tracker thead > tr:first-child > th.progress,

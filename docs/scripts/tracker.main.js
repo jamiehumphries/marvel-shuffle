@@ -15,6 +15,7 @@ const scenarios = getGroups(allScenarios);
 const heroes = getGroups(allHeroes);
 
 renderTable(scenarios, heroes);
+setUpIntersectionObserver();
 
 function getGroups(cardsOrSets) {
   const allGroups = cardsOrSets.reduce((groups, cardOrSet, i) => {
@@ -39,4 +40,23 @@ function getGroups(cardsOrSets) {
     .filter((group) => group.length > 0);
 
   return filteredGroups.length > 0 ? filteredGroups : [flatten(cardsOrSets[0])];
+}
+
+function setUpIntersectionObserver() {
+  const cells = document.querySelectorAll("th,td");
+  const observer = new IntersectionObserver(updateVisibility);
+  for (const cell of cells) {
+    observer.observe(cell);
+  }
+}
+
+function updateVisibility(entries, observer) {
+  for (const entry of entries) {
+    if (!entry.isIntersecting) {
+      continue;
+    }
+    const cell = entry.target;
+    cell.classList.add("show");
+    observer.unobserve(cell);
+  }
 }

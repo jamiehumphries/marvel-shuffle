@@ -43,7 +43,7 @@ function getGroups(cardsOrSets) {
 }
 
 function setUpIntersectionObserver() {
-  const cells = document.querySelectorAll("th,td");
+  const cells = document.querySelectorAll("td");
   const observer = new IntersectionObserver(updateVisibility);
   for (const cell of cells) {
     observer.observe(cell);

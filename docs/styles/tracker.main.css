@@ -40,12 +40,10 @@
   margin-top: var(--nav-bar-height);
 }
 
-#tracker th,
 #tracker td {
   visibility: hidden;
 }
 
-#tracker th.show,
 #tracker td.show {
   visibility: visible;
 }

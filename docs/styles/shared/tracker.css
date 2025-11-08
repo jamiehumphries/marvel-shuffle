@@ -1,6 +1,4 @@
 :root {
-  --table-padding: 1rem;
-
   --cell-width: 5rem;
   --cell-height: 4rem;
   --scenario-cell-height: calc(var(--cell-height) * 0.65);

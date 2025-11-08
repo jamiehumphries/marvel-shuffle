@@ -133,5 +133,5 @@
 
 #tracker thead > tr > th:last-child,
 #tracker tbody > tr > td:last-child {
-  padding-right: var(--table-padding);
+  padding-right: var(--table-padding-right);
 }

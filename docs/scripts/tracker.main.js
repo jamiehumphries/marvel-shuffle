@@ -56,7 +56,7 @@ function updateVisibility(entries, observer) {
       continue;
     }
     const cell = entry.target;
-    cell.classList.add("show");
+    cell.classList.add("visible");
     observer.unobserve(cell);
   }
 }

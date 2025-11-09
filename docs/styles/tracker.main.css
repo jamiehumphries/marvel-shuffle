@@ -75,7 +75,7 @@
   visibility: hidden;
 }
 
-#tracker td.show {
+#tracker td.visible {
   visibility: visible;
 }
 

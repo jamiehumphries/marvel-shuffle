@@ -33,10 +33,10 @@ export function renderTable(scenarios, heroes, difficulties = []) {
   const fragment = document.createDocumentFragment();
   fragment.appendChild(thead);
   fragment.appendChild(tbody);
-
   table.appendChild(fragment);
 
   updateProgress();
+  return table;
 }
 
 function clearTable() {

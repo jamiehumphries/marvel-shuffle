@@ -365,12 +365,16 @@ export const modulars = [
   ),
   synthezoidSmackdown(
     registration.synthezoidSmackdown(
-      modular("Thunderbolts"),
+      modular("S.H.I.E.L.D. Ops"),
+      modular("Thunderbolts"), //, { isLandscape }),
       modular("Taskmaster", { traits: "Thunderbolt" }),
+      modular("Deadly Duo", { isLandscape }),
     ),
     resistance.synthezoidSmackdown(
       modular("Young Avengers", { isLandscape }),
+      modular("Scarlet Twins", { isLandscape }),
       modular("Moon Knight"),
+      modular("Royal Guard", { isLandscape }),
     ),
   ),
   hercules(
@@ -536,11 +540,11 @@ export const scenarios = [
   ),
   synthezoidSmackdown(
     registration.synthezoidSmackdown(
-      scenario("She-Hulk", ["Thunderbolts", "Taskmaster"], "#00b050",
+      scenario("She-Hulk", ["S.H.I.E.L.D. Ops", "Thunderbolts", "Taskmaster", "Deadly Duo"], "#00b050",
         { ...registration.schemes("Enforce the Law", "Mighty Avengers") }),
     ).withExtraOptions(...registration.synthezoidSmackdown.schemes),
     resistance.synthezoidSmackdown(
-      scenario("Vision", ["Young Avengers", "Moon Knight"], "#ff0000",
+      scenario("Vision", ["Young Avengers", "Scarlet Twins", "Moon Knight", "Royal Guard"], "#ff0000",
         { ...resistance.schemes("Protect Secret Identities", "Expose Overreach") }),
     ).withExtraOptions(...resistance.synthezoidSmackdown.schemes),
   )

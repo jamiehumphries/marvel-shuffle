@@ -1,5 +1,5 @@
-import { Aspect } from "./Aspect.js";
-import { Card } from "./Card.js";
+import { Aspect } from "./Aspect.js?v=50be4cca";
+import { Card } from "./Card.js?v=64eddc08";
 
 export class Hero extends Card {
   constructor(

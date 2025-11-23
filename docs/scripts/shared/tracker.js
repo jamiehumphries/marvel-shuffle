@@ -1,6 +1,6 @@
-import { difficulties as allDifficulties } from "../data/cards.js";
-import { getItem, setItem } from "../data/storage.js";
-import { EXPERT, STANDARD } from "../models/Difficulty.js";
+import { difficulties as allDifficulties } from "../data/cards.js?v=1a835479";
+import { getItem, setItem } from "../data/storage.js?v=5a17bb47";
+import { EXPERT, STANDARD } from "../models/Difficulty.js?v=7dd6e93f";
 
 const WIN = "✓";
 const LOSS = "✗";

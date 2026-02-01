@@ -366,7 +366,7 @@ export const modulars = [
   synthezoidSmackdown(
     registration.synthezoidSmackdown(
       modular("S.H.I.E.L.D. Ops"),
-      modular("Thunderbolts"), //, { isLandscape }),
+      modular("Thunderbolts", { isLandscape }),
       modular("Taskmaster", { traits: "Thunderbolt" }),
       modular("Deadly Duo", { isLandscape }),
     ),

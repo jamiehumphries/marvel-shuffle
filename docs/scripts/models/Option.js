@@ -1,5 +1,5 @@
-import { getItem, setItem } from "../data/storage.js";
-import { Model } from "./Model.js";
+import { getItem, setItem } from "../data/storage.js?v=5a17bb47";
+import { Model } from "./Model.js?v=cf381a97";
 
 export class Option extends Model {
   constructor(

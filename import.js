@@ -12,7 +12,8 @@ const imagesSourcePath =
   "https://cerebrodatastorage.blob.core.windows.net/cerebro-cards/official/";
 
 const imagesRoot = "docs/images/deck";
-const fallbackImgSrc = imgSrc(resolve(imagesRoot, "back.png"));
+const fallbackPortraitImgSrc = fallbackImgSrc("portrait");
+const fallbackLandscapeImgSrc = fallbackImgSrc("landscape");
 
 const identityTypeCodes = ["hero", "alter_ego"];
 const characterTypeCodes = [...identityTypeCodes, "ally"];
@@ -272,7 +273,9 @@ async function fetchImage(card, force) {
     });
   } catch (error) {
     error.response.data.destroy();
-    card.imgSrc = fallbackImgSrc;
+    card.imgSrc = card.isLandscape
+      ? fallbackLandscapeImgSrc
+      : fallbackPortraitImgSrc;
     return;
   }
 
@@ -298,9 +301,13 @@ function imgSrc(path) {
   return "/" + relative("docs", path);
 }
 
+function fallbackImgSrc(orientation) {
+  return imgSrc(resolve(imagesRoot, `back.${orientation}.png`));
+}
+
 function warnAboutMissingImages(cards) {
-  const cardsWithMissingImages = cards.filter(
-    (card) => card.imgSrc === fallbackImgSrc,
+  const cardsWithMissingImages = cards.filter((card) =>
+    [fallbackPortraitImgSrc, fallbackLandscapeImgSrc].includes(card.imgSrc),
   );
 
   if (cardsWithMissingImages.length === 0) {

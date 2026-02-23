@@ -14,7 +14,6 @@ export const hashes = {
   "/images/campaign/the-galaxys-most-wanted.png": "c0317564",
   "/images/campaign/the-mad-titans-shadow.png": "122bcd6b",
   "/images/campaign/the-rise-of-red-skull.png": "109042c7",
-  "/images/deck/back.png": "3cac7044",
   "/images/difficulty/back.png": "6d1bfcb5",
   "/images/difficulty/expert-ii/front.png": "da4dcc9a",
   "/images/difficulty/expert/front.png": "6526211e",

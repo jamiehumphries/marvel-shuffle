@@ -4,16 +4,16 @@ import {
   getBookmarkUrl,
   initializeStorage,
   setUserId,
-} from "./data/storage.js";
-import { requestPostAnimationFrame } from "./shared/helpers.js";
-import { renderTable } from "./shared/tracker.js";
-import { AspectSection } from "./ui/AspectSection.js";
-import { DifficultySection } from "./ui/DifficultySection.js";
-import { ExtraModularSection } from "./ui/ExtraModularSection.js";
-import { HeroSection } from "./ui/HeroSection.js";
-import { ModularSection } from "./ui/ModularSection.js";
-import { ScenarioSection } from "./ui/ScenarioSection.js";
-import { Settings } from "./ui/Settings.js";
+} from "./data/storage.js?v=5a17bb47";
+import { requestPostAnimationFrame } from "./shared/helpers.js?v=f466f5fb";
+import { renderTable } from "./shared/tracker.js?v=3b9595f9";
+import { AspectSection } from "./ui/AspectSection.js?v=29babf54";
+import { DifficultySection } from "./ui/DifficultySection.js?v=a626c5e2";
+import { ExtraModularSection } from "./ui/ExtraModularSection.js?v=4093e9db";
+import { HeroSection } from "./ui/HeroSection.js?v=03a59bf8";
+import { ModularSection } from "./ui/ModularSection.js?v=99a20542";
+import { ScenarioSection } from "./ui/ScenarioSection.js?v=ac46ed83";
+import { Settings } from "./ui/Settings.js?v=6695de2b";
 
 const settingsButton = document.getElementById("settings");
 const shuffleAllButton = document.getElementById("shuffle-all");

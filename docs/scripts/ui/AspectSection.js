@@ -1,4 +1,4 @@
-import { aspects } from "../data/cards.js";
+import { aspects, POOL } from "../data/cards.js";
 import { deck } from "../data/deck.js";
 import { getItem, resetItem, setItem } from "../data/storage.js";
 import { Hero } from "../models/Hero.js";
@@ -138,7 +138,7 @@ export class AspectSection extends Section {
 
   prioritise(aspects, isShuffleAll) {
     if (!this.settings.avoidRepeatedAspects) {
-      return aspects;
+      return super.prioritise(aspects, isShuffleAll);
     }
 
     const avoidedCousinSections = isShuffleAll
@@ -149,13 +149,37 @@ export class AspectSection extends Section {
       (section) => section.trueCards,
     );
 
-    const aspectUseCounts = Object.groupBy(
+    const aspectsByUseCount = Object.groupBy(
       aspects,
       (aspect) => aspectUses.filter((use) => use === aspect).length,
     );
 
-    const minUseCount = Math.min(...Object.keys(aspectUseCounts));
-    return aspectUseCounts[minUseCount];
+    const useCounts = Object.keys(aspectsByUseCount).sort();
+    const leastUsedAspects = aspectsByUseCount[useCounts[0]];
+
+    const poolAspectWeighting = this.settings.poolAspectWeighting;
+    if (poolAspectWeighting < 1) {
+      if (leastUsedAspects.length === 1 && leastUsedAspects.includes(POOL)) {
+        leastUsedAspects.push(...(aspectsByUseCount[useCounts[1]] || []));
+      }
+    } else if (poolAspectWeighting > 1) {
+      if (aspects.includes(POOL) && !leastUsedAspects.includes(POOL)) {
+        leastUsedAspects.push(POOL);
+      }
+    }
+
+    return super.prioritise(leastUsedAspects, isShuffleAll);
+  }
+
+  getPriority(aspect, _isShuffleAll) {
+    const poolAspectWeighting = this.settings.poolAspectWeighting;
+    if (poolAspectWeighting < 1 && aspect !== POOL) {
+      return 1 / poolAspectWeighting;
+    } else if (poolAspectWeighting > 1 && aspect === POOL) {
+      return poolAspectWeighting;
+    }
+
+    return 1;
   }
 
   loadSuggestedCards() {

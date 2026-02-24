@@ -1,12 +1,18 @@
 import { getItem, setItem } from "../data/storage.js";
 
 export class RadioSetting {
-  constructor(slug, legend, options, { onChange = null } = {}) {
+  constructor(
+    slug,
+    legend,
+    options,
+    { onChange = null, defaultValue = null } = {},
+  ) {
     this.id = `setting--${slug}`;
     this.slug = slug;
     this.legend = legend;
     this.options = options;
     this._onChange = onChange;
+    this.defaultValue = defaultValue || options[0].value;
   }
 
   get value() {
@@ -14,7 +20,7 @@ export class RadioSetting {
       const storedValue = getItem(this.id);
       this._value = this.allowedValues.includes(storedValue)
         ? storedValue
-        : this.allowedValues[0];
+        : this.defaultValue;
     }
     return this._value;
   }

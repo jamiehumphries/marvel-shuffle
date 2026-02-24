@@ -276,12 +276,13 @@ export class Settings {
     });
 
     for (const card of uncountedModulars) {
+      const onChange = (value) => (this._cardProbabilities[card.id] = value);
       this.initializeRadioSetting(
         customisationDiv,
         `probability--${card.id}`,
         `Probability of adding ${card.name}`,
         options,
-        (value) => (this._cardProbabilities[card.id] = value),
+        { onChange },
       );
     }
   }
@@ -332,12 +333,13 @@ export class Settings {
 
     this.appendHint(deckBuildingDiv, "pool-aspect-selected");
 
+    const onChange = (value) => (this._poolAspectWeighting = value);
     this.initializeRadioSetting(
       deckBuildingDiv,
       "weighting--aspect--pool",
       "Relative weighting of ‘Pool aspect",
       options,
-      (value) => (this._poolAspectWeighting = value),
+      { onChange, defaultValue: "even" },
     );
   }
 
@@ -362,11 +364,22 @@ export class Settings {
       const value = min + i;
       return { value, html: value.toString() };
     });
-    return this.initializeRadioSetting(parent, slug, legend, options, onChange);
+    return this.initializeRadioSetting(parent, slug, legend, options, {
+      onChange,
+    });
   }
 
-  initializeRadioSetting(parent, slug, legend, options, onChange = null) {
-    const radioSetting = new RadioSetting(slug, legend, options, { onChange });
+  initializeRadioSetting(
+    parent,
+    slug,
+    legend,
+    options,
+    { onChange = null, defaultValue = null } = {},
+  ) {
+    const radioSetting = new RadioSetting(slug, legend, options, {
+      onChange,
+      defaultValue,
+    });
     radioSetting.appendTo(parent);
     return radioSetting;
   }

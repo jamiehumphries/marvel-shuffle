@@ -11,6 +11,10 @@ export function canIncludeSuggestedCard(card, hero, allowedAspects) {
   );
 }
 
+export function capitalize(str) {
+  return str.length > 0 ? str[0].toUpperCase() + str.slice(1) : "";
+}
+
 export function chooseRandom(array) {
   return array[Math.floor(Math.random() * array.length)];
 }

@@ -267,10 +267,16 @@ body:not(.shuffle-difficulties) #setting--max-heroic-level,
 body:not(.randomise-heroic-level) #setting--max-heroic-level,
 body:not(.include-additional-modulars) #customisation .hint,
 body:not(.include-additional-modulars) #customisation fieldset,
+body:not(.adjust-pool-weighting) #pool-aspect-selected.hint,
+body:not(.adjust-pool-weighting) #setting--weighting--aspect--pool,
 body:not(.suggest-cards) label[for="setting--include-basic-in-suggested-cards"],
-body:not(.suggest-cards) #deck-building .hint,
-body:not(.suggest-cards) #deck-building fieldset {
+body:not(.suggest-cards) #possible-cards.hint,
+body:not(.suggest-cards) #setting--number-of-suggested-cards {
   display: none;
+}
+
+fieldset#setting--weighting--aspect--pool {
+  margin-bottom: 1.5rem;
 }
 
 body:not(.has-user-id) .show-if-has-user-id,
@@ -376,13 +382,19 @@ fieldset legend::after {
   height: 0;
 }
 
-.radio-setting label {
+.radio-setting label,
+.radio-setting .deadpool {
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   box-sizing: border-box;
+  text-align: center;
+}
+
+.radio-setting label {
+  position: relative;
   margin-bottom: 0.25rem;
   border: 1px solid var(--option-border-and-check-color);
   border-radius: 0.5rem;
@@ -398,6 +410,23 @@ fieldset legend::after {
   border-width: 2px;
   background-color: var(--option-background-color-checked);
   font-weight: bold;
+}
+
+div.deadpool {
+  position: absolute;
+  transform: rotate(-8deg);
+  border: 1px solid rgba(233, 222, 190);
+  background-color: rgba(233, 222, 190, 0.9);
+  padding: 0.05rem;
+  width: 80%;
+  font-weight: normal !important;
+  font-size: 0.85rem;
+  line-height: 0.7rem;
+  font-family: "Permanent Marker", sans-serif;
+}
+
+div.deadpool span {
+  font-size: 0.6rem;
 }
 
 .keyboard-nav .radio-setting input:focus + label {

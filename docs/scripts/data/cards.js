@@ -576,7 +576,7 @@ const AGGRESSION = aspect("Aggression");
 const JUSTICE = aspect("Justice");
 const LEADERSHIP = aspect("Leadership");
 const PROTECTION = aspect("Protection");
-const POOL = aspect("‘Pool", { required: "Dreadpool" });
+export const POOL = aspect("‘Pool", { required: "Dreadpool" });
 
 // prettier-ignore
 export const aspects = [

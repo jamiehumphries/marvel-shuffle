@@ -2,6 +2,7 @@ import { difficulties, extraModulars } from "../data/cards.js";
 import { STANDARD } from "../models/Difficulty.js";
 import { RadioSetting } from "../models/RadioSetting.js";
 import { Setting } from "../models/Setting.js";
+import { capitalize } from "../shared/helpers.js";
 
 const PROBABILITY_MAP = {
   never: 0,
@@ -9,6 +10,14 @@ const PROBABILITY_MAP = {
   medium: 0.1,
   high: 0.25,
   always: 1,
+};
+
+const WEIGHTING_MAP = {
+  low: 0.1,
+  medium: 0.25,
+  high: 0.5,
+  even: 1,
+  maximum: 10,
 };
 
 const preferencesDiv = document.getElementById("preferences");
@@ -74,6 +83,12 @@ export class Settings {
     return this._includeAdditionalModulars.checked
       ? this._maxExtraModularsSetting.value
       : 0;
+  }
+
+  get poolAspectWeighting() {
+    return this._adjustPoolWeighting.checked
+      ? WEIGHTING_MAP[this._poolAspectWeighting]
+      : 1;
   }
 
   get suggestCards() {
@@ -258,7 +273,7 @@ export class Settings {
     const uncountedModulars = extraModulars.filter((card) => card.isUncounted);
     const options = Object.entries(PROBABILITY_MAP).map(
       ([key, probability]) => {
-        const label = key[0].toUpperCase() + key.slice(1);
+        const label = capitalize(key);
         const sublabel = `${probability * 100}%`;
         return { value: key, html: `${label}<span>${sublabel}</span>` };
       },
@@ -276,6 +291,15 @@ export class Settings {
   }
 
   initializeDeckBuilding() {
+    this._adjustPoolWeighting = this.initializeCheckboxSetting(
+      deckBuildingDiv,
+      "adjust-pool-weighting",
+      "Adjust likelihood of ‘Pool aspect",
+      { subname: "(relative to other aspects)", togglesBodyClass: true },
+    );
+
+    this.initializePoolWeighting();
+
     this._suggestCardsSetting = this.initializeCheckboxSetting(
       deckBuildingDiv,
       "suggest-cards",
@@ -297,6 +321,29 @@ export class Settings {
       "Number of suggested cards",
       0,
       this.maxAllowedSuggestedCards,
+    );
+  }
+
+  initializePoolWeighting() {
+    const options = Object.entries(WEIGHTING_MAP).map(([key, weighting]) => {
+      if (key === "maximum") {
+        const html =
+          'Increased<span>200%</span><div class="deadpool">Maximum effort!<span>1000%</span></div>';
+        return { value: key, html };
+      }
+      const label = capitalize(key);
+      const sublabel = `${weighting * 100}%`;
+      return { value: key, html: `${label}<span>${sublabel}</span>` };
+    });
+
+    this.appendHint(deckBuildingDiv, "pool-aspect-selected");
+
+    this.initializeRadioSetting(
+      deckBuildingDiv,
+      "weighting--aspect--pool",
+      "Relative weighting of ‘Pool aspect",
+      options,
+      (value) => (this._poolAspectWeighting = value),
     );
   }
 

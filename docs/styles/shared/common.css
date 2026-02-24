@@ -18,6 +18,11 @@
   font-family: "Back Issues BB";
 }
 
+@font-face {
+  src: url(../fonts/PermanentMarker.ttf);
+  font-family: "Permanent Marker";
+}
+
 body {
   background-color: var(--background-color);
   font-family: "Back Issues BB", sans-serif;

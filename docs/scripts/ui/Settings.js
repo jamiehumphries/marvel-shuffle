@@ -146,7 +146,7 @@ export class Settings {
       preferencesDiv,
       "show-next-scenario-button",
       "Show “Next Scenario” button",
-      { subname: "(below campaign scenarios)", togglesBodyClass: true },
+      { hint: "below campaign scenarios", togglesBodyClass: true },
     );
   }
 
@@ -176,7 +176,7 @@ export class Settings {
       preferencesDiv,
       "show-tracker",
       "Show game tracker",
-      { subname: "(below shuffle)", togglesBodyClass: true },
+      { hint: "below shuffle", togglesBodyClass: true },
     );
 
     this._avoidCompleted = this.initializeCheckboxSetting(
@@ -191,8 +191,7 @@ export class Settings {
       "only-show-selected",
       "Only show selected",
       {
-        subname:
-          "(the full tracker will only show selected scenarios and heroes)",
+        hint: "the full tracker will only show selected scenarios and heroes",
         isSubsetting: true,
       },
     );
@@ -271,13 +270,10 @@ export class Settings {
     this.appendHint(customisationDiv, "uncounted-modulars");
 
     const uncountedModulars = extraModulars.filter((card) => card.isUncounted);
-    const options = Object.entries(PROBABILITY_MAP).map(
-      ([key, probability]) => {
-        const label = capitalize(key);
-        const sublabel = `${probability * 100}%`;
-        return { value: key, html: `${label}<span>${sublabel}</span>` };
-      },
-    );
+    const options = Object.entries(PROBABILITY_MAP).map(([key, value]) => {
+      const html = this.getMapEntryHtml(key, value);
+      return { value: key, html };
+    });
 
     for (const card of uncountedModulars) {
       this.initializeRadioSetting(
@@ -295,7 +291,7 @@ export class Settings {
       deckBuildingDiv,
       "adjust-pool-weighting",
       "Adjust likelihood of ‘Pool aspect",
-      { subname: "(relative to other aspects)", togglesBodyClass: true },
+      { hint: "relative to other aspects", togglesBodyClass: true },
     );
 
     this.initializePoolWeighting();
@@ -304,7 +300,7 @@ export class Settings {
       deckBuildingDiv,
       "suggest-cards",
       "Suggest random cards for each hero",
-      { subname: "(below hero’s aspect section)", togglesBodyClass: true },
+      { hint: "below hero’s aspect section", togglesBodyClass: true },
     );
 
     this._includeBasicInSuggestedCards = this.initializeCheckboxSetting(
@@ -325,15 +321,13 @@ export class Settings {
   }
 
   initializePoolWeighting() {
-    const options = Object.entries(WEIGHTING_MAP).map(([key, weighting]) => {
-      if (key === "maximum") {
-        const html =
-          'Increased<span>200%</span><div class="deadpool">Maximum effort!<span>1000%</span></div>';
-        return { value: key, html };
-      }
-      const label = capitalize(key);
-      const sublabel = `${weighting * 100}%`;
-      return { value: key, html: `${label}<span>${sublabel}</span>` };
+    const options = Object.entries(WEIGHTING_MAP).map(([key, value]) => {
+      const html =
+        key === "maximum"
+          ? this.getMapEntryHtml("Increased", 2) +
+            `<div class="deadpool">${this.getMapEntryHtml("Maximum effort!", value)}</div>`
+          : this.getMapEntryHtml(key, value);
+      return { value: key, html };
     });
 
     this.appendHint(deckBuildingDiv, "pool-aspect-selected");
@@ -351,11 +345,12 @@ export class Settings {
     parent,
     slug,
     label,
-    { subname = null, isSubsetting = false, togglesBodyClass = false } = {},
+    { hint = null, isSubsetting = false, togglesBodyClass = false } = {},
   ) {
     const onChange = togglesBodyClass
       ? (checked) => document.body.classList.toggle(slug, checked)
       : null;
+    const subname = hint ? `(${hint})` : null;
     const setting = new Setting(slug, label, { subname, onChange });
     const classes = isSubsetting ? ["subsetting"] : [];
     setting.appendTo(parent, ...classes);
@@ -374,6 +369,12 @@ export class Settings {
     const radioSetting = new RadioSetting(slug, legend, options, { onChange });
     radioSetting.appendTo(parent);
     return radioSetting;
+  }
+
+  getMapEntryHtml(key, value) {
+    const label = capitalize(key);
+    const sublabel = `${value * 100}%`;
+    return `${label}<span>${sublabel}</span>`;
   }
 
   appendHint(div, hintId) {

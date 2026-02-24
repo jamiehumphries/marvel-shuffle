@@ -40,7 +40,7 @@ export class Settings {
   }
 
   get numberOfHeroes() {
-    return this._numberOfHeroesSetting.value;
+    return this._numberOfHeroes.value;
   }
 
   get avoidRepeatedAspects() {
@@ -68,20 +68,18 @@ export class Settings {
   }
 
   get maxHeroicLevel() {
-    return this._randomiseHeroicLevel.checked
-      ? this._maxHeroicLevelSetting.value
-      : 0;
+    return this._randomiseHeroicLevel.checked ? this._maxHeroicLevel.value : 0;
   }
 
   get minExtraModulars() {
     return this._includeAdditionalModulars.checked
-      ? this._minExtraModularsSetting.value
+      ? this._minExtraModulars.value
       : 0;
   }
 
   get maxExtraModulars() {
     return this._includeAdditionalModulars.checked
-      ? this._maxExtraModularsSetting.value
+      ? this._maxExtraModulars.value
       : 0;
   }
 
@@ -92,7 +90,7 @@ export class Settings {
   }
 
   get suggestCards() {
-    return this._suggestCardsSetting.checked;
+    return this._suggestCards.checked;
   }
 
   get includeBasicInSuggestedCards() {
@@ -100,7 +98,7 @@ export class Settings {
   }
 
   get numberOfSuggestedCards() {
-    return this.suggestCards ? this._numberOfSuggestedCardsSetting.value : 0;
+    return this.suggestCards ? this._numberOfSuggestedCards.value : 0;
   }
 
   getProbability(card) {
@@ -123,7 +121,7 @@ export class Settings {
   }
 
   initializeNumberOfHeroes() {
-    this._numberOfHeroesSetting = this.initializeNumericalSetting(
+    this._numberOfHeroes = this.initializeNumericalSetting(
       preferencesDiv,
       "number-of-heroes",
       "Number of heroes",
@@ -215,7 +213,7 @@ export class Settings {
 
     preferencesDiv.appendChild(outerDiv);
 
-    this._maxHeroicLevelSetting = this.initializeNumericalSetting(
+    this._maxHeroicLevel = this.initializeNumericalSetting(
       preferencesDiv,
       "max-heroic-level",
       "Maximum heroic level",
@@ -239,28 +237,28 @@ export class Settings {
   initializeNumberOfExtraModulars() {
     this.appendHint(customisationDiv, "extra-modulars");
 
-    this._minExtraModularsSetting = this.initializeNumericalSetting(
+    this._minExtraModulars = this.initializeNumericalSetting(
       customisationDiv,
       "min-extra-modulars",
       "Minimum extra modulars",
       0,
       this.maxAllowedExtraModulars,
       (value) => {
-        if (this._maxExtraModularsSetting && value > this.maxExtraModulars) {
-          this._maxExtraModularsSetting.value = value;
+        if (this._maxExtraModulars && value > this.maxExtraModulars) {
+          this._maxExtraModulars.value = value;
         }
       },
     );
 
-    this._maxExtraModularsSetting = this.initializeNumericalSetting(
+    this._maxExtraModulars = this.initializeNumericalSetting(
       customisationDiv,
       "max-extra-modulars",
       "Maximum extra modulars",
       0,
       this.maxAllowedExtraModulars,
       (value) => {
-        if (this._minExtraModularsSetting && value < this.minExtraModulars) {
-          this._minExtraModularsSetting.value = value;
+        if (this._minExtraModulars && value < this.minExtraModulars) {
+          this._minExtraModulars.value = value;
         }
       },
     );
@@ -297,7 +295,7 @@ export class Settings {
 
     this.initializePoolWeighting();
 
-    this._suggestCardsSetting = this.initializeCheckboxSetting(
+    this._suggestCards = this.initializeCheckboxSetting(
       deckBuildingDiv,
       "suggest-cards",
       "Suggest random cards for each hero",
@@ -312,7 +310,7 @@ export class Settings {
 
     this.appendHint(deckBuildingDiv, "possible-cards");
 
-    this._numberOfSuggestedCardsSetting = this.initializeNumericalSetting(
+    this._numberOfSuggestedCards = this.initializeNumericalSetting(
       deckBuildingDiv,
       "number-of-suggested-cards",
       "Number of suggested cards",

@@ -463,7 +463,7 @@ export class Section extends Toggleable {
   prioritise(options, isShuffleAll) {
     return options.flatMap((card) => {
       const priority = this.getPriority(card, isShuffleAll);
-      return Array(priority).fill(card);
+      return Array(Math.ceil(priority)).fill(card);
     });
   }
 

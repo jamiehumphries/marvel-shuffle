@@ -1,4 +1,4 @@
-import { getItem, setItem } from "../data/storage.js";
+import { getItem, setItem } from "../data/storage.js?v=5a17bb47";
 
 export class RadioSetting {
   constructor(slug, legend, options, { onChange = null } = {}) {

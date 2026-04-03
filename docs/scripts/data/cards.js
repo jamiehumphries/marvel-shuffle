@@ -20,6 +20,7 @@ const hasBack = true;
 const hasGiantForm = true;
 const hasWideForm = true;
 const isUncounted = true;
+const isMultiVillain = true;
 
 // SETS
 
@@ -417,16 +418,28 @@ function findModular(name, searchArray = null) {
 }
 
 function scenario(name, modularNamesOrNumber, color, options = {}) {
+  options.exclude ||= [];
+  options.hardExclude ||= [];
+
   if (options.requiredTrait) {
-    options.exclude = customisationModulars.filter(
-      (modular) => !ensureArray(modular.traits).includes(options.requiredTrait),
+    options.exclude.push(
+      ...customisationModulars.filter(
+        (modular) =>
+          !ensureArray(modular.traits).includes(options.requiredTrait),
+      ),
     );
   }
 
   if (options.excludedSet) {
-    options.hardExclude = customisationModulars.filter(
-      (modular) => modular.parent?.name === options.excludedSet,
+    options.hardExclude.push(
+      ...customisationModulars.filter(
+        (modular) => modular.parent?.name === options.excludedSet,
+      ),
     );
+  }
+
+  if (options.isMultiVillain) {
+    options.hardExclude.push(findModular("Infinity Gauntlet"));
   }
 
   options.required &&= findModulars(options.required);
@@ -451,7 +464,7 @@ export const scenarios = [
     scenario("Mutagen Formula", "Goblin Gimmicks", "#660066"),
   ),
   theWreckingCrew(
-    scenario("Wrecking Crew", 0, "#ffc000"),
+    scenario("Wrecking Crew", 0, "#ffc000", { isMultiVillain }),
   ),
   theRiseOfRedSkull(
     scenario("Crossbones", ["Hydra Assault", "Weapon Master", "Legions of Hydra"], "#404040", { required: "Experimental Weapons" }),
@@ -461,7 +474,7 @@ export const scenarios = [
     scenario("Red Skull", ["Hydra Assault", "Hydra Patrol"], "#ff0000"),
   ),
   theOnceAndFutureKang(
-    scenario("Kang", "Temporal", "#00b050"),
+    scenario("Kang", "Temporal", "#00b050", { isMultiVillain }),
   ),
   theGalaxysMostWanted(
     scenario("Brotherhood of Badoon", "Band of Badoon", "#660066", { required: "Ship Command" }),
@@ -472,7 +485,7 @@ export const scenarios = [
   ),
   theMadTitansShadow(
     scenario("Ebony Maw", ["Armies of Titan", "Black Order"], "#404040"),
-    scenario("Tower Defense", "Armies of Titan", "#c7d0db", { hasBack }),
+    scenario("Tower Defense", "Armies of Titan", "#c7d0db", { hasBack, isMultiVillain }),
     scenario("Thanos", ["Black Order", "Children of Thanos"], "#9900ff", { required: "Infinity Gauntlet" }),
     scenario("Hela", ["Legions of Hel", "Frost Giants"], "#b4d79d", { hasBack }),
     scenario("Loki", ["Enchantress", "Frost Giants"], "#ffc000", { required: "Infinity Gauntlet" }),
@@ -484,14 +497,14 @@ export const scenarios = [
     scenario("Sandman", "Down to Earth", "#ffcc66", { required: "City in Chaos" }),
     scenario("Venom", "Down to Earth", "#404040", { required: "Symbiotic Strength" }),
     scenario("Mysterio", "Whispers of Paranoia", "#7030a0", { required: "Personal Nightmare" }),
-    scenario("The Sinister Six", 0, "#f4ad7c", { required: "Guerilla Tactics" }),
+    scenario("The Sinister Six", 0, "#f4ad7c", { required: "Guerilla Tactics", isMultiVillain }),
     scenario("Venom Goblin", "Goblin Gear", "#375623", { required: "Symbiotic Strength" }),
   ),
   mutantGenesis(
     scenario("Sabretooth", ["Brotherhood", "Mystique"], "#ffc000"),
     scenario("Project Wideawake", "Sentinels", "#9933ff", { required: "Zero Tolerance" }),
     scenario("Master Mold", "Zero Tolerance", "#7030a0", { required: ["Sentinels", "Magneto"] }),
-    scenario("Mansion Attack", "Mystique", "#d0cece", { required: "Brotherhood", hasBack: Modular }),
+    scenario("Mansion Attack", "Mystique", "#d0cece", { required: "Brotherhood", hasBack: Modular, isMultiVillain }),
     scenario("Magneto", "Acolytes", "#c00000"),
   ),
   mojoMania(
@@ -500,7 +513,7 @@ export const scenarios = [
     scenario("Mojo", 1, "#ffcc00", { requiredTrait: "Show", additionalModularsPerHero: 1 }),
   ),
   neXtEvolution(
-    scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], "#00b050", { hasBack: Aspect }),
+    scenario("Morlock Siege", ["Military Grade", "Mutant Slayers"], "#00b050", { hasBack: Aspect, isMultiVillain }),
     scenario("On the Run", ["Military Grade", "Nasty Boys"], "#7030a0", { required: "Mutant Slayers", hasBack }),
     scenario("Juggernaut", "Black Tom Cassidy", "#c00000", { required: "Hope Summers" }),
     scenario("Mister Sinister", "Nasty Boys", "#305496", { required: ["Flight", "Super Strength", "Telepathy", "Hope Summers"] }),
@@ -508,7 +521,7 @@ export const scenarios = [
   ),
   ageOfApocalypse(
     scenario("Unus", ["Dystopian Nightmare"], "#00b050", { required: "Infinites" }),
-    scenario("Four Horsemen", ["Dystopian Nightmare", "Hounds"], "#ffc000", { hasBack: Modular }),
+    scenario("Four Horsemen", ["Dystopian Nightmare", "Hounds"], "#ffc000", { hasBack: Modular, isMultiVillain }),
     scenario("Apocalypse", ["Dark Riders", "Infinites"], "#305496", { required: "Prelates", hasBack }),
     scenario("Dark Beast", ["Dystopian Nightmare"], "#808080", { required: ["Blue Moon", "Genosha", "Savage Land"] }),
     scenario("En Sabah Nur", ["Celestial Tech", "Clan Akkaba"], "#1e365e", { hasBack, hasGiantForm }),
@@ -522,7 +535,7 @@ export const scenarios = [
   ),
   tricksterTakeover(
     scenario("Enchantress", "Trickster Magic", "#00b050"),
-    scenario("God of Lies", "Trickster Magic", "#ffc000", { hasBack }),
+    scenario("God of Lies", "Trickster Magic", "#ffc000", { hasBack, isMultiVillain }),
   ),
   civilWar(
     registration.civilWar(

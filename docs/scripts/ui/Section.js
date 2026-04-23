@@ -417,7 +417,7 @@ export class Section extends Toggleable {
   }
 
   getCardOptionSets(count, isShuffleAll = false) {
-    if (count === 0) {
+    if (count <= 0) {
       return [];
     }
 

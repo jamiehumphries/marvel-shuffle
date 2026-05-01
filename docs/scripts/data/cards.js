@@ -64,6 +64,7 @@ const tricksterTakeover = cardSet("Trickster Takeover");
 const civilWar = cardSet("Civil War");
 const synthezoidSmackdown = cardSet("Synthezoid Smackdown");
 const hercules = cardSet("Hercules");
+const fearNoEvil = cardSet("Fear No Evil", { isCampaign });
 
 // MODULARS
 
@@ -739,4 +740,7 @@ export const heroes = [
   ),
   hero("Wonder Man", "Simon Williams", JUSTICE, "#ff0000", { include: { type: "Event", resources: "Energy" } }),
   hero("Hercules", null, LEADERSHIP, "#ffc000"),
+  fearNoEvil(
+    hero("Echo", "Maya Lopez", PROTECTION, "#404040"),
+  ),
 ];

@@ -56,6 +56,8 @@ export const hashes = {
   "/images/hero/domino-neena-thurman/front.png": "cf8e6a8e",
   "/images/hero/drax/back.png": "4b952983",
   "/images/hero/drax/front.png": "3fd87eca",
+  "/images/hero/echo-maya-lopez/back.png": "5ce8f304",
+  "/images/hero/echo-maya-lopez/front.png": "7185107b",
   "/images/hero/falcon-sam-wilson/back.png": "69062c16",
   "/images/hero/falcon-sam-wilson/front.png": "0031129f",
   "/images/hero/gambit-remy-lebeau/back.png": "7afb0599",

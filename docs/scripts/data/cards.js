@@ -23,6 +23,17 @@ function cardSet(name, options = {}) {
   return (...cards) => new CardSet(name, cards, options);
 }
 
+function villainsCardSet(schemeSet, ...cards) {
+  const parentSetSlug = schemeSet.slug;
+  return cardSet("Villains", { parentSetSlug })(...cards);
+}
+
+function scenariosCardSet(schemeSet) {
+  const parentSetSlug = schemeSet.slug;
+  const set = cardSet("Scenarios", { type: Scenario, parentSetSlug })();
+  return set.withExtraOptions(...schemeSet.schemes);
+}
+
 const coreSet = cardSet("Core Set");
 const theGreenGoblin = cardSet("The Green Goblin");
 const theWreckingCrew = cardSet("The Wrecking Crew");
@@ -59,7 +70,7 @@ const tricksterTakeover = cardSet("Trickster Takeover");
 const civilWar = cardSet("Civil War");
 const synthezoidSmackdown = cardSet("Synthezoid Smackdown");
 const hercules = cardSet("Hercules");
-const fearNoEvil = cardSet("Fear No Evil", { isCampaign });
+const fearNoEvil = cardSet("Fear No Evil");
 
 // MODULARS
 
@@ -67,7 +78,7 @@ function modular(name, options = {}) {
   return new Modular(name, options);
 }
 
-function schemeGroup(groupName, stagesBySet) {
+function schemeGroup(groupName, usesCommonBacks, stagesBySet) {
   const group = { name: groupName };
 
   group.allSchemes = [];
@@ -77,17 +88,15 @@ function schemeGroup(groupName, stagesBySet) {
     const parentSetSlug = Model.buildSlug(...setName.split(/(?=[A-Z])/g));
     group[setName] = cardSet(groupName, { parentSetSlug });
     group[setName].schemes = [];
+    group[setName].slug = parentSetSlug;
     for (let i = 0; i < stages.length; i++) {
       const stage = stages[i];
       group.stages[i] ||= [];
       for (const schemeName of stage) {
-        const subname = `Main Scheme - Stage ${i + 1}`;
-        const backName = `${groupName} - ${subname}`;
-        const scheme = modular(schemeName, {
-          subname,
-          isLandscape,
-          hasBack: backName,
-        });
+        const subname =
+          stages.length > 1 ? `Main Scheme - Stage ${i + 1}` : "Main Scheme";
+        const hasBack = usesCommonBacks ? `${groupName} - ${subname}` : true;
+        const scheme = modular(schemeName, { subname, isLandscape, hasBack });
         group.allSchemes.push(scheme);
         group.stages[i].push(scheme);
         group[setName].schemes.push(scheme);
@@ -95,20 +104,21 @@ function schemeGroup(groupName, stagesBySet) {
     }
   }
 
-  group.schemes = (...defaultSchemes) => {
-    return {
-      schemes: group.stages,
-      defaultSchemes: defaultSchemes.map((name, i) =>
-        findModulars(name, group.stages[i]),
-      ),
-    };
+  group.schemes = (...defaultSchemeNames) => {
+    const schemes = group.stages;
+    const defaultSchemes =
+      defaultSchemeNames.length === 0
+        ? schemes
+        : defaultSchemeNames.map((name, i) => findModulars(name, schemes[i]));
+
+    return { schemes, defaultSchemes };
   };
 
   return group;
 }
 
 // prettier-ignore
-const registration = schemeGroup("Registration", {
+const registration = schemeGroup("Registration", true, {
   civilWar: [
     [
       "S.H.I.E.L.D. Recruits",
@@ -134,7 +144,7 @@ const registration = schemeGroup("Registration", {
 });
 
 // prettier-ignore
-const resistance = schemeGroup("Resistance", {
+const resistance = schemeGroup("Resistance", true, {
   civilWar: [
     [
       "Gathering Support",
@@ -155,6 +165,17 @@ const resistance = schemeGroup("Resistance", {
     ],
     [
       "Expose Overreach",
+    ],
+  ],
+});
+
+// prettier-ignore
+const underlings = schemeGroup("Underlings", false, {
+  fearNoEvil: [
+    [
+      "The Getaway",
+      "Protection Racket",
+      "The Raft Breakout",
     ],
   ],
 });
@@ -386,6 +407,7 @@ export const extraModulars = [
   // Customisable main schemes
   ...registration.allSchemes,
   ...resistance.allSchemes,
+  ...underlings.allSchemes,
 ];
 
 // SCENARIOS
@@ -549,6 +571,17 @@ export const scenarios = [
       scenario("Vision", ["Young Avengers", "Scarlet Twins", "Moon Knight", "Royal Guard"], "#ff0000",
         { ...resistance.schemes("Protect Secret Identities", "Expose Overreach"), minModularsVariability: 1, excludedSet: "Registration" }),
     ).withExtraOptions(...resistance.synthezoidSmackdown.schemes),
+  ),
+  fearNoEvil(
+    villainsCardSet(underlings.fearNoEvil,
+      scenario("Bullseye", 0, "#305496", { ...underlings.schemes() }),
+      scenario("Electro", 0, "#00b050", { ...underlings.schemes() }),
+      scenario("Hammerhead", 0, "#1e365e", { ...underlings.schemes() }),
+      scenario("Purple Man", 0, "#7030a0", { ...underlings.schemes() }),
+      scenario("Typhoid Mary", 0, "#c00000", { ...underlings.schemes() }),
+      scenario("Kingpin", 0, "#f2f2f2", { hasBack }),
+    ),
+    scenariosCardSet(underlings.fearNoEvil),
   ),
 ];
 

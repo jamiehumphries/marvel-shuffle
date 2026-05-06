@@ -743,6 +743,7 @@ export const heroes = [
   hero("Wonder Man", "Simon Williams", JUSTICE, "#ff0000", { include: { type: "Event", resources: "Energy" } }),
   hero("Hercules", null, LEADERSHIP, "#ffc000"),
   fearNoEvil(
+    hero("Daredevil", "Matt Murdock", JUSTICE, "#c00000"),
     hero("Echo", "Maya Lopez", PROTECTION, "#404040"),
   ),
 ];

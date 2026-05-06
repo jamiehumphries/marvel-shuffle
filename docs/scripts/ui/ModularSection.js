@@ -43,9 +43,11 @@ export class ModularSection extends Section {
 
   getCardOptionSets(count, isShuffleAll = false) {
     const scenario = this.scenarioSection.trueCard;
-    const schemeOptionSets = scenario.schemes.map((schemes) => {
-      const filteredSchemes = schemes.filter((card) => card.checked);
-      return filteredSchemes.length > 0 ? filteredSchemes : [schemes[0]];
+    const schemeOptionSets = scenario.schemes.map((stage, i) => {
+      const filteredSchemes = stage.filter((card) => card.checked);
+      return filteredSchemes.length > 0
+        ? filteredSchemes
+        : scenario.defaultSchemes[i];
     });
     return schemeOptionSets.concat(
       super.getCardOptionSets(count - schemeOptionSets.length, isShuffleAll),

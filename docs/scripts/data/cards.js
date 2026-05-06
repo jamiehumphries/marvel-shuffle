@@ -6,12 +6,7 @@ import { Hero } from "../models/Hero.js";
 import { Model } from "../models/Model.js";
 import { Modular } from "../models/Modular.js";
 import { Scenario } from "../models/Scenario.js";
-import {
-  ensureArray,
-  filter,
-  flatten,
-  passesRestriction,
-} from "../shared/helpers.js";
+import { ensureArray, flatten, passesRestriction } from "../shared/helpers.js";
 
 // Modifiers
 const isCampaign = true;
@@ -102,12 +97,10 @@ function schemeGroup(groupName, stagesBySet) {
 
   group.schemes = (...defaultSchemes) => {
     return {
-      schemes: defaultSchemes.map((name, i) => {
-        const schemes = group.stages[i];
-        const defaultScheme = findModular(name, schemes);
-        const otherSchemes = filter(schemes, defaultScheme);
-        return [defaultScheme, ...otherSchemes];
-      }),
+      schemes: group.stages,
+      defaultSchemes: defaultSchemes.map((name, i) =>
+        findModulars(name, group.stages[i]),
+      ),
       excludedSet: group.excludedSet,
       minModularsVariability: 1,
     };
@@ -405,8 +398,8 @@ export const extraModulars = [
 const customisationModulars = flatten(modulars);
 const allModulars = customisationModulars.concat(extraModulars);
 
-function findModulars(names) {
-  return ensureArray(names).map((name) => findModular(name));
+function findModulars(names, searchArray = null) {
+  return ensureArray(names).map((name) => findModular(name, searchArray));
 }
 
 function findModular(name, searchArray = null) {

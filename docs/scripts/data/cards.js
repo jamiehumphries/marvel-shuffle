@@ -101,8 +101,6 @@ function schemeGroup(groupName, stagesBySet) {
       defaultSchemes: defaultSchemes.map((name, i) =>
         findModulars(name, group.stages[i]),
       ),
-      excludedSet: group.excludedSet,
-      minModularsVariability: 1,
     };
   };
 
@@ -160,9 +158,6 @@ const resistance = schemeGroup("Resistance", {
     ],
   ],
 });
-
-registration.excludedSet = resistance.name;
-resistance.excludedSet = registration.name;
 
 // prettier-ignore
 export const modulars = [
@@ -534,27 +529,27 @@ export const scenarios = [
   civilWar(
     registration.civilWar(
       scenario("Iron Man", ["Mighty Avengers", "The Initiative", "Maria Hill", "Dangerous Recruits"], "#ffc000",
-        { ...registration.schemes("Cut Off Support", "Negative Zone Prison") }),
+        { ...registration.schemes("Cut Off Support", "Negative Zone Prison"), minModularsVariability: 1, excludedSet: "Resistance" }),
       scenario("Captain Marvel", ["Cape-Killer", "Martial Law", "Heroes for Hire", "Paladin"], "#305496",
-        { ...registration.schemes("S.H.I.E.L.D. Recruits", "Hunting Rebel Heroes") }),
+        { ...registration.schemes("S.H.I.E.L.D. Recruits", "Hunting Rebel Heroes"), minModularsVariability: 1, excludedSet: "Resistance" }),
     ).withExtraOptions(...registration.civilWar.schemes),
     resistance.civilWar(
       scenario("Captain America", ["New Avengers", "Secret Avengers", "Namor", "Atlanteans"], "#0070c0",
-        { ...resistance.schemes("Gathering Support", "Secret Avengers") }),
+        { ...resistance.schemes("Gathering Support", "Secret Avengers"), minModularsVariability: 1, excludedSet: "Registration" }),
       scenario("Spider-Woman", ["Spider-Man", "Defenders", "Hell’s Kitchen", "Cloak & Dagger"], "#ffc000",
-        { ...resistance.schemes("Open Rebellion", "Neighbourhood Protectors") }),
+        { ...resistance.schemes("Open Rebellion", "Neighbourhood Protectors"), minModularsVariability: 1, excludedSet: "Registration" }),
     ).withExtraOptions(...resistance.civilWar.schemes),
   ),
   synthezoidSmackdown(
     registration.synthezoidSmackdown(
       scenario("She-Hulk", ["S.H.I.E.L.D. Ops", "Thunderbolts", "Taskmaster", "Deadly Duo"], "#00b050",
-        { ...registration.schemes("Enforce the Law", "Mighty Avengers") }),
+        { ...registration.schemes("Enforce the Law", "Mighty Avengers"), minModularsVariability: 1, excludedSet: "Resistance" }),
     ).withExtraOptions(...registration.synthezoidSmackdown.schemes),
     resistance.synthezoidSmackdown(
       scenario("Vision", ["Young Avengers", "Scarlet Twins", "Moon Knight", "Royal Guard"], "#ff0000",
-        { ...resistance.schemes("Protect Secret Identities", "Expose Overreach") }),
+        { ...resistance.schemes("Protect Secret Identities", "Expose Overreach"), minModularsVariability: 1, excludedSet: "Registration" }),
     ).withExtraOptions(...resistance.synthezoidSmackdown.schemes),
-  )
+  ),
 ];
 
 // DIFFICULTIES

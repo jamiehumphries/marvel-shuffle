@@ -48,6 +48,8 @@ export const hashes = {
   "/images/hero/colossus-piotr-rasputin/front.png": "e660b8ac",
   "/images/hero/cyclops-scott-summers/back.png": "fcb9b267",
   "/images/hero/cyclops-scott-summers/front.png": "d892b3e8",
+  "/images/hero/daredevil-matt-murdock/back.png": "2f6f7f16",
+  "/images/hero/daredevil-matt-murdock/front.png": "7d4accf4",
   "/images/hero/deadpool-wade-wilson/back.png": "2cc4ab43",
   "/images/hero/deadpool-wade-wilson/front.png": "e776e4ec",
   "/images/hero/doctor-strange-stephen-strange/back.png": "9999cc01",

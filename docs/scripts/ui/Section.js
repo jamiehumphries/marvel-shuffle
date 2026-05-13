@@ -1,6 +1,7 @@
 import { getItem, resetItem, setItem } from "../data/storage.js";
 import { All } from "../models/All.js";
 import { Aspect } from "../models/Aspect.js";
+import { CardSet } from "../models/CardSet.js";
 import { CardTier } from "../models/CardTier.js";
 import { Difficulty } from "../models/Difficulty.js";
 import { Hero } from "../models/Hero.js";
@@ -106,8 +107,11 @@ export class Section extends Toggleable {
   }
 
   get parentSet() {
-    const primaryParentSetName = this.parentCards[0]?.parent?.name;
-    return this.sets.find((set) => set.name === primaryParentSetName);
+    let parentSet = this.parentCards[0]?.parent;
+    while (parentSet?.parent && parentSet.parent instanceof CardSet) {
+      parentSet = parentSet.parent;
+    }
+    return this.sets.find((set) => set.name === parentSet?.name);
   }
 
   get trueCard() {

@@ -417,6 +417,8 @@ function findModular(name, searchArray = null) {
   return modular;
 }
 
+const modularsUnusableInMultiVillain = findModulars(["Infinity Gauntlet"]);
+
 function scenario(name, modularNamesOrNumber, color, options = {}) {
   options.exclude ||= [];
   options.hardExclude ||= [];
@@ -439,7 +441,7 @@ function scenario(name, modularNamesOrNumber, color, options = {}) {
   }
 
   if (options.isMultiVillain) {
-    options.hardExclude.push(findModular("Infinity Gauntlet"));
+    options.hardExclude.push(...modularsUnusableInMultiVillain);
   }
 
   options.required &&= findModulars(options.required);

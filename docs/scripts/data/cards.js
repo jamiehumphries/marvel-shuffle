@@ -391,6 +391,11 @@ export const modulars = [
   hercules(
     modular("All Versus All", { isLandscape }),
   ),
+  fearNoEvil(
+    modular("Disasters"),
+    modular("Tombstone"),
+    modular("Tracksuit Mafia"),
+  ),
 ];
 
 export const extraModulars = [

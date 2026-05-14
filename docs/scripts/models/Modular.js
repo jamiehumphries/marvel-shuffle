@@ -10,6 +10,7 @@ export class Modular extends Card {
       traits = [],
       isUncounted = false,
       requiredReason = null,
+      schemeDefaultModulars = null,
     } = {},
   ) {
     super(name, {
@@ -20,5 +21,7 @@ export class Modular extends Card {
       isUncounted,
       requiredReason,
     });
+    this.isScheme = schemeDefaultModulars !== null;
+    this.schemeDefaultModulars = schemeDefaultModulars;
   }
 }

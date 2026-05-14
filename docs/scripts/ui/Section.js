@@ -369,6 +369,7 @@ export class Section extends Toggleable {
     const newCards = forcedCards || this.chooseCards(isShuffleAll);
 
     if (!animate) {
+      this.incomingCards = null;
       this.cards = newCards;
       return;
     }
@@ -394,14 +395,19 @@ export class Section extends Toggleable {
     setTimeout(() => (this.cards = newCards), cardChangeDelayMs);
   }
 
-  chooseCards(isShuffleAll) {
+  chooseCards(isShuffleAll, from = 0, to = NaN) {
     const count = this.getRandomCount();
+    to = isNaN(to) ? count : to;
     const optionSets = this.getCardOptionSets(count, isShuffleAll);
     const cards = [];
-    for (const optionSet of optionSets) {
+    for (let i = from; i < to; i++) {
+      const optionSet = optionSets[i];
       const filteredOptionSet = filter(optionSet, cards);
       const card = this.randomCard(filteredOptionSet, isShuffleAll);
       cards.push(card);
+    }
+    if (to < count) {
+      return cards;
     }
     for (const card of this.uncountedCards) {
       if (cards.includes(card)) {

@@ -90,13 +90,24 @@ function schemeGroup(groupName, usesCommonBacks, stagesBySet) {
     group[setName].schemes = [];
     group[setName].slug = parentSetSlug;
     for (let i = 0; i < stages.length; i++) {
-      const stage = stages[i];
+      let stage = stages[i];
+      if (Array.isArray(stage)) {
+        stage = Object.fromEntries(stage.map((name) => [name, null]));
+      }
       group.stages[i] ||= [];
-      for (const schemeName of stage) {
-        const subname =
-          stages.length > 1 ? `Main Scheme - Stage ${i + 1}` : "Main Scheme";
+      for (const [schemeName, defaultModularNames] of Object.entries(stage)) {
+        const subname = `Main Scheme${stages.length > 1 ? ` - Stage ${i + 1}` : ""}`;
         const hasBack = usesCommonBacks ? `${groupName} - ${subname}` : true;
-        const scheme = modular(schemeName, { subname, isLandscape, hasBack });
+        const schemeDefaultModulars =
+          defaultModularNames !== null
+            ? findModulars(defaultModularNames, customisationModulars)
+            : [];
+        const scheme = modular(schemeName, {
+          subname,
+          isLandscape,
+          hasBack,
+          schemeDefaultModulars,
+        });
         group.allSchemes.push(scheme);
         group.stages[i].push(scheme);
         group[setName].schemes.push(scheme);
@@ -110,8 +121,8 @@ function schemeGroup(groupName, usesCommonBacks, stagesBySet) {
       defaultSchemeNames.length === 0
         ? schemes
         : defaultSchemeNames.map((name, i) => findModulars(name, schemes[i]));
-
-    return { schemes, defaultSchemes };
+    const schemeModularCount = schemes[0][0].schemeDefaultModulars.length;
+    return { schemes, defaultSchemes, schemeModularCount };
   };
 
   return group;
@@ -165,17 +176,6 @@ const resistance = schemeGroup("Resistance", true, {
     ],
     [
       "Expose Overreach",
-    ],
-  ],
-});
-
-// prettier-ignore
-const underlings = schemeGroup("Underlings", false, {
-  fearNoEvil: [
-    [
-      "The Getaway",
-      "Protection Racket",
-      "The Raft Breakout",
     ],
   ],
 });
@@ -398,6 +398,20 @@ export const modulars = [
   ),
 ];
 
+const customisationModulars = flatten(modulars);
+
+// prettier-ignore
+const underlings = schemeGroup("Underlings", false, {
+  fearNoEvil: [
+    {
+      "The Getaway": ["Disasters", "Tracksuit Mafia"], // TODO: Update placeholder.
+      "Protection Racket": ["Disasters", "Tracksuit Mafia"],
+      "The Raft Breakout": ["Disasters", "Tracksuit Mafia"], // TODO: Update placeholder.
+      "Stop the Presses!": ["Tombstone", "Tracksuit Mafia"],
+    },
+  ],
+});
+
 export const extraModulars = [
   // Scenario specific modulars
   modular("Magneto", { hasBack }),
@@ -415,9 +429,6 @@ export const extraModulars = [
   ...underlings.allSchemes,
 ];
 
-// SCENARIOS
-
-const customisationModulars = flatten(modulars);
 const allModulars = customisationModulars.concat(extraModulars);
 
 function findModulars(names, searchArray = null) {
@@ -432,6 +443,8 @@ function findModular(name, searchArray = null) {
   }
   return modular;
 }
+
+// SCENARIOS
 
 const modularsUnusableInMultiVillain = findModulars(["Infinity Gauntlet"]);
 

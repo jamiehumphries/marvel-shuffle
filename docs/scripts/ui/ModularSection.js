@@ -7,8 +7,22 @@ export class ModularSection extends Section {
     super(settings, modulars, 1, extraModulars);
   }
 
+  get defaultCards() {
+    return this.trueCards?.length > 0 && this.trueCards[0].isScheme
+      ? super.defaultCards.concat(this.trueCards[0].schemeDefaultModulars)
+      : super.defaultCards;
+  }
+
   get placeholder() {
     return (this._placeholder ||= new Modular(`No ${this.sectionNamePlural}`));
+  }
+
+  chooseCards(isShuffleAll) {
+    const { schemes } = this.scenarioSection.trueCard;
+    this.incomingCards = super.chooseCards(isShuffleAll, 0, schemes.length);
+    return this.incomingCards.concat(
+      super.chooseCards(isShuffleAll, schemes.length),
+    );
   }
 
   getRandomCount() {

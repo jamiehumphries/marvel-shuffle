@@ -16,6 +16,7 @@ export class Scenario extends Card {
       minModularsVariability = 0,
       schemes = [],
       defaultSchemes = [],
+      schemeModularCount = 0,
     } = {},
   ) {
     const [baseChildCardCount, defaultChildCards] = Array.isArray(
@@ -42,6 +43,8 @@ export class Scenario extends Card {
     });
     this.schemes = schemes;
     this.defaultSchemes = defaultSchemes;
+    this.schemeModularCount = schemeModularCount;
+
   }
 
   get campaign() {
@@ -51,6 +54,10 @@ export class Scenario extends Card {
   }
 
   childCardCount(numberOfHeroes) {
-    return super.childCardCount(numberOfHeroes) + this.schemes.length;
+    return (
+      super.childCardCount(numberOfHeroes) +
+      this.schemes.length +
+      this.schemeModularCount
+    );
   }
 }

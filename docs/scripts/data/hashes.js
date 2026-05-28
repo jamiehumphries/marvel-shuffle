@@ -84,6 +84,8 @@ export const hashes = {
   "/images/hero/iron-man-tony-stark/front.png": "1fa889eb",
   "/images/hero/ironheart-riri-williams/back.png": "a12bd6b3",
   "/images/hero/ironheart-riri-williams/front.png": "1931d560",
+  "/images/hero/jessica-jones/back.png": "c73671b9",
+  "/images/hero/jessica-jones/front.png": "518852a5",
   "/images/hero/jubilee-jubilation-lee/back.png": "af0c181b",
   "/images/hero/jubilee-jubilation-lee/front.png": "c8a86dcc",
   "/images/hero/magik-illyana-rasputin/back.png": "5e38e215",

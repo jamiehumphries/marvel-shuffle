@@ -598,7 +598,7 @@ export const scenarios = [
       scenario("Electro", 0, "#00b050", { ...underlings.schemes() }),
       scenario("Hammerhead", 0, "#1e365e", { ...underlings.schemes() }),
       scenario("Purple Man", 0, "#7030a0", { ...underlings.schemes() }),
-      scenario("Typhoid Mary", 0, "#c00000", { ...underlings.schemes() }),
+      scenario("Typhoid Mary", 0, "#c00000", { ...underlings.schemes(), hasBack }),
       scenario("Kingpin", 0, "#f2f2f2", { hasBack }),
     ),
     scenariosCardSet(underlings.fearNoEvil),

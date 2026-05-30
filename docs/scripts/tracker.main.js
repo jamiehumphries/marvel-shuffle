@@ -1,11 +1,11 @@
 import {
   heroes as allHeroes,
   scenarios as allScenarios,
-} from "./data/cards.js";
-import { initializeStorage } from "./data/storage.js";
-import { Setting } from "./models/Setting.js";
-import { flatten } from "./shared/helpers.js";
-import { renderTable } from "./shared/tracker.js";
+} from "./data/cards.js?v=1095938d";
+import { initializeStorage } from "./data/storage.js?v=d251e682";
+import { Setting } from "./models/Setting.js?v=a6b9f6f6";
+import { flatten } from "./shared/helpers.js?v=2ecd4db0";
+import { renderTable } from "./shared/tracker.js?v=99aba3c9";
 
 await initializeStorage();
 

@@ -1,7 +1,11 @@
-import { heroes } from "./data/cards.js";
-import { deck } from "./data/deck.js";
-import { Model } from "./models/Model.js";
-import { BASIC, canIncludeSuggestedCard, flatten } from "./shared/helpers.js";
+import { heroes } from "./data/cards.js?v=1095938d";
+import { deck } from "./data/deck.js?v=8b078feb";
+import { Model } from "./models/Model.js?v=99f0fb03";
+import {
+  BASIC,
+  canIncludeSuggestedCard,
+  flatten,
+} from "./shared/helpers.js?v=2ecd4db0";
 
 const gallery = document.getElementById("gallery");
 const cardTemplate = document.getElementById("suggested-card");

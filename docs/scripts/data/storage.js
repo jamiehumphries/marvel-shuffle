@@ -30,6 +30,12 @@ const users = collection(db, "users");
 window.pendingUpdates = null;
 window.updateTimeoutId = null;
 
+window.addEventListener("beforeunload", () => {
+  if (pendingUpdates) {
+    event.preventDefault();
+  }
+});
+
 async function initializeStorage() {
   const userDoc = getUserDoc();
   if (userDoc) {
@@ -136,7 +142,7 @@ function updateDb(key, value) {
     setDoc(userDoc, pendingUpdates, { merge: true });
     pendingUpdates = null;
     updateTimeoutId = null;
-  }, 500);
+  }, 200);
 }
 
 function runMigrations() {

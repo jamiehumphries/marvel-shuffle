@@ -108,7 +108,7 @@ export class Section extends Toggleable {
 
   get parentSet() {
     let parentSet = this.parentCards[0]?.parent;
-    while (parentSet?.parent?.constructor === CardSet) {
+    while (parentSet?.parent && parentSet.parent instanceof CardSet) {
       parentSet = parentSet.parent;
     }
     return this.sets.find((set) => set.name === parentSet?.name);

@@ -729,39 +729,74 @@ input:active + .checkmark {
   transform: rotateY(179.99deg);
 }
 
-.next-scenario-button {
-  --campaign-image-size: 50px;
-  --next-scenario-button-padding: 0.25rem;
+.next-button {
+  --next-button-padding: 0.25rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
   opacity: 1;
-  margin: 0.5rem auto 0 auto;
   border: none;
-  border-radius: var(--next-scenario-button-padding);
+  border-radius: var(--next-button-padding);
   background: none;
-  padding: var(--next-scenario-button-padding);
+  padding: var(--next-button-padding);
   width: var(--card-width);
-  height: calc(
-    var(--campaign-image-size) + 2 * var(--next-scenario-button-padding)
-  );
+  height: calc(var(--next-image-size) + 2 * var(--next-button-padding));
   color: var(--button-border-and-text-color);
   font-size: 1rem;
 }
 
+.next-button img {
+  height: var(--next-image-size);
+}
+
+.next-scenario-button,
+.next-villain-buttons {
+  margin: 0.5rem auto 0 auto;
+}
+
+.next-villain-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.next-scenario-button {
+  --next-image-size: 50px;
+}
+
 .next-scenario-button img {
   border-radius: 10%;
-  width: var(--campaign-image-size);
-  height: var(--campaign-image-size);
+}
+
+.next-villain-button {
+  --next-image-size: var(--thumbnail-card-img-size);
+}
+
+.next-villain-button > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.next-villain-button .subname {
+  font-size: 0.7rem;
+}
+
+.next-villain-button.random {
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.next-villain-button.hidden {
+  display: none;
 }
 
 @media (hover: hover) {
-  .next-scenario-button:hover {
+  .next-button:hover {
     font-weight: bold;
   }
 
-  .next-scenario-button:hover img {
+  .next-button:hover img {
     filter: brightness(var(--button-image-brightness-hover));
   }
 }
@@ -795,7 +830,7 @@ input:active + .checkmark {
   width: var(--card-width);
   height: calc(
     var(--suggested-cards-header-height) + var(--suggested-cards) *
-      (var(--suggested-card-margin) + var(--suggested-card-img-size))
+      (var(--suggested-card-margin) + var(--thumbnail-card-img-size))
   );
 }
 
@@ -823,7 +858,9 @@ input:active + .checkmark {
 }
 
 body:not(.show-next-scenario-button) .next-scenario-button,
+body:not(.show-next-scenario-button) .next-villain-button,
 body:not(.has-next-scenario) .next-scenario-button,
+body:not(.has-villain-group) .next-villain-button,
 body:not(.randomise-heroic-level) .heroic-level,
 .hide-heroic-level .heroic-level,
 body:not(.suggest-cards) .suggested-cards,
@@ -928,7 +965,7 @@ body:not(.show-tracker) #tracking {
   }
 
   .suggested-card {
-    --suggested-card-img-size: 2rem;
+    --thumbnail-card-img-size: 2rem;
   }
 }
 

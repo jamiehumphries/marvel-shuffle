@@ -6,7 +6,12 @@ import { Hero } from "../models/Hero.js";
 import { Model } from "../models/Model.js";
 import { Modular } from "../models/Modular.js";
 import { Scenario } from "../models/Scenario.js";
-import { ensureArray, flatten, passesRestriction } from "../shared/helpers.js";
+import {
+  ensureArray,
+  filter,
+  flatten,
+  passesRestriction,
+} from "../shared/helpers.js";
 
 // Modifiers
 const isCampaign = true;
@@ -23,9 +28,20 @@ function cardSet(name, options = {}) {
   return (...cards) => new CardSet(name, cards, options);
 }
 
-function villainsCardSet(schemeSet, ...cards) {
-  const parentSetSlug = schemeSet.slug;
-  return cardSet("Villains", { parentSetSlug })(...cards);
+function villainsCardSet(schemeSet, group) {
+  const { slug, groupName } = schemeSet;
+  const { variableOrderVillains, finalVillain } = group;
+  for (const card of variableOrderVillains) {
+    card.groupName = groupName;
+    card.villainGroup = {
+      variableOrderVillains: filter(variableOrderVillains, card),
+      finalVillain,
+    };
+  }
+  return cardSet("Villains", { parentSetSlug: slug })(
+    ...variableOrderVillains,
+    finalVillain,
+  );
 }
 
 function scenariosCardSet(schemeSet) {
@@ -88,6 +104,7 @@ function schemeGroup(groupName, usesCommonBacks, stagesBySet) {
     const parentSetSlug = Model.buildSlug(...setName.split(/(?=[A-Z])/g));
     group[setName] = cardSet(groupName, { parentSetSlug });
     group[setName].schemes = [];
+    group[setName].groupName = groupName;
     group[setName].slug = parentSetSlug;
     for (let i = 0; i < stages.length; i++) {
       let stage = stages[i];
@@ -401,7 +418,7 @@ export const modulars = [
 const customisationModulars = flatten(modulars);
 
 // prettier-ignore
-const underlings = schemeGroup("Underlings", false, {
+const underlings = schemeGroup("Underling", false, {
   fearNoEvil: [
     {
       "The Getaway": ["Disasters", "Tracksuit Mafia"], // TODO: Update placeholder.
@@ -594,12 +611,16 @@ export const scenarios = [
   ),
   fearNoEvil(
     villainsCardSet(underlings.fearNoEvil,
-      scenario("Bullseye", 0, "#305496", { ...underlings.schemes() }),
-      scenario("Electro", 0, "#00b050", { ...underlings.schemes() }),
-      scenario("Hammerhead", 0, "#1e365e", { ...underlings.schemes() }),
-      scenario("Purple Man", 0, "#7030a0", { ...underlings.schemes() }),
-      scenario("Typhoid Mary", 0, "#c00000", { ...underlings.schemes(), hasBack }),
-      scenario("Kingpin", 0, "#f2f2f2", { hasBack }),
+      {
+        variableOrderVillains: [
+          scenario("Bullseye", 0, "#305496", { ...underlings.schemes() }),
+          scenario("Electro", 0, "#00b050", { ...underlings.schemes() }),
+          scenario("Hammerhead", 0, "#1e365e", { ...underlings.schemes() }),
+          scenario("Purple Man", 0, "#7030a0", { ...underlings.schemes() }),
+          scenario("Typhoid Mary", 0, "#c00000", { ...underlings.schemes(), hasBack }),
+        ],
+        finalVillain: scenario("Kingpin", 0, "#f2f2f2", { hasBack }),
+      }
     ),
     scenariosCardSet(underlings.fearNoEvil),
   ),

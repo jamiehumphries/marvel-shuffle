@@ -1,5 +1,5 @@
 :root {
-  --suggested-card-img-size: 2.2rem;
+  --thumbnail-card-img-size: 2.2rem;
   --suggested-card-margin: 0.5rem;
 }
 
@@ -16,16 +16,16 @@
   justify-content: center;
   align-items: center;
   margin-right: 0.5rem;
-  width: var(--suggested-card-img-size);
-  height: var(--suggested-card-img-size);
+  width: var(--thumbnail-card-img-size);
+  height: var(--thumbnail-card-img-size);
 }
 
 .suggested-card img:not(.landscape) {
-  height: var(--suggested-card-img-size);
+  height: var(--thumbnail-card-img-size);
 }
 
 .suggested-card img.landscape {
-  width: var(--suggested-card-img-size);
+  width: var(--thumbnail-card-img-size);
 }
 
 .suggested-card > div {
@@ -35,15 +35,15 @@
 }
 
 .suggested-card .name-and-subname {
-  font-size: calc(0.375 * var(--suggested-card-img-size));
+  font-size: calc(0.375 * var(--thumbnail-card-img-size));
 }
 
 .suggested-card .subname {
-  font-size: calc(0.325 * var(--suggested-card-img-size));
+  font-size: calc(0.325 * var(--thumbnail-card-img-size));
 }
 
 .suggested-card .aspect-and-type {
-  font-size: calc(0.25 * var(--suggested-card-img-size));
+  font-size: calc(0.25 * var(--thumbnail-card-img-size));
 }
 
 .suggested-card .aspect.aggression {

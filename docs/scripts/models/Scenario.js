@@ -44,7 +44,8 @@ export class Scenario extends Card {
     this.schemes = schemes;
     this.defaultSchemes = defaultSchemes;
     this.schemeModularCount = schemeModularCount;
-
+    this.groupName = null;
+    this.villainGroup = null;
   }
 
   get campaign() {

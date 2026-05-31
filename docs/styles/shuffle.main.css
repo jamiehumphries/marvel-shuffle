@@ -37,6 +37,8 @@
   --option-background-color-checked: #ddf0f6;
   --option-background-color-checked-hover: #c7e6f1;
 
+  --disabled-opacity: 0.6;
+
   --button-scale-factor: 1;
   --layout-scale-factor: 1;
 
@@ -216,7 +218,7 @@ body.show-settings .button.shuffle:disabled {
 }
 
 .icon-button:disabled {
-  opacity: 0.6;
+  opacity: var(--disabled-opacity);
 }
 
 body.show-settings #settings {
@@ -782,6 +784,14 @@ input:active + .checkmark {
   font-size: 0.7rem;
 }
 
+.next-villain-button:disabled {
+  opacity: var(--disabled-opacity);
+}
+
+.next-villain-button:disabled img {
+  filter: grayscale();
+}
+
 .next-villain-button.random {
   font-style: italic;
   font-size: 0.9rem;
@@ -792,11 +802,11 @@ input:active + .checkmark {
 }
 
 @media (hover: hover) {
-  .next-button:hover {
+  .next-button:hover:not(:disabled) {
     font-weight: bold;
   }
 
-  .next-button:hover img {
+  .next-button:hover:not(:disabled) img {
     filter: brightness(var(--button-image-brightness-hover));
   }
 }

@@ -1,6 +1,6 @@
 import { scenarios } from "../data/cards.js";
 import { Scenario } from "../models/Scenario.js";
-import { chooseRandom, ensureArray } from "../shared/helpers.js";
+import { chooseRandom, ensureArray, filter } from "../shared/helpers.js";
 import { getNumberOfIncompleteGames } from "../shared/tracker.js";
 import { Section } from "./Section.js";
 
@@ -63,7 +63,9 @@ export class ScenarioSection extends Section {
         villain = variableOrderVillains[i];
       } else if (i === variableOrderVillains.length) {
         villain = {
-          id: variableOrderVillains.map((card) => card.id),
+          id: filter(variableOrderVillains, this.forcedCardsHistory).map(
+            (card) => card.id,
+          ),
           name: `Random Next ${this.trueCard.groupName}`,
           frontSrc: Scenario.placeholderImageSrc,
         };
@@ -72,14 +74,22 @@ export class ScenarioSection extends Section {
       } else {
         villain = null;
       }
+
       button.dataset.ids = villain
         ? JSON.stringify(ensureArray(villain.id))
         : "";
       button.querySelector("img").src = villain?.frontSrc || "";
       button.querySelector(".name").innerText = villain?.name || "";
       button.querySelector(".subname").innerText = villain?.groupName || "";
-      button.classList.toggle("random", Array.isArray(villain?.id));
+
+      const isRandom = Array.isArray(villain?.id);
+      const isDone =
+        this.forcedCardsHistory.includes(villain) ||
+        (isRandom && villain.id.length === 0);
+
       button.classList.toggle("hidden", !villain);
+      button.classList.toggle("random", isRandom);
+      button.disabled = isDone;
     }
   }
 

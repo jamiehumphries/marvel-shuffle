@@ -36,6 +36,7 @@ export class Section extends Toggleable {
     this.coreSet = this.sets.find((set) => set.name === "Core Set");
     this.selectableCards = flatten(this.cardsOrSets);
     this.uncountedCards = this.extraCards.filter((card) => card.isUncounted);
+    this.allCards = this.selectableCards.concat(this.extraCards);
 
     const types = this.selectableCards.map((card) => card.type);
     if (new Set(types).size !== 1) {
@@ -46,6 +47,7 @@ export class Section extends Toggleable {
     this.id = this.type.id + (nthOfType === 1 ? "" : `-${nthOfType}`);
     this.root = document.getElementById(this.id);
     this.forcedSettingId = this.id + "--setting--forced";
+    this.forcedCardsHistorySettingId = this.forcedSettingId + "--history";
 
     this.parentSections = [];
     this.siblingSections = [];
@@ -210,11 +212,23 @@ export class Section extends Toggleable {
   }
 
   get forced() {
-    return getItem(this.forcedSettingId);
+    return (this._forced ||= getItem(this.forcedSettingId) || false);
   }
 
   set forced(value) {
+    this._forced = value;
     setItem(this.forcedSettingId, value);
+  }
+
+  get forcedCardsHistory() {
+    return (this._forcedCardsHistory ||= this.loadCards(
+      this.forcedCardsHistorySettingId,
+    ));
+  }
+
+  set forcedCardsHistory(value) {
+    this._forcedCardsHistory = value;
+    this.saveCards(this.forcedCardsHistorySettingId, value);
   }
 
   get cards() {
@@ -325,13 +339,13 @@ export class Section extends Toggleable {
   }
 
   initializeCards() {
-    this.cards = this.loadCards();
+    this.cards = this.loadCards(this.id);
     this.shuffleIfInvalid({ animate: false });
   }
 
   setCards(value) {
     this._cards = value;
-    this.saveCards(value);
+    this.saveCards(this.id, value);
 
     this.name.innerText =
       value.length === 1 ? this.sectionName : this.sectionNamePlural;
@@ -366,6 +380,10 @@ export class Section extends Toggleable {
     }
 
     this.forced = forcedCards !== null;
+    this.forcedCardsHistory = this.forced
+      ? this.forcedCardsHistory.concat(this.trueCards)
+      : [];
+
     const newCards = forcedCards || this.chooseCards(isShuffleAll);
 
     if (!animate) {
@@ -510,23 +528,22 @@ export class Section extends Toggleable {
     requestPostAnimationFrame(() => this.root.classList.remove("flipped"));
   }
 
-  loadCards() {
+  loadCards(id) {
     try {
-      const savedCardIds = getItem(this.id);
-      const allCards = this.selectableCards.concat(this.extraCards);
+      const savedCardIds = getItem(id);
       return savedCardIds
         ? savedCardIds
-            .map((id) => allCards.find((card) => card.id === id))
+            .map((cardId) => this.allCards.find((card) => card.id === cardId))
             .filter((card) => card !== undefined)
         : [];
     } catch (error) {
-      return resetItem(this.id, [], error);
+      return resetItem(id, [], error);
     }
   }
 
-  saveCards(cards) {
+  saveCards(id, cards) {
     const cardIds = cards.map((card) => card.id);
-    setItem(this.id, cardIds);
+    setItem(id, cardIds);
   }
 
   updateVisibility() {

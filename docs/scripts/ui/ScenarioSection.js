@@ -43,14 +43,18 @@ export class ScenarioSection extends Section {
     super.setCards(value);
 
     const hasNextScenario = !!this.nextScenario;
-    [this.campaignImage.src, this.nextScenarioButton.tabIndex] = hasNextScenario
-      ? [this.nextScenario.campaign.imageSrc, 0]
-      : ["", -1];
+    this.nextScenarioButton.tabIndex = hasNextScenario ? 0 : -1;
     document.body.classList.toggle("has-next-scenario", hasNextScenario);
+    if (hasNextScenario) {
+      this.campaignImage.src = this.nextScenario.campaign.imageSrc;
+    }
 
     const hasVillainGroup = !!this.villainGroup;
     document.body.classList.toggle("has-villain-group", hasVillainGroup);
     if (!hasVillainGroup) {
+      for (const button of this.nextVillainButtons) {
+        button.tabIndex = -1;
+      }
       return;
     }
 
@@ -90,6 +94,7 @@ export class ScenarioSection extends Section {
       button.classList.toggle("hidden", !villain);
       button.classList.toggle("random", isRandom);
       button.disabled = isDone;
+      button.tabIndex = villain ? 0 : -1;
     }
   }
 

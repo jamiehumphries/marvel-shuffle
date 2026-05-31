@@ -134,8 +134,12 @@ export class ScenarioSection extends Section {
     const button = event.currentTarget;
     const ids = JSON.parse(button.dataset.ids);
     const id = chooseRandom(ids);
-    const card = this.selectableCards.find((card) => card.id === id);
-    this.shuffle({ forcedCards: [card] });
+    const villain = this.selectableCards.find((card) => card.id === id);
+    this.modularSection.forceExcludedCards =
+      this.modularSection.forceExcludedCards.concat(
+        this.modularSection.trueCards.slice(0, villain.schemes.length),
+      );
+    this.shuffle({ forcedCards: [villain] });
   }
 
   getPriority(scenario, isShuffleAll) {

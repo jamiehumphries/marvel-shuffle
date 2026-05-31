@@ -143,7 +143,7 @@ export class Settings {
     this.initializeCheckboxSetting(
       preferencesDiv,
       "show-next-scenario-button",
-      "Show “Next Scenario” button",
+      "Show next scenario buttons",
       { hint: "below campaign scenarios", togglesBodyClass: true },
     );
   }

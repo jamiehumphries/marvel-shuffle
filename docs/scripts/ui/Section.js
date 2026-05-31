@@ -46,9 +46,9 @@ export class Section extends Toggleable {
     this.type = types[0];
     this.id = this.type.id + (nthOfType === 1 ? "" : `-${nthOfType}`);
     this.root = document.getElementById(this.id);
-    this.forcedSettingId = this.id + "--setting--forced";
-    this.forcedCardsHistorySettingId = this.forcedSettingId + "--history";
-
+    this.forcedSettingId = `${this.id}--setting--forced`;
+    this.forcedCardsHistorySettingId = `${this.id}--setting--forced-cards-history`;
+    this.forceExcludedCardsSettingId = `${this.id}--setting--force-excluded-cards`;
     this.parentSections = [];
     this.siblingSections = [];
   }
@@ -133,7 +133,9 @@ export class Section extends Toggleable {
   }
 
   get excludedCards() {
-    return this.flattenParentCards((card) => card.excludedChildCards);
+    return this.flattenParentCards((card) => card.excludedChildCards).concat(
+      this.forceExcludedCards,
+    );
   }
 
   get placeholder() {
@@ -229,6 +231,17 @@ export class Section extends Toggleable {
   set forcedCardsHistory(value) {
     this._forcedCardsHistory = value;
     this.saveCards(this.forcedCardsHistorySettingId, value);
+  }
+
+  get forceExcludedCards() {
+    return (this._forceExcludedCards ||= this.loadCards(
+      this.forceExcludedCardsSettingId,
+    ));
+  }
+
+  set forceExcludedCards(value) {
+    this._forceExcludedCards = value;
+    this.saveCards(this.forceExcludedCardsSettingId, value);
   }
 
   get cards() {
@@ -383,6 +396,9 @@ export class Section extends Toggleable {
     this.forcedCardsHistory = this.forced
       ? this.forcedCardsHistory.concat(this.trueCards)
       : [];
+    if (!this.forced && this.childSection) {
+      this.childSection.forceExcludedCards = [];
+    }
 
     const newCards = forcedCards || this.chooseCards(isShuffleAll);
 

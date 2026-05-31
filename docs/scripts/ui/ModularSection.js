@@ -1,5 +1,6 @@
 import { extraModulars, modulars } from "../data/cards.js";
 import { Modular } from "../models/Modular.js";
+import { filter } from "../shared/helpers.js";
 import { Section } from "./Section.js";
 
 export class ModularSection extends Section {
@@ -58,10 +59,12 @@ export class ModularSection extends Section {
   getCardOptionSets(count, isShuffleAll = false) {
     const scenario = this.scenarioSection.trueCard;
     const schemeOptionSets = scenario.schemes.map((stage, i) => {
-      const filteredSchemes = stage.filter((card) => card.checked);
+      const filteredSchemes = stage.filter(
+        (card) => card.checked && !this.excludedCards.includes(card),
+      );
       return filteredSchemes.length > 0
         ? filteredSchemes
-        : scenario.defaultSchemes[i];
+        : filter(scenario.defaultSchemes[i], this.excludedCards);
     });
     return schemeOptionSets.concat(
       super.getCardOptionSets(count - schemeOptionSets.length, isShuffleAll),

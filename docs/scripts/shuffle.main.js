@@ -120,10 +120,10 @@ function initializeSettings() {
 function initializeSections() {
   for (const section of sections) {
     section.addEventListener("shufflestart", () => {
-      setGlobalButtonsAvailability();
+      setGlobalUiAvailability();
     });
     section.addEventListener("shuffleend", () => {
-      setGlobalButtonsAvailability();
+      setGlobalUiAvailability();
       maybeReturnFocusAfterShuffle();
     });
     section.addEventListener("cardsupdated", () => {
@@ -217,10 +217,11 @@ function updateTrackingTable() {
   renderTable([scenarios], [heroes], difficulties);
 }
 
-function setGlobalButtonsAvailability() {
+function setGlobalUiAvailability() {
   const disabled = sections.some((section) => section.disabled);
   shuffleAllButton.disabled = disabled;
   settingsButton.disabled = disabled;
+  document.body.classList.toggle("shuffling", disabled);
 }
 
 function maybeReturnFocusAfterShuffle() {

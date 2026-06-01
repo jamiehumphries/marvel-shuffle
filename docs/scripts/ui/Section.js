@@ -489,7 +489,6 @@ export class Section extends Toggleable {
       return;
     }
 
-    document.body.classList.remove("shuffling");
     this.root.classList.remove("flipping");
     this.root.classList.add("flipped");
     this.disabled = false;

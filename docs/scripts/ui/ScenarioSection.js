@@ -70,7 +70,7 @@ export class ScenarioSection extends Section {
           id: filter(variableOrderVillains, this.forcedCardsHistory).map(
             (card) => card.id,
           ),
-          name: `Random Next ${this.trueCard.groupName}`,
+          name: `Random next ${this.trueCard.groupName}`,
           frontSrc: Scenario.placeholderImageSrc,
         };
       } else if (i === variableOrderVillains.length + 1) {

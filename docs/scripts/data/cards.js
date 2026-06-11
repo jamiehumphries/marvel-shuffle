@@ -785,7 +785,7 @@ export const heroes = [
     hero("Daredevil", "Matt Murdock", JUSTICE, "#c00000"),
     hero("Echo", "Maya Lopez", PROTECTION, "#f2f2f2"),
     hero("Jessica Jones", null, JUSTICE, "#404040"),
-    hero("Luke Cage", null, LEADERSHIP, "#ffc000"), // TODO: Update aspect.
+    hero("Luke Cage", null, LEADERSHIP, "#ffc000"),
     hero("Elektra", "Elektra Natchios", AGGRESSION, "#ff0000"), // TODO: Update aspect.
     hero("Iron Fist", "Danny Rand", PROTECTION, "#00b050"), // TODO: Update aspect.
   ),

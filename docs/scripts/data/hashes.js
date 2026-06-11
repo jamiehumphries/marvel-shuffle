@@ -88,6 +88,8 @@ export const hashes = {
   "/images/hero/jessica-jones/front.png": "518852a5",
   "/images/hero/jubilee-jubilation-lee/back.png": "af0c181b",
   "/images/hero/jubilee-jubilation-lee/front.png": "c8a86dcc",
+  "/images/hero/luke-cage/back.png": "ce9413bc",
+  "/images/hero/luke-cage/front.png": "d8893553",
   "/images/hero/magik-illyana-rasputin/back.png": "5e38e215",
   "/images/hero/magik-illyana-rasputin/front.png": "08852e9d",
   "/images/hero/magneto-erik-lehnsherr/back.png": "cb6f7d17",

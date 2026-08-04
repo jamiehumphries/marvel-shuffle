@@ -681,4 +681,31 @@ export const heroes = [
       { name: "Prince of Power", subname: null },
     ],
   },
+  {
+    name: "Daredevil",
+    alterEgo: "Matt Murdock",
+    hp: 10,
+    traitKeys: ["AERIAL"],
+    exludedDeckCards: [
+      { name: "Elektra", subname: "Elektra Natchios" },
+      { name: "Focus the Senses", subname: null },
+      { name: "Foggy Nelson", subname: null },
+      { name: "Karen Page", subname: null },
+      { name: "Nelson and Murdock", subname: null },
+      { name: "Sister Maggie", subname: null },
+      { name: "Daredevil’s Billy Club", subname: null },
+      { name: "The Man Without Fear", subname: null },
+    ],
+  },
+  {
+    name: "Echo",
+    alterEgo: "Maya Lopez",
+    hp: 9,
+    traitKeys: ["CIVILIAN"],
+    exludedDeckCards: [
+      { name: "Daredevil", subname: "Matt Murdock" },
+      { name: "The Rez", subname: null },
+      { name: "Echo’s Katana", subname: null },
+    ],
+  },
 ];

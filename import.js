@@ -34,7 +34,9 @@ const resourceKeyPreifx = "resource_";
 const traitJoinPattern = "(?:,? or |,? and | character and an? |, )";
 const traitJoinRegex = new RegExp(traitJoinPattern, "i");
 
-const { characterSet } = openFontSync("./docs/styles/fonts/BackIssuesBB.otf");
+const { characterSet } = openFontSync(
+  "./docs/styles/fonts/BackIssuesBB.20260804.otf",
+);
 
 const deckFilePath = "docs/scripts/data/deck.js";
 const heroesFilePath = "docs/scripts/data/heroes.js";

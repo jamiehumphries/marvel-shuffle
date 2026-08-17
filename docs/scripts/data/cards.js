@@ -747,5 +747,6 @@ export const heroes = [
     hero("Echo", "Maya Lopez", PROTECTION, "#f2f2f2"),
     hero("Jessica Jones", null, JUSTICE, "#404040"),
     hero("Luke Cage", null, LEADERSHIP, "#ffc000"),
+    hero("Elektra", "Elektra Natchios", AGGRESSION, "#ff0000"),
   ),
 ];

@@ -25,7 +25,19 @@ const isMultiVillain = true;
 // SETS
 
 function cardSet(name, options = {}) {
-  return (...cards) => new CardSet(name, cards, options);
+  const builder = (...cards) => {
+    if (options.isCampaign) {
+      for (let i = 0; i < cards.length - 1; i++) {
+        const card = cards[i];
+        card.nextScenarioOptions = [cards[i + 1]];
+      }
+    }
+    return new CardSet(name, cards, options);
+  };
+  const slug = Model.buildSlug(name);
+  builder.subCardSet = (name, cards) =>
+    new CardSet(name, cards, { parentSetSlug: slug });
+  return builder;
 }
 
 const coreSet = cardSet("Core Set");
@@ -64,7 +76,7 @@ const tricksterTakeover = cardSet("Trickster Takeover");
 const civilWar = cardSet("Civil War");
 const synthezoidSmackdown = cardSet("Synthezoid Smackdown");
 const hercules = cardSet("Hercules");
-const fearNoEvil = cardSet("Fear No Evil", { isCampaign });
+const fearNoEvil = cardSet("Fear No Evil");
 
 // MODULARS
 
@@ -102,11 +114,10 @@ function schemeGroup(groupName, stagesBySet) {
 
   group.schemes = (...defaultSchemes) => {
     return {
-      schemes: defaultSchemes.map((name, i) => {
-        const schemes = group.stages[i];
-        const defaultScheme = findModular(name, schemes);
-        const otherSchemes = filter(schemes, defaultScheme);
-        return [defaultScheme, ...otherSchemes];
+      special: defaultSchemes.map((name, i) => {
+        const options = group.stages[i];
+        const defaultOption = findModular(name, options);
+        return { options, defaultOption };
       }),
       excludedSet: group.excludedSet,
       minModularsVariability: 1,
@@ -114,6 +125,14 @@ function schemeGroup(groupName, stagesBySet) {
   };
 
   return group;
+}
+
+function villain(name, options = {}) {
+  return modular(name, { ...options, subname: "Villain" });
+}
+
+function villains(set) {
+  return { special: [{ options: set.allCards }] };
 }
 
 // prettier-ignore
@@ -382,7 +401,23 @@ export const modulars = [
   hercules(
     modular("All Versus All", { isLandscape }),
   ),
+  fearNoEvil(
+    modular("Disasters"),
+    modular("Cops"),
+    modular("Drive"),
+    modular("The Owl"),
+    modular("Tombstone"),
+    modular("Tracksuit Mafia", { isLandscape }),
+  ),
 ];
+
+const underlings = fearNoEvil.subCardSet("Underlings", [
+  villain("Bullseye"),
+  villain("Electro"),
+  villain("Hammerhead"),
+  villain("Purple Man"),
+  villain("Typhoid Mary", { hasBack }),
+]);
 
 export const extraModulars = [
   // Scenario specific modulars
@@ -395,9 +430,10 @@ export const extraModulars = [
   modular("Hope Summers", { hasBack: Aspect, isUncounted }),
   // Dreadpool for ‘Pool aspect
   modular("Dreadpool", { requiredReason: "for ‘Pool aspect" }),
-  // Customisable main schemes
+  // Customisable scenarios
   ...registration.allSchemes,
   ...resistance.allSchemes,
+  ...underlings.allCards,
 ];
 
 // SCENARIOS
@@ -453,6 +489,14 @@ function scenario(name, modularNamesOrNumber, color, options = {}) {
       : findModulars(modularNamesOrNumber);
 
   return new Scenario(name, modularsOrNumber, color, options);
+}
+
+function scenarioOptions({ variable, final }) {
+  const allScenarios = [...variable, final];
+  for (const card of variable) {
+    card.nextScenarioOptions = filter(allScenarios, card);
+  }
+  return allScenarios;
 }
 
 // prettier-ignore
@@ -563,7 +607,19 @@ export const scenarios = [
       scenario("Vision", ["Young Avengers", "Scarlet Twins", "Moon Knight", "Royal Guard"], "#ff0000",
         { ...resistance.schemes("Protect Secret Identities", "Expose Overreach") }),
     ).withExtraOptions(...resistance.synthezoidSmackdown.schemes),
-  )
+  ),
+  fearNoEvil(
+    ...scenarioOptions({
+      variable: [
+        scenario("Art Museum Heist", ["Cops", "The Owl"], "#305496", { hasBack, ...villains(underlings) }),
+        scenario("The Getaway", ["Cops", "Drive"], "#ffc000", { hasBack, ...villains(underlings) }),
+        scenario("Protection Racket", ["Disasters", "Tracksuit Mafia"], "#00b050", { hasBack, ...villains(underlings) }),
+        scenario("The Raft Breakout", ["The Owl", "Tombstone"], "#404040", { hasBack, ...villains(underlings) }),
+        scenario("Stop the Presses!", ["Tombstone", "Tracksuit Mafia"], "#ff0000", { hasBack, ...villains(underlings) }),
+      ],
+      final: scenario("Kingpin", ["Tombstone", "Tracksuit Mafia"], "#f2f2f2", { hasBack }),
+    }),
+  ).withExtraOptions(underlings),
 ];
 
 // DIFFICULTIES

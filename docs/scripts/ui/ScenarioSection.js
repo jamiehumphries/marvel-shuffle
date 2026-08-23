@@ -7,14 +7,20 @@ export class ScenarioSection extends Section {
     super(settings, scenarios, 1);
   }
 
-  get nextScenario() {
-    const cardSet = this.trueCard?.parent;
-    if (!cardSet?.isCampaign) {
-      return null;
+  get maxNextScenarioOptions() {
+    if (this._maxNextScenarioOptions) {
+      return this._maxNextScenarioOptions;
     }
+    const nextScenarioOptionCounts = this.selectableCards.map(
+      (card) => card.nextScenarioOptions?.length || 0,
+    );
+    return (this._maxNextScenarioOptions = Math.max(
+      ...nextScenarioOptionCounts,
+    ));
+  }
 
-    const scenarioIndex = cardSet.children.indexOf(this.trueCard);
-    return cardSet.children[scenarioIndex + 1] || null;
+  get nextScenarioOptions() {
+    return this.trueCard?.nextScenarioOptions;
   }
 
   initializeSectionRelationships() {
@@ -23,29 +29,70 @@ export class ScenarioSection extends Section {
 
   setCards(value) {
     super.setCards(value);
-    const hasNextScenario = !!this.nextScenario;
-    [this.campaignImage.src, this.nextScenarioButton.tabIndex] = hasNextScenario
-      ? [this.nextScenario.campaign.imageSrc, 0]
-      : ["", -1];
-    document.body.classList.toggle("has-next-scenario", hasNextScenario);
+    const nextScenarioOptions = this.nextScenarioOptions || [];
+
+    const singleNextScenario =
+      nextScenarioOptions.length === 1 ? nextScenarioOptions[0] : null;
+    document.body.classList.toggle("has-next-scenario", !!singleNextScenario);
+    this.nextScenarioButton.dataset.id = singleNextScenario?.id || "";
+    this.nextScenarioButton.tabIndex = singleNextScenario ? 0 : -1;
+    this.campaignImage.src = singleNextScenario?.campaign.imageSrc || "";
+
+    document.body.classList.toggle(
+      "has-next-scenario-options",
+      nextScenarioOptions.length > 1,
+    );
+
+    for (let i = 0; i < this.nextScenarioOptionButtons.length; i++) {
+      const button = this.nextScenarioOptionButtons[i];
+      const option = singleNextScenario ? null : nextScenarioOptions[i];
+      button.dataset.id = option?.id || "";
+      button.querySelector("img").src = option?.frontSrc || "";
+      button.querySelector(".name").innerText = option?.name || "";
+      button.classList.toggle("hidden", !option);
+      button.tabIndex = option ? 0 : -1;
+    }
   }
 
   initializeLayout() {
     super.initializeLayout();
-    const buttonTemplate = document.getElementById("next-scenario-button");
-    const element = buttonTemplate.content.cloneNode(true);
-    this.root.appendChild(element);
 
-    this.nextScenarioButton = this.root.querySelector(".next-scenario-button");
-    this.nextScenarioButton.addEventListener("click", () =>
-      this.goToNextScenario(),
+    const nextScenarioButtonTemplate = document.getElementById(
+      "next-scenario-button",
     );
-
+    const nextScenarioButton =
+      nextScenarioButtonTemplate.content.firstElementChild.cloneNode(true);
+    this.root.appendChild(nextScenarioButton);
+    this.nextScenarioButton = this.root.querySelector(".next-scenario-button");
+    this.nextScenarioButton.addEventListener("click", (event) =>
+      this.goToNextScenarioOption(event),
+    );
     this.campaignImage = this.root.querySelector(".campaign-image");
+
+    const nextScenarioOptionButtonsDiv = document.createElement("div");
+    nextScenarioOptionButtonsDiv.classList.add("next-scenario-option-buttons");
+    this.root.appendChild(nextScenarioOptionButtonsDiv);
+    const nextScenarioOptionButtonTemplate = document.getElementById(
+      "next-scenario-option-button",
+    );
+    this.nextScenarioOptionButtons = [];
+    for (let i = 0; i < this.maxNextScenarioOptions; i++) {
+      const nextScenarioOptionButton =
+        nextScenarioOptionButtonTemplate.content.firstElementChild.cloneNode(
+          true,
+        );
+      this.nextScenarioOptionButtons.push(nextScenarioOptionButton);
+      nextScenarioOptionButtonsDiv.appendChild(nextScenarioOptionButton);
+      nextScenarioOptionButton.addEventListener("click", (event) =>
+        this.goToNextScenarioOption(event),
+      );
+    }
   }
 
-  goToNextScenario() {
-    this.shuffle({ forcedCards: [this.nextScenario] });
+  goToNextScenarioOption(event) {
+    const { id } = event.currentTarget.dataset;
+    const card = this.selectableCards.find((card) => card.id === id);
+    this.shuffle({ forcedCards: [card] });
   }
 
   getPriority(scenario, isShuffleAll) {

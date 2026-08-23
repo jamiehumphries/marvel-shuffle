@@ -35,7 +35,7 @@ export async function updateImages(force = false) {
     return;
   }
 
-  const sourceImages = `${imageSourceRepo}/${imageGlobToExt}.{ffg,scan}.{png,tiff}`;
+  const sourceImages = `${imageSourceRepo}/${imageGlobToExt}.{ffg,scan}.{png,tif,tiff}`;
   const files = await glob(sourceImages, { withFileTypes: true });
   await Promise.all(files.map((file) => updateImage(file, force)));
 }
@@ -57,7 +57,7 @@ async function updateImage(file, force) {
   const sourceImage = await readFile(sourcePath);
   const { width, height } = imageSize(sourceImage);
 
-  if (type === "scan" && ext === "tiff") {
+  if (type === "scan" && ["tif", "tiff"].includes(ext)) {
     const tempName = `${name}.temp.tiff`;
     const tempPath = resolve(parentPath, tempName);
     await exec(`tiffcp ${sourcePath} ${tempPath}`);

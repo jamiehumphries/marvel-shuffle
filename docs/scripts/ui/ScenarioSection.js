@@ -1,10 +1,13 @@
 import { scenarios } from "../data/cards.js";
+import { getItem, setItem } from "../data/storage.js";
 import { getNumberOfIncompleteGames } from "../shared/tracker.js";
 import { Section } from "./Section.js";
 
 export class ScenarioSection extends Section {
   constructor(settings) {
     super(settings, scenarios, 1);
+    this.pinnedModularsMapSettingId =
+      this.id + "--setting--pinned-modulars-map";
   }
 
   get maxNextScenarioOptions() {
@@ -21,6 +24,14 @@ export class ScenarioSection extends Section {
 
   get nextScenarioOptions() {
     return this.trueCard?.nextScenarioOptions;
+  }
+
+  get pinnedModularsMap() {
+    return getItem(this.pinnedModularsMapSettingId) || {};
+  }
+
+  set pinnedModularsMap(value) {
+    return setItem(this.pinnedModularsMapSettingId, value);
   }
 
   initializeSectionRelationships() {
@@ -51,6 +62,11 @@ export class ScenarioSection extends Section {
       button.querySelector(".name").innerText = option?.name || "";
       button.classList.toggle("hidden", !option);
       button.tabIndex = option ? 0 : -1;
+
+      const subname = button.querySelector(".subname");
+      const pinnedModulars = this.getPinnedModulars(option);
+      subname.innerText =
+        pinnedModulars?.length > 0 ? `with ${pinnedModulars[0].name}` : "";
     }
   }
 
@@ -89,7 +105,15 @@ export class ScenarioSection extends Section {
     }
   }
 
+  shuffle({ forcedCards = null, animate = true, isShuffleAll = false } = {}) {
+    if (!forcedCards) {
+      this.clearPinnedModulars();
+    }
+    super.shuffle({ forcedCards, animate, isShuffleAll });
+  }
+
   goToNextScenarioOption(event) {
+    this.pinModulars();
     const { id } = event.currentTarget.dataset;
     const card = this.selectableCards.find((card) => card.id === id);
     this.shuffle({ forcedCards: [card] });
@@ -107,5 +131,41 @@ export class ScenarioSection extends Section {
       ? this.difficultySection.checkedCards
       : this.difficultySection.trueCards;
     return getNumberOfIncompleteGames([scenario], heroes, difficulties);
+  }
+
+  getPinnedModulars(scenario) {
+    const pinnedModularIds = this.pinnedModularsMap[scenario?.id];
+    return pinnedModularIds
+      ? pinnedModularIds.map((id) => this.findSpecialModular(id))
+      : null;
+  }
+
+  getAllPinnedModulars() {
+    return Object.values(this.pinnedModularsMap)
+      .flatMap((ids) => ids)
+      .map((id) => this.findSpecialModular(id));
+  }
+
+  pinModulars() {
+    const scenario = this.trueCard;
+    const specialModularCount = scenario.specialModularOptionSets.length;
+    if (specialModularCount === 0) {
+      return;
+    }
+
+    const map = this.pinnedModularsMap;
+    map[scenario.id] = this.modularSection.trueCards
+      .slice(0, specialModularCount)
+      .map((card) => card.id);
+
+    this.pinnedModularsMap = map;
+  }
+
+  clearPinnedModulars() {
+    this.pinnedModularsMap = {};
+  }
+
+  findSpecialModular(id) {
+    return this.modularSection.extraCards.find((card) => card.id === id);
   }
 }

@@ -1,5 +1,6 @@
 import { extraModulars, modulars } from "../data/cards.js";
 import { Modular } from "../models/Modular.js";
+import { filter } from "../shared/helpers.js";
 import { Section } from "./Section.js";
 
 export class ModularSection extends Section {
@@ -42,21 +43,33 @@ export class ModularSection extends Section {
   }
 
   getCardOptionSets(count, isShuffleAll = false) {
-    const scenario = this.scenarioSection.trueCard;
-    const specialCardOptionSets = scenario.specialModularOptionSets.map(
-      ({ options, defaultOption }) => {
-        const filteredOptions = options.filter((card) => card.checked);
-        if (filteredOptions.length > 0) {
-          return filteredOptions;
-        }
-        return defaultOption ? [defaultOption] : options;
-      },
-    );
+    const specialCardOptionSets = this.getSpecialCardOptionSets();
     return specialCardOptionSets.concat(
       super.getCardOptionSets(
         count - specialCardOptionSets.length,
         isShuffleAll,
       ),
+    );
+  }
+
+  getSpecialCardOptionSets() {
+    const scenario = this.scenarioSection.trueCard;
+
+    const pinnedForScenario = this.scenarioSection.getPinnedModulars(scenario);
+    if (pinnedForScenario) {
+      return pinnedForScenario.map((card) => [card]);
+    }
+
+    const allPinned = this.scenarioSection.getAllPinnedModulars();
+    return scenario.specialModularOptionSets.map(
+      ({ options, defaultOption }) => {
+        options = filter(options, allPinned);
+        const checkedOptions = options.filter((card) => card.checked);
+        if (checkedOptions.length > 0) {
+          return checkedOptions;
+        }
+        return defaultOption ? [defaultOption] : options;
+      },
     );
   }
 

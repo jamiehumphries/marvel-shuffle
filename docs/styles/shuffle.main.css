@@ -731,7 +731,7 @@ input:active + .checkmark {
 }
 
 .next-button {
-  --next-button-padding: 0.25rem;
+  --next-button-padding: 0.4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -780,7 +780,7 @@ input:active + .checkmark {
 }
 
 .next-scenario-option-button .subname {
-  font-size: 0.7rem;
+  font-size: 0.6rem;
 }
 
 .next-scenario-option-button.hidden {

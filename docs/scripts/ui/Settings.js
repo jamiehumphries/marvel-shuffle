@@ -1,8 +1,8 @@
-import { difficulties, extraModulars } from "../data/cards.js";
-import { STANDARD } from "../models/Difficulty.js";
-import { RadioSetting } from "../models/RadioSetting.js";
-import { Setting } from "../models/Setting.js";
-import { capitalize } from "../shared/helpers.js";
+import { difficulties, extraModulars } from "../data/cards.js?v=393ff90e";
+import { STANDARD } from "../models/Difficulty.js?v=ed9568f2";
+import { RadioSetting } from "../models/RadioSetting.js?v=53ddfac7";
+import { Setting } from "../models/Setting.js?v=333ec7de";
+import { capitalize } from "../shared/helpers.js?v=2ecd4db0";
 
 const PROBABILITY_MAP = {
   never: 0,

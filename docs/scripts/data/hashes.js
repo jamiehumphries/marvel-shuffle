@@ -82,6 +82,8 @@ export const hashes = {
   "/images/hero/hulkling-teddy-altman/front.png": "e5dde82c",
   "/images/hero/iceman-bobby-drake/back.png": "3cb37f1c",
   "/images/hero/iceman-bobby-drake/front.png": "689eec95",
+  "/images/hero/iron-fist-danny-rand/back.png": "49ae0b4f",
+  "/images/hero/iron-fist-danny-rand/front.png": "96638094",
   "/images/hero/iron-man-tony-stark/back.png": "17308db9",
   "/images/hero/iron-man-tony-stark/front.png": "1fa889eb",
   "/images/hero/ironheart-riri-williams/back.png": "a12bd6b3",

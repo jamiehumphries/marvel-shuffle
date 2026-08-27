@@ -48,7 +48,6 @@
   --slot-height-portrait: calc(var(--card-header-height) + var(--card-height));
   --slot-height-landscape: calc(var(--card-header-height) + var(--card-width));
   --slot-height-giant: calc(var(--card-header-height) + 2 * var(--card-width));
-  --thumbnail-card-img-size: 2.2rem;
 
   --option-inset: 30px;
 

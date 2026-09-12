@@ -77,6 +77,7 @@ const civilWar = cardSet("Civil War");
 const synthezoidSmackdown = cardSet("Synthezoid Smackdown");
 const hercules = cardSet("Hercules");
 const fearNoEvil = cardSet("Fear No Evil");
+const shadowland = cardSet("Shadowland");
 
 // MODULARS
 
@@ -409,6 +410,11 @@ export const modulars = [
     modular("Tombstone"),
     modular("Tracksuit Mafia", { isLandscape }),
   ),
+  shadowland(
+    modular("Ninja Swarm"),
+    modular("Deadly Contraptions"),
+    modular("Black Flower", { hasBack }),
+  ),
 ];
 
 const underlings = fearNoEvil.subCardSet("Underlings", [
@@ -417,6 +423,18 @@ const underlings = fearNoEvil.subCardSet("Underlings", [
   villain("Hammerhead"),
   villain("Purple Man"),
   villain("Typhoid Mary", { hasBack }),
+]);
+
+const darkProtegeHand = modular("Dark Protégé", { modifier: "hand" });
+const darkProtegePossessed = modular("Dark Protégé", { modifier: "possessed" });
+
+const darkProteges = shadowland.subCardSet("Dark Protégés", [
+  villain("Archpriestess", { linked: [darkProtegeHand] }),
+  villain("Daredevil", { linked: [darkProtegePossessed] }),
+  villain("Elektra", { linked: [darkProtegePossessed] }),
+  villain("Gorgon", { linked: [darkProtegeHand] }),
+  villain("Lady Bullseye", { linked: [darkProtegeHand] }),
+  villain("White Tiger", { linked: [darkProtegePossessed] }),
 ]);
 
 export const extraModulars = [
@@ -434,6 +452,9 @@ export const extraModulars = [
   ...registration.allSchemes,
   ...resistance.allSchemes,
   ...underlings.allCards,
+  ...darkProteges.allCards,
+  darkProtegeHand,
+  darkProtegePossessed,
 ];
 
 // SCENARIOS
@@ -534,7 +555,7 @@ export const scenarios = [
     scenario("Ebony Maw", ["Armies of Titan", "Black Order"], "#404040"),
     scenario("Tower Defense", "Armies of Titan", "#c7d0db", { hasBack, isMultiVillain }),
     scenario("Thanos", ["Black Order", "Children of Thanos"], "#9900ff", { required: "Infinity Gauntlet" }),
-    scenario("Hela", ["Legions of Hel", "Frost Giants"], "#b4d79d", { hasBack }),
+    scenario("Hela", ["Legions of Hel", "Frost Giants"], "#afdc7e", { hasBack }),
     scenario("Loki", ["Enchantress", "Frost Giants"], "#ffc000", { required: "Infinity Gauntlet" }),
   ),
   theHood(
@@ -620,6 +641,11 @@ export const scenarios = [
       final: scenario("Kingpin", ["Tombstone", "Tracksuit Mafia"], "#f2f2f2", { hasBack }),
     }),
   ).withExtraOptions(underlings),
+  shadowland(
+    scenario("Shadows in the Night", "Ninja Swarm", "#c00000", { hasBack, ...villains(darkProteges) }),
+    scenario("Shadow Labyrinth", "Deadly Contraptions", "#1e365e"),
+    scenario("Heart of Shadow", "Black Flower", "#afdc7e"),
+  ).withExtraOptions(darkProteges),
 ];
 
 // DIFFICULTIES

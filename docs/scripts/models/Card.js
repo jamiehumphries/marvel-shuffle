@@ -6,6 +6,7 @@ export class Card extends Option {
     name,
     {
       subname = null,
+      modifier = null,
       color = null,
       isLandscape = false,
       hasBack = false,
@@ -15,6 +16,7 @@ export class Card extends Option {
       hardExcludedChildCards = [],
       requiredChildCards = [],
       defaultChildCards = [],
+      linkedCards = [],
       additionalChildCardsPerHero = 0,
       traits = [],
       hasGiantForm = false,
@@ -23,7 +25,7 @@ export class Card extends Option {
       requiredReason = null,
     } = {},
   ) {
-    const slugModifier = subname;
+    const slugModifier = [subname, modifier].filter(Boolean).join("-") || null;
     super(name, { subname, slugModifier });
 
     this.color = color;
@@ -34,12 +36,17 @@ export class Card extends Option {
     this.hardExcludedChildCards = hardExcludedChildCards;
     this.requiredChildCards = requiredChildCards;
     this.defaultChildCards = defaultChildCards;
+    this.linkedCards = linkedCards;
     this.additionalChildCardsPerHero = additionalChildCardsPerHero;
     this.traits = traits;
     this.hasGiantForm = hasGiantForm;
     this.hasWideForm = hasWideForm;
     this.isUncounted = isUncounted;
     this.requiredReason = requiredReason;
+
+    for (const linkedCard of this.linkedCards) {
+      linkedCard.isLinked = true;
+    }
 
     this.frontSrc = this.image("front");
     this.hasBack = hasBack;

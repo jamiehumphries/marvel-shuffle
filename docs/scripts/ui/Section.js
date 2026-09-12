@@ -160,7 +160,9 @@ export class Section extends Toggleable {
 
   get valid() {
     const countedCards = this.cards.filter(
-      (card) => !card.isUncounted || this.requiredCards.includes(card),
+      (card) =>
+        !(card.isUncounted || card.isLinked) ||
+        this.requiredCards.includes(card),
     );
 
     const count = countedCards.length;
@@ -179,8 +181,17 @@ export class Section extends Toggleable {
     }
 
     const optionSets = this.getCardOptionSets(count);
-    if (optionSets.some((set, i) => !set.includes(this.cards[i]))) {
-      return false;
+    for (let i = 0; i < countedCards.length; i++) {
+      const card = countedCards[i];
+      if (!optionSets[i].includes(card)) {
+        return false;
+      }
+      for (let j = 0; j < card.linkedCards.length; j++) {
+        const linkedCard = card.linkedCards[j];
+        if (this.cards[i + j + 1] !== linkedCard) {
+          return false;
+        }
+      }
     }
 
     return this.uncountedCards
@@ -401,7 +412,7 @@ export class Section extends Toggleable {
     for (const optionSet of optionSets) {
       const filteredOptionSet = filter(optionSet, cards);
       const card = this.randomCard(filteredOptionSet, isShuffleAll);
-      cards.push(card);
+      cards.push(card, ...card.linkedCards);
     }
     for (const card of this.uncountedCards) {
       if (cards.includes(card)) {

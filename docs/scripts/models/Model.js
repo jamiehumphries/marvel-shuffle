@@ -7,8 +7,11 @@ export class Model {
 
   static buildSlug(...names) {
     return names
+      .filter(Boolean)
       .join()
       .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // Remove accents.
       .replaceAll(/[’\.]/g, "") // Remove apostrophes and full stops.
       .replaceAll(/[^a-zA-Z0-9]+/g, "-") // Replace all non-word characters with "-".
       .replaceAll(/(^\-+|\-+$)/g, ""); // Strip any leading and trailing "-".

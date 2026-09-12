@@ -5,17 +5,22 @@ export class Modular extends Card {
     name,
     {
       subname = null,
+      modifier = null,
       isLandscape = false,
       hasBack = false,
+      linked = [],
       traits = [],
       isUncounted = false,
       requiredReason = null,
     } = {},
   ) {
+    const linkedCards = linked;
     super(name, {
       subname,
+      modifier,
       isLandscape,
       hasBack,
+      linkedCards,
       traits,
       isUncounted,
       requiredReason,

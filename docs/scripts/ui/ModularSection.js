@@ -77,7 +77,9 @@ export class ModularSection extends Section {
     const slots = this.slots || [];
     for (const slot of slots) {
       const { root, requiredReason, card } = slot;
-      const isRequired = this.requiredCards.includes(card);
+      const isRequired =
+        card !== undefined &&
+        (this.requiredCards.includes(card) || card.isLinked);
       root.classList.toggle("is-required", isRequired);
       requiredReason.innerText = card?.requiredReason
         ? ` ${card.requiredReason}`

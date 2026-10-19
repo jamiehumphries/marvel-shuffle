@@ -77,7 +77,7 @@ const civilWar = cardSet("Civil War");
 const synthezoidSmackdown = cardSet("Synthezoid Smackdown");
 const hercules = cardSet("Hercules");
 const fearNoEvil = cardSet("Fear No Evil");
-const shadowland = cardSet("Shadowland");
+const shadowland = cardSet("Shadowland", { isCampaign });
 
 // MODULARS
 
@@ -429,12 +429,12 @@ const darkProtegeHand = modular("Dark Protégé", { modifier: "hand" });
 const darkProtegePossessed = modular("Dark Protégé", { modifier: "possessed" });
 
 const darkProteges = shadowland.subCardSet("Dark Protégés", [
-  villain("Archpriestess", { linked: [darkProtegeHand] }),
-  villain("Daredevil", { linked: [darkProtegePossessed] }),
-  villain("Elektra", { linked: [darkProtegePossessed] }),
-  villain("Gorgon", { linked: [darkProtegeHand] }),
-  villain("Lady Bullseye", { linked: [darkProtegeHand] }),
-  villain("White Tiger", { linked: [darkProtegePossessed] }),
+  villain("Archpriestess", { hasBack, linked: [darkProtegeHand] }),
+  villain("Daredevil", { hasBack, linked: [darkProtegePossessed] }),
+  villain("Elektra", { hasBack, linked: [darkProtegePossessed] }),
+  villain("Gorgon", { hasBack, linked: [darkProtegeHand] }),
+  villain("Lady Bullseye", { hasBack, linked: [darkProtegeHand] }),
+  villain("White Tiger", { hasBack, linked: [darkProtegePossessed] }),
 ]);
 
 export const extraModulars = [
@@ -643,8 +643,8 @@ export const scenarios = [
   ).withExtraOptions(underlings),
   shadowland(
     scenario("Shadows in the Night", "Ninja Swarm", "#c00000", { hasBack, ...villains(darkProteges) }),
-    scenario("Shadow Labyrinth", "Deadly Contraptions", "#1e365e"),
-    scenario("Heart of Shadow", "Black Flower", "#afdc7e"),
+    scenario("Shadow Labyrinth", "Ninja Swarm", "#1e365e", { required: ["Deadly Contraptions"], ...villains(darkProteges) }),
+    scenario("Heart of Shadow", "Ninja Swarm", "#afdc7e", { required: "Black Flower" }),
   ).withExtraOptions(darkProteges),
 ];
 

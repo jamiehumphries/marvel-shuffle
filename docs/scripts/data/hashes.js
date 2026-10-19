@@ -10,6 +10,7 @@ export const hashes = {
   "/images/campaign/mojomania.png": "0ad881ab",
   "/images/campaign/mutant-genesis.png": "009dfc3f",
   "/images/campaign/next-evolution.png": "f28cf080",
+  "/images/campaign/shadowland.png": "2203ea0d",
   "/images/campaign/sinister-motives.png": "a5561dcf",
   "/images/campaign/the-galaxys-most-wanted.png": "c0317564",
   "/images/campaign/the-mad-titans-shadow.png": "122bcd6b",

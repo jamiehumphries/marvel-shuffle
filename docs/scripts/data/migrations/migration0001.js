@@ -1,4 +1,4 @@
-import { remove, rename, setDefault } from "./operations.js";
+import { remove, rename, setDefault } from "./operations.js?v=79c92de1";
 
 const alterEgos = [
   ["captain-marvel", "carol-danvers"],

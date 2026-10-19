@@ -44,6 +44,7 @@ export class Card extends Option {
     this.isUncounted = isUncounted;
     this.requiredReason = requiredReason;
 
+    this.isLinked ||= false;
     for (const linkedCard of this.linkedCards) {
       linkedCard.isLinked = true;
     }

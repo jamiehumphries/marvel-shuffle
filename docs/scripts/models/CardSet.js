@@ -1,5 +1,5 @@
-import { flatten } from "../shared/helpers.js";
-import { Option } from "./Option.js";
+import { flatten } from "../shared/helpers.js?v=2ecd4db0";
+import { Option } from "./Option.js?v=4196f7a9";
 
 export class CardSet extends Option {
   constructor(name, cards, { isCampaign = false, parentSetSlug = null }) {

@@ -1,7 +1,7 @@
-import { scenarios } from "../data/cards.js";
-import { getItem, setItem } from "../data/storage.js";
-import { getNumberOfIncompleteGames } from "../shared/tracker.js";
-import { Section } from "./Section.js";
+import { scenarios } from "../data/cards.js?v=5471a092";
+import { getItem, setItem } from "../data/storage.js?v=d251e682";
+import { getNumberOfIncompleteGames } from "../shared/tracker.js?v=6f4afbf5";
+import { Section } from "./Section.js?v=bc5a628c";
 
 export class ScenarioSection extends Section {
   constructor(settings) {

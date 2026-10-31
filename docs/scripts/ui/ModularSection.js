@@ -1,7 +1,7 @@
-import { extraModulars, modulars } from "../data/cards.js";
-import { Modular } from "../models/Modular.js";
-import { filter } from "../shared/helpers.js";
-import { Section } from "./Section.js";
+import { extraModulars, modulars } from "../data/cards.js?v=5471a092";
+import { Modular } from "../models/Modular.js?v=6a42018e";
+import { filter } from "../shared/helpers.js?v=2ecd4db0";
+import { Section } from "./Section.js?v=bc5a628c";
 
 export class ModularSection extends Section {
   constructor(settings) {

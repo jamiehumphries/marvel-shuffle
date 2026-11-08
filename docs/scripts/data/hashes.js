@@ -186,7 +186,6 @@ export const hashes = {
   "/images/modular/band-of-badoon/front.png": "64fc009d",
   "/images/modular/batrocs-brigade/front.png": "63ce3169",
   "/images/modular/beasty-boys/front.png": "3f75b050",
-  "/images/modular/black-flower/back.png": "4cfb4b19",
   "/images/modular/black-flower/front.png": "f740ce03",
   "/images/modular/black-order/front.png": "0db43c9c",
   "/images/modular/black-tom-cassidy/front.png": "84251df2",

@@ -413,7 +413,7 @@ export const modulars = [
   shadowland(
     modular("Ninja Swarm"),
     modular("Deadly Contraptions"),
-    modular("Black Flower", { hasBack }),
+    modular("Black Flower", { isLandscape }),
   ),
 ];
 
